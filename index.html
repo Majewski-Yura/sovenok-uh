@@ -459,8 +459,10 @@ const PHOTO_KEY='uh-photo';
 function showPhoto(){
   let p=null;try{p=localStorage.getItem(PHOTO_KEY)}catch(e){}
   const b=document.getElementById('meBtn'),svg=b.querySelector('svg');let img=b.querySelector('img');
-  if(p){if(!img){img=document.createElement('img');img.alt='Алиса';img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';b.appendChild(img)}img.src=p;svg.style.display='none'}
-  else{if(img)img.remove();svg.style.display=''}
+  if(!img){img=document.createElement('img');img.alt='Алиса';img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';b.appendChild(img)}
+  img.onerror=()=>{img.style.display='none';svg.style.display=''};
+  img.onload=()=>{img.style.display='block';svg.style.display='none'};
+  img.src=p||'alisa.jpg';
 }
 function loadPhoto(inp){
   const f=inp.files&&inp.files[0];if(!f)return;
