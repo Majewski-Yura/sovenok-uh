@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Совёнок Ух</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fdf6ec; --bg2:#fff; --ink:#3b2a20; --ink2:#7a6455; --line:#ecdcc8;
+  --brown:#b98060; --brown2:#9a6644; --cream:#f5e2c8; --gold:#f5b82e; --gold2:#fff1c7;
+  --pink:#ff8fb0; --mint:#7fd99e; --sky:#8ec5ff; --lilac:#b89bf0; --shadow:0 6px 0 rgba(120,80,40,.12);
+}
+:root.night{ --bg:#232a4a; --bg2:#2f3760; --ink:#fff5e6; --ink2:#c9c4e6; --line:#434c7e; --gold2:#4a4370; --shadow:0 6px 0 rgba(0,0,0,.25); }
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:700;min-height:100vh;transition:background .6s}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:720px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.logo{font-weight:900;font-size:22px;display:flex;align-items:center;gap:8px}
+.stars{background:var(--gold2);border:3px solid var(--gold);border-radius:999px;padding:6px 16px;font-weight:900;font-size:20px;display:flex;gap:6px;align-items:center}
+.stars b{color:#e09a00}
+.back{background:var(--bg2);border:3px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800}
+.screen{display:none;animation:in .35s ease}
+.screen.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.stage{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative}
+.owl{width:230px;height:250px;cursor:pointer;animation:bob 3.2s ease-in-out infinite;transform-origin:50% 90%}
+.owl.small{width:150px;height:165px}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.owl .lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);animation:blink 5s infinite}
+@keyframes blink{0%,94%,100%{transform:scaleY(0)}97%{transform:scaleY(1)}}
+.owl .zz{display:none}
+.owl.sleep .lid{animation:none;transform:scaleY(1)}
+.owl.sleep .zz{display:block;animation:zz 2.4s ease-in-out infinite}
+.owl.sleep{animation-duration:5s}
+@keyframes zz{0%{opacity:0;transform:translate(0,0)}30%{opacity:1}100%{opacity:0;transform:translate(14px,-22px)}}
+.owl.happy{animation:hop .5s ease 2}
+@keyframes hop{50%{transform:translateY(-22px) rotate(-4deg)}}
+.owl.happy .wing{animation:flap .25s ease 4}
+.wing{transform-box:fill-box;transform-origin:50% 10%}
+@keyframes flap{50%{transform:rotate(-25deg)}}
+.owl .acc{display:none}
+
+.bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
+.bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
+.bubble.down:before{top:auto;bottom:-14px;border-top:12px solid var(--line);border-bottom:0}
+.say{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;background:var(--gold2);font-size:18px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
+.card{background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:18px;text-align:left;box-shadow:var(--shadow);transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.card:active{transform:translateY(2px);box-shadow:none}
+.card .ic{font-size:36px}
+.card h3{margin:6px 0 4px;font-size:20px;font-weight:900}
+.card p{margin:0;color:var(--ink2);font-size:15px;line-height:1.35}
+.card.hot{border-color:var(--gold);background:var(--gold2)}
+.mission{margin-top:16px;border:3px dashed var(--lilac);border-radius:24px;padding:16px 18px;display:flex;gap:14px;align-items:center;background:var(--bg2)}
+.mission .ic{font-size:34px}
+.mission p{margin:2px 0 0;font-size:17px}
+.mission small{color:var(--ink2);font-weight:800}
+
+.btn{background:var(--gold);color:#3b2a20;border-radius:18px;padding:14px 22px;font-size:19px;font-weight:900;box-shadow:0 5px 0 #d08f00}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #d08f00}
+.btn.soft{background:var(--bg2);color:var(--ink);border:3px solid var(--line);box-shadow:var(--shadow)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.chip{background:var(--bg2);border:2px solid var(--line);border-radius:999px;padding:8px 14px;font-size:15px}
+textarea{width:100%;max-width:560px;min-height:110px;border:3px solid var(--line);border-radius:20px;padding:14px;font:inherit;font-size:19px;background:var(--bg2);color:var(--ink);resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold)}
+.progress{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.progress i{width:14px;height:14px;border-radius:50%;background:var(--line)}
+.progress i.done{background:var(--gold)}
+
+.word{font-size:56px;font-weight:900;letter-spacing:2px;margin:18px 0 6px;text-align:center}
+.word .gap{display:inline-block;min-width:48px;border-bottom:5px solid var(--gold);color:var(--brown2);margin:0 2px}
+.word .gap.ok{color:#2f9a5a;border-color:#2f9a5a;animation:pop .4s}
+@keyframes pop{50%{transform:scale(1.4)}}
+.opts{display:flex;gap:16px;justify-content:center}
+.opt{min-width:110px;font-size:40px;font-weight:900;background:var(--bg2);border:4px solid var(--line);border-radius:22px;padding:10px 20px;box-shadow:var(--shadow)}
+.opt.no{opacity:.35;transform:scale(.92)}
+.opt.yes{border-color:#2f9a5a;background:#dff6e6;color:#1d6b3e}
+.rule{margin-top:14px;text-align:center;font-size:17px;color:var(--ink2);min-height:24px}
+
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+.item{background:var(--bg2);border:3px solid var(--line);border-radius:22px;padding:14px;text-align:center;box-shadow:var(--shadow)}
+.item .ic{font-size:40px}
+.item b{display:block;font-size:17px;margin:4px 0}
+.item span{font-size:15px;color:var(--ink2)}
+.item.on{border-color:var(--mint);background:#e9faef}
+:root.night .item.on{background:#2f5a4a}
+.item.lock{opacity:.6}
+
+.diary{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.entry{background:var(--bg2);border:3px solid var(--line);border-radius:18px;padding:12px 16px;font-size:16px;line-height:1.4}
+.entry small{color:var(--ink2)}
+.entry q{display:block;color:var(--ink2);font-style:italic}
+label.f{display:block;margin-top:14px;font-size:16px}
+.t{display:block;width:100%;border:3px solid var(--line);border-radius:14px;padding:10px 12px;font:inherit;font-size:17px;background:var(--bg2);color:var(--ink);margin-top:6px}
+.foot{text-align:center;margin-top:30px}
+.foot button{color:var(--ink2);font-size:14px;text-decoration:underline}
+
+.burst{position:fixed;pointer-events:none;font-size:28px;z-index:9;animation:fly 1.1s ease-out forwards}
+@keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(200deg);opacity:0}}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--gold);color:#3b2a20;font-weight:900;font-size:20px;padding:10px 22px;border-radius:999px;z-index:10;box-shadow:0 5px 0 #d08f00;animation:in .3s}
+.sky{position:fixed;inset:0;pointer-events:none;z-index:-1;display:none}
+:root.night .sky{display:block}
+.sky i{position:absolute;width:3px;height:3px;background:#fff7c2;border-radius:50%;animation:tw 3s infinite}
+@keyframes tw{50%{opacity:.2}}
+@media (max-width:480px){.word{font-size:44px}.owl{width:190px;height:206px}.bubble{font-size:18px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sky" id="sky"></div>
+<div class="wrap">
+  <header>
+    <div class="logo">🦉 Совёнок Ух</div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="back" id="backBtn" style="display:none" onclick="go('home')">← Домой</button>
+      <div class="stars">⭐ <b id="starN">0</b></div>
+    </div>
+  </header>
+
+  <!-- ДОМ -->
+  <section class="screen on" id="home">
+    <div class="stage">
+      <div class="bubble down" id="homeSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div id="owlHome"></div>
+    </div>
+    <div class="mission" id="missionBox" style="display:none">
+      <div class="ic">🎒</div>
+      <div style="flex:1"><small>Задание от Уха на школьный день</small><p id="missionText"></p></div>
+      <button class="btn" onclick="missionDone()">Сделала!</button>
+    </div>
+    <div class="cards">
+      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic">🌙</div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
+      <button class="card" onclick="startGame()"><div class="ic">✏️</div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
+      <button class="card" onclick="go('shop')"><div class="ic">🎁</div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
+    </div>
+    <div class="foot"><button onclick="go('parent')">Для родителей</button></div>
+  </section>
+
+  <!-- РАЗГОВОР -->
+  <section class="screen" id="talk">
+    <div class="stage">
+      <div id="owlTalk"></div>
+      <div class="progress" id="talkProg"></div>
+      <div class="bubble" id="talkSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div id="talkInput" style="width:100%;display:flex;flex-direction:column;align-items:center;margin-top:14px">
+        <textarea id="talkText" placeholder="Напиши тут… или расскажи вслух маме"></textarea>
+        <div class="chips" id="talkChips"></div>
+        <div class="row"><button class="btn" onclick="talkNext()">Рассказать Уху</button></div>
+      </div>
+      <div class="row" id="talkEnd" style="display:none"><button class="btn" onclick="go('home')">Пока, Ух!</button></div>
+    </div>
+  </section>
+
+  <!-- ИГРА -->
+  <section class="screen" id="game">
+    <div class="stage">
+      <div id="owlGame"></div>
+      <div class="progress" id="gameProg"></div>
+      <div class="bubble" id="gameSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+    </div>
+    <div id="gameBody">
+      <div class="word" id="gameWord"></div>
+      <div class="opts" id="gameOpts"></div>
+      <div class="rule" id="gameRule"></div>
+    </div>
+    <div class="row" id="gameNext" style="display:none"><button class="btn" id="gameNextBtn" onclick="gameStep()">Дальше →</button></div>
+  </section>
+
+  <!-- МАГАЗИН -->
+  <section class="screen" id="shop">
+    <div class="stage">
+      <div id="owlShop"></div>
+      <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+    </div>
+    <div class="shop" id="shopList"></div>
+  </section>
+
+  <!-- РОДИТЕЛЯМ -->
+  <section class="screen" id="parent">
+    <h2 style="font-weight:900">Для родителей</h2>
+    <p style="color:var(--ink2);line-height:1.5;margin-top:0">Здесь видно, что Алиса рассказала Уху. Всё хранится только в&nbsp;этом браузере.</p>
+    <label class="f">Что сейчас у Алисы
+      <select class="t" id="modeIn">
+        <option value="auto">Здорова — школа, выходные и каникулы по календарю</option>
+        <option value="sick">Болеет, сидит дома</option>
+      </select>
+    </label>
+    <p style="color:var(--ink2);font-size:14px;margin:6px 0 0">Каникулы 2026/27 уже внесены: 1–8&nbsp;ноября, 25&nbsp;декабря – 10&nbsp;января, 15–21&nbsp;февраля, 21–28&nbsp;марта, лето с&nbsp;1&nbsp;июня.</p>
+    <label class="f">Если болеет: в&nbsp;школу снова с (можно не заполнять)
+      <input class="t" id="backIn" type="date">
+    </label>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveMode()">Сохранить</button></div>
+    <label class="f">Тема завтрашнего урока (Ух спросит про неё вечером)
+      <input class="t" id="topicIn" placeholder="например: парные согласные">
+    </label>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
+    <h3 style="margin-top:24px">Дневник разговоров</h3>
+    <div class="diary" id="diaryList"></div>
+  </section>
+</div>
+
+<template id="owlTpl">
+<svg class="owl" viewBox="-80 -88 160 175" aria-label="Совёнок Ух">
+  <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="40" y="-52" font-size="18">z</text><text x="52" y="-66" font-size="13">z</text></g>
+  <path d="M-34 -36 q-6 -20 6 -22 q8 6 10 16 Z" fill="#9a6644"/>
+  <path d="M34 -36 q6 -20 -6 -22 q-8 6 -10 16 Z" fill="#9a6644"/>
+  <ellipse class="wing" cx="-47" cy="22" rx="11" ry="26" fill="#9a6644"/>
+  <ellipse class="wing" cx="47" cy="22" rx="11" ry="26" fill="#9a6644"/>
+  <ellipse cx="0" cy="12" rx="50" ry="54" fill="#b98060"/>
+  <ellipse cx="0" cy="36" rx="30" ry="26" fill="#f5e2c8"/>
+  <path d="M-8 30 q3 4 6 0 M4 30 q3 4 6 0 M-2 42 q3 4 6 0" stroke="#d9b48c" stroke-width="2" fill="none"/>
+  <g class="acc acc-scarf"><path d="M-40 46 q40 18 80 0 l0 10 q-40 18 -80 0 Z" fill="#e8584f"/><path d="M18 56 l6 26 l10 -4 l-6 -24 Z" fill="#e8584f"/><path d="M-30 50 v10 M-14 54 v10 M2 55 v10 M18 54 v10" stroke="#fff" stroke-width="3" opacity=".6"/></g>
+  <circle cx="-19" cy="-4" r="17" fill="#fff6e8"/><circle cx="19" cy="-4" r="17" fill="#fff6e8"/>
+  <circle cx="-18" cy="-2" r="11" fill="#2b2b3a"/><circle cx="18" cy="-2" r="11" fill="#2b2b3a"/>
+  <circle cx="-22" cy="-7" r="4" fill="#fff"/><circle cx="14" cy="-7" r="4" fill="#fff"/>
+  <circle cx="-14" cy="2" r="1.8" fill="#fff"/><circle cx="22" cy="2" r="1.8" fill="#fff"/>
+  <ellipse class="lid" cx="-19" cy="-4" rx="18" ry="18" fill="#b98060"/>
+  <ellipse class="lid" cx="19" cy="-4" rx="18" ry="18" fill="#b98060"/>
+  <g class="zz"><path d="M-30 2 q11 8 22 0 M8 2 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  <path d="M-5 10 h10 l-5 7 Z" fill="#f5a83e"/>
+  <ellipse cx="-34" cy="16" rx="7" ry="4" fill="#f7a8b8"/><ellipse cx="34" cy="16" rx="7" ry="4" fill="#f7a8b8"/>
+  <ellipse cx="-14" cy="66" rx="8" ry="4" fill="#f5a83e"/><ellipse cx="14" cy="66" rx="8" ry="4" fill="#f5a83e"/>
+  <g class="acc acc-glasses" fill="none" stroke="#3b6bd6" stroke-width="3.5"><circle cx="-19" cy="-4" r="20"/><circle cx="19" cy="-4" r="20"/><path d="M-2 -6 h4"/></g>
+  <g class="acc acc-cap"><path d="M-40 -34 q30 -40 76 -14 q8 -30 30 -24 q-30 -30 -70 -14 q-30 12 -36 52 Z" fill="#6c7cf0"/><circle cx="66" cy="-72" r="9" fill="#fff6c2"/><path d="M-42 -34 q38 -18 80 -10" stroke="#fff6c2" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="-6" cy="-52" r="3" fill="#fff6c2"/><circle cx="18" cy="-58" r="2.5" fill="#fff6c2"/></g>
+  <g class="acc acc-bow"><path d="M26 -46 l-18 -12 v24 Z M26 -46 l18 -12 v24 Z" fill="#ff8fb0"/><circle cx="26" cy="-46" r="6" fill="#ff6f9a"/></g>
+  <g class="acc acc-crown"><path d="M-26 -44 l4 -30 l12 16 l10 -22 l10 22 l12 -16 l4 30 Z" fill="#f5c84b" stroke="#d99a10" stroke-width="2"/><circle cx="0" cy="-58" r="4" fill="#ff6f9a"/><circle cx="-16" cy="-52" r="3" fill="#7fd99e"/><circle cx="16" cy="-52" r="3" fill="#8ec5ff"/></g>
+  <g class="acc acc-book"><rect x="-26" y="40" width="52" height="34" rx="4" fill="#7fd99e" stroke="#3f9a62" stroke-width="2.5"/><path d="M0 40 v34" stroke="#3f9a62" stroke-width="2.5"/><path d="M-20 50 h14 M-20 58 h14 M6 50 h14 M6 58 h14" stroke="#fff" stroke-width="2.5"/></g>
+</svg>
+</template>
+
+<script>
+/* ---------- хранилище ---------- */
+const KEY='uh-v1';
+let S={stars:0,owned:[],wear:{},diary:[],mission:null,missionDate:null,talkDate:null,topic:'',mode:'sick',backDate:'2026-11-09'};
+try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
+if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+
+/* ---------- типографика: без висячих строк ---------- */
+const SHORT=/(^|[\s(«"])([а-яёА-ЯЁa-z]{1,3}|что|как|для|без|при)\s+/g;
+function typo(s){
+  s=s.replace(SHORT,(m,p,w)=>p+w+' ').replace(SHORT,(m,p,w)=>p+w+' ');
+  s=s.replace(/\s+([—–])/g,' $1');
+  s=s.replace(/\s+(\S+)$/,(m,w)=>w.length<12?' '+w:m);
+  return s;
+}
+function typoDom(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){if(n.parentNode.closest('script,style,svg'))continue;if(n.nodeValue.trim().length>3)n.nodeValue=typo(n.nodeValue)}
+}
+
+/* ---------- голос ---------- */
+let voice=null;
+function pickVoice(){const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ru'));voice=vs.find(v=>/Milena|Alyona|Google/i.test(v.name))||vs[0]||null}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function speak(t){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?…—-]/gu,''));
+  u.lang='ru-RU';if(voice)u.voice=voice;u.pitch=1.5;u.rate=1;speechSynthesis.speak(u);
+}
+
+/* ---------- сова ---------- */
+const owls={};
+function mountOwl(id,small){
+  const el=document.getElementById(id);el.innerHTML='';
+  const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
+  if(small)svg.classList.add('small');
+  svg.addEventListener('click',()=>{if(svg.classList.contains('sleep')){wake();return}cheer(svg);say(id.replace('owl','').toLowerCase(),pick(TICKLE))});
+  el.appendChild(svg);owls[id]=svg;dress();
+}
+function dress(){
+  Object.values(owls).forEach(svg=>{
+    svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
+    const w=Object.values(S.wear);if(S.mode==='sick')w.push('scarf');
+    w.forEach(k=>{if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}});
+  });
+}
+function cheer(svg){svg=svg||owls[current()];if(!svg)return;svg.classList.remove('happy');void svg.getBBox();svg.classList.add('happy')}
+const TICKLE=['Хи-хи, щекотно!','Ух-ух! Я тут!','Пушистый, правда?','Ой, мои пёрышки!'];
+
+/* ---------- общее ---------- */
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+function say(screen,text,silent){
+  const b=document.getElementById(screen+'Say');if(!b)return;
+  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t);
+}
+function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
+function setStars(){document.getElementById('starN').textContent=S.stars}
+function addStars(n,why){
+  S.stars+=n;save();setStars();
+  const t=document.createElement('div');t.className='toast';t.textContent='+'+n+' ⭐ '+(why||'');document.body.appendChild(t);setTimeout(()=>t.remove(),1800);
+  const r=document.querySelector('.stars').getBoundingClientRect();
+  for(let i=0;i<10;i++){const s=document.createElement('div');s.className='burst';s.textContent=pick(['⭐','✨','🌟']);
+    s.style.left=(innerWidth/2)+'px';s.style.top=(innerHeight/2)+'px';
+    s.style.setProperty('--dx',(r.left-innerWidth/2+(Math.random()*80-40))+'px');s.style.setProperty('--dy',(r.top-innerHeight/2+(Math.random()*80-40))+'px');
+    s.style.animationDelay=(i*0.05)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1700)}
+  cheer();
+}
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  document.getElementById('backBtn').style.display=id==='home'?'none':'';
+  if(id==='home')renderHome();if(id==='shop')renderShop();if(id==='parent')renderParent();
+  scrollTo(0,0);
+}
+
+/* ---------- время суток ---------- */
+const hour=()=>new Date().getHours();
+const isDay=()=>hour()>=8&&hour()<15;
+const isEvening=()=>hour()>=17||hour()<8;
+let awake=false;
+function applyTime(){document.documentElement.classList.toggle('night',isEvening())}
+function wake(){awake=true;owls.owlHome.classList.remove('sleep');cheer(owls.owlHome);say('home','Ой! Я задремал… Днём совы спят, поэтому я и в школу не хожу. Расскажешь мне потом, что там было?')}
+
+/* ---------- дом ---------- */
+/* школьный календарь Беларуси 2026/27 (1–2 класс) */
+const HOLIDAYS=[
+  ['2026-11-01','2026-11-08','осенние каникулы'],
+  ['2026-12-25','2027-01-10','зимние каникулы'],
+  ['2027-02-15','2027-02-21','дополнительные зимние каникулы'],
+  ['2027-03-21','2027-03-28','весенние каникулы'],
+  ['2027-06-01','2027-08-31','летние каникулы']
+];
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function restName(d){
+  d=d||new Date();const s=ymd(d);
+  const h=HOLIDAYS.find(h=>s>=h[0]&&s<=h[1]);if(h)return h[2];
+  if(d.getDay()===0||d.getDay()===6)return 'выходные';
+  return '';
+}
+function mode(){
+  if(S.mode==='sick'&&S.backDate&&today()>=S.backDate){S.mode='auto';S.backDate='';save()}
+  if(S.mode==='sick')return 'sick';
+  return restName()?'holiday':'school';
+}
+function daysLeft(){
+  const n=new Date();n.setHours(0,0,0,0);
+  const d=new Date(n);d.setDate(d.getDate()+1);
+  if(S.mode==='sick'&&S.backDate){const [y,m,dd]=S.backDate.split('-').map(Number);const b=new Date(y,m-1,dd);if(b>d)d.setTime(b.getTime())}
+  for(let i=0;i<120&&restName(d);i++)d.setDate(d.getDate()+1);
+  return Math.round((d-n)/864e5);
+}
+function daysWord(n){const a=n%10,b=n%100;return (a===1&&b!==11)?'день':(a>=2&&a<=4&&(b<10||b>=20))?'дня':'дней'}
+function countdown(){const n=daysLeft();if(n<=0)return '';if(n===1)return ' Завтра в школу! Ух уже ждёт твоих историй.';return ' До школы '+n+' '+daysWord(n)+'. А потом ты снова будешь приносить мне истории!'}
+const MODE_TXT={
+  school:{mission:'Задание от Уха на школьный день',talkT:'Вечерний разговор',talkP:'Расскажи Уху, как прошёл день в школе'},
+  holiday:{mission:'Задание от Уха на свободный день',talkT:'Поболтать с Ухом',talkP:'Расскажи, как прошёл твой день'},
+  sick:{mission:'Лёгкое задание от Уха — можно не вставая',talkT:'Поболтать с Ухом',talkP:'Ух скучает и хочет узнать, как ты'}
+};
+function renderHome(){
+  applyTime();
+  const md=mode(),T=MODE_TXT[md];
+  document.querySelector('#missionBox small').textContent=typo(T.mission);
+  document.querySelector('#cardTalk h3').textContent=typo(T.talkT);
+  document.querySelector('#cardTalk p').textContent=typo(T.talkP);
+  document.querySelector('#cardTalk .ic').textContent=md==='school'?'🌙':md==='sick'?'🍵':'🍂';
+  if(md!=='school'){
+    owls.owlHome.classList.remove('sleep');
+    const fresh=S.talkDate!==today();
+    let msg=md==='sick'
+      ?pick(['Ой, ты заболела? Я тоже закутался в шарфик — будем болеть вместе. Пей тёплый чай!','Привет! Как ты себя чувствуешь? Ух принёс тебе пёрышко для уюта.','Болеть скучно, правда? Давай я тебя повеселю!'])
+      :pick(['Ура, '+restName()+'! Можно спать сколько хочешь — прямо как сова!','Ух-ух! Свободный день — время приключений. Что будем делать?','Привет! Когда нет школы, я скучаю по твоим школьным историям.']);
+    msg+=countdown();
+    say('home',msg);
+    document.getElementById('cardTalk').classList.toggle('hot',fresh);
+    const mb=document.getElementById('missionBox');
+    if(S.mission){mb.style.display='flex';document.getElementById('missionText').textContent=typo(S.mission)}else mb.style.display='none';
+    return;
+  }
+  const o=owls.owlHome;
+  const sleeping=isDay()&&!awake;
+  o.classList.toggle('sleep',sleeping);
+  let msg;
+  if(sleeping)msg='Хр-р-р… Ух спит. Днём совы спят! Нажми на меня, чтобы разбудить.';
+  else if(isEvening()&&S.talkDate!==today())msg='Ух-ух! Наконец-то вечер, я проснулся! Как прошёл день в школе? Мне ужасно интересно!';
+  else if(isEvening())msg='Спасибо за рассказ! Я всё запомнил и буду думать об этом всю ночь.';
+  else if(hour()<8)msg='Доброе утро! Совсем скоро в школу. Не забудь моё задание!';
+  else msg='Ты уже из школы? Ух! Расскажи всё-всё, когда наступит вечер. А пока можно помочь мне с записками.';
+  if(S.topic&&!sleeping&&S.talkDate!==today())msg+=' Я слышал, вы будете проходить «'+S.topic+'». Это что такое?';
+  say('home',msg);
+  document.getElementById('cardTalk').classList.toggle('hot',isEvening()&&S.talkDate!==today());
+  const mb=document.getElementById('missionBox');
+  if(S.mission){mb.style.display='flex';document.getElementById('missionText').textContent=typo(S.mission)}else mb.style.display='none';
+}
+function missionDone(){
+  addStars(2,'за задание');S.diary.unshift({d:today(),q:'Задание: '+S.mission,a:'Выполнила'});S.mission=null;save();renderHome();
+  say('home',mode()==='sick'?'Ух ты! Даже болея ты справилась. Умница!':'Ух ты! Ты настоящий разведчик! Вечером расскажешь подробности?');
+}
+
+/* ---------- вечерний разговор ---------- */
+const QUESTIONS=[
+  {q:'Что сегодня было самое смешное в школе?',chips:['Ничего смешного','На перемене','На уроке']},
+  {q:'Расскажи мне одну новую вещь, которую ты сегодня узнала. Я, совёнок, такого точно не знаю!',chips:['Новое слово','Новое правило','Про животных']},
+  {q:'С кем ты сегодня играла или болтала на перемене?',chips:['С подружкой','С разными ребятами','Ни с кем']},
+  {q:'Какой урок сегодня был самый интересный? И почему?',chips:['Русский','Чтение','Английский','Физкультура']},
+  {q:'А было сегодня что-нибудь скучное? Как бы ты сделала это веселее?',chips:['Да, было','Нет, всё ок']},
+  {q:'Какое у тебя было настроение в школе? Покажи цветом: солнечное, облачное или грозовое?',chips:['☀️ Солнечное','⛅ Облачное','⛈ Грозовое']},
+  {q:'Учительница сегодня сказала что-нибудь интересное? Повтори, пожалуйста, мне тоже хочется знать!',chips:['Да!','Не помню']},
+  {q:'Что ты сегодня ела в столовой? Совы едят мышей, мне очень любопытно, что едят девочки!',chips:['Кашу','Суп','Не помню']}
+];
+const REACT=['Ух ты! Вот это да!','Ничего себе! Я бы так не смог.','Как интересно! Ух запомнит.','Ух-ух! А дальше?','Здорово! Ты так понятно объясняешь, как учительница!','Хи-хи! Вот это история!'];
+const MISSIONS=['Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
+const HOLIDAY_Q=[
+  {q:'Что сегодня было самое интересное?',chips:['Гуляла','Играла','Смотрела мультик']},
+  {q:'Во что ты сегодня играла? Научи меня, я в такое никогда не играл!',chips:['В куклы','В настолку','На улице']},
+  {q:'По кому из класса ты уже соскучилась?',chips:['По подружке','По учительнице','По всем']},
+  {q:'Что интересного ты расскажешь в классе, когда вернёшься?',chips:['Пока не знаю','Есть одна история!']},
+  {q:'Если бы я пришёл в твою школу, что бы ты мне показала первым делом?',chips:['Свой класс','Столовую','Спортзал']},
+  {q:'Какую книжку или мультик ты сегодня видела? О чём он?',chips:['Книжку','Мультик','Ничего']}
+];
+const SICK_Q=[
+  {q:'Что самое уютное у тебя в кровати?',chips:['Подушка','Одеяло','Игрушка']},
+  {q:'Кто о тебе сегодня заботился? Что он делал?',chips:['Мама','Папа','Бабушка']},
+  {q:'Когда поправишься и пойдёшь в школу, что ты хочешь сделать первым делом?',chips:['Обнять подружку','Поиграть на перемене']},
+  {q:'По кому из класса ты соскучилась?',chips:['По подружке','По учительнице','По всем']},
+  {q:'Посмотри в окно. На что похоже небо или облако?',chips:['На зверя','На вату','Серое']},
+  {q:'Какую сказку тебе сегодня читали? Чем она закончилась?',chips:['Не читали','Расскажу!']}
+];
+const SICK_FIRST={q:'Как ты себя чувствуешь сегодня?',chips:['Получше','Так себе','Плохо']};
+const SOFT_REACT=['Спасибо, что рассказала!','Ух укроет тебя крылышком.','Как хорошо, что ты мне это рассказала!','Ух-ух, понятно. А ещё?'];
+const HOLIDAY_M=['Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видел','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
+const SICK_M=['Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
+let talk=null;
+function startTalk(){
+  go('talk');
+  const md=mode();
+  let qs;
+  if(md==='sick')qs=[SICK_FIRST].concat(shuffle(SICK_Q).slice(0,2));
+  else if(md==='holiday')qs=shuffle(HOLIDAY_Q).slice(0,3);
+  else qs=shuffle(QUESTIONS).slice(0,3);
+  if(md==='school'&&S.topic)qs[1]={q:'Вы проходили «'+S.topic+'»? Объясни мне, пожалуйста, что это такое. Я совсем-совсем не знаю!',chips:['Попробую!','Ещё не проходили']};
+  talk={qs,i:0,ans:[]};
+  document.getElementById('talkEnd').style.display='none';document.getElementById('talkInput').style.display='flex';
+  talkShow();
+}
+function talkShow(){
+  const q=talk.qs[talk.i];
+  say('talk',(talk.i===0?'Ух-ух! Устраивайся поудобнее. ':'')+q.q);
+  document.getElementById('talkText').value='';
+  const c=document.getElementById('talkChips');c.innerHTML='';
+  q.chips.forEach(t=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>{const ta=document.getElementById('talkText');ta.value=(ta.value?ta.value+' ':'')+t;ta.focus()};c.appendChild(b)});
+  document.getElementById('talkProg').innerHTML=talk.qs.map((_,k)=>'<i class="'+(k<talk.i?'done':'')+'"></i>').join('');
+}
+function talkNext(){
+  const a=document.getElementById('talkText').value.trim()||'(рассказала вслух)';
+  talk.ans.push(a);S.diary.unshift({d:today(),q:talk.qs[talk.i].q,a});save();
+  addStars(1,'за рассказ');
+  talk.i++;
+  if(talk.i<talk.qs.length){say('talk',pick(mode()==='sick'?SOFT_REACT:REACT));setTimeout(talkShow,1600);return}
+  S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
+  document.getElementById('talkInput').style.display='none';document.getElementById('talkEnd').style.display='flex';
+  document.getElementById('talkProg').innerHTML=talk.qs.map(()=>'<i class="done"></i>').join('');
+  setTimeout(()=>{addStars(2,'за разговор с Ухом');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission.toLowerCase()+'. Справишься?')},900);
+}
+
+/* ---------- игра «Записка Уха» ---------- */
+const R={zhi:'ЖИ и ШИ пиши с буквой И',cha:'ЧА и ЩА пиши с буквой А',chu:'ЧУ и ЩУ пиши с буквой У',chk:'ЧК и ЧН пишутся без мягкого знака',cap:'Имена, клички, города и реки пишем с большой буквы'};
+const WORDS=[
+  {p:'ж',s:'раф',o:['и','ы'],r:R.zhi},{p:'ш',s:'шка',o:['и','ы'],r:R.zhi},{p:'маш',s:'на',o:['и','ы'],r:R.zhi},
+  {p:'ж',s:'вот',o:['и','ы'],r:R.zhi},{p:'лыж',s:'',o:['и','ы'],r:R.zhi},{p:'снеж',s:'нка',o:['и','ы'],r:R.zhi},
+  {p:'ч',s:'шка',o:['а','я'],r:R.cha},{p:'щ',s:'вель',o:['а','я'],r:R.cha},{p:'туч',s:'',o:['а','я'],r:R.cha},
+  {p:'рощ',s:'',o:['а','я'],r:R.cha},{p:'дач',s:'',o:['а','я'],r:R.cha},
+  {p:'ч',s:'до',o:['у','ю'],r:R.chu},{p:'щ',s:'ка',o:['у','ю'],r:R.chu},{p:'ч',s:'жой',o:['у','ю'],r:R.chu},
+  {p:'ноч',s:'ка',o:['','ь'],r:R.chk},{p:'руч',s:'ка',o:['','ь'],r:R.chk},{p:'реч',s:'ка',o:['','ь'],r:R.chk},{p:'моч',s:'ка',o:['','ь'],r:R.chk},
+  {p:'ду',s:'',o:['б','п'],r:'Проверим: дубы — слышно Б'},{p:'гри',s:'',o:['б','п'],r:'Проверим: грибы — слышно Б'},
+  {p:'сне',s:'',o:['г','к'],r:'Проверим: снега — слышно Г'},{p:'моро',s:'',o:['з','с'],r:'Проверим: морозы — слышно З'},
+  {p:'хле',s:'',o:['б','п'],r:'Проверим: хлеба — слышно Б'},{p:'гла',s:'',o:['з','с'],r:'Проверим: глаза — слышно З'},
+  {p:'',s:'инск',o:['М','м'],r:R.cap,pre:'город '},{p:'',s:'урка',o:['М','м'],r:R.cap,pre:'кошка '},
+  {p:'',s:'еман',o:['Н','н'],r:R.cap,pre:'река '},{p:'',s:'х',o:['У','у'],r:R.cap,pre:'совёнок '}
+];
+const DOUBT=['Хм… я написал и засомневался. Какую букву поставить?','Ух! Тут у меня дырка. Что вставить?','Помоги, а? Я в школу не хожу, вот и путаюсь.','Учительница Алиса, подскажи!'];
+const OK=['Точно! Ух запомнит.','Ура! Ты как настоящая учительница!','Ух-ух, правильно! Спасибо!','Вот это да! Сразу видно, кто ходит в школу.'];
+const OOPS=['Ой, и я так подумал бы! Давай попробуем другую.','Хм, Ух тоже сомневается… А может, другая?','Ничего, ошибаться — это нормально. Ещё разок?'];
+let G=null;
+function startGame(){go('game');G={list:shuffle(WORDS).slice(0,6),i:-1,first:0};gameStep()}
+function gameStep(){
+  G.i++;
+  document.getElementById('gameProg').innerHTML=G.list.map((_,k)=>'<i class="'+(k<G.i?'done':'')+'"></i>').join('');
+  document.getElementById('gameNext').style.display='none';
+  if(G.i>=G.list.length){
+    document.getElementById('gameBody').style.display='none';
+    say('game','Спасибо! Теперь моя записка без ловушек. Ты мне очень помогла!');
+    addStars(3,'за помощь Уху');
+    document.getElementById('gameNext').style.display='flex';
+    document.getElementById('gameNextBtn').textContent='Ещё записку!';document.getElementById('gameNextBtn').onclick=startGame;
+    return;
+  }
+  document.getElementById('gameBody').style.display='block';
+  document.getElementById('gameNextBtn').textContent='Дальше →';document.getElementById('gameNextBtn').onclick=gameStep;
+  const w=G.list[G.i];
+  document.getElementById('gameWord').innerHTML=(w.pre?'<span style="font-size:.5em;color:var(--ink2)">'+w.pre+'</span>':'')+w.p+'<span class="gap" id="gap">?</span>'+w.s;
+  document.getElementById('gameRule').textContent='';
+  say('game',pick(DOUBT));
+  const box=document.getElementById('gameOpts');box.innerHTML='';
+  shuffle(w.o.map((o,k)=>({o,ok:k===0}))).forEach(x=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=x.o===''?'—':x.o;
+    b.onclick=()=>{
+      if(b.classList.contains('no')||document.getElementById('gap').classList.contains('ok'))return;
+      if(x.ok){
+        b.classList.add('yes');const g=document.getElementById('gap');g.textContent=x.o||'';g.classList.add('ok');if(!x.o)g.style.minWidth='0';
+        document.getElementById('gameRule').textContent=typo(w.r);say('game',pick(OK));cheer();
+        document.getElementById('gameNext').style.display='flex';
+      }else{b.classList.add('no');say('game',pick(OOPS))}
+    };
+    box.appendChild(b);
+  });
+}
+
+/* ---------- гардероб ---------- */
+const ITEMS=[
+  {k:'cap',slot:'head',n:'Ночной колпак',ic:'🌙',p:5},
+  {k:'bow',slot:'head',n:'Бантик',ic:'🎀',p:5},
+  {k:'glasses',slot:'face',n:'Очки умника',ic:'👓',p:8},
+  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'🧣',p:8},
+  {k:'book',slot:'hands',n:'Своя книжка',ic:'📗',p:10},
+  {k:'crown',slot:'head',n:'Корона',ic:'👑',p:15}
+];
+function renderShop(){
+  say('shop',S.owned.length?'Нажми на вещь, чтобы надеть или снять. Мне всё к лицу!':'Тут можно купить мне наряды за звёздочки. Звёздочки дают за рассказы и помощь, а не за оценки!');
+  const L=document.getElementById('shopList');L.innerHTML='';
+  ITEMS.forEach(it=>{
+    const own=S.owned.includes(it.k),on=S.wear[it.slot]===it.k;
+    const b=document.createElement('button');b.className='item'+(on?' on':'')+(!own&&S.stars<it.p?' lock':'');
+    b.innerHTML='<div class="ic">'+it.ic+'</div><b>'+it.n+'</b><span>'+(own?(on?'Надето ✓':'Надеть'):'⭐ '+it.p)+'</span>';
+    b.onclick=()=>{
+      if(!own){
+        if(S.stars<it.p){say('shop','Пока не хватает звёздочек. Ещё '+(it.p-S.stars)+' — и будет моё!');return}
+        S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop','Ух ты! Это мне? Спасибо-спасибо!');cheer();
+      }else{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!');}
+      save();dress();renderShop();
+    };
+    L.appendChild(b);
+  });
+}
+
+/* ---------- родителям ---------- */
+function saveMode(){
+  S.mode=document.getElementById('modeIn').value;S.backDate=document.getElementById('backIn').value;S.mission=null;save();dress();
+  const t=document.createElement('div');t.className='toast';t.textContent='Сохранено';document.body.appendChild(t);setTimeout(()=>t.remove(),1400);
+}
+function renderParent(){
+  document.getElementById('modeIn').value=mode();document.getElementById('backIn').value=S.backDate||'';
+  document.getElementById('topicIn').value=S.topic||'';
+  const L=document.getElementById('diaryList');
+  L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Вечером Ух расспросит Алису о&nbsp;школе.</div>';
+  S.diary.slice(0,60).forEach(e=>{const d=document.createElement('div');d.className='entry';d.innerHTML='<small></small><q></q><div></div>';
+    d.children[0].textContent=e.d.split('-').reverse().join('.');d.children[1].textContent=e.q;d.children[2].textContent=e.a;L.appendChild(d)});
+}
+function saveTopic(){S.topic=document.getElementById('topicIn').value.trim();save();const t=document.createElement('div');t.className='toast';t.textContent='Сохранено';document.body.appendChild(t);setTimeout(()=>t.remove(),1400)}
+
+/* ---------- старт ---------- */
+(function(){
+  const sky=document.getElementById('sky');
+  for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
+  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlShop');
+  typoDom(document.body);setStars();renderHome();
+})();
+</script>
+</body>
+</html>
