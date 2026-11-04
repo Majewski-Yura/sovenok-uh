@@ -22,6 +22,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .logo{font-weight:900;font-size:22px;display:flex;align-items:center;gap:8px}
 .stars{background:var(--gold2);border:3px solid var(--gold);border-radius:999px;padding:6px 16px;font-weight:900;font-size:20px;display:flex;gap:6px;align-items:center}
 .stars b{color:#e09a00}
+.me{width:46px;height:46px;border-radius:50%;padding:0;border:3px solid var(--gold);background:var(--gold2);overflow:hidden;flex:none;transition:transform .2s}
+.me svg{width:100%;height:100%;display:block}
+.me:hover{transform:scale(1.1) rotate(-4deg)}
 .back{background:var(--bg2);border:3px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800}
 .screen{display:none;animation:in .35s ease}
 .screen.on{display:block}
@@ -110,6 +113,15 @@ label.f{display:block;margin-top:14px;font-size:16px}
 :root.night .sky{display:block}
 .sky i{position:absolute;width:3px;height:3px;background:#fff7c2;border-radius:50%;animation:tw 3s infinite}
 @keyframes tw{50%{opacity:.2}}
+.eq{text-align:center;margin:14px 0 8px}
+.eq .pic{font-size:84px;line-height:1.1}
+.eq .ru{font-size:22px;color:var(--ink2);margin-top:2px}
+.eq .sent{font-size:34px;font-weight:900;margin-top:6px}
+.eq .sent .gap{display:inline-block;min-width:64px;border-bottom:5px solid var(--gold);color:var(--brown2)}
+.eq .sent .gap.ok{color:#2f9a5a;border-color:#2f9a5a;animation:pop .4s}
+.sw{display:inline-block;width:110px;height:110px;border-radius:50%;border:4px solid var(--line);box-shadow:var(--shadow)}
+.opts.en{flex-wrap:wrap;gap:12px}
+.opts.en .opt{font-size:28px;min-width:0;padding:12px 22px}
 @media (max-width:480px){.word{font-size:44px}.owl{width:190px;height:206px}.bubble{font-size:18px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -122,6 +134,28 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div style="display:flex;gap:8px;align-items:center">
       <button class="back" id="backBtn" style="display:none" onclick="go('home')">← Домой</button>
       <div class="stars">⭐ <b id="starN">0</b></div>
+      <button class="me" id="meBtn" aria-label="Алиса" onclick="meClick()"><svg viewBox="0 0 100 100">
+        <defs><clipPath id="meClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+        <g clip-path="url(#meClip)">
+          <rect width="100" height="100" fill="#a9d2f5"/>
+          <path d="M0 22 q20 -6 40 0 q20 6 60 -2" stroke="#fff" stroke-width="5" fill="none" opacity=".7"/>
+          <rect y="66" width="100" height="34" fill="#f5d33b"/>
+          <circle cx="10" cy="72" r="3" fill="#ffe56b"/><circle cx="88" cy="70" r="3" fill="#ffe56b"/><circle cx="80" cy="80" r="2.5" fill="#8cc63f"/>
+          <path d="M21 46 q-1 -32 29 -32 q30 0 29 32 l5 44 q-34 10 -68 0 Z" fill="#8a5a3c"/>
+          <path d="M16 100 q3 -24 34 -25 q31 1 34 25 Z" fill="#fff4f1"/>
+          <path d="M39 76 l11 13 l11 -13 Z" fill="#f59a9a"/>
+          <path d="M38 76 l-6 10 l8 2 Z M62 76 l6 10 l-8 2 Z" fill="#f3e3de"/>
+          <rect x="44" y="64" width="12" height="13" rx="4" fill="#f0c6ad"/>
+          <ellipse cx="50" cy="48" rx="21" ry="23" fill="#f8dcc8"/>
+          <path d="M29 46 q-3 -28 21 -29 q24 1 21 29 q-5 -18 -21 -19 q-16 1 -21 19 Z" fill="#9a6644"/>
+          <path d="M50 18 q-1 6 0 10" stroke="#7a4a2e" stroke-width="1.6" fill="none"/>
+          <ellipse cx="50" cy="12" rx="10" ry="6" fill="#8a5a3c"/>
+          <path d="M36 42 q5 -3 10 0 M54 42 q5 -3 10 0" stroke="#7a4a2e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <ellipse cx="41" cy="50" rx="4.6" ry="5.6" fill="#3b3040"/><ellipse cx="59" cy="50" rx="4.6" ry="5.6" fill="#3b3040"/>
+          <circle cx="39.4" cy="47.8" r="1.9" fill="#fff"/><circle cx="57.4" cy="47.8" r="1.9" fill="#fff"/>
+          <ellipse cx="33" cy="58" rx="4.6" ry="2.6" fill="#f7a0b0" opacity=".85"/><ellipse cx="67" cy="58" rx="4.6" ry="2.6" fill="#f7a0b0" opacity=".85"/>
+          <path d="M43 60 q7 6 14 0" stroke="#b5534a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        </g></svg></button>
     </div>
   </header>
 
@@ -139,6 +173,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="cards">
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic">🌙</div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic">✏️</div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
+      <button class="card" onclick="startEng()"><div class="ic">🐣</div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
       <button class="card" onclick="go('shop')"><div class="ic">🎁</div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
     <div class="foot"><button onclick="go('parent')">Для родителей</button></div>
@@ -174,6 +209,21 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="row" id="gameNext" style="display:none"><button class="btn" id="gameNextBtn" onclick="gameStep()">Дальше →</button></div>
   </section>
 
+  <!-- АНГЛИЙСКИЙ -->
+  <section class="screen" id="eng">
+    <div class="stage">
+      <div id="owlEng"></div>
+      <div class="progress" id="engProg"></div>
+      <div class="bubble" id="engSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+    </div>
+    <div id="engBody">
+      <div class="eq" id="engQ"></div>
+      <div class="opts en" id="engOpts"></div>
+      <div class="rule" id="engRule"></div>
+    </div>
+    <div class="row" id="engNext" style="display:none"><button class="btn" id="engNextBtn">Дальше →</button></div>
+  </section>
+
   <!-- МАГАЗИН -->
   <section class="screen" id="shop">
     <div class="stage">
@@ -202,6 +252,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <input class="t" id="topicIn" placeholder="например: парные согласные">
     </label>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
+    <h3 style="margin-top:24px">Голоса</h3>
+    <p style="color:var(--ink2);font-size:14px;margin:0">Ух, Угу и&nbsp;английские слова говорят живыми записанными голосами. Настройки ниже — запасной голос устройства для фраз, которых нет в&nbsp;записи (например, с&nbsp;темой урока).</p>
+    <div id="voiceBox"></div>
     <h3 style="margin-top:24px">Дневник разговоров</h3>
     <div class="diary" id="diaryList"></div>
   </section>
@@ -236,6 +289,26 @@ label.f{display:block;margin-top:14px;font-size:16px}
 </svg>
 </template>
 
+<template id="babyTpl">
+<svg class="owl small" viewBox="-80 -88 160 175" aria-label="Братик Угу">
+  <path d="M0 -44 q-4 -18 8 -24 q-2 10 4 14 q-6 2 -12 10 Z" fill="#c99872"/>
+  <ellipse class="wing" cx="-44" cy="26" rx="10" ry="20" fill="#c99872"/>
+  <ellipse class="wing" cx="44" cy="26" rx="10" ry="20" fill="#c99872"/>
+  <ellipse cx="0" cy="14" rx="48" ry="50" fill="#e3b892"/>
+  <ellipse cx="0" cy="38" rx="28" ry="22" fill="#fff1dc"/>
+  <path d="M-8 34 q3 4 6 0 M4 34 q3 4 6 0" stroke="#e3c39e" stroke-width="2" fill="none"/>
+  <circle cx="-19" cy="0" r="19" fill="#fffaf0"/><circle cx="19" cy="0" r="19" fill="#fffaf0"/>
+  <circle cx="-18" cy="2" r="13" fill="#2b2b3a"/><circle cx="18" cy="2" r="13" fill="#2b2b3a"/>
+  <circle cx="-23" cy="-4" r="5" fill="#fff"/><circle cx="13" cy="-4" r="5" fill="#fff"/>
+  <circle cx="-13" cy="7" r="2" fill="#fff"/><circle cx="23" cy="7" r="2" fill="#fff"/>
+  <ellipse class="lid" cx="-19" cy="0" rx="20" ry="20" fill="#e3b892"/>
+  <ellipse class="lid" cx="19" cy="0" rx="20" ry="20" fill="#e3b892"/>
+  <path d="M-4 16 h8 l-4 6 Z" fill="#f5a83e"/>
+  <ellipse cx="-33" cy="20" rx="7" ry="4" fill="#f7a8b8"/><ellipse cx="33" cy="20" rx="7" ry="4" fill="#f7a8b8"/>
+  <ellipse cx="-12" cy="63" rx="7" ry="4" fill="#f5a83e"/><ellipse cx="12" cy="63" rx="7" ry="4" fill="#f5a83e"/>
+</svg>
+</template>
+
 <script>
 /* ---------- хранилище ---------- */
 const KEY='uh-v1';
@@ -259,22 +332,73 @@ function typoDom(root){
 }
 
 /* ---------- голос ---------- */
-let voice=null;
-function pickVoice(){const vs=speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ru'));voice=vs.find(v=>/Milena|Alyona|Google/i.test(v.name))||vs[0]||null}
-if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
-function speak(t){
-  if(!('speechSynthesis' in window))return;
-  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?…—-]/gu,''));
-  u.lang='ru-RU';if(voice)u.voice=voice;u.pitch=1.5;u.rate=1;speechSynthesis.speak(u);
+/* характеры голоса: высота и скорость */
+const VOICE_PRESETS=[
+  {k:'cute',n:'Милый совёнок',pitch:1.5,rate:1},
+  {k:'sleepy',n:'Сонный и добрый',pitch:1.25,rate:.85},
+  {k:'cheeky',n:'Весёлый и быстрый',pitch:1.7,rate:1.15},
+  {k:'tiny',n:'Малыш-пискля',pitch:2,rate:1.05},
+  {k:'calm',n:'Спокойный',pitch:1,rate:.95}
+];
+const VOICE_DEF={uh:{name:'',p:'cute'},baby:{name:'',p:'tiny'},en:{name:''}};
+const vset=who=>Object.assign({},VOICE_DEF[who],(S.voices||{})[who]);
+const ruVoices=()=>('speechSynthesis' in window)?speechSynthesis.getVoices().filter(v=>v.lang.startsWith('ru')):[];
+const enVoices=()=>('speechSynthesis' in window)?speechSynthesis.getVoices().filter(v=>v.lang.startsWith('en')):[];
+function findVoice(list,name,fallback){return list.find(v=>v.name===name)||list.find(v=>fallback.test(v.name))||list[0]||null}
+/* запасной голос устройства */
+function robot(t,who,cb){
+  if(!('speechSynthesis' in window)){cb&&cb();return}
+  let u;
+  if(who==='en'){
+    const vs=enVoices(),c=vset('en');
+    const v=vs.find(v=>v.name===c.name)||vs.find(v=>/Daniel|Дэниэл|Serena|Kate|Google UK/i.test(v.name))||vs.find(v=>v.lang==='en-GB')||vs[0]||null;
+    u=new SpeechSynthesisUtterance(t);u.lang=v?v.lang:'en-GB';if(v)u.voice=v;u.rate=.85;u.pitch=1.1;
+  }else{
+    const c=vset(who),pr=VOICE_PRESETS.find(p=>p.k===c.p)||VOICE_PRESETS[0];
+    u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?…—-]/gu,''));
+    u.lang='ru-RU';const v=findVoice(ruVoices(),c.name,/Milena|Милена|Alyona|Google/i);if(v)u.voice=v;u.pitch=pr.pitch;u.rate=pr.rate;
+  }
+  if(cb){u.onend=cb;u.onerror=cb}
+  speechSynthesis.speak(u);
+}
+/* живые голоса: заранее озвученные фразы (audio/, делает озвучка/make.mjs) */
+const vnorm=s=>s.toLowerCase().replace(/ё/g,'е').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
+function vhash(s){let h=0x811c9dc5;for(const c of s){h^=c.codePointAt(0);h=Math.imul(h,0x01000193)>>>0}return h.toString(36)}
+function splitS(t){
+  const out=[];let cur='';
+  for(let i=0;i<t.length;i++){cur+=t[i];if('.!?…'.includes(t[i])&&!'.!?…'.includes(t[i+1]||'')&&/\s/.test(t[i+1]||' ')){out.push(cur.trim());cur=''}}
+  if(cur.trim())out.push(cur.trim());return out;
+}
+let REC={uh:new Set(),baby:new Set(),en:new Set()};
+fetch('audio/manifest.json').then(r=>r.json()).then(m=>{for(const k in m)REC[k]=new Set(m[k])}).catch(()=>{});
+const player=typeof Audio!=='undefined'?new Audio():null;let playTok=0;
+function speak(t,who){
+  who=who||'uh';
+  const parts=(who==='en'?[t]:splitS(t)).filter(s=>vnorm(s)).map(s=>{const h=vhash(vnorm(s));return {s,src:REC[who].has(h)?'audio/'+who+'/'+h+'.mp3':null}});
+  const tok=++playTok;if(player)player.pause();if('speechSynthesis' in window)speechSynthesis.cancel();
+  let i=0;
+  const next=()=>{
+    if(tok!==playTok||i>=parts.length)return;const p=parts[i++];
+    if(p.src&&player){player.onended=next;player.onerror=()=>robot(p.s,who,next);player.src=p.src;player.play().catch(()=>robot(p.s,who,next))}
+    else robot(p.s,who,next);
+  };
+  next();
 }
 
 /* ---------- сова ---------- */
 const owls={};
-function mountOwl(id,small){
+function mountOwl(id,small,tpl){
   const el=document.getElementById(id);el.innerHTML='';
-  const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
+  const svg=document.getElementById(tpl||'owlTpl').content.firstElementChild.cloneNode(true);
   if(small)svg.classList.add('small');
-  svg.addEventListener('click',()=>{if(svg.classList.contains('sleep')){wake();return}cheer(svg);say(id.replace('owl','').toLowerCase(),pick(TICKLE))});
+  svg.addEventListener('click',()=>{if(svg.classList.contains('sleep')){wake();return}cheer(svg);say(id.replace('owl','').toLowerCase(),pick(tpl?BABY_TICKLE:TICKLE))});
+  /* наведение: подпрыгнуть и ухнуть (не чаще раза в 1,5 с) */
+  let lastHoot=0;
+  svg.addEventListener('mouseenter',()=>{
+    const now=Date.now();if(now-lastHoot<1500)return;lastHoot=now;
+    if(svg.classList.contains('sleep')){speak('Хр-р-р…','uh');return}
+    cheer(svg);speak(tpl?'Угу!':'Ух-ух!',tpl?'baby':'uh');
+  });
   el.appendChild(svg);owls[id]=svg;dress();
 }
 function dress(){
@@ -286,13 +410,19 @@ function dress(){
 }
 function cheer(svg){svg=svg||owls[current()];if(!svg)return;svg.classList.remove('happy');void svg.getBBox();svg.classList.add('happy')}
 const TICKLE=['Хи-хи, щекотно!','Ух-ух! Я тут!','Пушистый, правда?','Ой, мои пёрышки!'];
+function meClick(){
+  const scr=document.querySelector('.screen.on').id,isBaby=scr==='eng';
+  const t=isBaby?pick(['Алиса! Это ты! Моя любимая сестричка!','Угу! Ты самая добрая!']):pick(['Это ты, Алиса! Самая любопытная исследовательница!','Алиса пришла! Ух-ух, как я рад!','Привет, учительница Алиса!']);
+  say(scr,t);speak(typo(t),isBaby?'baby':'uh');cheer();
+}
+const BABY_TICKLE=['Угу-угу! Хи-хи!','Ой! Я маленький, но пушистый!','Алиса, ты моя самая любимая!','Угу! Обними меня!'];
 
 /* ---------- общее ---------- */
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 function say(screen,text,silent){
   const b=document.getElementById(screen+'Say');if(!b)return;
-  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t);
+  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t,screen==='eng'?'baby':'uh');
 }
 function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
 function setStars(){document.getElementById('starN').textContent=S.stars}
@@ -405,8 +535,10 @@ const QUESTIONS=[
   {q:'А было сегодня что-нибудь скучное? Как бы ты сделала это веселее?',chips:['Да, было','Нет, всё ок']},
   {q:'Какое у тебя было настроение в школе? Покажи цветом: солнечное, облачное или грозовое?',chips:['☀️ Солнечное','⛅ Облачное','⛈ Грозовое']},
   {q:'Учительница сегодня сказала что-нибудь интересное? Повтори, пожалуйста, мне тоже хочется знать!',chips:['Да!','Не помню']},
-  {q:'Что ты сегодня ела в столовой? Совы едят мышей, мне очень любопытно, что едят девочки!',chips:['Кашу','Суп','Не помню']}
+  {q:'Что ты сегодня ела в столовой? Совы едят мышей, мне очень любопытно, что едят девочки!',chips:['Кашу','Суп','Не помню']},
+  {q:'Мой братик Угу спрашивает: а что сегодня делал Лёша? Вы во что-нибудь играли?',chips:['Играли!','Не успели','Он мешал']}
 ];
+const LESHA_REACT='Угу передаёт: младшие братики иногда шалят, потому что очень хотят играть со старшей сестрой. Он тебя любит!';
 const REACT=['Ух ты! Вот это да!','Ничего себе! Я бы так не смог.','Как интересно! Ух запомнит.','Ух-ух! А дальше?','Здорово! Ты так понятно объясняешь, как учительница!','Хи-хи! Вот это история!'];
 const MISSIONS=['Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
 const HOLIDAY_Q=[
@@ -415,7 +547,8 @@ const HOLIDAY_Q=[
   {q:'По кому из класса ты уже соскучилась?',chips:['По подружке','По учительнице','По всем']},
   {q:'Что интересного ты расскажешь в классе, когда вернёшься?',chips:['Пока не знаю','Есть одна история!']},
   {q:'Если бы я пришёл в твою школу, что бы ты мне показала первым делом?',chips:['Свой класс','Столовую','Спортзал']},
-  {q:'Какую книжку или мультик ты сегодня видела? О чём он?',chips:['Книжку','Мультик','Ничего']}
+  {q:'Какую книжку или мультик ты сегодня видела? О чём он?',chips:['Книжку','Мультик','Ничего']},
+  {q:'Мой братик Угу спрашивает: а во что вы сегодня играли с Лёшей? Он тоже хочет так научиться!',chips:['Играли!','Не успели','Он мешал']}
 ];
 const SICK_Q=[
   {q:'Что самое уютное у тебя в кровати?',chips:['Подушка','Одеяло','Игрушка']},
@@ -423,12 +556,13 @@ const SICK_Q=[
   {q:'Когда поправишься и пойдёшь в школу, что ты хочешь сделать первым делом?',chips:['Обнять подружку','Поиграть на перемене']},
   {q:'По кому из класса ты соскучилась?',chips:['По подружке','По учительнице','По всем']},
   {q:'Посмотри в окно. На что похоже небо или облако?',chips:['На зверя','На вату','Серое']},
-  {q:'Какую сказку тебе сегодня читали? Чем она закончилась?',chips:['Не читали','Расскажу!']}
+  {q:'Какую сказку тебе сегодня читали? Чем она закончилась?',chips:['Не читали','Расскажу!']},
+  {q:'Мой братик Угу спрашивает: а Лёша заходил тебя проведать? Что он делал?',chips:['Заходил!','Принёс игрушку','Шумел']}
 ];
 const SICK_FIRST={q:'Как ты себя чувствуешь сегодня?',chips:['Получше','Так себе','Плохо']};
 const SOFT_REACT=['Спасибо, что рассказала!','Ух укроет тебя крылышком.','Как хорошо, что ты мне это рассказала!','Ух-ух, понятно. А ещё?'];
-const HOLIDAY_M=['Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видел','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
-const SICK_M=['Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
+const HOLIDAY_M=['Придумай с Лёшей общую игру и научи ей потом Угу','Насмеши Лёшу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видел','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
+const SICK_M=['Расскажи Лёше сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
 let talk=null;
 function startTalk(){
   go('talk');
@@ -455,11 +589,11 @@ function talkNext(){
   talk.ans.push(a);S.diary.unshift({d:today(),q:talk.qs[talk.i].q,a});save();
   addStars(1,'за рассказ');
   talk.i++;
-  if(talk.i<talk.qs.length){say('talk',pick(mode()==='sick'?SOFT_REACT:REACT));setTimeout(talkShow,1600);return}
+  if(talk.i<talk.qs.length){say('talk',/Лёш/.test(talk.qs[talk.i-1].q)&&/мешал|Шумел/.test(a)?LESHA_REACT:pick(mode()==='sick'?SOFT_REACT:REACT));setTimeout(talkShow,1600);return}
   S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
   document.getElementById('talkInput').style.display='none';document.getElementById('talkEnd').style.display='flex';
   document.getElementById('talkProg').innerHTML=talk.qs.map(()=>'<i class="done"></i>').join('');
-  setTimeout(()=>{addStars(2,'за разговор с Ухом');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission.toLowerCase()+'. Справишься?')},900);
+  setTimeout(()=>{addStars(2,'за разговор с Ухом');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
 }
 
 /* ---------- игра «Записка Уха» ---------- */
@@ -515,6 +649,107 @@ function gameStep(){
   });
 }
 
+/* ---------- игра «Братик Угу и английский» (по темам занятий) ---------- */
+const speakEn=t=>speak(t,'en');
+/* выбор голосов в «Для родителей» */
+const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Угу! Я братик Уха. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
+function setVoice(who,key,val){S.voices=S.voices||{};S.voices[who]=Object.assign(vset(who),{[key]:val});save()}
+function renderVoices(){
+  const box=document.getElementById('voiceBox');if(!box)return;box.innerHTML='';
+  const rows=[['uh','Голос Уха'],['baby','Голос братика Угу'],['en','Английские слова']];
+  rows.forEach(([who,title])=>{
+    const c=vset(who),list=who==='en'?enVoices():ruVoices();
+    const w=document.createElement('div');w.className='entry';w.style.marginTop='10px';
+    w.innerHTML='<b></b><select class="t vname"></select>'+(who==='en'?'':'<div class="chips vpre" style="justify-content:flex-start"></div>')+'<div class="row" style="justify-content:flex-start;margin-top:8px"><button class="btn soft">🔊 Послушать</button></div>';
+    w.querySelector('b').textContent=title;
+    const sel=w.querySelector('.vname');
+    const auto=document.createElement('option');auto.value='';auto.textContent='Автоматически';sel.appendChild(auto);
+    list.forEach(v=>{const o=document.createElement('option');o.value=v.name;o.textContent=v.name+' ('+v.lang+')';sel.appendChild(o)});
+    sel.value=list.some(v=>v.name===c.name)?c.name:'';
+    sel.onchange=()=>{setVoice(who,'name',sel.value);speechSynthesis.cancel();robot(VOICE_SAMPLE[who],who)};
+    const test=()=>who==='en'?speakEn(VOICE_SAMPLE.en):speak(VOICE_SAMPLE[who],who);
+    w.querySelector('.btn').onclick=test;
+    const pre=w.querySelector('.vpre');
+    if(pre)VOICE_PRESETS.forEach(p=>{const b=document.createElement('button');b.className='chip';b.textContent=p.n;
+      if(p.k===c.p){b.style.borderColor='var(--gold)';b.style.background='var(--gold2)'}
+      b.onclick=()=>{setVoice(who,'p',p.k);renderVoices();speechSynthesis.cancel();robot(VOICE_SAMPLE[who],who)};pre.appendChild(b)});
+    box.appendChild(w);
+  });
+  if(!ruVoices().length)box.insertAdjacentHTML('beforeend','<p style="color:var(--ink2);font-size:14px">На этом устройстве нет русского голоса. На iPhone его можно добавить: Настройки → Универсальный доступ → Устный контент → Голоса.</p>');
+}
+if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',()=>{if(document.getElementById('parent').classList.contains('on'))renderVoices()});
+const COLORS=[{en:'red',ru:'красный',c:'#e8443a'},{en:'blue',ru:'синий',c:'#3a78e8'},{en:'green',ru:'зелёный',c:'#3fb35f'},{en:'yellow',ru:'жёлтый',c:'#f7d21e'},{en:'orange',ru:'оранжевый',c:'#f58a1f'},{en:'pink',ru:'розовый',c:'#ff8fc0'},{en:'purple',ru:'фиолетовый',c:'#9b5de5'},{en:'black',ru:'чёрный',c:'#222'},{en:'white',ru:'белый',c:'#fff'},{en:'brown',ru:'коричневый',c:'#8b5a2b'}];
+const ANIMALS=[{en:'cat',ru:'кошка',e:'🐱'},{en:'dog',ru:'собака',e:'🐶'},{en:'fox',ru:'лиса',e:'🦊'},{en:'frog',ru:'лягушка',e:'🐸'},{en:'rabbit',ru:'кролик',e:'🐰'},{en:'bird',ru:'птичка',e:'🐦'},{en:'fish',ru:'рыбка',e:'🐟'},{en:'mouse',ru:'мышка',e:'🐭'},{en:'bear',ru:'медведь',e:'🐻'},{en:'owl',ru:'сова — это мы с Ухом!',e:'🦉'}];
+const SPOOKY=[{en:'pumpkin',ru:'тыква',e:'🎃'},{en:'ghost',ru:'привидение',e:'👻'},{en:'bat',ru:'летучая мышь',e:'🦇'},{en:'monster',ru:'монстрик',e:'👾'},{en:'spider',ru:'паук',e:'🕷️'},{en:'witch',ru:'ведьма',e:'🧙‍♀️'}];
+const FEEL=[{en:"I'm happy",ru:'я счастливый',e:'😊'},{en:"I'm tired",ru:'я устал',e:'😴'},{en:"I'm angry",ru:'я злюсь',e:'😠'},{en:"I'm hungry",ru:'я голодный',e:'🤤'},{en:"I'm great!",ru:'у меня всё отлично',e:'🤩'},{en:"I'm bad",ru:'мне плохо',e:'🤒'}];
+const PRON=[{en:'I',ru:'я',e:'🙋‍♀️'},{en:'you',ru:'ты',e:'👉'},{en:'he',ru:'он',e:'👦'},{en:'she',ru:'она',e:'👧'},{en:'it',ru:'оно (зверёк или вещь)',e:'🐱'},{en:'we',ru:'мы',e:'👭'},{en:'they',ru:'они',e:'👨‍👩‍👧'}];
+const BE=[['I','am','happy','Я счастлива'],['She','is','tired','Она устала'],['He','is','hungry','Он голодный'],['They','are','angry','Они злятся'],['We','are','friends','Мы друзья'],['You','are','my friend','Ты мой друг'],['It','is','a cat','Это кошка'],['I','am','a girl','Я девочка'],['The ghost','is','white','Привидение белое'],['We','are','happy','Мы счастливы']];
+const PAINT=[{e:'🐸',en:'frog',c:'green'},{e:'🦊',en:'fox',c:'orange'},{e:'👻',en:'ghost',c:'white'},{e:'🦇',en:'bat',c:'black'},{e:'🐻',en:'bear',c:'brown'},{e:'🎃',en:'pumpkin',c:'orange'},{e:'🍎',en:'apple',c:'red'},{e:'☀️',en:'sun',c:'yellow'},{e:'🐷',en:'pig',c:'pink'},{e:'🍇',en:'grapes',c:'purple'}];
+const BE_RULE='I — am, he / she / it — is, you / we / they — are';
+const B_OK=['Угу! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Угу-угу! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
+const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Угу… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
+let E=null;
+const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slice(0,n);
+function engRound(){
+  const one=a=>pick(a);
+  const word=()=>{const cat=one([COLORS,ANIMALS,SPOOKY]);const it=one(cat);const isC=cat===COLORS;
+    return {word:1,pic:isC?'<span class="sw" style="background:'+it.c+'"></span>':it.e,ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
+      ask:'Угу! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+  const pron=()=>{const it=one(PRON);return {pic:it.e,ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
+      ask:'Как сказать по-английски «'+it.ru+'»? Я забыл…',r:'«'+it.ru+'» по-английски — '+it.en,say:it.en}};
+  const be=()=>{const b=one(BE);return {sent:b[0]+' <span class="gap">?</span> '+b[2],ru:b[3],opts:[b[1]].concat(['am','is','are'].filter(x=>x!==b[1])),
+      ask:'Тут дырка! Что вставить: am, is или are?',r:BE_RULE,say:b[0]+' '+b[1]+' '+b[2],fill:b[1]}};
+  const feel=()=>{const it=one(FEEL);return {pic:it.e,ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
+      ask:'Меня спросили «How are you?», а мне вот так: '+it.e+' Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
+  const paint=()=>{const it=one(PAINT);return {pic:it.e,sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
+      ask:'Я хочу рассказать про картинку. Какого она цвета?',r:'The '+it.en+' is '+it.c,say:'The '+it.en+' is '+it.c,fill:it.c}};
+  return [word(),pron(),be(),feel(),word(),be(),paint()];
+}
+function startEng(){
+  go('eng');E={list:engRound(),i:-1};
+  say('eng','Привет! Я Угу, младший братик Уха. Ух говорит, что ты ходишь на английский. А я ещё ничего-ничего не знаю… Научишь меня?');
+  document.getElementById('engBody').style.display='none';
+  const n=document.getElementById('engNext');n.style.display='flex';
+  const b=document.getElementById('engNextBtn');b.textContent='Конечно, научу!';b.onclick=engStep;
+}
+function engStep(){
+  E.i++;
+  document.getElementById('engProg').innerHTML=E.list.map((_,k)=>'<i class="'+(k<E.i?'done':'')+'"></i>').join('');
+  document.getElementById('engNext').style.display='none';
+  const btn=document.getElementById('engNextBtn');
+  if(E.i>=E.list.length){
+    document.getElementById('engBody').style.display='none';
+    const lw=pick(E.list.filter(q=>q.word)).opts[0];
+    say('eng','Угу-угу! Я теперь столько знаю! Ух говорит, у тебя тоже есть младший братик — Лёша. Ты, наверное, самая лучшая старшая сестра! Может, научишь и Лёшу слову «'+lw+'»? Вот он удивится!');
+    S.mission='Научи Лёшу английскому слову «'+lw+'» и расскажи Угу, как у него получилось';
+    addStars(3,'за помощь Угу');
+    S.diary.unshift({d:today(),q:'Английский с братиком Угу',a:'Научила Угу '+E.list.length+' вещам'});save();
+    document.getElementById('engNext').style.display='flex';btn.textContent='Ещё поучить Угу!';btn.onclick=startEng;
+    return;
+  }
+  document.getElementById('engBody').style.display='block';btn.textContent='Дальше →';btn.onclick=engStep;
+  const q=E.list[E.i];
+  const Q=document.getElementById('engQ');
+  Q.innerHTML=(q.pic?'<div class="pic">'+q.pic+'</div>':'')+(q.sent?'<div class="sent">'+q.sent+'</div>':'')+(q.ru?'<div class="ru"></div>':'');
+  if(q.ru)Q.querySelector('.ru').textContent=typo(q.ru);
+  document.getElementById('engRule').textContent='';
+  const wrong=q.opts[1+Math.floor(Math.random()*(q.opts.length-1))];
+  say('eng',q.ask+(Math.random()<.5?' По-моему, «'+wrong+'»… или нет?':''));
+  const box=document.getElementById('engOpts');box.innerHTML='';let done=false;
+  shuffle(q.opts.map((o,k)=>({o,ok:k===0}))).forEach(x=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=x.o;
+    b.onclick=()=>{
+      if(done||b.classList.contains('no'))return;
+      if(x.ok){done=true;b.classList.add('yes');
+        const g=Q.querySelector('.gap');if(g){g.textContent=q.fill;g.classList.add('ok')}
+        document.getElementById('engRule').textContent=typo(q.r);say('eng',pick(B_OK));cheer();speakEn(q.say);
+        document.getElementById('engNext').style.display='flex';
+      }else{b.classList.add('no');say('eng',pick(B_OOPS))}
+    };
+    box.appendChild(b);
+  });
+}
+
 /* ---------- гардероб ---------- */
 const ITEMS=[
   {k:'cap',slot:'head',n:'Ночной колпак',ic:'🌙',p:5},
@@ -549,7 +784,7 @@ function saveMode(){
 }
 function renderParent(){
   document.getElementById('modeIn').value=mode();document.getElementById('backIn').value=S.backDate||'';
-  document.getElementById('topicIn').value=S.topic||'';
+  document.getElementById('topicIn').value=S.topic||'';renderVoices();
   const L=document.getElementById('diaryList');
   L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Вечером Ух расспросит Алису о&nbsp;школе.</div>';
   S.diary.slice(0,60).forEach(e=>{const d=document.createElement('div');d.className='entry';d.innerHTML='<small></small><q></q><div></div>';
@@ -561,7 +796,7 @@ function saveTopic(){S.topic=document.getElementById('topicIn').value.trim();sav
 (function(){
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
-  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlShop');
+  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlShop');
   typoDom(document.body);setStars();renderHome();
 })();
 </script>
