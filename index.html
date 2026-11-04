@@ -435,6 +435,9 @@ function mountOwl(id,small,tpl){
   const el=document.getElementById(id);el.innerHTML='';
   const svg=document.getElementById(tpl||'owlTpl').content.firstElementChild.cloneNode(true);
   if(small)svg.classList.add('small');
+  /* свои id градиентов у каждой совы: иначе на скрытом экране они пропадают */
+  svg.querySelectorAll('[id]').forEach(n=>{const o=n.id,nn=o+'_'+id;n.id=nn;
+    svg.querySelectorAll('[fill="url(#'+o+')"],[filter="url(#'+o+')"]').forEach(e=>{['fill','filter'].forEach(a=>{if(e.getAttribute(a)==='url(#'+o+')')e.setAttribute(a,'url(#'+nn+')')})})});
   svg.addEventListener('click',()=>{if(svg.classList.contains('sleep')){wake();return}cheer(svg);say(id.replace('owl','').toLowerCase(),pick(tpl?BABY_TICKLE:TICKLE))});
   /* наведение: подпрыгнуть и ухнуть (не чаще раза в 1,5 с) */
   let lastHoot=0;
