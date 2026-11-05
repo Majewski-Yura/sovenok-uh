@@ -825,7 +825,7 @@ const ITEMS=[
 /* обновка: Алиса видит Уха в вещи только после покупки.
    Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
 /* вещи, для которых уже есть готовая картинка img/reveal/<k>.webp */
-const REVEAL_HAVE=['wizard'];
+const REVEAL_HAVE=['wizard','phones'];
 const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самый нарядный совёнок на свете!'];
 function revealOwl(k){
   const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
