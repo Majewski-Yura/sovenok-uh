@@ -144,6 +144,9 @@ textarea:focus{outline:none;border-color:var(--gold)}
 .shelf button img{max-width:100%;max-height:100%;height:auto!important;width:auto;object-fit:contain}
 .shelf button.on{border-color:var(--mint);background:#e9faef}
 .shelf button:hover{transform:translateY(-3px)}
+.shelf button{touch-action:none;cursor:grab}
+.dragging{position:relative;z-index:60;transition:none!important;cursor:grabbing;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
+.dz-over{outline:6px dashed var(--gold);outline-offset:4px;border-radius:28px}
 .shelf .empty{font-size:17px;color:#9a7f5a;align-self:center;padding-left:6px;font-weight:800}
 
 .diary{margin-top:14px;display:flex;flex-direction:column;gap:10px}
@@ -389,7 +392,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="chip" onclick="sendMomAsk('Я занята — поиграй, пожалуйста, с Лёшей')">🦖 Поиграть с Лёшей</button>
     </div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="if(confirm('Обнулить звёзды?')){S.stars=0;save();setStars()}">Обнулить звёзды</button></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="twoTap(this,()=>{S.stars=0;save();setStars();toast('Звёзды обнулены')})">Обнулить звёзды</button></div>
     <h3 style="margin-top:24px">☁️ Общая база</h3>
     <div id="syncBox"></div>
     <h3 style="margin-top:24px">Чтобы звёзды и&nbsp;вещи не&nbsp;пропадали</h3>
@@ -528,14 +531,18 @@ function newFamily(){
   cloudInit().then(renderSync);renderSync();
 }
 function familyLink(){return location.origin+location.pathname+'?family='+famId}
-function copyFamily(){const l=familyLink();(navigator.clipboard?navigator.clipboard.writeText(l):Promise.reject()).then(()=>alert('Ссылка скопирована. Откройте её на другом устройстве.')).catch(()=>prompt('Скопируйте ссылку:',l))}
-function leaveFamily(){if(!confirm('Отключить общую базу на этом устройстве? Данные в облаке останутся.'))return;try{localStorage.removeItem(FAM_KEY)}catch(e){}famId=null;location.reload()}
+/* без системных окон: на iPhone с экрана «Домой» они не показываются */
+function toast(t){const x=document.createElement('div');x.className='toast';x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
+function twoTap(btn,fn){if(btn.dataset.sure){clearTimeout(btn._t);btn.textContent=btn.dataset.sure;delete btn.dataset.sure;fn();return}
+  btn.dataset.sure=btn.textContent;btn.textContent='Точно? Нажмите ещё раз';btn._t=setTimeout(()=>{if(btn.dataset.sure){btn.textContent=btn.dataset.sure;delete btn.dataset.sure}},4000)}
+function copyFamily(){const l=familyLink();(navigator.clipboard?navigator.clipboard.writeText(l):Promise.reject()).then(()=>toast('Ссылка скопирована')).catch(()=>{const i=document.querySelector('#syncBox input');if(i){i.focus();i.select()}toast('Скопируйте ссылку из поля')})}
+function leaveFamily(){try{localStorage.removeItem(FAM_KEY)}catch(e){}famId=null;location.reload()}
 function renderSync(){
   const box=document.getElementById('syncBox');if(!box)return;
   if(!FB_CONFIG){box.innerHTML='<p style="color:var(--ink2);font-size:14px;margin:0">Общая база ещё не&nbsp;настроена.</p>';return}
   if(!famId){box.innerHTML='<p style="color:var(--ink2);font-size:14px;margin:0">Звёзды, вещи, дневник, просьбы и&nbsp;подтверждения будут общими на&nbsp;всех устройствах семьи.</p><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="newFamily()">☁️ Включить для нашей семьи</button></div><p style="color:var(--ink2);font-size:14px">Уже включили на&nbsp;другом устройстве? Откройте здесь ссылку оттуда.</p>';return}
   const st={ok:'✓ Синхронизировано',wait:'Подключаюсь…',err:'Нет связи с базой — данные сохраняются на устройстве и отправятся позже.'}[syncState]||'';
-  box.innerHTML='<p id="syncNote" style="font-size:15px;margin:0 0 8px"></p><p style="color:var(--ink2);font-size:14px;margin:0">Откройте эту ссылку на&nbsp;телефоне мамы или папы и&nbsp;на других устройствах Алисы. Никому больше её не&nbsp;давайте.</p><input class="t" readonly onclick="this.select()"><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="copyFamily()">📋 Скопировать ссылку</button><button class="btn soft" onclick="leaveFamily()">Отключить здесь</button></div>';
+  box.innerHTML='<p id="syncNote" style="font-size:15px;margin:0 0 8px"></p><p style="color:var(--ink2);font-size:14px;margin:0">Откройте эту ссылку на&nbsp;телефоне мамы или папы и&nbsp;на других устройствах Алисы. Никому больше её не&nbsp;давайте.</p><input class="t" readonly onclick="this.select()"><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="copyFamily()">📋 Скопировать ссылку</button><button class="btn soft" onclick="twoTap(this,leaveFamily)">Отключить здесь</button></div>';
   box.querySelector('#syncNote').textContent=st;box.querySelector('input').value=familyLink();
 }
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
@@ -928,10 +935,9 @@ function saveBackup(){
 function loadBackup(inp){
   const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='sovenok-uh'||!d.S)throw 0;
-    if(!confirm('Восстановить копию от '+(d.saved||'').slice(0,10).split('-').reverse().join('.')+'? Звёзд в копии: '+(d.S.stars||0)+', вещей: '+((d.S.owned||[]).length)+'. Текущие данные заменятся.'))return;
     S=Object.assign(S,d.S);save();if(d.photo){try{localStorage.setItem(PHOTO_KEY,d.photo)}catch(e){}}
-    setStars();dress();showPhoto();renderParent();alert('Готово! Копия восстановлена.');
-  }catch(e){alert('Это не похоже на копию Совёнка Уха.')}inp.value=''};
+    setStars();dress();showPhoto();renderParent();toast('Готово! Копия восстановлена');
+  }catch(e){toast('Это не похоже на копию')}inp.value=''};
   r.readAsText(f);
 }
 function checkPersist(){
@@ -1240,13 +1246,37 @@ function showReveal(it){
 }
 function closeReveal(){document.getElementById('reveal').classList.remove('on')}
 function renderShop(){
-  say('shop',S.owned.length?'Нажми на вещь на полке, чтобы надеть или снять. А в магазине можно купить ещё!':'Тут можно купить мне наряды за звёздочки. Звёздочки дают за рассказы и помощь, а не за оценки!');
-  /* полка «Мои вещи»: купленное, нажатие — надеть или снять */
+  say('shop',S.owned.length?'Перетащи вещь с полки на меня — и я её надену! А в магазине можно купить ещё.':'Тут можно купить мне наряды за звёздочки. Звёздочки дают за рассказы и помощь, а не за оценки!');
+  /* ---------- перетаскивание пальцем ---------- */
+function hitEl(t,x,y){const r=t.getBoundingClientRect(),p=30;return x>r.left-p&&x<r.right+p&&y>r.top-p&&y<r.bottom+p}
+function draggable(el,o){
+  el.style.touchAction='none';
+  el.addEventListener('pointerdown',e=>{
+    if(el.classList.contains('gone')||el.classList.contains('used'))return;
+    e.preventDefault();const sx=e.clientX,sy=e.clientY,base=el.style.transform||'';let moved=false,dx=0,dy=0;
+    try{el.setPointerCapture(e.pointerId)}catch(_){}
+    el.classList.add('dragging');
+    const T=()=>o.targets().filter(Boolean);
+    const mv=ev=>{dx=ev.clientX-sx;dy=ev.clientY-sy;if(Math.hypot(dx,dy)>8)moved=true;
+      el.style.transform='translate('+dx+'px,'+dy+'px) scale(1.15)';T().forEach(t=>t.classList.toggle('dz-over',hitEl(t,ev.clientX,ev.clientY)))};
+    const up=ev=>{
+      el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);
+      el.classList.remove('dragging');T().forEach(t=>t.classList.remove('dz-over'));
+      const t=moved&&T().find(t=>hitEl(t,ev.clientX,ev.clientY));
+      const back=()=>{el.style.transition='transform .3s';el.style.transform=base;setTimeout(()=>{el.style.transition=''},320)};
+      if(t){if(o.drop(t,el,dx,dy)===false)back()}
+      else{back();if(!moved)(o.tap||dragHint)(el)}
+    };
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  });
+}
+/* полка «Мои вещи»: купленное, перетащи на Уха — надеть, нажатие — надеть или снять */
   const M=document.getElementById('myShelf');M.innerHTML='';
   const mine=ITEMS.filter(it=>S.owned.includes(it.k));
   if(!mine.length)M.innerHTML='<div class="empty">Полка пока пустая</div>';
   mine.forEach(it=>{const on=S.wear[it.slot]===it.k,b=document.createElement('button');b.className=on?'on':'';b.title=it.n;b.innerHTML=it.ic;
-    b.onclick=()=>{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!');save();dress();cheer();renderShop()};M.appendChild(b)});
+    const toggle=()=>{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!');save();dress();cheer();renderShop()};
+    draggable(b,{targets:()=>[document.getElementById('owlShop')],drop:()=>{S.wear[it.slot]=it.k;say('shop',pick(['Красота!','Ух ты, как мне идёт!','Спасибо! Я самая нарядная!']));save();dress();cheer();renderShop();return false},tap:toggle});M.appendChild(b)});
   const L=document.getElementById('shopList');L.innerHTML='';
   const rest=ITEMS.filter(it=>!S.owned.includes(it.k));
   if(!rest.length)L.innerHTML='<div class="item" style="grid-column:1/-1">Ты купила всё! Ух — самая нарядная совушка на свете!</div>';

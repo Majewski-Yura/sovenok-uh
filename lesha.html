@@ -132,6 +132,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .shelf{display:flex;gap:10px;flex-wrap:wrap;min-height:96px;background:#f4e2c4;border-radius:24px;padding:12px;border:5px solid #fff;box-shadow:var(--shadow)}
 .shelf button{font-size:64px;line-height:1;transition:transform .2s}
 .shelf button.play{animation:hop .45s ease 2}
+.shelf button{touch-action:none;cursor:grab}
+.spose.hopp{animation:hop .45s ease 3}
 .shelf .empty{font-size:18px;color:#9a7f5a;align-self:center;padding-left:6px}
 .toast{position:fixed;left:50%;top:16px;transform:translateX(-50%);background:var(--gold);color:#4a3200;font-size:26px;padding:10px 26px;border-radius:999px;z-index:20;box-shadow:0 5px 0 #d99a00;animation:in .3s}
 .burst{position:fixed;pointer-events:none;font-size:34px;z-index:19;animation:fly 1.2s ease-out forwards}
@@ -542,7 +544,7 @@ function feel(i){
 const ITEMS=[{k:'cap',ic:'🧢',p:3,slot:'head'},{k:'glasses',ic:'🤓',p:4,slot:'face'},{k:'scarf',ic:'🧣',p:4,slot:'neck'},{k:'bowtie',ic:'🎀',p:5,slot:'neck2'},{k:'balloon',ic:'🎈',p:6,slot:'hand'},{k:'crown',ic:'👑',p:8,slot:'head'}];
 const NEW=['Ух ты! Это мне? Спасибо, Лёша!','Смотри, какой я красивый!','Ура! Обновка! Я самый нарядный динозаврик!'];
 function renderShop(quiet){
-  if(!quiet){document.getElementById('shopSay').textContent=typo('Наряди меня! Нажми на вещь.');speak('Наряди меня! Нажми на вещь.')}
+  if(!quiet){document.getElementById('shopSay').textContent=typo('Наряди меня! Купи вещь и перетащи её на меня.');speak('Наряди меня! Купи вещь и перетащи её на меня.')}
   const L=document.getElementById('shopList');L.innerHTML='';
   ITEMS.forEach(it=>{
     const own=S.owned.includes(it.k),on=S.wear[it.slot]===it.k;
@@ -554,6 +556,7 @@ function renderShop(quiet){
       else{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!')}
       save();dress();hop(dinos.dinoShop);renderShop(true);
     };
+    if(own)draggable(b,{targets:()=>[document.getElementById('dinoShop')],drop:()=>{S.wear[it.slot]=it.k;save();dress();hop(dinos.dinoShop);say('shop','Красота!');renderShop(true)},tap:()=>b.onclick()});
     L.appendChild(b)});
 }
 
@@ -757,10 +760,11 @@ const TOYSHOP=[
   {k:'castle',ic:'🏰',p:8,say:'Замок! Я король замка!'}
 ];
 function renderToyshop(quiet){
-  if(!quiet)say('toyshop',(S.toys||[]).length?'Нажми на свою игрушку, чтобы поиграть. Или купи новую!':'Это магазин игрушек! Выбирай, что купим за звёздочки.');
+  if(!quiet)say('toyshop',(S.toys||[]).length?'Перетащи игрушку ко мне, и мы поиграем! Или купи новую!':'Это магазин игрушек! Выбирай, что купим за звёздочки.');
   const mine=S.toys||[],sh=document.getElementById('shelf');sh.innerHTML=mine.length?'':'<span class="empty">Полка пока пустая</span>';
   TOYSHOP.filter(t=>mine.includes(t.k)).forEach(t=>{const b=document.createElement('button');b.textContent=t.ic;b.setAttribute('aria-label',t.say);
-    b.onclick=()=>{b.classList.remove('play');void b.offsetWidth;b.classList.add('play');say('toyshop',t.say)};sh.appendChild(b)});
+    const play=()=>{b.classList.remove('play');void b.offsetWidth;b.classList.add('play');say('toyshop',t.say)};
+    draggable(b,{targets:()=>[document.querySelector('#toyshop .spose')],drop:()=>{const p=document.querySelector('#toyshop .spose');p.classList.remove('hopp');void p.offsetWidth;p.classList.add('hopp');say('toyshop','Ура! Поиграем вместе! '+t.say);return false},tap:play});sh.appendChild(b)});
   const L=document.getElementById('toyList');L.innerHTML='';
   TOYSHOP.filter(t=>!mine.includes(t.k)).forEach(t=>{const b=document.createElement('button');b.className='item'+(S.stars<t.p?' lock':'');
     b.innerHTML='<div class="ic">'+t.ic+'</div><span>⭐ '+t.p+'</span>';
