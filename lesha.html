@@ -161,7 +161,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </style>
 </head>
 <body>
-<button class="home" id="homeBtn" aria-label="Домой" onclick="go('home')">🏠</button>
+<button class="home" id="homeBtn" aria-label="Назад" onclick="goBack()">🏠</button>
 <div class="wrap">
   <header>
     <div class="logo"><img src="img/uh-hello.webp" alt=""><img src="img/topa-hello.webp" alt="" style="margin-left:-6px">Топоух</div>
@@ -176,6 +176,19 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="ask" id="askBox"><span style="font-size:40px">💌</span><div style="flex:1"><small style="color:var(--ink2)">Мама просит</small><div id="askText"></div></div><button class="pbtn gold" onclick="askDone()">Сделал!</button></div>
     <div class="pend" id="pendBox"><span style="font-size:36px">⏳</span><div style="flex:1" id="pendText"></div><button class="pbtn gold" onclick="openConfirm()">Подтвердить</button></div>
     <div class="tiles">
+      <button class="tile" onclick="openGames()"><div class="ic"><img src="img/ic/toybox.webp" alt="" class="tpic"></div><span>Игры</span></button>
+      <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/ic/book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
+      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/ic/check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
+      <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/ic/cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
+      <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/ic/crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
+      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/ic/sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
+    </div>
+    <div class="parent"><button onclick="openParent()">Для родителей</button></div>
+  </section>
+
+  <section class="screen" id="games">
+    <div class="stage"><div class="bubble" id="gamesSay"></div></div>
+    <div class="tiles">
       <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/ic/balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
       <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/ic/cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
       <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/ic/strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
@@ -184,13 +197,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/ic/puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
       <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="startDress()"><div class="ic"><img src="img/ic/shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
-      <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/ic/book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
-      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/ic/check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
-      <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/ic/cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
-      <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/ic/crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
-      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/ic/sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
     </div>
-    <div class="parent"><button onclick="openParent()">Для родителей</button></div>
   </section>
 
   <section class="screen" id="balls">
@@ -412,6 +419,9 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
+const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress'];
+function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
+function goBack(){if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
