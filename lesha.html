@@ -28,8 +28,10 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 @keyframes hop{50%{transform:translateY(-30px) scale(1.05,.95)}}
 .dino .lid{transform-box:fill-box;transform-origin:50% 0;transform:scaleY(0);animation:blink 4.5s infinite}
 @keyframes blink{0%,93%,100%{transform:scaleY(0)}96%{transform:scaleY(1)}}
-.dino .mouth-open{display:none}.dino.eat .mouth-open{display:block}.dino.eat .mouth-smile{display:none}
+.dino.eat .body{transform-box:fill-box;transform-origin:50% 100%;animation:chomp .22s ease 4}@keyframes chomp{50%{transform:scale(1.06,.94)}}
 .dino .acc{display:none}
+.dino.noacc .acc{display:none!important}
+.tile .ic img.tpic{height:1.25em;width:auto;display:block;margin:0 auto}
 .hint{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:#4a3200;border-radius:999px;padding:8px 18px;font-size:20px;pointer-events:none;animation:pulse 1.2s ease-in-out infinite;white-space:nowrap}
 @keyframes pulse{50%{transform:translateX(-50%) scale(1.12)}}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:18px}
@@ -146,19 +148,19 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div id="dinoHome" style="position:relative"></div>
     </div>
     <div class="tiles">
-      <button class="tile" onclick="startBalls()"><div class="ic">🎈</div><span>Шарики</span></button>
+      <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/topa-balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
       <button class="tile" onclick="startZoo()"><div class="ic">🐮</div><span>Кто как говорит</span></button>
-      <button class="tile" onclick="startFeed()"><div class="ic">🍓</div><span>Накорми Топу</span></button>
+      <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/topa-strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
       <button class="tile" onclick="startBlocks()"><div class="ic">🧱</div><span>Построй башню</span></button>
       <button class="tile" onclick="startCars()"><div class="ic">🚗</div><span>Машинки</span></button>
-      <button class="tile" onclick="startPuzzle()"><div class="ic">🧩</div><span>Пазл</span></button>
+      <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/topa-puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
       <button class="tile" onclick="startTidy()"><div class="ic">🧹</div><span>Наведём порядок</span></button>
       <button class="tile" onclick="startDress()"><div class="ic">👕</div><span>Одень Топу</span></button>
       <button class="tile" onclick="go('tales')"><div class="ic">📖</div><span>Сказки</span></button>
       <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic">✅</div><span>Мои дела</span></button>
       <button class="tile" onclick="go('toyshop')"><div class="ic">🛒</div><span>Магазин игрушек</span></button>
-      <button class="tile" onclick="go('shop')"><div class="ic">👑</div><span>Наряды Топы</span></button>
-      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic">🤒</div><span>Как ты себя чувствуешь?</span></button>
+      <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/topa-crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
+      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/topa-sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
     </div>
     <div class="parent"><button onclick="go('parent')">Для родителей</button></div>
   </section>
@@ -269,36 +271,16 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </div>
 
 <template id="dinoTpl">
-<svg xmlns="http://www.w3.org/2000/svg" class="dino" viewBox="-100 -110 200 210" aria-label="Динозаврик Топа">
-  <defs>
-    <radialGradient id="dBody" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#9df0a0"/><stop offset=".6" stop-color="#5ccf6e"/><stop offset="1" stop-color="#36a24b"/></radialGradient>
-    <radialGradient id="dBelly" cx="45%" cy="35%" r="70%"><stop offset="0" stop-color="#fffbe0"/><stop offset="1" stop-color="#f3e7a4"/></radialGradient>
-    <radialGradient id="dShadow"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-  </defs>
-  <ellipse cx="0" cy="92" rx="62" ry="9" fill="url(#dShadow)"/>
-  <g class="acc acc-balloon"><path d="M66 30 q10 -40 2 -78" stroke="#8aa" stroke-width="2" fill="none"/><ellipse cx="70" cy="-62" rx="18" ry="22" fill="#ff5a5f"/><ellipse cx="64" cy="-70" rx="5" ry="7" fill="#fff" opacity=".5"/></g>
-  <path d="M40 55 q50 10 58 -20 q4 -10 -6 -6 q-14 20 -50 6 Z" fill="url(#dBody)"/>
-  <g fill="#ff9a3c"><path d="M22 -76 l10 -16 l8 18 Z"/><path d="M40 -60 l14 -12 l4 18 Z"/><path d="M50 -38 l16 -6 l-2 18 Z"/><path d="M54 -12 l16 0 l-6 16 Z"/><path d="M58 18 l14 6 l-10 12 Z"/></g>
-  <ellipse cx="0" cy="40" rx="56" ry="52" fill="url(#dBody)"/>
-  <ellipse cx="-4" cy="50" rx="34" ry="36" fill="url(#dBelly)"/>
-  <path d="M-24 34 h40 M-28 50 h48 M-24 66 h40" stroke="#e2d38a" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <ellipse cx="-30" cy="88" rx="17" ry="9" fill="#36a24b"/><ellipse cx="22" cy="88" rx="17" ry="9" fill="#36a24b"/>
-  <ellipse cx="-50" cy="34" rx="10" ry="16" fill="#4bbd5e" transform="rotate(25 -50 34)"/>
-  <ellipse cx="44" cy="34" rx="10" ry="16" fill="#4bbd5e" transform="rotate(-25 44 34)"/>
-  <circle cx="-6" cy="-36" r="50" fill="url(#dBody)"/>
-  <g class="acc acc-scarf"><path d="M-46 4 q40 22 84 0 l2 14 q-44 24 -88 0 Z" fill="#4a8cff"/><path d="M20 14 l8 34 l14 -4 l-8 -32 Z" fill="#4a8cff"/></g>
-  <circle cx="-24" cy="-44" r="15" fill="#fff"/><circle cx="12" cy="-44" r="15" fill="#fff"/>
-  <circle cx="-22" cy="-42" r="9" fill="#24242f"/><circle cx="14" cy="-42" r="9" fill="#24242f"/>
-  <circle cx="-25" cy="-46" r="3.5" fill="#fff"/><circle cx="11" cy="-46" r="3.5" fill="#fff"/>
-  <circle class="lid" cx="-24" cy="-44" r="16" fill="#6fd57d"/><circle class="lid" cx="12" cy="-44" r="16" fill="#6fd57d"/>
-  <ellipse cx="-40" cy="-22" rx="9" ry="5" fill="#ff9fb5" opacity=".8"/><ellipse cx="28" cy="-22" rx="9" ry="5" fill="#ff9fb5" opacity=".8"/>
-  <circle cx="-14" cy="-24" r="2" fill="#2e7a3d"/><circle cx="2" cy="-24" r="2" fill="#2e7a3d"/>
-  <path class="mouth-smile" d="M-22 -12 q16 14 32 0" stroke="#24442c" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <g class="mouth-open"><ellipse cx="-6" cy="-6" rx="17" ry="13" fill="#7a2638"/><ellipse cx="-6" cy="0" rx="10" ry="5" fill="#ff7f9a"/></g>
-  <g class="acc acc-cap"><path d="M-50 -66 q44 -50 88 0 Z" fill="#ff5a5f"/><path d="M36 -68 q26 -6 34 6 q-14 4 -34 2 Z" fill="#e2444a"/><circle cx="-6" cy="-94" r="5" fill="#fff"/></g>
-  <g class="acc acc-crown"><path d="M-34 -78 l4 -32 l14 16 l10 -24 l10 24 l14 -16 l4 32 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="2.5"/><circle cx="-6" cy="-92" r="4.5" fill="#ff5a8a"/><circle cx="-22" cy="-86" r="3.5" fill="#4a8cff"/><circle cx="10" cy="-86" r="3.5" fill="#3ccf6e"/></g>
-  <g class="acc acc-glasses" fill="none" stroke="#ff8a00" stroke-width="4"><circle cx="-24" cy="-44" r="18"/><circle cx="12" cy="-44" r="18"/><path d="M-6 -46 h0"/></g>
-  <g class="acc acc-bowtie"><path d="M-6 16 l-18 -11 v22 Z M-6 16 l18 -11 v22 Z" fill="#a77bff"/><circle cx="-6" cy="16" r="6" fill="#8a5cf0"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" class="dino" viewBox="-100 -110 200 210" aria-label="Динозаврик Топа" overflow="visible">
+  <defs><radialGradient id="dShadow"><stop offset="0" stop-color="#000" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="-2" cy="94" rx="60" ry="8" fill="url(#dShadow)"/>
+  <g class="body"><image class="pose" href="img/topa-hello.webp" x="-77.5" y="-108" width="155" height="200"/></g>
+  <g class="acc-wrap" transform="translate(64 -34)"><g transform="scale(.85) translate(-66 -30)"><g class="acc acc-balloon"><path d="M66 30 q10 -40 2 -78" stroke="#8aa" stroke-width="2" fill="none"/><ellipse cx="70" cy="-62" rx="18" ry="22" fill="#ff5a5f"/><ellipse cx="64" cy="-70" rx="5" ry="7" fill="#fff" opacity=".5"/></g></g></g>
+  <g class="acc-wrap" transform="translate(15 -16) scale(.78 .8) translate(4 -6)"><g class="acc acc-scarf"><path d="M-46 4 q40 22 84 0 l2 14 q-44 24 -88 0 Z" fill="#4a8cff"/><path d="M20 14 l8 34 l14 -4 l-8 -32 Z" fill="#4a8cff"/></g></g>
+  <g class="acc-wrap" transform="translate(20 -5) scale(.8) translate(6 -16)"><g class="acc acc-bowtie"><path d="M-6 16 l-18 -11 v22 Z M-6 16 l18 -11 v22 Z" fill="#a77bff"/><circle cx="-6" cy="16" r="6" fill="#8a5cf0"/></g></g>
+  <g class="acc-wrap" transform="translate(11 -71) rotate(-11) scale(1.02) translate(6 44)"><g class="acc acc-glasses" fill="none" stroke="#ff8a00" stroke-width="4"><circle cx="-24" cy="-44" r="18"/><circle cx="12" cy="-44" r="18"/><path d="M-6 -46 h0"/></g></g>
+  <g class="acc-wrap" transform="translate(8 -82) rotate(-12) scale(.9) translate(6 66)"><g class="acc acc-cap"><path d="M-50 -66 q44 -50 88 0 Z" fill="#ff5a5f"/><path d="M36 -68 q26 -6 34 6 q-14 4 -34 2 Z" fill="#e2444a"/><circle cx="-6" cy="-94" r="5" fill="#fff"/></g></g>
+  <g class="acc-wrap" transform="translate(6 -86) rotate(-12) scale(.85) translate(6 78)"><g class="acc acc-crown"><path d="M-34 -78 l4 -32 l14 16 l10 -24 l10 24 l14 -16 l4 32 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="2.5"/><circle cx="-6" cy="-92" r="4.5" fill="#ff5a8a"/><circle cx="-22" cy="-86" r="3.5" fill="#4a8cff"/><circle cx="10" cy="-86" r="3.5" fill="#3ccf6e"/></g></g>
 </svg>
 </template>
 
@@ -345,6 +327,9 @@ function mountDino(id,small){
   const svg=document.getElementById('dinoTpl').content.firstElementChild.cloneNode(true);
   svg.querySelectorAll('[id]').forEach(n=>{const o=n.id,nn=o+'_'+id;n.id=nn;svg.querySelectorAll('[fill="url(#'+o+')"]').forEach(e=>e.setAttribute('fill','url(#'+nn+')'))});
   if(small)svg.classList.add('small');
+  /* позы Топы: картинка 672×900 на высоту 200 */
+  const POSE={dinoFeel:['sick',176]};
+  if(POSE[id]){const [n,w]=POSE[id],im=svg.querySelector('image.pose');im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.add('noacc')}
   svg.addEventListener('click',()=>{if(id==='dinoFeed')return;hop(svg);if(id==='dinoHome')hello();else say(id.replace('dino','').toLowerCase(),pick(TAP))});
   el.appendChild(svg);dinos[id]=svg;dress();
 }
@@ -530,7 +515,7 @@ function dinoPicture(){
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg.outerHTML.replace('<svg ','<svg style="background:#eafbe9" '));
 }
 function startPuzzle(){
-  PICS=PICS||[{src:dinoPicture(),say:'Ура! Получилось! Это я, динозаврик Топа!'},{src:'img/uh-hello.webp',say:'Ура! Получилось! Это совушка Ух!'},{src:'img/ugu.webp',say:'Ура! Получилось! Это совёнок Угу!'},{src:'img/reveal/balloon.webp',say:'Ура! Получилось! Это Ух с шариком!'}];
+  PICS=PICS||[{src:'img/topa-hello.webp',say:'Ура! Получилось! Это я, динозаврик Топа!'},{src:'img/uh-hello.webp',say:'Ура! Получилось! Это совушка Ух!'},{src:'img/ugu.webp',say:'Ура! Получилось! Это совёнок Угу!'},{src:'img/reveal/balloon.webp',say:'Ура! Получилось! Это Ух с шариком!'}];
   go('puzzle');newPuzzle();say('puzzle','Собери картинку! Нажми на два кусочка, и они поменяются местами.');
 }
 function newPuzzle(){
