@@ -242,7 +242,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .opts.en .opt.glow{border-color:#f5a000;box-shadow:0 0 0 5px #ffd23f}
 .eq .pic .art.photo{width:190px;height:190px;border-radius:26px;background:#fff;border:3px solid var(--line);object-fit:cover}
 .opts.en .opt.popt .art.photo{width:120px;height:120px;border-radius:16px;object-fit:cover}
-.eq .pic .art.body{width:170px;height:221px}
+.eq .pic .art.body{width:220px;height:324px;background:#fff;border-radius:24px;border:3px solid var(--line)}
 .eq .spot{cursor:pointer}
 .eq .ear{width:62px;height:62px;border-radius:50%;background:var(--gold2);border:3px solid var(--gold);margin:8px auto 0;display:flex;align-items:center;justify-content:center}
 .eq .ear img{width:38px;height:38px}
@@ -1572,13 +1572,21 @@ const B_OOPS=['Ой, это я бы тоже так перепутал! Попр
 let E=null;
 const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slice(0,n);
 /* ---------- новые уроки: части тела, семья, буквы ---------- */
-const BODY_W=[{en:'head',ru:'голова'},{en:'eyes',ru:'глаза'},{en:'ears',ru:'уши'},{en:'nose',ru:'нос'},{en:'mouth',ru:'рот'},{en:'hair',ru:'волосы'},{en:'hands',ru:'руки'},{en:'tummy',ru:'животик'},{en:'legs',ru:'ноги'},{en:'feet',ru:'ступни'}];
+const BODY_W=[{en:'head',ru:'голова'},{en:'eyes',ru:'глаза'},{en:'ears',ru:'уши'},{en:'nose',ru:'нос'},{en:'mouth',ru:'рот'},{en:'hair',ru:'волосы'},{en:'hands',ru:'руки'},{en:'tummy',ru:'животик'},{en:'legs',ru:'ноги'},{en:'feet',ru:'ступни'},{en:'fingers',ru:'пальцы'}];
 const FAMILY=[{en:'mother',ru:'мама'},{en:'father',ru:'папа'},{en:'sister',ru:'сестра'},{en:'brother',ru:'брат'},{en:'baby',ru:'малыш'},{en:'grandma',ru:'бабушка'},{en:'grandpa',ru:'дедушка'},{en:'family',ru:'семья'}];
 const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 /* части тела: где обвести и куда можно нажать */
 const BODY_SPOT={head:[[50,26,24,24]],eyes:[[42,28,6,6],[58,28,6,6]],ears:[[26,30,6,8],[74,30,6,8]],nose:[[50,35,5,5]],mouth:[[50,42,8,5]],hair:[[50,10,22,9]],
   hands:[[17,76,9,9],[83,76,9,9]],tummy:[[50,70,15,12]],legs:[[42,100,8,12],[58,100,8,12]],feet:[[40,121,11,6],[60,121,11,6]]};
-function BODY(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"',S='#ffd9b8';
+/* мальчик в полный рост (img/en/body.webp, 420×620 = viewBox 312×460) и зоны для «покажи, где…» */
+const BODY_PH={hair:[[155,47,70,32]],head:[[155,102,72,82]],eyes:[[130,113,16,16],[182,113,16,16]],ears:[[95,127,12,18],[218,127,12,18]],nose:[[156,127,11,11]],
+  mouth:[[156,144,20,9]],tummy:[[156,252,50,40]],hands:[[55,294,28,28],[255,294,28,28]],legs:[[130,402,18,32],[185,402,18,32]],feet:[[118,437,26,13],[192,437,26,13]]};
+function BODY(hl,tap){
+  let g='<image href="img/en/body.webp" x="0" y="0" width="312" height="460"/>';
+  if(hl)(BODY_PH[hl]||[]).forEach(a=>g+='<ellipse cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+4)+'" ry="'+(a[3]+4)+'" fill="#ffe14d" fill-opacity=".35" stroke="#ff3b30" stroke-width="5"/>');
+  if(tap)['head','hair','tummy','hands','legs','feet','ears','eyes','mouth','nose'].forEach(k=>BODY_PH[k].forEach(a=>g+='<ellipse class="spot" data-p="'+k+'" cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+3)+'" ry="'+(a[3]+3)+'" fill="#000" fill-opacity="0"/>'));
+  return '<svg class="art body" viewBox="0 0 312 460" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
+function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"',S='#ffd9b8';
   let g='<rect x="35" y="88" width="13" height="30" rx="5" fill="#4a78c8" '+st+'/><rect x="52" y="88" width="13" height="30" rx="5" fill="#4a78c8" '+st+'/>'+
     '<ellipse cx="40" cy="121" rx="11" ry="6" fill="#e8443a" '+st+'/><ellipse cx="60" cy="121" rx="11" ry="6" fill="#e8443a" '+st+'/>'+
     '<path d="M30 56 L22 74 M70 56 L78 74" stroke="'+K+'" stroke-width="11" stroke-linecap="round"/><path d="M30 56 L22 74 M70 56 L78 74" stroke="#ff8fc0" stroke-width="6" stroke-linecap="round"/>'+
@@ -1592,7 +1600,7 @@ function BODY(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5" st
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
 /* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
-const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family'];
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet'];
 function wordPic(it){if(EN_IMG.includes(it.en))return '<img class="art photo" src="img/en/'+it.en+'.webp" alt="">';if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
   if(BODY_W.includes(it))return BODY(it.en);return ART(it.en)}
 /* ошибка в английском: это же задание повторится в конце урока (не больше двух за урок) */
@@ -1616,7 +1624,7 @@ function engRound(){
   const listen=(cat)=>{const it=one(cat),o=[it].concat(others(cat,it,2,'en'));return {listen:1,noGuess:1,opts:o.map(x=>x.en),picOpts:o.map(wordPic),
       ask:'Послушай слово и найди картинку! Нажми на динамик, чтобы послушать ещё раз.',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
   /* покажи на человечке */
-  const tap=()=>{const it=one(BODY_W);return {tap:it.en,noGuess:1,opts:[it.en],ask:'Покажи на картинке, где это! Послушай слово.',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+  const tap=()=>{const it=one(BODY_W.filter(x=>x.en!=='fingers'));return {tap:it.en,noGuess:1,opts:[it.en],ask:'Покажи на картинке, где это! Послушай слово.',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
   /* собери слово из букв */
   const spell=(cat)=>{const it=one(cat.filter(x=>/^[a-z]{3,5}$/.test(x.en)));return {spell:it.en,noGuess:1,pic:wordPic(it),opts:[it.en],
       ask:'Я хочу написать это слово по-английски, но буквы рассыпались. Собери их по порядку!',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
