@@ -91,7 +91,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .idea{position:relative;background:var(--bg2);border:3px dashed var(--lilac);border-radius:24px;padding:20px;text-align:center;font-size:21px;line-height:1.4;margin:16px auto 0;max-width:620px}
 .idea .ic{font-size:72px;display:block}
 .mission.mom{border-color:var(--pink)}
-.pin-dots{display:flex;gap:14px;justify-content:center;margin:6px 0 14px}
+.pin-dots{display:flex;justify-content:center;margin:6px auto 14px;min-width:150px;font-size:34px;font-weight:900;letter-spacing:4px;border-bottom:4px solid var(--gold);width:max-content;padding:0 18px}
+.pin-pad button.ok{background:var(--gold);border-color:var(--gold)}
 .pin-dots i{width:18px;height:18px;border-radius:50%;border:3px solid var(--gold);background:transparent}
 .pin-dots i.on{background:var(--gold)}
 .pin-pad{display:grid;grid-template-columns:repeat(3,68px);gap:10px;justify-content:center}
@@ -202,7 +203,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
 <div class="sky" id="sky"></div>
 <div class="reveal" id="pinModal" onclick="if(event.target===this)pinClose()"><div class="rv-card">
   <div style="font-size:48px">🔐</div><h2 id="pinTitle" style="margin:6px 0"></h2><p id="pinHint" style="color:var(--ink2)"></p>
-  <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i></div>
+  <div class="pin-dots" id="pinDots">…</div>
   <div class="pin-pad" id="pinPad"></div>
   <div class="row"><button class="btn soft" onclick="pinClose()">Отмена</button></div>
   <button id="pinForgot" onclick="pinForgot()" style="margin-top:10px;color:var(--ink2);font-size:14px;text-decoration:underline">Забыли код?</button>
@@ -365,7 +366,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
     <h3 style="margin-top:20px">Ждут подтверждения</h3>
     <div class="diary" id="parentPend"></div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="showConfirm()">Подтвердить дела</button><button class="btn soft" onclick="if(confirm('Сменить код родителя?')){S.pin='';save();askPin(()=>{})}">Сменить код</button></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="showConfirm()">Подтвердить дела</button></div>
     <label class="f">Попросить Алису помочь (Ух покажет просьбу на главной)
       <input class="t" id="momIn" placeholder="например: убери, пожалуйста, игрушки">
     </label>
@@ -885,37 +886,47 @@ function momDone(){
 }
 /* код родителя */
 let pinCb=null;
-let pinVal='';
-function pinDraw(){document.querySelectorAll('#pinDots i').forEach((d,k)=>d.classList.toggle('on',k<pinVal.length))}
-function pinKey(k){
-  if(k==='⌫')pinVal=pinVal.slice(0,-1);else if(pinVal.length<4)pinVal+=k;
-  pinDraw();if(pinVal.length===4)setTimeout(pinOk,150);
-}
+/* вход для взрослых: пример, который ребёнок не решит (кода нет) */
+let pinVal='',gateA=0,gateB=0;
+function gateNew(){gateA=12+Math.floor(Math.random()*15);gateB=13+Math.floor(Math.random()*14);
+  document.getElementById('pinHint').textContent=typo('Сколько будет '+gateA+' × '+gateB+'?');pinVal='';pinDraw()}
+function pinDraw(){const d=document.getElementById('pinDots');d.textContent=pinVal||'…'}
+function pinKey(k){if(k==='⌫')pinVal=pinVal.slice(0,-1);else if(k==='✓'){pinOk();return}else if(pinVal.length<4)pinVal+=k;pinDraw()}
 function askPin(cb){
-  pinCb=cb;pinVal='';const set=!S.pin;
-  document.getElementById('pinTitle').textContent=set?'Придумайте код мамы или папы':'Код мамы или папы';
-  document.getElementById('pinHint').textContent=typo(set?'4 цифры. Алисе его не говорите — им подтверждаются домашние дела и открывается этот раздел.':'Введите код, чтобы продолжить.');
+  pinCb=cb;document.getElementById('pinTitle').textContent='Вход для мамы и папы';
   const P=document.getElementById('pinPad');P.innerHTML='';
-  ['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');b.textContent=k;if(!k)b.style.visibility='hidden';b.onclick=()=>pinKey(k);P.appendChild(b)});
-  document.getElementById('pinForgot').style.display=set?'none':'';
-  pinDraw();document.getElementById('pinModal').classList.add('on');
-}
-/* сброс кода: пример для взрослых */
-function pinForgot(){
-  const a=12+Math.floor(Math.random()*15),b=13+Math.floor(Math.random()*14);
-  const v=prompt('Сброс кода мамы или папы. Сколько будет '+a+' × '+b+'?');
-  if(v===null)return;
-  if(parseInt(v,10)===a*b){S.pin='';save();const cb=pinCb;askPin(cb);document.getElementById('pinHint').textContent=typo('Старый код сброшен. Придумайте новый — 4 цифры.')}
-  else alert('Неверно. Код не сброшен.');
+  ['1','2','3','4','5','6','7','8','9','⌫','0','✓'].forEach(k=>{const b=document.createElement('button');b.textContent=k;if(k==='✓')b.className='ok';b.onclick=()=>pinKey(k);P.appendChild(b)});
+  document.getElementById('pinForgot').style.display='none';
+  gateNew();document.getElementById('pinModal').classList.add('on');
 }
 function pinClose(){document.getElementById('pinModal').classList.remove('on');pinCb=null;pinVal=''}
 function pinOk(){
-  const v=pinVal,h=document.getElementById('pinHint');
-  if(!/^\d{4}$/.test(v))return;
-  if(!S.pin){S.pin=v;save()}
-  else if(v!==S.pin){h.textContent='Не тот код. Попробуйте ещё раз.';pinVal='';pinDraw();const d=document.getElementById('pinDots');d.classList.remove('pin-shake');void d.offsetWidth;d.classList.add('pin-shake');return}
+  if(!pinVal)return;
+  if(parseInt(pinVal,10)!==gateA*gateB){const d=document.getElementById('pinDots');d.classList.remove('pin-shake');void d.offsetWidth;d.classList.add('pin-shake');setTimeout(gateNew,450);return}
   const cb=pinCb;pinClose();cb&&cb();
 }
+/* резервная копия и постоянное хранилище */
+function saveBackup(){
+  let photo=null;try{photo=localStorage.getItem(PHOTO_KEY)}catch(e){}
+  const data={app:'sovenok-uh',v:1,saved:new Date().toISOString(),S,photo};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
+  a.download='совёнок-ух-копия-'+today()+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+}
+function loadBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='sovenok-uh'||!d.S)throw 0;
+    if(!confirm('Восстановить копию от '+(d.saved||'').slice(0,10).split('-').reverse().join('.')+'? Звёзд в копии: '+(d.S.stars||0)+', вещей: '+((d.S.owned||[]).length)+'. Текущие данные заменятся.'))return;
+    S=Object.assign(S,d.S);save();if(d.photo){try{localStorage.setItem(PHOTO_KEY,d.photo)}catch(e){}}
+    setStars();dress();showPhoto();renderParent();alert('Готово! Копия восстановлена.');
+  }catch(e){alert('Это не похоже на копию Совёнка Уха.')}inp.value=''};
+  r.readAsText(f);
+}
+function checkPersist(){
+  const n=document.getElementById('persistNote');if(!n)return;
+  if(!(navigator.storage&&navigator.storage.persisted)){n.textContent='';return}
+  navigator.storage.persisted().then(p=>{n.textContent=p?'✓ Браузер обещал не стирать данные сайта.':'Браузер может стереть данные — сохраните копию.'}).catch(()=>{});
+}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 function openParent(){askPin(()=>go('parent'))}
 function openConfirm(){askPin(showConfirm)}
 function showConfirm(){
