@@ -48,6 +48,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 @keyframes flap{50%{transform:rotate(-25deg)}}
 .owl .acc{display:none}
 .owl{overflow:visible}
+.owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie{visibility:hidden}
 
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
 .bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
@@ -298,7 +299,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <g class="acc acc-wreath" transform="translate(10.8 -31) scale(.95)"><path d="M-40 -34 q40 -30 80 0" stroke="#6bbf59" stroke-width="5" fill="none"/><g fill="#ffd93b" stroke="#f0b400" stroke-width="1.5"><circle cx="-38" cy="-34" r="6"/><circle cx="-24" cy="-45" r="6"/><circle cx="-8" cy="-50" r="6"/><circle cx="8" cy="-50" r="6"/><circle cx="24" cy="-45" r="6"/><circle cx="38" cy="-34" r="6"/></g><g fill="#ff8fb0"><circle cx="-16" cy="-48" r="4"/><circle cx="16" cy="-48" r="4"/></g></g>
   <g class="acc acc-phones" transform="translate(10.8 -31) scale(.95)"><path d="M-50 -4 q0 -60 50 -60 q50 0 50 60" stroke="#ff6f9a" stroke-width="7" fill="none"/><rect x="-60" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="44" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="-57" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/><rect x="47" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/></g>
   <g class="acc acc-shades" transform="translate(10.8 -33.4)"><rect x="-39" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><rect x="3" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><path d="M-3 -8 h6" stroke="#1d1d2b" stroke-width="4"/><path d="M-32 -11 l8 0 M10 -11 l8 0" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></g>
-  <g class="acc acc-bowtie" transform="translate(12 -20) scale(1.15)"><path d="M0 48 l-17 -10 v20 Z M0 48 l17 -10 v20 Z" fill="#3b6bd6"/><circle cx="0" cy="48" r="5" fill="#2d55b0"/><circle cx="-10" cy="45" r="2" fill="#fff" opacity=".7"/><circle cx="10" cy="51" r="2" fill="#fff" opacity=".7"/></g>
+  <g class="acc acc-bowtie"><image href="img/babochka.webp" x="-15.0" y="3.4" width="40" height="23.2"/></g>
   <g class="acc acc-medal" transform="translate(12 -20) scale(1.15)"><path d="M-12 40 l12 20 l12 -20" stroke="#e8584f" stroke-width="7" fill="none"/><circle cx="0" cy="64" r="10" fill="#f5c84b" stroke="#d99a10" stroke-width="2.5"/><path d="M0 58 l2 4 h4 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 h4 Z" fill="#fff6c2"/></g>
   <g class="acc acc-balloon" transform="translate(12 -20) scale(1.15)"><path d="M50 40 q14 -30 12 -60" stroke="#999" stroke-width="1.5" fill="none"/><ellipse cx="62" cy="-38" rx="14" ry="17" fill="#ff5a6e"/><path d="M58 -21 l4 5 l4 -5 Z" fill="#ff5a6e"/><ellipse cx="57" cy="-44" rx="4" ry="6" fill="#fff" opacity=".45"/></g>
   <g class="acc acc-pencil" transform="translate(12 -20) scale(1.15)"><g transform="rotate(-25 52 40)"><rect x="47" y="4" width="11" height="46" fill="#f5c84b"/><rect x="47" y="0" width="11" height="7" rx="2" fill="#ff8fb0"/><path d="M47 50 l5.5 13 l5.5 -13 Z" fill="#f5d9b0"/><path d="M50.5 58 l2 5 l2 -5 Z" fill="#333"/><path d="M51 6 v44" stroke="#e0a400" stroke-width="1.5"/></g></g>
@@ -419,7 +420,7 @@ function mountOwl(id,small,tpl){
 /* позы Уха: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
 const POSE={owlHome:'hello',owlTalk:'hello',owlGame:'pointer',owlShop:'star'};
 ['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='img/uh-'+n+'.webp'});
-function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);im.setAttribute('href','img/uh-'+(name||POSE[id]||'hello')+'.webp')}
+function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);const pn=name||POSE[id]||'hello';svg.dataset.pose=pn;im.setAttribute('href','img/uh-'+pn+'.webp')}
 function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;setPose(id,'star');svg._pt=setTimeout(()=>setPose(id,back),1700)}
 function dress(){
   Object.values(owls).forEach(svg=>{
@@ -796,7 +797,7 @@ const ITEMS=[
   {k:'bow',slot:'head',n:'Бантик',ic:'<img src="img/bantik.webp" alt="" style="height:44px">',p:5},
   {k:'glasses',slot:'face',n:'Очки умника',ic:'👓',p:8},
   {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'🧣',p:8},
-  {k:'bowtie',slot:'neck',n:'Бабочка',ic:'🦋',p:6},
+  {k:'bowtie',slot:'neck',n:'Бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
   {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'✏️',p:6},
   {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'🎈',p:8},
   {k:'book',slot:'hands',n:'Своя книжка',ic:'📗',p:10},
