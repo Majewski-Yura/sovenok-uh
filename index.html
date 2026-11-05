@@ -137,6 +137,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .pin-pad button:active{background:var(--gold2)}
 .pin-shake{animation:shake .35s}@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .mission.pend{border-color:var(--gold);border-style:solid}
+.mission.today{border:3px solid var(--gold);background:var(--gold2)}
+.mission.today.done{border-style:dashed;background:var(--bg2)}
+.streak{color:#e2521d;font-weight:900;margin-left:4px}
 .mission{margin-top:16px;border:3px dashed var(--lilac);border-radius:24px;padding:16px 18px;display:flex;gap:14px;align-items:center;background:var(--bg2)}
 .mission .ic{font-size:34px}
 .mission p{margin:2px 0 0;font-size:17px}
@@ -322,6 +325,11 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div id="owlHome"></div>
     </div>
     <div class="daybar" id="dayBar"></div>
+    <div class="mission today" id="todayBox" style="display:none">
+      <div class="ic"><img src="img/ic/smart.webp" alt=""></div>
+      <div style="flex:1"><small>Урок дня · <b class="starsTag">⭐ +2</b> <span class="streak" id="streakTag"></span></small><p id="todayText"></p></div>
+      <button class="btn" id="todayBtn" onclick="startToday()">Начать</button>
+    </div>
     <div class="mission" id="missionBox" style="display:none">
       <div class="ic"><img src="img/ryukzak.webp" alt="Рюкзак"></div>
       <div style="flex:1"><small>Задание от Ух на школьный день</small> <b class="starsTag">⭐ 2</b><p id="missionText"></p></div>
@@ -873,7 +881,7 @@ const MODE_TXT={
   sick:{mission:'Лёгкое задание от Ух — можно не вставая',talkT:'Поболтать с Ух',talkP:'Ух скучает и хочет узнать, как ты'}
 };
 function renderHome(){
-  applyTime();
+  applyTime();renderToday();
   const md=mode(),T=MODE_TXT[md];
   document.querySelector('#missionBox small').textContent=typo(T.mission);
   document.querySelector('#cardTalk h3').textContent=typo(T.talkT);
@@ -1227,7 +1235,29 @@ function nextPrize(k){const g=S.gameDay&&S.gameDay.d===today()?S.gameDay:{};cons
 function prizeText(){const n=lessonPrize(lessonKey());return n?'За урок: ⭐ '+n:'Звёзды за этот урок сегодня уже есть'}
 function showPrize(id,k){const e=document.getElementById(id);if(e)e.textContent=prizeText(k)}
 function startLesson(k,i){LESSON={subj:k,i};({ru:startGame,read:startRead,en:startEng,math:startMath})[k]()}
-function lessonDone(){S.lessonsDone=S.lessonsDone||{};S.lessonsDone[LESSON.subj+LESSON.i]=today();save()}
+function lessonDone(){S.lessonsDone=S.lessonsDone||{};S.lessonsDone[LESSON.subj+LESSON.i]=today();save();todayCheck()}
+/* ---------- урок дня и огонёк серии ---------- */
+const dayOff=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function dayLesson(){
+  if(S.dayL&&S.dayL.d===today())return S.dayL;
+  const prev=S.dayL&&S.dayL.k,done=S.lessonsDone||{};
+  const all=Object.keys(LESSONS).flatMap(k=>LESSONS[k].list.map((x,i)=>({k,i})));
+  const score=x=>(done[x.k+x.i]?done[x.k+x.i]:'0000')+(x.k===prev?'z':'a')+Math.random();
+  const c=all.sort((a,b)=>score(a)<score(b)?-1:1)[0];
+  S.dayL={d:today(),k:c.k,i:c.i,done:0};save();return S.dayL}
+function streakNow(){const t=S.streak;return t&&(t.last===today()||t.last===dayOff(-1))?t.n:0}
+function dayWord(n){const a=n%10,b=n%100;return (a===1&&b!==11)?'день':(a>=2&&a<=4&&(b<10||b>=20))?'дня':'дней'}
+function renderToday(){
+  const box=document.getElementById('todayBox');if(!box)return;const L=dayLesson(),x=LESSONS[L.k].list[L.i];box.style.display='flex';
+  box.classList.toggle('done',!!L.done);
+  document.getElementById('todayText').textContent=typo(LESSONS[L.k].name+': '+x.n);
+  const n=streakNow();document.getElementById('streakTag').textContent=n?'🔥 '+n+' '+dayWord(n)+' подряд':'';
+  const b=document.getElementById('todayBtn');b.textContent=L.done?'✓ Готово':'Начать';b.disabled=false}
+function startToday(){const L=dayLesson();if(L.done){say('home','Урок дня уже сделан! Завтра будет новый. А сейчас можно позаниматься чем хочешь.');return}
+  LESSON={subj:L.k,i:L.i};say('home','Это урок дня! Сделаешь его — получишь ещё две звёздочки и огонёк.');setTimeout(()=>startLesson(L.k,L.i),1800)}
+function todayCheck(){const L=dayLesson();if(L.done||LESSON.subj!==L.k||LESSON.i!==L.i)return;
+  L.done=1;const t=S.streak||{n:0,last:''};t.n=t.last===dayOff(-1)?t.n+1:(t.last===today()?t.n:1);t.last=today();S.streak=t;save();
+  setTimeout(()=>addStars(2,'за урок дня'),2200);setTimeout(()=>toast('🔥 Огонёк: '+t.n+' '+dayWord(t.n)+' подряд!'),4300)}
 
 /* ---------- Умнее каждый день ---------- */
 const SMART=['game','eng','math','read'];
