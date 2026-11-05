@@ -86,6 +86,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .idea{position:relative;background:var(--bg2);border:3px dashed var(--lilac);border-radius:24px;padding:20px;text-align:center;font-size:21px;line-height:1.4;margin:16px auto 0;max-width:620px}
 .idea .ic{font-size:72px;display:block}
 .mission.mom{border-color:var(--pink)}
+.mission.pend{border-color:var(--gold);border-style:solid}
 .mission{margin-top:16px;border:3px dashed var(--lilac);border-radius:24px;padding:16px 18px;display:flex;gap:14px;align-items:center;background:var(--bg2)}
 .mission .ic{font-size:34px}
 .mission p{margin:2px 0 0;font-size:17px}
@@ -187,6 +188,16 @@ label.f{display:block;margin-top:14px;font-size:16px}
   </div>
 </div>
 <div class="sky" id="sky"></div>
+<div class="reveal" id="pinModal" onclick="if(event.target===this)pinClose()"><div class="rv-card">
+  <div style="font-size:48px">🔐</div><h2 id="pinTitle" style="margin:6px 0"></h2><p id="pinHint" style="color:var(--ink2)"></p>
+  <input class="t" id="pinIn" type="password" inputmode="numeric" maxlength="4" autocomplete="off" style="text-align:center;font-size:30px;letter-spacing:12px" onkeydown="if(event.key==='Enter')pinOk()">
+  <div class="row"><button class="btn soft" onclick="pinClose()">Отмена</button><button class="btn" onclick="pinOk()">Готово</button></div>
+</div></div>
+<div class="reveal" id="confModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card" style="max-width:560px;text-align:left">
+  <h2 style="margin:0 0 6px;text-align:center">Алиса помогла?</h2><p style="color:var(--ink2);text-align:center;margin-top:0">Подтвердите — и&nbsp;она получит звёздочки.</p>
+  <div class="diary" id="confList"></div>
+  <div class="row"><button class="btn soft" onclick="document.getElementById('confModal').classList.remove('on')">Закрыть</button></div>
+</div></div>
 <div class="reveal" id="reveal" onclick="if(event.target===this)closeReveal()"><div class="rv-card"><div class="rv-pic" id="rvPic"></div><h2 id="rvTitle"></h2><p id="rvSay"></p><button class="btn" onclick="closeReveal()">Ура!</button></div></div>
 <div class="wrap">
   <header>
@@ -230,6 +241,11 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div style="flex:1"><small>Задание от Уха на школьный день</small><p id="missionText"></p></div>
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
+    <div class="mission pend" id="pendBox" style="display:none">
+      <div class="ic">⏳</div>
+      <div style="flex:1"><small>Ждёт подтверждения мамы или папы</small><p id="pendText"></p></div>
+      <button class="btn" onclick="openConfirm()">Подтвердить</button>
+    </div>
     <div class="mission mom" id="momBox" style="display:none">
       <div class="ic">💌</div>
       <div style="flex:1"><small>Мама просит</small><p id="momText"></p></div>
@@ -242,7 +258,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
       <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic-uh-star.webp" alt="Ух со звездой"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
-    <div class="foot"><button onclick="go('parent')">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
+    <div class="foot"><button onclick="openParent()">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
   </section>
 
   <!-- РАЗГОВОР -->
@@ -333,6 +349,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <input class="t" id="topicIn" placeholder="например: парные согласные">
     </label>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
+    <h3 style="margin-top:20px">Ждут подтверждения</h3>
+    <div class="diary" id="parentPend"></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="showConfirm()">Подтвердить дела</button><button class="btn soft" onclick="if(confirm('Сменить код родителя?')){S.pin='';save();askPin(()=>{})}">Сменить код</button></div>
     <label class="f">Попросить Алису помочь (Ух покажет просьбу на главной)
       <input class="t" id="momIn" placeholder="например: убери, пожалуйста, игрушки">
     </label>
@@ -343,6 +362,13 @@ label.f{display:block;margin-top:14px;font-size:16px}
     </div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="if(confirm('Обнулить звёзды?')){S.stars=0;save();setStars()}">Обнулить звёзды</button></div>
+    <h3 style="margin-top:24px">Чтобы звёзды и&nbsp;вещи не&nbsp;пропадали</h3>
+    <p style="color:var(--ink2);font-size:14px;line-height:1.5;margin:0">Всё хранится в&nbsp;браузере этого устройства. На&nbsp;iPhone и&nbsp;iPad Safari стирает данные сайта, если его не&nbsp;открывать 7&nbsp;дней, — поэтому добавьте сайт на&nbsp;экран «Домой»: «Поделиться» → «На&nbsp;экран „Домой“» и&nbsp;открывайте оттуда. И&nbsp;время от&nbsp;времени сохраняйте копию.</p>
+    <p id="persistNote" style="color:var(--ink2);font-size:14px;margin:6px 0 0"></p>
+    <div class="row" style="justify-content:flex-start">
+      <button class="btn soft" onclick="saveBackup()">💾 Сохранить копию</button>
+      <label class="btn soft" style="cursor:pointer">📂 Восстановить из&nbsp;копии<input type="file" accept=".json,application/json" style="display:none" onchange="loadBackup(this)"></label>
+    </div>
     <h3 style="margin-top:24px">Фото Алисы</h3>
     <p style="color:var(--ink2);font-size:14px;margin:0">Фото станет аватаром в&nbsp;углу. Оно хранится только в&nbsp;этом браузере и&nbsp;никуда не&nbsp;отправляется.</p>
     <div class="row" style="justify-content:flex-start">
@@ -642,14 +668,24 @@ function renderHome(){
   if(S.mission){mb.style.display='flex';document.getElementById('missionText').textContent=typo(S.mission)}else mb.style.display='none';
   renderMom();
 }
+function renderPending(){
+  const b=document.getElementById('pendBox'),L=S.pending||[];
+  if(!L.length){b.style.display='none';return}
+  b.style.display='flex';document.getElementById('pendText').textContent=typo(L.length===1?L[0].what:'Дел: '+L.length+' — '+L.map(x=>x.what).join('; '));
+}
 function renderMom(){
+  renderPending();
   const b=document.getElementById('momBox');
   if(S.momAsk&&S.momAsk.t){b.style.display='flex';document.getElementById('momText').textContent=typo(S.momAsk.t);
     const sp=document.querySelector('#homeSay span');if(!/записка от мамы/.test(sp.textContent))say('home',sp.textContent+' Ой, тебе записка от мамы! Посмотри ниже.')}
   else b.style.display='none';
 }
 function missionDone(){
-  addStars(2,'за задание');S.diary.unshift({d:today(),q:'Задание: '+S.mission,a:'Выполнила'});S.mission=null;save();renderHome();
+  const home=/комнат|посуд|Лёш|вещи по местам|маме/i.test(S.mission);
+  S.diary.unshift({d:today(),q:'Задание: '+S.mission,a:'Выполнила'});
+  if(home)addPending('Задание: '+S.mission,2);else addStars(2,'за задание');
+  S.mission=null;save();renderHome();
+  if(home){say('home','Ух ты! Ты настоящая помощница! Покажи маме или папе — пусть подтвердят, и звёздочки твои!');return}
   say('home',mode()==='sick'?'Ух ты! Даже болея ты справилась. Умница!':'Ух ты! Ты настоящий разведчик! Вечером расскажешь подробности?');
 }
 
@@ -738,12 +774,17 @@ function startLesha(){
   next();
   helpRow([['Другая идея',next,1],['Поиграли!',()=>finishHelp('lesha','Поиграла с Лёшей, пока мама была занята','Спасибо! Ты отличная старшая сестра. Лёше с тобой так весело, а мама смогла спокойно доделать дела!')],['← Выбрать другое',startHelp,1]]);
 }
+/* домашние дела: звёзды только после подтверждения мамы или папы */
+function addPending(what,stars){
+  S.pending=S.pending||[];S.pending.push({id:Date.now()+Math.random(),d:today(),what,stars});save();
+  const t=document.createElement('div');t.className='toast';t.textContent='⏳ Ждёт подтверждения мамы или папы';document.body.appendChild(t);setTimeout(()=>t.remove(),2000);
+}
 function finishHelp(k,diary,msg){
   const h=HELP.find(x=>x.k===k),first=!helpDoneToday(k);
   if(!S.help||S.help.d!==today())S.help={d:today(),done:[]};
   if(first)S.help.done.push(k);
-  S.diary.unshift({d:today(),q:'Помогла маме',a:diary});save();
-  if(first)addStars(h.stars,'за помощь маме');else cheer();
+  S.diary.unshift({d:today(),q:'Помогла маме',a:diary});save();cheer();
+  if(first){addPending(diary,h.stars);msg+=' Покажи маме или папе — пусть подтвердят, и звёздочки твои!'}
   say('help',msg);
   helpRow([['Ещё помочь',startHelp],['Домой',()=>go('home'),1]]);
 }
@@ -751,9 +792,61 @@ function finishHelp(k,diary,msg){
 function momDone(){
   const t=S.momAsk&&S.momAsk.t;if(!t)return;
   S.diary.unshift({d:today(),q:'Мама просила: '+t,a:'Сделала'});S.momAsk=null;save();
-  addStars(3,'за помощь маме');renderHome();
-  say('home','Мама будет так рада! Ты настоящая помощница!');
+  addPending('Мама просила: '+t,3);cheer();renderHome();
+  say('home','Мама будет так рада! Ты настоящая помощница! Покажи маме — пусть подтвердит, и звёздочки твои!');
 }
+/* код родителя */
+let pinCb=null;
+function askPin(cb){
+  pinCb=cb;const set=!S.pin;
+  document.getElementById('pinTitle').textContent=set?'Придумайте код мамы или папы':'Код мамы или папы';
+  document.getElementById('pinHint').textContent=typo(set?'4 цифры. Алисе его не говорите — им подтверждаются домашние дела и открывается этот раздел.':'Введите код, чтобы продолжить.');
+  const i=document.getElementById('pinIn');i.value='';document.getElementById('pinModal').classList.add('on');setTimeout(()=>i.focus(),50);
+}
+function pinClose(){document.getElementById('pinModal').classList.remove('on');pinCb=null}
+function pinOk(){
+  const v=document.getElementById('pinIn').value.trim(),h=document.getElementById('pinHint');
+  if(!/^\d{4}$/.test(v)){h.textContent='Нужно ровно 4 цифры.';return}
+  if(!S.pin){S.pin=v;save()}else if(v!==S.pin){h.textContent='Не тот код. Попробуйте ещё раз.';document.getElementById('pinIn').value='';return}
+  const cb=pinCb;pinClose();cb&&cb();
+}
+/* резервная копия и постоянное хранилище */
+function saveBackup(){
+  let photo=null;try{photo=localStorage.getItem(PHOTO_KEY)}catch(e){}
+  const data={app:'sovenok-uh',v:1,saved:new Date().toISOString(),S,photo};
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:'application/json'}));
+  a.download='совёнок-ух-копия-'+today()+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);
+}
+function loadBackup(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='sovenok-uh'||!d.S)throw 0;
+    if(!confirm('Восстановить копию от '+(d.saved||'').slice(0,10).split('-').reverse().join('.')+'? Звёзд в копии: '+(d.S.stars||0)+', вещей: '+((d.S.owned||[]).length)+'. Текущие данные заменятся.'))return;
+    S=Object.assign(S,d.S);save();if(d.photo){try{localStorage.setItem(PHOTO_KEY,d.photo)}catch(e){}}
+    setStars();dress();showPhoto();renderParent();alert('Готово! Копия восстановлена.');
+  }catch(e){alert('Это не похоже на копию Совёнка Уха.')}inp.value=''};
+  r.readAsText(f);
+}
+function checkPersist(){
+  const n=document.getElementById('persistNote');if(!n)return;
+  if(!(navigator.storage&&navigator.storage.persisted)){n.textContent='';return}
+  navigator.storage.persisted().then(p=>{n.textContent=p?'✓ Браузер обещал не стирать данные сайта.':'Браузер может стереть данные — сохраните копию.'}).catch(()=>{});
+}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+function openParent(){askPin(()=>go('parent'))}
+function openConfirm(){askPin(showConfirm)}
+function showConfirm(){
+  const L=document.getElementById('confList');L.innerHTML='';
+  (S.pending||[]).forEach(x=>{const r=document.createElement('div');r.className='entry';r.style.cssText='display:flex;gap:10px;align-items:center;flex-wrap:wrap';
+    r.innerHTML='<div style="flex:1;min-width:160px"><small></small><div></div></div><button class="btn" style="padding:10px 16px;font-size:16px">✓ Да, сделала</button><button class="btn soft" style="padding:10px 16px;font-size:16px">Не сейчас</button>';
+    r.querySelector('small').textContent=x.d.split('-').reverse().join('.')+' · ⭐ '+x.stars;r.querySelector('div div').textContent=typo(x.what);
+    const [ok,no]=r.querySelectorAll('button');
+    ok.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);S.diary.unshift({d:today(),q:'Родитель подтвердил',a:x.what+' (+'+x.stars+' ⭐)'});save();r.remove();addStars(x.stars,'— мама и папа подтвердили!');afterConfirm()};
+    no.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);save();r.remove();afterConfirm()};
+    L.appendChild(r)});
+  if(!L.children.length)L.innerHTML='<div class="entry">Нет дел, которые ждут подтверждения.</div>';
+  document.getElementById('confModal').classList.add('on');
+}
+function afterConfirm(){renderPending();if(document.getElementById('parent').classList.contains('on'))renderParent();if(!(S.pending||[]).length){document.getElementById('confModal').classList.remove('on');if(document.getElementById('home').classList.contains('on'))say('home','Ура! Мама и папа подтвердили. Спасибо, что помогаешь!')}}
 function sendMomAsk(t){
   t=(t||document.getElementById('momIn').value).trim();if(!t)return;
   S.momAsk={t,d:today()};save();document.getElementById('momIn').value='';
@@ -851,6 +944,13 @@ const DOUBT=['Хм… я написала и засомневалась. Как�
 const OK=['Точно! Ух запомнит.','Ура! Ты как настоящая учительница!','Ух-ух, правильно! Спасибо!','Вот это да! Сразу видно, кто ходит в школу.'];
 const OOPS=['Ой, и я так подумала бы! Давай попробуем другую.','Хм, Ух тоже сомневается… А может, другая?','Ничего, ошибаться — это нормально. Ещё разок?'];
 let G=null;
+/* звёзды за игры: первая игра дня 3, вторая и третья по 1, дальше без звёзд */
+function gameReward(k,why){
+  if(!S.gameDay||S.gameDay.d!==today())S.gameDay={d:today()};
+  const n=S.gameDay[k]=(S.gameDay[k]||0)+1;save();
+  const st=n===1?3:n<=3?1:0;
+  if(st)addStars(st,why);else{cheer();const t=document.createElement('div');t.className='toast';t.textContent='Звёздочки за сегодня собраны — играть можно сколько хочешь!';document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+}
 function startGame(){go('game');G={list:shuffle(WORDS).slice(0,6),i:-1,first:0};gameStep()}
 function gameStep(){
   G.i++;
@@ -859,7 +959,7 @@ function gameStep(){
   if(G.i>=G.list.length){
     document.getElementById('gameBody').style.display='none';
     say('game','Спасибо! Теперь моя записка без ловушек. Ты мне очень помогла!');
-    addStars(3,'за помощь Уху');
+    gameReward('uh','за помощь Уху');
     document.getElementById('gameNext').style.display='flex';
     document.getElementById('gameNextBtn').textContent='Ещё записку!';document.getElementById('gameNextBtn').onclick=startGame;
     return;
@@ -958,7 +1058,7 @@ function engStep(){
     const lw=pick(E.list.filter(q=>q.word)).opts[0];
     say('eng','Угу-угу! Я теперь столько знаю! Ух говорит, у тебя тоже есть младший братик — Лёша. Ты, наверное, самая лучшая старшая сестра! Может, научишь и Лёшу слову «'+lw+'»? Вот он удивится!');
     S.mission='Научи Лёшу английскому слову «'+lw+'» и расскажи Угу, как у него получилось';
-    addStars(3,'за помощь Угу');
+    gameReward('ugu','за помощь Угу');
     S.diary.unshift({d:today(),q:'Английский с братиком Угу',a:'Научила Угу '+E.list.length+' вещам'});save();
     document.getElementById('engNext').style.display='flex';btn.textContent='Ещё поучить Угу!';btn.onclick=startEng;
     return;
@@ -988,21 +1088,21 @@ function engStep(){
 
 /* ---------- гардероб ---------- */
 const ITEMS=[
-  {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="img/kolpak.webp" alt="" style="height:44px">',p:5},
-  {k:'bow',slot:'head',n:'Бантик',ic:'<img src="img/bantik.webp" alt="" style="height:44px">',p:5},
-  {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="img/ochki.webp" alt="" style="height:30px">',p:8},
-  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="img/sharf.webp" alt="" style="height:44px">',p:8},
-  {k:'bowtie',slot:'neck',n:'Галстук-бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
-  {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="img/karandash.webp" alt="" style="height:48px">',p:6},
-  {k:'butterfly',slot:'pet',n:'Бабочка-подружка',ic:'<img src="img/babochka-podruzhka.webp" alt="" style="height:44px">',p:9},
-  {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="img/sharik.webp" alt="" style="height:48px">',p:8},
-  {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="img/knizhka.webp" alt="" style="height:40px">',p:10},
-  {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="img/venok.webp" alt="" style="height:36px">',p:10},
-  {k:'shades',slot:'face',n:'Тёмные очки',ic:'<img src="img/temnye-ochki.webp" alt="" style="height:30px">',p:10},
-  {k:'phones',slot:'head',n:'Наушники',ic:'<img src="img/naushniki.webp" alt="" style="height:40px">',p:12},
-  {k:'medal',slot:'neck',n:'Медаль',ic:'<img src="img/medal.webp" alt="" style="height:44px">',p:12},
-  {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="img/shlyapa.webp" alt="" style="height:44px">',p:14},
-  {k:'crown',slot:'head',n:'Корона',ic:'<img src="img/korona.webp" alt="" style="height:44px">',p:15}
+  {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="img/kolpak.webp" alt="" style="height:44px">',p:25},
+  {k:'bow',slot:'head',n:'Бантик',ic:'<img src="img/bantik.webp" alt="" style="height:44px">',p:25},
+  {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="img/ochki.webp" alt="" style="height:30px">',p:40},
+  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="img/sharf.webp" alt="" style="height:44px">',p:40},
+  {k:'bowtie',slot:'neck',n:'Галстук-бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:30},
+  {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="img/karandash.webp" alt="" style="height:48px">',p:30},
+  {k:'butterfly',slot:'pet',n:'Бабочка-подружка',ic:'<img src="img/babochka-podruzhka.webp" alt="" style="height:44px">',p:45},
+  {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="img/sharik.webp" alt="" style="height:48px">',p:40},
+  {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="img/knizhka.webp" alt="" style="height:40px">',p:50},
+  {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="img/venok.webp" alt="" style="height:36px">',p:50},
+  {k:'shades',slot:'face',n:'Тёмные очки',ic:'<img src="img/temnye-ochki.webp" alt="" style="height:30px">',p:50},
+  {k:'phones',slot:'head',n:'Наушники',ic:'<img src="img/naushniki.webp" alt="" style="height:40px">',p:60},
+  {k:'medal',slot:'neck',n:'Медаль',ic:'<img src="img/medal.webp" alt="" style="height:44px">',p:60},
+  {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="img/shlyapa.webp" alt="" style="height:44px">',p:70},
+  {k:'crown',slot:'head',n:'Корона',ic:'<img src="img/korona.webp" alt="" style="height:44px">',p:75}
 ];
 /* обновка: Алиса видит Уха в вещи только после покупки.
    Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
@@ -1056,7 +1156,10 @@ function saveMode(){
 }
 function renderParent(){
   document.getElementById('modeIn').value=mode();document.getElementById('backIn').value=S.backDate||'';
-  document.getElementById('topicIn').value=S.topic||'';renderVoices();
+  document.getElementById('topicIn').value=S.topic||'';renderVoices();checkPersist();
+  const PP=document.getElementById('parentPend'),pl=S.pending||[];
+  PP.innerHTML=pl.length?'':'<div class="entry">Пока ничего.</div>';
+  pl.forEach(x=>{const d=document.createElement('div');d.className='entry';d.textContent=x.d.split('-').reverse().join('.')+' · '+x.what+' · ⭐ '+x.stars;PP.appendChild(d)});
   const L=document.getElementById('diaryList');
   L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Вечером Ух расспросит Алису о&nbsp;школе.</div>';
   S.diary.slice(0,60).forEach(e=>{const d=document.createElement('div');d.className='entry';d.innerHTML='<small></small><q></q><div></div>';
