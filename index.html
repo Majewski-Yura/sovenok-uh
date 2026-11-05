@@ -68,6 +68,24 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .card h3{margin:6px 0 4px;font-size:20px;font-weight:900}
 .card p{margin:0;color:var(--ink2);font-size:15px;line-height:1.35}
 .card.hot{border-color:var(--gold);background:var(--gold2)}
+.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:18px}
+.task{background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:18px;text-align:center;box-shadow:var(--shadow);position:relative;transition:transform .15s}
+.task:hover{transform:translateY(-3px)}
+.task .ic{font-size:60px;line-height:1.1}
+.task h3{margin:6px 0 4px;font-size:20px;font-weight:900}
+.task p{margin:0;color:var(--ink2);font-size:15px}
+.task .badge{position:absolute;top:10px;right:12px;background:var(--mint);color:#1d6b3e;border-radius:999px;padding:3px 10px;font-size:13px;font-weight:900}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
+.chk{background:var(--bg2);border:3px solid var(--line);border-radius:20px;padding:14px 10px;font-size:17px;text-align:center;box-shadow:var(--shadow);line-height:1.3}
+.chk .ic{font-size:44px;display:block;margin-bottom:4px}
+.chk.on{border-color:#2f9a5a;background:#dff6e6;color:#1d6b3e}
+:root.night .chk.on{background:#2f5a4a;color:#e9fff0}
+.chk.on .ic:after{content:" ✓";font-size:26px}
+.timer{font-size:46px;font-weight:900;text-align:center;margin-top:12px;font-variant-numeric:tabular-nums}
+.timer.low{color:#e8584f}
+.idea{position:relative;background:var(--bg2);border:3px dashed var(--lilac);border-radius:24px;padding:20px;text-align:center;font-size:21px;line-height:1.4;margin:16px auto 0;max-width:620px}
+.idea .ic{font-size:72px;display:block}
+.mission.mom{border-color:var(--pink)}
 .mission{margin-top:16px;border:3px dashed var(--lilac);border-radius:24px;padding:16px 18px;display:flex;gap:14px;align-items:center;background:var(--bg2)}
 .mission .ic{font-size:34px}
 .mission p{margin:2px 0 0;font-size:17px}
@@ -212,7 +230,13 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div style="flex:1"><small>Задание от Уха на школьный день</small><p id="missionText"></p></div>
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
+    <div class="mission mom" id="momBox" style="display:none">
+      <div class="ic">💌</div>
+      <div style="flex:1"><small>Мама просит</small><p id="momText"></p></div>
+      <button class="btn" onclick="momDone()">Сделала!</button>
+    </div>
     <div class="cards">
+      <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic">🧹</div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
       <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
@@ -249,6 +273,21 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div class="rule" id="gameRule"></div>
     </div>
     <div class="row" id="gameNext" style="display:none"><button class="btn" id="gameNextBtn" onclick="gameStep()">Дальше →</button></div>
+  </section>
+
+  <!-- ПОМОЩНИЦА -->
+  <section class="screen" id="help">
+    <div class="stage">
+      <div id="owlHelp"></div>
+      <div class="bubble" id="helpSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+    </div>
+    <div class="tasks" id="helpMenu"></div>
+    <div id="helpBody" style="display:none">
+      <div class="timer" id="helpTimer" style="display:none"></div>
+      <div class="checks" id="helpChecks"></div>
+      <div class="idea" id="helpIdea" style="display:none"></div>
+    </div>
+    <div class="row" id="helpRow"></div>
   </section>
 
   <!-- АНГЛИЙСКИЙ -->
@@ -294,6 +333,15 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <input class="t" id="topicIn" placeholder="например: парные согласные">
     </label>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
+    <label class="f">Попросить Алису помочь (Ух покажет просьбу на главной)
+      <input class="t" id="momIn" placeholder="например: убери, пожалуйста, игрушки">
+    </label>
+    <div class="chips" style="justify-content:flex-start">
+      <button class="chip" onclick="sendMomAsk('Убери, пожалуйста, в своей комнате')">🧸 Убрать в комнате</button>
+      <button class="chip" onclick="sendMomAsk('Помоги, пожалуйста, помыть посуду')">🍽️ Помыть посуду</button>
+      <button class="chip" onclick="sendMomAsk('Я занята — поиграй, пожалуйста, с Лёшей')">🦖 Поиграть с Лёшей</button>
+    </div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="if(confirm('Обнулить звёзды?')){S.stars=0;save();setStars()}">Обнулить звёзды</button></div>
     <h3 style="margin-top:24px">Фото Алисы</h3>
     <p style="color:var(--ink2);font-size:14px;margin:0">Фото станет аватаром в&nbsp;углу. Оно хранится только в&nbsp;этом браузере и&nbsp;никуда не&nbsp;отправляется.</p>
@@ -508,6 +556,7 @@ function addStars(n,why){
   cheer();
 }
 function go(id){
+  if(id!=='help'&&typeof stopHelpTimer==='function')stopHelpTimer();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
   document.getElementById('backBtn').style.display=id==='home'?'none':'';
   if(id==='home')renderHome();if(id==='shop')renderShop();if(id==='parent')renderParent();
@@ -574,6 +623,7 @@ function renderHome(){
     document.getElementById('cardTalk').classList.toggle('hot',fresh);
     const mb=document.getElementById('missionBox');
     if(S.mission){mb.style.display='flex';document.getElementById('missionText').textContent=typo(S.mission)}else mb.style.display='none';
+  renderMom();
     return;
   }
   const o=owls.owlHome;
@@ -590,14 +640,129 @@ function renderHome(){
   document.getElementById('cardTalk').classList.toggle('hot',isEvening()&&S.talkDate!==today());
   const mb=document.getElementById('missionBox');
   if(S.mission){mb.style.display='flex';document.getElementById('missionText').textContent=typo(S.mission)}else mb.style.display='none';
+  renderMom();
+}
+function renderMom(){
+  const b=document.getElementById('momBox');
+  if(S.momAsk&&S.momAsk.t){b.style.display='flex';document.getElementById('momText').textContent=typo(S.momAsk.t);
+    const sp=document.querySelector('#homeSay span');if(!/записка от мамы/.test(sp.textContent))say('home',sp.textContent+' Ой, тебе записка от мамы! Посмотри ниже.')}
+  else b.style.display='none';
 }
 function missionDone(){
   addStars(2,'за задание');S.diary.unshift({d:today(),q:'Задание: '+S.mission,a:'Выполнила'});S.mission=null;save();renderHome();
   say('home',mode()==='sick'?'Ух ты! Даже болея ты справилась. Умница!':'Ух ты! Ты настоящий разведчик! Вечером расскажешь подробности?');
 }
 
+/* ---------- помощница: уборка, посуда, игры с Лёшей ---------- */
+const HELP=[
+  {k:'room',ic:'🧸',n:'Уборка в комнате',p:'Наперегонки с Ухом!',stars:3},
+  {k:'dishes',ic:'🍽️',n:'Помыть посуду',p:'Пусть всё блестит',stars:2},
+  {k:'lesha',ic:'🦖',n:'Поиграть с Лёшей',p:'Когда мама занята',stars:2}
+];
+const ROOM=[['🧸','Игрушки — по домикам'],['👕','Одежда — в шкаф'],['📚','Книжки — на полку'],['✏️','Стол — чистый'],['🛏️','Кровать заправлена'],['🗑️','Мусор — в ведро']];
+const DISH=[['🥛','Чашки и стаканы'],['🍽️','Тарелки'],['🥄','Ложки и вилки'],['🧽','Раковина чистая, губка отжата']];
+const LESHA_IDEAS=[
+  {ic:'🧱',t:'Постройте из кубиков высокую башню. А потом пусть Лёша её сломает — бух!'},
+  {ic:'🚗',t:'Устройте гонки машинок по коридору. Чья машинка первой доедет до двери?'},
+  {ic:'📖',t:'Почитай Лёше книжку с картинками. Спрашивай его: а где тут собачка?'},
+  {ic:'🙈',t:'Спрячь игрушку в комнате, а Лёша пусть ищет. Подсказывай: тепло, теплее, горячо!'},
+  {ic:'🖍️',t:'Порисуйте вместе. Ты рисуешь домик, а Лёша — солнышко.'},
+  {ic:'🧩',t:'Соберите вместе пазл. Дай Лёше вставить последний кусочек!'},
+  {ic:'💃',t:'Устройте танцы под весёлую песенку. Кто станцует смешнее?'},
+  {ic:'🎒',t:'Положи игрушку в мешочек, а Лёша пусть угадает её на ощупь.'},
+  {ic:'🦖',t:'Открой Лёше его приложение с Топой и помоги ему поиграть.'},
+  {ic:'🐻',t:'Поиграйте в доктора: полечите мишку, как мама лечит вас.'}
+];
+const ROOM_OK=['Ух ты, быстро!','Красота! Дальше!','Ух-ух, вот это скорость!','Отлично! Комната уже улыбается!','Так держать!'];
+const DISH_OK=['Блестит!','Чистота!','Ух ты, как сверкает!','Молодец! Ещё немножко!'];
+let H=null;
+const helpDoneToday=k=>S.help&&S.help.d===today()&&S.help.done.includes(k);
+function stopHelpTimer(){if(H&&H.iv){clearInterval(H.iv);H.iv=null}}
+function startHelp(){
+  stopHelpTimer();go('help');setPose('owlHelp','hello');
+  document.getElementById('helpBody').style.display='none';document.getElementById('helpRow').innerHTML='';
+  const M=document.getElementById('helpMenu');M.style.display='';M.innerHTML='';
+  HELP.forEach(h=>{const b=document.createElement('button');b.className='task';
+    b.innerHTML='<div class="ic"></div><h3></h3><p></p>'+(helpDoneToday(h.k)?'<span class="badge">✓ Сегодня</span>':'');
+    b.querySelector('.ic').textContent=h.ic;b.querySelector('h3').textContent=typo(h.n);b.querySelector('p').textContent=typo(h.p);
+    b.onclick=()=>h.k==='lesha'?startLesha():startChecks(h.k);M.appendChild(b)});
+  say('help',mode()==='sick'?'Если чувствуешь себя хорошо, давай поможем маме! Только без спешки. Что выберешь?'
+    :pick(['Ух-ух! Давай поможем маме! Что выберешь?','Мама так много всего делает. Давай ей поможем? Выбирай!','Я тоже люблю помогать маме-сове. Что сделаем сегодня?']));
+}
+function helpRow(btns){const r=document.getElementById('helpRow');r.innerHTML='';btns.forEach(([t,f,soft])=>{const b=document.createElement('button');b.className='btn'+(soft?' soft':'');b.textContent=typo(t);b.onclick=f;r.appendChild(b)})}
+function startChecks(k){
+  const room=k==='room',list=room?ROOM:DISH;
+  H={k,on:new Set(),left:600,iv:null,t0:Date.now()};
+  document.getElementById('helpMenu').style.display='none';document.getElementById('helpBody').style.display='';
+  document.getElementById('helpIdea').style.display='none';
+  const C=document.getElementById('helpChecks');C.innerHTML='';
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='chk';b.innerHTML='<span class="ic"></span><span></span>';
+    b.children[0].textContent=x[0];b.children[1].textContent=x[1].replace(/ — /,'\u00a0— ').replace(/(^|\s)([а-яё]{1,2})\s/gi,'$1$2\u00a0');
+    b.onclick=()=>{if(H.on.has(i))return;H.on.add(i);b.classList.add('on');cheer();
+      if(H.on.size===list.length)finishChecks();else say('help',pick(room?ROOM_OK:DISH_OK))};
+    C.appendChild(b)});
+  const T=document.getElementById('helpTimer');T.style.display='none';T.classList.remove('low');
+  if(room){
+    say('help','Наперегонки! Я засекаю десять минут. Нажимай на то, что уже убрала. Успеем?');
+    helpRow([['⏱ Поехали!',()=>{runTimer();helpRow([['← Выбрать другое',startHelp,1]])}],['Без спешки',()=>{say('help','Хорошо, без спешки. Нажимай на то, что уже убрала!');helpRow([['← Выбрать другое',startHelp,1]])},1]]);
+  }else{
+    say('help','Сначала попроси маму включить тёплую воду. Начинаем с чашек, потом тарелки, а ложки — в самом конце.');
+    helpRow([['← Выбрать другое',startHelp,1]]);
+  }
+}
+function runTimer(){
+  const T=document.getElementById('helpTimer');T.style.display='';
+  const show=()=>{T.textContent=Math.floor(H.left/60)+':'+String(H.left%60).padStart(2,'0');T.classList.toggle('low',H.left<=60)};
+  show();say('help','Поехали! Ух болеет за тебя!');
+  H.iv=setInterval(()=>{H.left--;show();
+    if(H.left===60)say('help','Осталась одна минутка! Ты сможешь!');
+    if(H.left<=0){stopHelpTimer();T.textContent='0:00';say('help','Время вышло, но это не страшно! Доделаем без спешки — я с тобой.')}
+  },1000);
+}
+function finishChecks(){
+  const room=H.k==='room',won=room&&H.iv&&H.left>0;stopHelpTimer();
+  const mins=Math.max(1,Math.round((Date.now()-H.t0)/60000));
+  finishHelp(H.k,room?(won?'Убрала комнату наперегонки с Ухом, за '+mins+' мин.':'Убрала комнату'):'Помыла посуду',
+    room?(won?'Ура! Ты быстрее совы! Комната сияет. Мама точно ахнет!':'Ура! Комната сияет. Мама точно ахнет!'):'Посуда блестит! Мама скажет тебе огромное спасибо!');
+}
+function startLesha(){
+  H={k:'lesha'};
+  document.getElementById('helpMenu').style.display='none';document.getElementById('helpBody').style.display='';
+  document.getElementById('helpChecks').innerHTML='';document.getElementById('helpTimer').style.display='none';
+  const I=document.getElementById('helpIdea');I.style.display='';
+  let last=-1;
+  const next=()=>{let i;do{i=Math.floor(Math.random()*LESHA_IDEAS.length)}while(i===last&&LESHA_IDEAS.length>1);last=i;
+    const x=LESHA_IDEAS[i];I.innerHTML='<button class="say" aria-label="Послушать">🔊</button><span class="ic"></span><span></span>';I.children[1].textContent=x.ic;I.children[2].textContent=typo(x.t);
+    I.children[0].onclick=()=>speak(typo(x.t),'uh');
+    say('help',pick(['Вот моя идея!','А как тебе такая игра?','Лёше точно понравится!','Попробуем вот так?']))};
+  next();
+  helpRow([['Другая идея',next,1],['Поиграли!',()=>finishHelp('lesha','Поиграла с Лёшей, пока мама была занята','Спасибо! Ты отличная старшая сестра. Лёше с тобой так весело, а мама смогла спокойно доделать дела!')],['← Выбрать другое',startHelp,1]]);
+}
+function finishHelp(k,diary,msg){
+  const h=HELP.find(x=>x.k===k),first=!helpDoneToday(k);
+  if(!S.help||S.help.d!==today())S.help={d:today(),done:[]};
+  if(first)S.help.done.push(k);
+  S.diary.unshift({d:today(),q:'Помогла маме',a:diary});save();
+  if(first)addStars(h.stars,'за помощь маме');else cheer();
+  say('help',msg);
+  helpRow([['Ещё помочь',startHelp],['Домой',()=>go('home'),1]]);
+}
+/* просьба мамы (пишется в «Для родителей») */
+function momDone(){
+  const t=S.momAsk&&S.momAsk.t;if(!t)return;
+  S.diary.unshift({d:today(),q:'Мама просила: '+t,a:'Сделала'});S.momAsk=null;save();
+  addStars(3,'за помощь маме');renderHome();
+  say('home','Мама будет так рада! Ты настоящая помощница!');
+}
+function sendMomAsk(t){
+  t=(t||document.getElementById('momIn').value).trim();if(!t)return;
+  S.momAsk={t,d:today()};save();document.getElementById('momIn').value='';
+  const x=document.createElement('div');x.className='toast';x.textContent='Ух передаст Алисе';document.body.appendChild(x);setTimeout(()=>x.remove(),1600);
+}
+
 /* ---------- вечерний разговор ---------- */
 const QUESTIONS=[
+  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с Лёшей','Пока ничем']},
   {q:'Что сегодня было самое смешное в школе?',chips:['Ничего смешного','На перемене','На уроке']},
   {q:'Расскажи мне одну новую вещь, которую ты сегодня узнала. Я, совушка, такого точно не знаю!',chips:['Новое слово','Новое правило','Про животных']},
   {q:'С кем ты сегодня играла или болтала на перемене?',chips:['С подружкой','С разными ребятами','Ни с кем']},
@@ -610,8 +775,9 @@ const QUESTIONS=[
 ];
 const LESHA_REACT='Угу передаёт: младшие братики иногда шалят, потому что очень хотят играть со старшей сестрой. Он тебя любит!';
 const REACT=['Ух ты! Вот это да!','Ничего себе! Я бы так не смогла.','Как интересно! Ух запомнит.','Ух-ух! А дальше?','Здорово! Ты так понятно объясняешь, как учительница!','Хи-хи! Вот это история!'];
-const MISSIONS=['Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
+const MISSIONS=['После школы разложи свои вещи по местам','Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
 const HOLIDAY_Q=[
+  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с Лёшей','Пока ничем']},
   {q:'Что сегодня было самое интересное?',chips:['Гуляла','Играла','Смотрела мультик']},
   {q:'Во что ты сегодня играла? Научи меня, я в такое никогда не играла!',chips:['В куклы','В настолку','На улице']},
   {q:'По кому из класса ты уже соскучилась?',chips:['По подружке','По учительнице','По всем']},
@@ -631,7 +797,7 @@ const SICK_Q=[
 ];
 const SICK_FIRST={q:'Как ты себя чувствуешь сегодня?',chips:['Получше','Так себе','Плохо']};
 const SOFT_REACT=['Спасибо, что рассказала!','Ух укроет тебя крылышком.','Как хорошо, что ты мне это рассказала!','Ух-ух, понятно. А ещё?'];
-const HOLIDAY_M=['Придумай с Лёшей общую игру и научи ей потом Угу','Насмеши Лёшу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
+const HOLIDAY_M=['Убери свою комнату так, чтобы мама ахнула','Помоги маме помыть посуду после обеда','Поиграй с Лёшей, когда мама будет занята','Придумай с Лёшей общую игру и научи ей потом Угу','Насмеши Лёшу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
 const SICK_M=['Расскажи Лёше сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
 let talk=null;
 function startTalk(){
@@ -907,7 +1073,7 @@ function pickWho(w){try{sessionStorage.setItem('who',w)}catch(e){}if(w==='lesha'
 (function(){
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
-  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlShop');
+  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlShop');
   typoDom(document.body);setStars();renderHome();showPhoto();
 })();
 </script>
