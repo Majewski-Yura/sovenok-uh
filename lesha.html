@@ -173,10 +173,11 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div class="bubble" id="homeSay"></div>
       <div id="dinoHome" style="position:relative"></div>
     </div>
-    <div class="ask" id="askBox"><span style="font-size:40px">💌</span><div style="flex:1"><small style="color:var(--ink2)">Мама просит</small><div id="askText"></div></div><button class="pbtn gold" onclick="askDone()">Сделал!</button></div>
+    <div class="ask" id="askBox"><span style="font-size:40px">💌</span><div style="flex:1"><small style="color:var(--ink2)">Мама просит · ⭐ 2</small><div id="askText"></div></div><button class="pbtn gold" onclick="askDone()">Сделал!</button></div>
     <div class="pend" id="pendBox"><span style="font-size:36px">⏳</span><div style="flex:1" id="pendText"></div><button class="pbtn gold" onclick="openConfirm()">Подтвердить</button></div>
     <div class="tiles">
       <button class="tile" onclick="openGames()"><div class="ic"><img src="img/ic/toybox.webp" alt="" class="tpic"></div><span>Игры</span></button>
+      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/ic/book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
       <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/ic/check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
       <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/ic/cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
@@ -195,7 +196,6 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/ic/blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
       <button class="tile" onclick="startCars()"><div class="ic"><img src="img/ic/car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
       <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/ic/puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
-      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="startDress()"><div class="ic"><img src="img/ic/shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
     </div>
   </section>
@@ -295,6 +295,9 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div class="bubble" id="shopSay"></div>
       <div id="dinoShop"></div>
     </div>
+    <h3 class="shelf-h">Мои наряды</h3>
+    <div class="shelf" id="outfitShelf"></div>
+    <h3 class="shelf-h">Магазин</h3>
     <div class="shop" id="shopList"></div>
   </section>
 
@@ -331,6 +334,9 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </svg>
 </template>
 
+<div class="gate cele-l" id="celeL" onclick="this.classList.remove('on')"><div class="gate-card" style="max-width:340px">
+  <img src="img/topa-hello.webp" alt="" style="height:200px;animation:hop .6s ease 3"><h2 id="celeLT" style="font-size:34px">Ура!</h2><div style="font-size:42px">⭐⭐⭐</div>
+</div></div>
 <div class="gate" id="gate" onclick="if(event.target===this)gateClose()"><div class="gate-card">
   <div style="font-size:46px">🔐</div><h2>Вход для мамы и папы</h2><p id="gateQ" style="color:var(--ink2);font-weight:800;margin:4px 0"></p>
   <div class="gate-ans" id="gateAns">…</div><div class="gate-pad" id="gatePad"></div>
@@ -345,6 +351,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 const KEY='topa-v1';
 let S={stars:0,owned:[],wear:{},diary:[],feelDate:'',taleDate:'',deeds:{},toys:[]};
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
+if(S.wear&&S.wear.neck2==='bowtie')S.wear.neck2=null; /* бантик у Лёши убран (05.11.2026) */
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!fb&&!applyingRemote)localDirty=true;cloudPush()}
 /* ---------- общая база (та же семья, что у Алисы; поле lesha) ---------- */
 const FB_CONFIG={apiKey:"AIzaSyDLZHhRwXYQU8fAOOlp4LzCODahdQuQ_mA",authDomain:"sovenok-uh.firebaseapp.com",projectId:"sovenok-uh",storageBucket:"sovenok-uh.firebasestorage.app",messagingSenderId:"495272253062",appId:"1:495272253062:web:18300d5cae9bae89756307"};
@@ -375,7 +382,7 @@ const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1])
 
 /* ---------- типографика ---------- */
 const SHORT=/(^|[\s(«"])([а-яёА-ЯЁ]{1,3}|что|как|для|без|при)\s+/g;
-function typo(s){s=s.replace(SHORT,(m,p,w)=>p+w+' ').replace(SHORT,(m,p,w)=>p+w+' ');s=s.replace(/\s+([—–])/g,' $1');return s.replace(/\s+(\S+)$/,(m,w)=>w.length<12?' '+w:m)}
+function typo(s){s=s.replace(/(\S+) +/g,(m,w)=>/^[«"(]*([а-яёА-ЯЁa-z]{1,3}|что|как|для|без|при)$/.test(w)?w+'\u00a0':m);s=s.replace(/\s+([—–])/g,' $1');return s.replace(/\s+(\S+)$/,(m,w)=>w.length<12?' '+w:m)}
 
 /* ---------- голос Топы: записи audio/dino (озвучка/make.mjs), иначе голос устройства ---------- */
 const vnorm=s=>s.toLowerCase().replace(/ё/g,'е').replace(/[^\p{L}\p{N}]+/gu,' ').trim();
@@ -419,7 +426,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress'];
+const GAMES=['balls','zoo','feed','blocks','cars','puzzle','dress'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
 function goBack(){if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
@@ -431,7 +438,9 @@ function go(id){
 }
 function toPicker(){try{sessionStorage.removeItem('who')}catch(e){}location.href='index.html'}
 function setStars(){document.getElementById('starN').textContent=S.stars}
-function addStar(n){
+function cele(t){const c=document.getElementById('celeL');document.getElementById('celeLT').textContent=t||pick(['Ура!','Молодец!','Ты супер!']);
+  c.classList.add('on');clearTimeout(c._t);c._t=setTimeout(()=>c.classList.remove('on'),2600)}
+function addStar(n){setTimeout(()=>cele(),400);
   S.stars+=n||1;save();setStars();
   const t=document.createElement('div');t.className='toast';t.textContent='+'+(n||1)+' ⭐';document.body.appendChild(t);setTimeout(()=>t.remove(),1600);
   const r=document.querySelector('.stars').getBoundingClientRect();
@@ -551,23 +560,24 @@ function feel(i){
 }
 
 /* ---------- наряды ---------- */
-const ITEMS=[{k:'cap',ic:'🧢',p:3,slot:'head'},{k:'glasses',ic:'🤓',p:4,slot:'face'},{k:'scarf',ic:'🧣',p:4,slot:'neck'},{k:'bowtie',ic:'🎀',p:5,slot:'neck2'},{k:'balloon',ic:'🎈',p:6,slot:'hand'},{k:'crown',ic:'👑',p:8,slot:'head'}];
+const ITEMS=[{k:'cap',ic:'🧢',p:9,slot:'head'},{k:'glasses',ic:'🤓',p:12,slot:'face'},{k:'scarf',ic:'🧣',p:12,slot:'neck'},{k:'balloon',ic:'🎈',p:18,slot:'hand'},{k:'crown',ic:'👑',p:24,slot:'head'}];
 const NEW=['Ух ты! Это мне? Спасибо, Лёша!','Смотри, какой я красивый!','Ура! Обновка! Я самый нарядный динозаврик!'];
 function renderShop(quiet){
   if(!quiet){document.getElementById('shopSay').textContent=typo('Наряди меня! Купи вещь и перетащи её на меня.');speak('Наряди меня! Купи вещь и перетащи её на меня.')}
+  /* полка «Мои наряды»: купленное — перетащить на Топу или нажать */
+  const M=document.getElementById('outfitShelf');M.innerHTML='';const mine=ITEMS.filter(it=>S.owned.includes(it.k));
+  if(!mine.length)M.innerHTML='<span class="empty">Полка пока пустая</span>';
+  mine.forEach(it=>{const on=S.wear[it.slot]===it.k,b=document.createElement('button');b.textContent=it.ic;if(on)b.style.background='#d9f7dd';b.style.borderRadius='18px';
+    const toggle=()=>{S.wear[it.slot]=on?null:it.k;save();dress();hop(dinos.dinoShop);say('shop',on?'Сниму пока.':'Красота!');renderShop(true)};
+    draggable(b,{targets:()=>[document.getElementById('dinoShop')],drop:()=>{S.wear[it.slot]=it.k;save();dress();hop(dinos.dinoShop);say('shop','Красота!');renderShop(true)},tap:toggle});M.appendChild(b)});
   const L=document.getElementById('shopList');L.innerHTML='';
-  ITEMS.forEach(it=>{
-    const own=S.owned.includes(it.k),on=S.wear[it.slot]===it.k;
-    const b=document.createElement('button');b.className='item'+(on?' on':'')+(!own&&S.stars<it.p?' lock':'');
-    b.innerHTML='<div class="ic">'+it.ic+'</div><span>'+(own?(on?'✓':''):'⭐ '+it.p)+'</span>';
-    b.onclick=()=>{
-      if(!own){if(S.stars<it.p){say('shop','Пока не хватает звёздочек. Поиграй ещё!');return}
-        S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop',pick(NEW));}
-      else{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!')}
-      save();dress();hop(dinos.dinoShop);renderShop(true);
-    };
-    if(own)draggable(b,{targets:()=>[document.getElementById('dinoShop')],drop:()=>{S.wear[it.slot]=it.k;save();dress();hop(dinos.dinoShop);say('shop','Красота!');renderShop(true)},tap:()=>b.onclick()});
+  ITEMS.filter(it=>!S.owned.includes(it.k)).forEach(it=>{
+    const b=document.createElement('button');b.className='item'+(S.stars<it.p?' lock':'');
+    b.innerHTML='<div class="ic">'+it.ic+'</div><span>⭐ '+it.p+'</span>';
+    b.onclick=()=>{if(S.stars<it.p){say('shop','Пока не хватает звёздочек. Поиграй ещё!');return}
+      S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop',pick(NEW));save();dress();hop(dinos.dinoShop);renderShop(true);cele('Новый наряд!')};
     L.appendChild(b)});
+  if(!L.children.length)L.innerHTML='<span class="empty" style="color:var(--ink2)">Ты купил все наряды!</span>';
 }
 
 /* ---------- построй башню ---------- */
@@ -746,7 +756,7 @@ function renderDeeds(){
   const done=(S.deeds||{})[today()]||[];
   const L=document.getElementById('deedList');L.innerHTML='';
   DEEDS.forEach(d=>{const b=document.createElement('button');b.className=done.includes(d.k)?'did':'';
-    b.innerHTML='<div class="ic">'+d.ic+'</div><span>'+d.n+(done.includes(d.k)?' ✓':'')+'</span>';
+    b.innerHTML='<div class="ic">'+d.ic+'</div><span>'+d.n+(done.includes(d.k)?' ✓':' · ⭐ 1')+'</span>';
     b.onclick=()=>{
       S.deeds=S.deeds||{};const t=S.deeds[today()]=S.deeds[today()]||[];hop(dinos.dinoDeeds);
       if(t.includes(d.k)){say('deeds','Ты уже это сделал сегодня. Молодец!');return}
@@ -758,16 +768,16 @@ function renderDeeds(){
 
 /* ---------- магазин игрушек: игрушки на полку, потом из них сделаем игры ---------- */
 const TOYSHOP=[
-  {k:'ball',ic:'⚽',p:3,say:'Мячик! Прыг-скок!'},
-  {k:'train',ic:'🚂',p:4,say:'Паровозик! Чух-чух-чух! Ту-ту!'},
-  {k:'drum',ic:'🥁',p:4,say:'Барабан! Бум-бум-бум!'},
-  {k:'bubbles',ic:'🫧',p:5,say:'Мыльные пузыри! Лопай их!'},
-  {k:'plane',ic:'✈️',p:5,say:'Самолётик! Ж-ж-ж! Полетели!'},
-  {k:'piano',ic:'🎹',p:6,say:'Пианино! Ля-ля-ля!'},
-  {k:'rocket',ic:'🚀',p:7,say:'Ракета! Три, два, один — пуск!'},
-  {k:'bear',ic:'🧸',p:7,say:'Мишка! Давай обнимемся!'},
-  {k:'friend',ic:'🦕',p:8,say:'Ещё один динозаврик! Теперь у меня есть друг!'},
-  {k:'castle',ic:'🏰',p:8,say:'Замок! Я король замка!'}
+  {k:'ball',ic:'⚽',p:9,say:'Мячик! Прыг-скок!'},
+  {k:'train',ic:'🚂',p:12,say:'Паровозик! Чух-чух-чух! Ту-ту!'},
+  {k:'drum',ic:'🥁',p:12,say:'Барабан! Бум-бум-бум!'},
+  {k:'bubbles',ic:'🫧',p:15,say:'Мыльные пузыри! Лопай их!'},
+  {k:'plane',ic:'✈️',p:15,say:'Самолётик! Ж-ж-ж! Полетели!'},
+  {k:'piano',ic:'🎹',p:18,say:'Пианино! Ля-ля-ля!'},
+  {k:'rocket',ic:'🚀',p:21,say:'Ракета! Три, два, один — пуск!'},
+  {k:'bear',ic:'🧸',p:21,say:'Мишка! Давай обнимемся!'},
+  {k:'friend',ic:'🦕',p:24,say:'Ещё один динозаврик! Теперь у меня есть друг!'},
+  {k:'castle',ic:'🏰',p:24,say:'Замок! Я король замка!'}
 ];
 function renderToyshop(quiet){
   if(!quiet)say('toyshop',(S.toys||[]).length?'Перетащи игрушку ко мне, и мы поиграем! Или купи новую!':'Это магазин игрушек! Выбирай, что купим за звёздочки.');
