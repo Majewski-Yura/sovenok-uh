@@ -258,7 +258,27 @@ label.f{display:block;margin-top:14px;font-size:16px}
   .shop{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
   textarea{max-width:780px}
 }
-@media (max-width:480px){.word{font-size:44px}.owl{width:190px;height:206px}.bubble{font-size:18px}}
+@media (max-width:480px){header{gap:6px}header>div{gap:6px!important}.logo{font-size:19px;gap:4px}.logo img{height:28px!important}.bk-t{display:none}.back{padding:6px 12px}.stars{padding:4px 12px;font-size:18px}.word{font-size:44px}.owl{width:190px;height:206px}.bubble{font-size:18px}}
+/* новые уроки русского */
+.word.long{font-size:34px;letter-spacing:0}
+.opts.ruw{flex-wrap:wrap;gap:12px}.opts.ruw .opt{font-size:28px;min-width:0;padding:12px 22px}.opts.ruw.small .opt{font-size:20px;width:100%;max-width:420px;text-align:left}
+.bins{display:flex;gap:12px;justify-content:center;margin:14px auto 0;max-width:620px}
+.bin{flex:1 1 0;min-width:0;min-height:150px;background:#fff;border:4px dashed var(--line);border-radius:24px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.bin h4{font-size:24px;font-weight:900;margin:0;color:var(--ink)}
+.bin-in{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.chips-ru{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:16px auto 0;max-width:620px}
+.chip-ru{font-size:26px;font-weight:900;background:var(--bg2);border:4px solid var(--line);border-radius:18px;padding:8px 18px;box-shadow:var(--shadow);touch-action:none;user-select:none;-webkit-user-select:none;color:var(--ink)}
+.chip-ru.sel{border-color:var(--gold);background:var(--gold2)}
+.chip-ru.in{box-shadow:none;border-color:#2f9a5a;background:#dff6e6;color:#1d6b3e;font-size:20px;padding:4px 12px;cursor:default}
+.line-ru .chip-ru.in{font-size:26px;padding:6px 14px}
+.chip-ru.shake{animation:shake .35s}
+.dragging{position:relative;z-index:60;transition:none!important;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
+.dz-over{outline:5px dashed var(--gold);outline-offset:4px}
+.line-ru{min-height:84px;border:4px dashed var(--line);background:#fff;border-radius:22px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;padding:10px;margin:14px auto 0;max-width:620px}
+.line-ru.done{border-style:solid;border-color:#2f9a5a}
+.line-ph{color:var(--ink2);font-size:17px}
+:root.night .bin,:root.night .line-ru{background:#fffaf2}:root.night .bin h4,:root.night .line-ph{color:#3b2a20}
+@media (max-width:480px){.chip-ru{font-size:22px;padding:7px 14px}.bin h4{font-size:20px}.opts.ruw .opt{font-size:24px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -293,7 +313,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <header>
     <div class="logo"><img src="img/uh-hello.webp" alt="" style="height:34px"><img src="img/topa-hello.webp" alt="" style="height:34px;margin-left:-6px">Топоух</div>
     <div style="display:flex;gap:8px;align-items:center">
-      <button class="back" id="backBtn" style="display:none" onclick="goBack()">← Назад</button>
+      <button class="back" id="backBtn" style="display:none" onclick="goBack()">←<span class="bk-t"> Назад</span></button>
       <div class="stars">⭐ <b id="starN">0</b></div>
       <button class="me" id="meBtn" aria-label="Алиса" onclick="meClick()"><svg viewBox="0 0 100 100">
         <defs><clipPath id="meClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
@@ -1209,10 +1229,16 @@ function paintSave(outline){const a=document.createElement('a');a.download='ра
 
 /* ---------- уроки: по три в каждом предмете ---------- */
 const LESSONS={
-  ru:{name:'Русский',say:'Выбирай урок русского! Будем ловить ловушки в словах.',list:[
+  ru:{name:'Русский',say:'Выбирай урок русского! Будем ловить ловушки, раскладывать слова по корзинкам и собирать предложения.',list:[
     {n:'Жи-ши, ча-ща, чу-щу',p:'Какую гласную писать после шипящих',f:w=>[R.zhi,R.cha,R.chu].includes(w.r)},
     {n:'Чк-чн и звонкие на конце',p:'Мягкий знак и проверочные слова',f:w=>w.r===R.chk||/^Проверим/.test(w.r)},
-    {n:'Большая буква',p:'Имена, клички, города и реки',f:w=>w.r===R.cap}]},
+    {n:'Большая буква',p:'Имена, клички, города и реки',f:w=>w.r===R.cap},
+    {n:'Кто? Что? Какой? Что делает?',p:'Разложи слова по корзинкам',g:['sortKto','askQ','sortKak','askQ','sortKto','sortKak']},
+    {n:'Слоги и перенос',p:'Собери слово из слогов',g:['build','count','per','build','count','per']},
+    {n:'Безударные гласные',p:'Проверь слово ударением',g:['bez','chk','bez','bez','chk','bez']},
+    {n:'Семья слов и слова-друзья',p:'Корень, синонимы, антонимы',g:['odd','synAnt','odd','synAnt','odd']},
+    {n:'Собери предложение',p:'Слова по порядку, большая буква и точка',g:['sent','sentOk','sent','sent','sentOk']},
+    {n:'Алфавит',p:'Буквы и слова по порядку',g:['abc','after','abcW','abc','after','abcW']}]},
   read:{name:'Чтение',say:'Выбирай историю! Прочитай её сама, а я помогу, если надо.',list:[
     {n:'Один трудный день',p:'Как Ух помогала Топе'},{n:'Пирог для мамы',p:'Как Ух и Топа пекли пирог'},{n:'Топа идёт в садик',p:'Почему учиться интересно'}]},
   en:{name:'Английский',say:'Привет! Я Топа, младший братик Ух. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Выбирай урок и научи меня английскому!',list:[
@@ -1236,7 +1262,7 @@ function dropWrong(box,isOk){const w=[...box.querySelectorAll('.opt')].filter(b=
 function nextPrize(k){const g=S.gameDay&&S.gameDay.d===today()?S.gameDay:{};const n=g[k]||0;return n===0?3:n<3?1:0}
 function prizeText(){const n=lessonPrize(lessonKey());return n?'За урок: ⭐ '+n:'Звёзды за этот урок сегодня уже есть'}
 function showPrize(id,k){const e=document.getElementById(id);if(e)e.textContent=prizeText(k)}
-function startLesson(k,i){LESSON={subj:k,i};({ru:startGame,read:startRead,en:startEng,math:startMath})[k]()}
+function startLesson(k,i){LESSON={subj:k,i};if(k==='ru'&&LESSONS.ru.list[i].g)return startRu();({ru:startGame,read:startRead,en:startEng,math:startMath})[k]()}
 function lessonDone(){S.lessonsDone=S.lessonsDone||{};S.lessonsDone[LESSON.subj+LESSON.i]=today();save();todayCheck()}
 /* ---------- урок дня и огонёк серии ---------- */
 const dayOff=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
@@ -1413,6 +1439,7 @@ function gameStep(){
   }
   document.getElementById('gameBody').style.display='block';
   document.getElementById('gameNextBtn').textContent='Дальше →';document.getElementById('gameNextBtn').onclick=gameStep;
+  {const W=document.getElementById('gameWord');W.className='word';W.style.display='';document.getElementById('gameOpts').className='opts'}
   const w=G.list[G.i];
   document.getElementById('gameWord').innerHTML=(w.pre?'<span style="font-size:.5em;color:var(--ink2)">'+w.pre+'</span>':'')+w.p+'<span class="gap" id="gap">?</span>'+w.s;
   document.getElementById('gameRule').textContent='';setPose('owlGame','pointer');
@@ -1436,6 +1463,125 @@ function gameStep(){
     box.appendChild(b);
   });
   hintBtn(box,()=>{say('game',w.r+'.');document.getElementById('gameRule').textContent=typo(w.r)});
+}
+
+/* ---------- новые уроки русского: корзинки, слоги, предложения, алфавит (перетаскивание) ---------- */
+const RQ={kto:'Кто? — спрашиваем про живых: людей и зверей. Что? — про всё неживое.',
+  kak:'Какой? — это признак: цвет, размер, вкус. Что делает? — это действие.',
+  slog:'Сколько в слове гласных, столько и слогов.',
+  per:'Переносим по слогам. Одну букву нельзя оставить на строке и нельзя перенести.',
+  bez:'Безударную гласную проверяем: меняем слово, чтобы на неё упало ударение.',
+  kor:'Однокоренные слова — одна семья: у них общий корень и похожий смысл.',
+  syn:'Синонимы — слова, близкие по смыслу. Антонимы — слова наоборот.',
+  pred:'Предложение начинаем с большой буквы, в конце ставим точку.',
+  abc:'В алфавите буквы стоят по порядку: А, Б, В, Г, Д, Е, Ё, Ж, З.'};
+const RU_KTO=['кошка','мама','ёжик','учитель','птичка','девочка','щенок','бабушка','рыбка','доктор'];
+const RU_CHTO=['стол','книга','мяч','окно','портфель','дерево','снег','ручка','шапка','пирог'];
+const RU_KAK=['красный','весёлый','большой','сладкий','пушистый','холодный','добрый','зелёный'];
+const RU_DEL=['бежит','читает','поёт','рисует','спит','прыгает','пишет','плавает'];
+const RU_SYL=[['ма','ши','на'],['мо','ло','ко'],['со','ба','ка'],['ка','ран','даш'],['ли','са'],['ба','буш','ка'],['пе','тух'],['я','бло','ко'],['лы','жи'],['ко','ро','ва']];
+const RU_PER=[['ли-са','лис-а'],['ру-ка','рук-а'],['зи-ма','зим-а'],['ко-за','коз-а'],['лу-на','лун-а'],['со-ва','сов-а'],['ры-ба','рыб-а']];
+const RU_BEZ=[{p:'л',s:'са',o:['и','е'],r:'Проверим: лис — слышно И.'},{p:'гр',s:'за',o:['о','а'],r:'Проверим: грозы — слышно О.'},
+  {p:'тр',s:'ва',o:['а','о'],r:'Проверим: травы — слышно А.'},{p:'в',s:'да',o:['о','а'],r:'Проверим: воды — слышно О.'},
+  {p:'з',s:'ма',o:['и','е'],r:'Проверим: зимы — слышно И.'},{p:'сл',s:'ны',o:['о','а'],r:'Проверим: слон — слышно О.'},
+  {p:'р',s:'ка',o:['е','и'],r:'Проверим: реки — слышно Е.'},{p:'с',s:'ва',o:['о','а'],r:'Проверим: совы — слышно О.'},
+  {p:'стр',s:'на',o:['а','о'],r:'Проверим: страны — слышно А.'},{p:'д',s:'ма',o:['о','а'],r:'Проверим: дом — слышно О.'}];
+const RU_CHK=[['вода','воды','водичка','водолаз'],['лиса','лис','лисичка','лисёнок'],['трава','травы','травинка','травяной'],['слоны','слон','слонёнок','слониха']];
+const RU_ODD=[['лес','лесник','лесной','лиса'],['гриб','грибной','грибник','груша'],['вода','водичка','водяной','ворона'],['снег','снеговик','снежинка','санки'],['сад','садовник','садик','сани'],['кот','котёнок','котик','кофта']];
+const RU_SYN=['весёлый — радостный','бежать — мчаться','смелый — храбрый','грустный — печальный','большой — огромный'];
+const RU_ANT=['большой — маленький','день — ночь','горячий — холодный','высокий — низкий','весёлый — грустный'];
+const RU_SENT=['Ух живёт в дупле.','Топа любит кубики.','Алиса идёт в школу.','Мама печёт пирог.','Лёша строит башню.','Зимой идёт снег.','Кошка спит на окне.'];
+const RU_ABC='АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+const RU_ABCW=[['арбуз','банан','вишня','груша'],['дом','ёлка','жук','заяц'],['кот','лиса','мышь','нос'],['пёс','рыба','сова','тыква'],['ива','кит','лук','мак']];
+const RU_GEN={
+  sortKto:()=>{const it=shuffle(shuffle(RU_KTO).slice(0,2).map(w=>[w,0]).concat(shuffle(RU_CHTO).slice(0,2).map(w=>[w,1])));return {t:'sort',ask:'Разложи слова по корзинкам: кто? и что?',bins:['Кто?','Что?'],items:it,r:RQ.kto}},
+  sortKak:()=>{const it=shuffle(shuffle(RU_KAK).slice(0,2).map(w=>[w,0]).concat(shuffle(RU_DEL).slice(0,2).map(w=>[w,1])));return {t:'sort',ask:'Разложи слова по корзинкам: какой? и что делает?',bins:['Какой?','Что делает?'],items:it,r:RQ.kak}},
+  askQ:()=>{const g=pick([[RU_KTO,'Кто?',RQ.kto],[RU_CHTO,'Что?',RQ.kto],[RU_KAK,'Какой?',RQ.kak],[RU_DEL,'Что делает?',RQ.kak]]);return {t:'choose',ask:'На какой вопрос отвечает это слово?',show:pick(g[0]),opts:[g[1]].concat(['Кто?','Что?','Какой?','Что делает?'].filter(x=>x!==g[1])),r:g[2]}},
+  build:()=>{const s=pick(RU_SYL);return {t:'order',ask:'Слово рассыпалось на слоги! Собери его.',seq:s,joiner:'',r:RQ.slog}},
+  count:()=>{const s=pick(RU_SYL.concat([['кот'],['дом'],['сыр']]));return {t:'choose',ask:'Сколько слогов в этом слове?',show:s.join(''),opts:[String(s.length)].concat(['1','2','3','4'].filter(x=>x!==String(s.length))),r:RQ.slog}},
+  per:()=>{const p=pick(RU_PER);return {t:'choose',ask:'Как правильно перенести слово?',show:p[0].replace('-',''),opts:p,r:RQ.per}},
+  bez:()=>{const w=pick(RU_BEZ);return {t:'fill',ask:pick(DOUBT),w,opts:w.o,r:w.r}},
+  chk:()=>{const c=pick(RU_CHK);return {t:'choose',ask:'Какое слово — проверочное? В нём ударение падает на нужную гласную.',show:c[0],opts:c.slice(1),r:RQ.bez}},
+  odd:()=>{const c=pick(RU_ODD);return {t:'choose',ask:'Какое слово лишнее — не из этой семьи?',show:c.slice(0,3).join(', ')+'…',opts:[c[3]].concat(shuffle(c.slice(0,3)).slice(0,2)),r:RQ.kor}},
+  synAnt:()=>{const it=shuffle(shuffle(RU_SYN).slice(0,2).map(w=>[w,0]).concat(shuffle(RU_ANT).slice(0,2).map(w=>[w,1])));return {t:'sort',ask:'Разложи пары: похожие слова и слова наоборот.',bins:['Похожие','Наоборот'],items:it,r:RQ.syn}},
+  sent:()=>{const s=pick(RU_SENT),w=s.replace('.','').split(' ').concat(['.']);return {t:'order',ask:'Ух рассыпала предложение! Собери его по порядку.',seq:w,joiner:' ',r:RQ.pred}},
+  sentOk:()=>{const s=pick(RU_SENT),b=s.replace('.',''),l=b[0].toLowerCase()+b.slice(1);return {t:'choose',ask:'Как правильно записать предложение?',opts:[s,l,l+'.'],small:1,r:RQ.pred}},
+  abc:()=>{const i=Math.floor(Math.random()*(RU_ABC.length-12)),l=shuffle(RU_ABC.slice(i,i+12).replace(/[ЁЙЪЫЬ]/g,'').split('')).slice(0,4);return {t:'order',ask:'Расставь буквы по алфавиту!',seq:l.sort((a,b)=>RU_ABC.indexOf(a)-RU_ABC.indexOf(b)),joiner:' ',r:RQ.abc}},
+  abcW:()=>{const w=pick(RU_ABCW);return {t:'order',ask:'Расставь слова по алфавиту — по первой букве!',seq:w,joiner:' ',r:RQ.abc}},
+  after:()=>{const i=1+Math.floor(Math.random()*(RU_ABC.length-3)),a=RU_ABC[i],n=RU_ABC[i+1];return {t:'choose',ask:'Какая буква идёт следом?',show:RU_ABC[i-1]+', '+a+', ?',opts:[n].concat(shuffle(RU_ABC.split('').filter(x=>x!==n&&x!==a)).slice(0,2)),r:RQ.abc}}};
+const RU_OOPS=['Ой, тут ловушка! Вот правило.','Почти! Давай вспомним правило.','Ничего страшного! Вот подсказка.'];
+const RU_AGAIN=['А теперь похожее задание! Справишься?','Ещё одно на это же правило. Проверим, как ты запомнила!'];
+const RU_SORT_OK=['Точно, сюда!','Правильно!','Ух-ух, верно!'];
+const RU_PLACE_NO=['Хм, не сюда. Подумай ещё!','Почти! Попробуй другую корзинку.'];
+const RU_ORDER_NO=['Хм, это слово пока рано. Какое идёт раньше?','Не то место! Что идёт следующим?'];
+let RG=null;
+function startRu(){go('game');showPrize('gamePrize','uh');const L=LESSONS.ru.list[LESSON.i];
+  RG={list:L.g.map(k=>Object.assign(RU_GEN[k](),{gen:k})),i:-1,extra:0};ruStep()}
+function ruStep(){
+  RG.i++;const prog=document.getElementById('gameProg');prog.innerHTML=RG.list.map((_,k)=>'<i class="'+(k<RG.i?'done':'')+'"></i>').join('');
+  const nx=document.getElementById('gameNext'),nb=document.getElementById('gameNextBtn');nx.style.display='none';
+  if(RG.i>=RG.list.length){document.getElementById('gameBody').style.display='none';
+    say('game','Вот это урок! Ты меня столькому научила. Спасибо!');
+    lessonDone();lessonReward('за урок русского');celebrate('Урок русского пройден! Ух теперь знает больше.');
+    nx.style.display='flex';nb.textContent='Ещё раз!';nb.onclick=startRu;return}
+  document.getElementById('gameBody').style.display='block';nb.textContent='Дальше →';nb.onclick=ruStep;
+  const q=RG.list[RG.i],W=document.getElementById('gameWord'),box=document.getElementById('gameOpts'),rl=document.getElementById('gameRule');
+  rl.textContent='';rl.classList.remove('explain');setPose('owlGame','pointer');W.className='word';W.style.display='';W.removeAttribute('aria-label');box.className='opts';W.innerHTML='';box.innerHTML='';
+  const old=box.parentNode.querySelector('.hint-row');if(old)old.remove();
+  say('game',q.again?pick(RU_AGAIN):q.ask);q.missed=false;
+  const miss=()=>{rl.textContent=typo(q.r);rl.classList.add('explain');setPose('owlGame','book');
+    if(!q.missed){q.missed=true;S.mist=S.mist||{};S.mist[q.r]=(S.mist[q.r]||0)+1;save()}};
+  const win=()=>{if(!q.missed){rl.textContent=typo(q.r);rl.classList.remove('explain')}cheer();flashStar('owlGame','book');
+    if(q.missed&&RG.extra<2){RG.list.splice(RG.i+1,0,Object.assign(RU_GEN[q.gen](),{gen:q.gen,again:1}));RG.extra++}
+    nx.style.display='flex'};
+  ({choose:ruChoose,fill:ruFill,sort:ruSort,order:ruOrder})[q.t](q,W,box,miss,win);
+}
+function ruChoose(q,W,box,miss,win){
+  if(q.show){W.textContent=q.show;if(q.show.length>12)W.classList.add('long')}else W.style.display='none';
+  box.className='opts ruw'+(q.small?' small':'');let done=false;
+  shuffle(q.opts.map((o,k)=>({o,ok:k===0}))).forEach(x=>{const b=document.createElement('button');b.className='opt';b.textContent=x.o;
+    b.onclick=()=>{if(done||b.classList.contains('no'))return;
+      if(x.ok){done=true;b.classList.add('yes');say('game',pick(OK));win()}else{b.classList.add('no');miss();say('game',pick(RU_OOPS)+' '+q.r)}};box.appendChild(b)});
+  W.style.display=q.show?'':'none';
+  hintBtn(box,()=>{if(dropWrong(box,t=>t===q.opts[0]))say('game','Я убрала один неправильный ответ!')});
+}
+function ruFill(q,W,box,miss,win){const w=q.w;W.innerHTML=w.p+'<span class="gap" id="gap">?</span>'+w.s;let done=false;
+  shuffle(w.o.map((o,k)=>({o,ok:k===0}))).forEach(x=>{const b=document.createElement('button');b.className='opt';b.textContent=x.o;
+    b.onclick=()=>{if(done||b.classList.contains('no'))return;
+      if(x.ok){done=true;b.classList.add('yes');const g=document.getElementById('gap');g.textContent=x.o;g.classList.add('ok');say('game',pick(OK));win()}
+      else{b.classList.add('no');miss();say('game',pick(RU_OOPS)+' '+RQ.bez+' '+w.r)}};box.appendChild(b)});
+  hintBtn(box,()=>{say('game',RQ.bez+' '+w.r);document.getElementById('gameRule').textContent=typo(w.r)});
+}
+function ruHit(t,x,y){const r=t.getBoundingClientRect(),p=24;return x>r.left-p&&x<r.right+p&&y>r.top-p&&y<r.bottom+p}
+/* перетаскивание пальцем; простое нажатие — выбрать фишку, потом нажать на место */
+function ruDrag(el,targets,drop,tap){
+  el.addEventListener('pointerdown',e=>{if(el.classList.contains('in'))return;e.preventDefault();
+    const sx=e.clientX,sy=e.clientY;let moved=false;try{el.setPointerCapture(e.pointerId)}catch(_){}
+    const mv=ev=>{const dx=ev.clientX-sx,dy=ev.clientY-sy;if(Math.hypot(dx,dy)>8){moved=true;el.classList.add('dragging')}
+      if(moved){el.style.transform='translate('+dx+'px,'+dy+'px) scale(1.1)';targets().forEach(t=>t.classList.toggle('dz-over',ruHit(t,ev.clientX,ev.clientY)))}};
+    const up=ev=>{el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);
+      el.classList.remove('dragging');targets().forEach(t=>t.classList.remove('dz-over'));el.style.transform='';
+      if(!moved){tap(el);return}const t=targets().find(t=>ruHit(t,ev.clientX,ev.clientY));if(t)drop(t,el)};
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up)})}
+function ruShake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+function ruSort(q,W,box,miss,win){
+  W.className='bins';q.bins.forEach((n,k)=>{const d=document.createElement('div');d.className='bin';d.dataset.k=k;d.innerHTML='<h4></h4><div class="bin-in"></div>';d.querySelector('h4').textContent=n;W.appendChild(d)});
+  box.className='chips-ru';let sel=null,left=q.items.length;const bins=()=>[...W.querySelectorAll('.bin')];
+  const put=(t,el)=>{if(+t.dataset.k===+el.dataset.k){el.classList.remove('sel');el.classList.add('in');t.querySelector('.bin-in').appendChild(el);sel=null;left--;say('game',pick(RU_SORT_OK));cheer();if(!left){say('game',pick(OK));win()}}
+    else{ruShake(el);miss();say('game',pick(RU_PLACE_NO)+' '+q.r)}};
+  bins().forEach(t=>t.onclick=()=>{if(sel)put(t,sel)});
+  q.items.forEach(([w,k])=>{const c=document.createElement('button');c.className='chip-ru';c.textContent=w;c.dataset.k=k;
+    ruDrag(c,bins,put,el=>{box.querySelectorAll('.chip-ru').forEach(x=>x.classList.remove('sel'));sel=el;el.classList.add('sel');say('game','Теперь нажми на корзинку! Или перетащи слово пальчиком.')});box.appendChild(c)});
+  hintBtn(box,()=>say('game',q.r));
+}
+function ruOrder(q,W,box,miss,win){
+  W.className='line-ru';W.innerHTML='<span class="line-ph">Перетащи сюда по порядку</span>';box.className='chips-ru';let n=0;
+  const place=(t,el)=>{if(el.textContent===q.seq[n]){const ph=W.querySelector('.line-ph');if(ph)ph.remove();el.classList.add('in');W.appendChild(el);n++;cheer();
+      if(n===q.seq.length){const res=q.seq.join(q.joiner).replace(' .','.');say('game',pick(OK));W.classList.add('done');W.setAttribute('aria-label',res);win()}}
+    else{ruShake(el);miss();say('game',pick(RU_ORDER_NO)+' '+q.r)}};
+  let items=shuffle(q.seq.map(x=>x));if(items.join()===q.seq.join())items=items.reverse();
+  items.forEach(w=>{const c=document.createElement('button');c.className='chip-ru';c.textContent=w;ruDrag(c,()=>[W],place,el=>place(W,el));box.appendChild(c)});
+  hintBtn(box,()=>{const c=[...box.querySelectorAll('.chip-ru')].find(x=>x.textContent===q.seq[n]);if(c){c.classList.add('sel');say('game','Вот это идёт следующим!')}});
 }
 
 /* ---------- игра «Братик Топа и английский» (по темам занятий) ---------- */
