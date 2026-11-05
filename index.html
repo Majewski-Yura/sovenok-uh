@@ -240,6 +240,8 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .opts.en .opt.popt .sw{width:84px;height:84px;margin:6px}.opts.en .opt.popt .num{font-size:72px;font-weight:900;color:#f58a1f;display:block;width:96px;line-height:96px}
 .opts.en .opt.big{font-size:48px;min-width:96px}
 .opts.en .opt.glow{border-color:#f5a000;box-shadow:0 0 0 5px #ffd23f}
+.eq .pic .art.photo{width:190px;height:190px;border-radius:26px;background:#fff;border:3px solid var(--line);object-fit:cover}
+.opts.en .opt.popt .art.photo{width:120px;height:120px;border-radius:16px;object-fit:cover}
 .eq .pic .art.body{width:170px;height:221px}
 .eq .spot{cursor:pointer}
 .eq .ear{width:62px;height:62px;border-radius:50%;background:var(--gold2);border:3px solid var(--gold);margin:8px auto 0;display:flex;align-items:center;justify-content:center}
@@ -1589,7 +1591,9 @@ function BODY(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5" st
   if(tap)Object.keys(BODY_SPOT).filter(k=>k!=='head').concat(['head']).reverse().forEach(k=>BODY_SPOT[k].forEach(a=>g+='<ellipse class="spot" data-p="'+k+'" cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+2)+'" ry="'+(a[3]+2)+'" fill="#000" fill-opacity="0"/>'));
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
-function wordPic(it){if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
+/* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family'];
+function wordPic(it){if(EN_IMG.includes(it.en))return '<img class="art photo" src="img/en/'+it.en+'.webp" alt="">';if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
   if(BODY_W.includes(it))return BODY(it.en);return ART(it.en)}
 /* ошибка в английском: это же задание повторится в конце урока (не больше двух за урок) */
 const E_AGAIN=['Давай повторим, чтобы запомнить!','Это слово мы уже встречали. Помнишь?'];
@@ -1598,7 +1602,7 @@ function missE(q){if(q.miss||q.again)return;q.miss=1;S.mist=S.mist||{};const k='
 function engRound(){
   const one=a=>pick(a);
   const word=(cats)=>{const cat=one(cats||[COLORS,ANIMALS,SPOOKY,NUMBERS]);const it=one(cat);const isC=cat===COLORS;
-    return {word:1,pic:isC?'<span class="sw" style="background:'+it.c+'"></span>':cat===NUMBERS?'<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>':ART(it.en),ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
+    return {word:1,pic:wordPic(it),ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
       ask:'Р-р-р! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
   const pron=()=>{const it=one(PRON);return {pic:ART(it.en),ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
       ask:'Как сказать по-английски «'+it.ru+'»? Я забыл…',r:'«'+it.ru+'» по-английски — '+it.en,say:it.en}};
