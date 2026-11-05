@@ -184,7 +184,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
     <div class="cards">
-      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic">🌙</div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
+      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
       <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
       <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic-uh-star.webp" alt="Ух со звездой"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
@@ -533,7 +533,6 @@ function renderHome(){
   document.querySelector('#missionBox small').textContent=typo(T.mission);
   document.querySelector('#cardTalk h3').textContent=typo(T.talkT);
   document.querySelector('#cardTalk p').textContent=typo(T.talkP);
-  document.querySelector('#cardTalk .ic').textContent=md==='school'?'🌙':md==='sick'?'🍵':'🍂';
   if(md!=='school'){
     owls.owlHome.classList.remove('sleep');
     const fresh=S.talkDate!==today();
