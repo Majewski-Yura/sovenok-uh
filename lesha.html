@@ -48,16 +48,16 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .home{position:fixed;left:12px;bottom:12px;width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:40px;box-shadow:0 6px 0 var(--green2);z-index:5;display:none}
 .home:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green2)}
 /* раскраска */
-.paint-wrap{max-width:520px;margin:10px auto 0;background:#fff;border:5px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
-.paint-wrap canvas{width:100%;height:auto;display:block;touch-action:manipulation;cursor:pointer}
-.palette{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px auto 0;max-width:560px}
-.palette button{width:64px;height:64px;border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
+.paint-wrap{max-width:520px;width:fit-content;margin:8px auto 0;background:#fff;border:5px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
+.paint-wrap canvas{max-width:100%;max-height:48vh;width:auto;height:auto;display:block;touch-action:manipulation;cursor:pointer}
+.palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px auto 0;max-width:560px}
+.palette button{width:min(10.5vw,60px);height:min(10.5vw,60px);border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
 .palette button.on{box-shadow:0 0 0 6px var(--ink);transform:scale(1.12)}
-.ppick{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px auto 0;max-width:560px}
-.ppick button{width:76px;height:76px;background:#fff;border:4px solid var(--line);border-radius:20px;padding:4px;box-shadow:var(--shadow)}
+.ppick{display:flex;gap:8px;justify-content:center;margin:8px auto 0;max-width:560px}
+.ppick button{width:min(14vw,72px);height:min(14vw,72px);flex:none;background:#fff;border:4px solid var(--line);border-radius:20px;padding:4px;box-shadow:var(--shadow)}
 .ppick button.on{border-color:var(--gold);background:var(--gold2)}
 .ppick img{width:100%;height:100%;object-fit:contain}
-.prow{display:flex;gap:14px;justify-content:center;margin-top:14px}
+.prow{display:flex;gap:14px;justify-content:center;margin-top:10px}
 .prow button{font-size:40px;background:var(--bg2);border:5px solid var(--line);border-radius:24px;padding:6px 18px;box-shadow:var(--shadow)}
 /* шарики */
 .sky{position:relative;height:min(62vh,520px);margin-top:10px;border-radius:32px;background:linear-gradient(#bfe6ff,#e9f7ff);overflow:hidden;border:5px solid #fff;box-shadow:var(--shadow)}
@@ -469,7 +469,7 @@ function addStar(n){setTimeout(()=>cele(),400);
     s.style.setProperty('--dx',(r.left-innerWidth/2+Math.random()*80-40)+'px');s.style.setProperty('--dy',(r.top-innerHeight/2+Math.random()*80-40)+'px');s.style.animationDelay=i*.05+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}
 }
 /* ---------- раскраска ---------- */
-let pCol='#ff5a5f',pHist=[],pFills=0,PK='topa';
+let pCol='#ff5a5f',pHist=[],pFills=0,PK='topa',pCur=null;
 const PPICS=['topa','cap','balloon','crown','car','train'];
 function startPaint(){go('paint');const P=document.getElementById('palette');P.innerHTML='';
   COLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
@@ -479,21 +479,23 @@ function startPaint(){go('paint');const P=document.getElementById('palette');P.i
     b.onclick=()=>{PK=k;Q.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');paintLoad()};Q.appendChild(b)});
   paintLoad();say('paint','Выбери картинку, потом цвет — и нажимай!')}
 function paintLoad(){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();pFills=0;
-  im.onload=()=>{cv.width=im.naturalWidth;cv.height=im.naturalHeight;c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[]};im.src='img/color-topa/'+PK+'.png';
+  im.onload=()=>{const k=Math.min(1,640/im.naturalWidth);cv.width=Math.round(im.naturalWidth*k);cv.height=Math.round(im.naturalHeight*k);c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[];pCur=c.getImageData(0,0,cv.width,cv.height)};im.src='img/color-topa/'+PK+'.png';
   cv.onclick=e=>{const r=cv.getBoundingClientRect();paintFill(Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height))}}
 function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),W=cv.width,H=cv.height,img=c.getImageData(0,0,W,H),d=img.data;
   const i0=(y*W+x)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];if(tr+tg+tb<200)return;
   const n=parseInt(pCol.slice(1),16),nr=n>>16&255,ng=n>>8&255,nb=n&255;if(Math.abs(tr-nr)+Math.abs(tg-ng)+Math.abs(tb-nb)<10)return;
-  pHist.push(c.getImageData(0,0,W,H));if(pHist.length>15)pHist.shift();
+  pHist.push(pCur||c.getImageData(0,0,W,H));if(pHist.length>6)pHist.shift();
   const same=i=>Math.abs(d[i]-tr)+Math.abs(d[i+1]-tg)+Math.abs(d[i+2]-tb)<60;const st=[[x,y]];
   while(st.length){let [px,py]=st.pop();let i=(py*W+px)*4;while(py>=0&&same(i)){py--;i-=W*4}py++;i+=W*4;let L=false,R=false;
     while(py<H&&same(i)){d[i]=nr;d[i+1]=ng;d[i+2]=nb;d[i+3]=255;
       if(px>0){if(same(i-4)){if(!L){st.push([px-1,py]);L=true}}else L=false}
       if(px<W-1){if(same(i+4)){if(!R){st.push([px+1,py]);R=true}}else R=false}
       py++;i+=W*4}}
-  c.putImageData(img,0,0);pFills++;
+  c.putImageData(img,0,0);pCur=img;pFills++;
   if(pFills===6){if(S.paintDate!==today()){S.paintDate=today();save();say('paint','Как красиво! Держи звёздочку!');addStar()}else say('paint','Как красиво! Ты настоящий художник!')}}
-function paintUndo(){const h=pHist.pop();if(h)document.getElementById('paintCv').getContext('2d').putImageData(h,0,0)}
+function paintUndo(){const h=pHist.pop();if(h){pCur=h;document.getElementById('paintCv').getContext('2d').putImageData(h,0,0)}}
+function paintRestore(){if(pCur&&cur()==='paint'){const cv=document.getElementById('paintCv');if(cv.width===pCur.width&&cv.height===pCur.height)cv.getContext('2d').putImageData(pCur,0,0)}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(paintRestore,100)});addEventListener('pageshow',()=>setTimeout(paintRestore,100));
 function counter(id,n,max){document.getElementById(id).innerHTML=Array.from({length:max},(_,k)=>'<i class="'+(k<n?'on':'')+'"></i>').join('')}
 
 /* ---------- дом ---------- */
