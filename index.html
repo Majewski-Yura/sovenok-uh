@@ -439,10 +439,10 @@ function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}cloudP
 /* firebaseConfig проекта sovenok-uh (публичный, доступ ограничен правилами Firestore и семейным кодом) */
 const FB_CONFIG={apiKey:"AIzaSyDLZHhRwXYQU8fAOOlp4LzCODahdQuQ_mA",authDomain:"sovenok-uh.firebaseapp.com",projectId:"sovenok-uh",storageBucket:"sovenok-uh.firebasestorage.app",messagingSenderId:"495272253062",appId:"1:495272253062:web:18300d5cae9bae89756307"};
 const FB_V='10.12.2',FAM_KEY='uh-family';
-let fb=null,famId=null,applyingRemote=false,pushT=null,syncState='';
+let fb=null,famId=null,applyingRemote=false,pushT=null,syncState='',joining=false;
 try{
   const q=new URLSearchParams(location.search).get('family');
-  if(q&&/^[A-Za-z0-9]{20,}$/.test(q)){localStorage.setItem(FAM_KEY,q);history.replaceState(null,'',location.pathname)}
+  if(q&&/^[A-Za-z0-9]{20,}$/.test(q)){if(localStorage.getItem(FAM_KEY)!==q)joining=true;localStorage.setItem(FAM_KEY,q);history.replaceState(null,'',location.pathname)}
   famId=localStorage.getItem(FAM_KEY);
 }catch(e){}
 const LOCAL_ONLY=['voices'];
@@ -450,6 +450,18 @@ function cloudData(){const o=JSON.parse(JSON.stringify(S));LOCAL_ONLY.forEach(k=
 function cloudPush(){
   if(!fb||applyingRemote)return;clearTimeout(pushT);
   pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>setSync('ok')).catch(()=>setSync('err'))},700);
+}
+/* первое подключение устройства к семье: объединяем, а не затираем */
+function mergeJoin(r){
+  const L=cloudData(),uniq=(a,key)=>{const m=new Map();a.forEach(x=>{const k=key(x);if(!m.has(k))m.set(k,x)});return [...m.values()]};
+  const o=Object.assign({},L,r);
+  o.stars=Math.max(L.stars||0,r.stars||0);
+  o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];
+  o.wear=Object.assign({},L.wear||{},r.wear||{});
+  o.diary=uniq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.q+'|'+x.a).sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0).slice(0,300);
+  o.pending=uniq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));
+  o.pin=r.pin||L.pin||'';o.momAsk=r.momAsk||L.momAsk||null;o.mission=L.mission||r.mission||null;
+  return o;
 }
 function applyRemote(r){
   if(JSON.stringify(r)===JSON.stringify(cloudData()))return;
@@ -473,7 +485,8 @@ async function cloudInit(){
     const db=F.getFirestore(app),ref=F.doc(db,'families',famId);
     const snap=await F.getDoc(ref);
     fb={ref,setDoc:F.setDoc,ts:F.serverTimestamp};
-    if(snap.exists()&&snap.data().alisa)applyRemote(snap.data().alisa);else cloudPush();
+    if(snap.exists()&&snap.data().alisa){const r=snap.data().alisa;if(joining){applyRemote(mergeJoin(r));cloudPush()}else applyRemote(r)}else cloudPush();
+    joining=false;
     F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites)return;const d=x.data();if(d&&d.alisa)applyRemote(d.alisa)});
     setSync('ok');
   }catch(e){fb=null;setSync('err');console.warn('cloud',e)}
