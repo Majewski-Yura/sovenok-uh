@@ -500,7 +500,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="chip" onclick="sendMomAsk('Я занята — поиграй, пожалуйста, с Лёшей')">🦖 Поиграть с Лёшей</button>
     </div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="twoTap(this,()=>{S.stars=0;save();setStars();toast('Звёзды обнулены')})">Обнулить звёзды</button> <button class="btn soft" onclick="twoTap(this,()=>{S.owned=[];S.wear={};save();dress();toast('Купленные вещи убраны')})">Убрать купленные вещи</button></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="twoTap(this,()=>{S.stars=0;save();setStars();toast('Звёзды обнулены')})">Обнулить звёзды</button> <button class="btn soft" onclick="twoTap(this,()=>{S.owned=[];S.wear={};save();dress();toast('Купленные вещи убраны')})">Убрать купленные вещи</button> <button class="btn soft" onclick="twoTap(this,()=>{S.help=null;S.pending=(S.pending||[]).filter(x=>x.d!==today()||/^(Мама просила|Задание)/.test(x.what));save();renderPending&&renderPending();toast('Дела «Помощницы» за сегодня сброшены')})">Сбросить «Помощницу» за сегодня</button></div>
     <h3 style="margin-top:24px">☁️ Общая база</h3>
     <div id="syncBox"></div>
     <h3 style="margin-top:24px">Чтобы звёзды и&nbsp;вещи не&nbsp;пропадали</h3>

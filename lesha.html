@@ -310,7 +310,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <p style="color:var(--ink2);font-weight:700;margin:0">Топа прочитает просьбу вслух на главной.</p>
     <div><button class="pbtn" onclick="sendAsk(ASKS[0])">🧸 Убрать игрушки</button><button class="pbtn" onclick="sendAsk(ASKS[1])">👕 Одеться самому</button><button class="pbtn" onclick="sendAsk(ASKS[2])">🗑️ Выбросить мусор</button><button class="pbtn" onclick="sendAsk(ASKS[3])">📚 Почитать книжку</button></div>
     <h3 style="margin-top:20px">Звёзды</h3>
-    <div><button class="pbtn" onclick="S.stars=0;save();setStars();this.textContent='Звёзды обнулены'">Обнулить звёзды</button></div>
+    <div><button class="pbtn" onclick="S.stars=0;save();setStars();this.textContent='Звёзды обнулены'">Обнулить звёзды</button><button class="pbtn" onclick="if(S.deeds)delete S.deeds[today()];S.pending=(S.pending||[]).filter(x=>x.d!==today()||/^Мама просила/.test(x.what));save();renderPend();this.textContent='«Мои дела» сброшены'">Сбросить «Мои дела» за сегодня</button></div>
     <h3 style="margin-top:20px">☁️ Общая база</h3>
     <p id="syncNote" style="color:var(--ink2);font-weight:700;margin:0"></p>
     <h3 style="margin-top:20px">Копия данных</h3>
