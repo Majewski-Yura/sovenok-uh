@@ -230,6 +230,17 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .eq .sent .gap.ok{color:#2f9a5a;border-color:#2f9a5a;animation:pop .4s}
 .sw{display:inline-block;width:110px;height:110px;border-radius:50%;border:4px solid var(--line);box-shadow:var(--shadow)}
 .opts.en{flex-wrap:wrap;gap:12px}
+.opts.en .opt.popt{padding:8px;background:#fff}
+.opts.en .opt.popt .art{width:96px;height:96px;display:block}.opts.en .opt.popt .art.body{width:110px;height:143px}
+.opts.en .opt.popt .sw{width:84px;height:84px;margin:6px}.opts.en .opt.popt .num{font-size:72px;font-weight:900;color:#f58a1f;display:block;width:96px;line-height:96px}
+.opts.en .opt.big{font-size:48px;min-width:96px}
+.opts.en .opt.glow{border-color:#f5a000;box-shadow:0 0 0 5px #ffd23f}
+.eq .pic .art.body{width:170px;height:221px}
+.eq .spot{cursor:pointer}
+.eq .ear{width:62px;height:62px;border-radius:50%;background:var(--gold2);border:3px solid var(--gold);margin:8px auto 0;display:flex;align-items:center;justify-content:center}
+.eq .ear img{width:38px;height:38px}
+.slots{display:flex;justify-content:center;gap:8px;margin-top:10px}
+.slots i{font-style:normal;width:48px;height:58px;border-bottom:5px solid var(--gold);font-size:40px;font-weight:900;color:#2f9a5a;text-align:center}
 .opts.en .opt{font-size:28px;min-width:0;padding:12px 22px}
 @media (min-width:1000px){
   .wrap{max-width:1140px;padding:24px 32px 48px}
@@ -1190,7 +1201,7 @@ const LESSONS={
   read:{name:'Чтение',say:'Выбирай историю! Прочитай её сама, а я помогу, если надо.',list:[
     {n:'Один трудный день',p:'Как Ух помогала Топе'},{n:'Пирог для мамы',p:'Как Ух и Топа пекли пирог'},{n:'Топа идёт в садик',p:'Почему учиться интересно'}]},
   en:{name:'Английский',say:'Привет! Я Топа, младший братик Ух. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Выбирай урок и научи меня английскому!',list:[
-    {n:'Цвета и числа',p:'red, blue, one, two…'},{n:'Животные и Хеллоуин',p:'cat, dog, ghost, pumpkin…'},{n:'Я, ты, он и am, is, are',p:'I am happy! How are you?'}]},
+    {n:'Цвета и числа',p:'red, blue, one, two…'},{n:'Животные и Хеллоуин',p:'cat, dog, ghost, pumpkin…'},{n:'Я, ты, он и am, is, are',p:'I am happy! How are you?'},{n:'Части тела',p:'head, eyes, nose… Покажи на картинке!'},{n:'Семья',p:'mother, father, sister, brother…'},{n:'Буквы',p:'A, B, C… С какой буквы слово?'}]},
   math:{name:'Математика',say:'Выбирай урок математики! Будем считать вместе.',list:[
     {n:'Сложение и вычитание до 20',p:'Жёлуди, пёрышки и ягодки',t:['add20','sub20','miss']},
     {n:'Десятки и сравнение',p:'Больше, меньше или равно',t:['tens','add2','cmp']},
@@ -1206,7 +1217,7 @@ function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
 function hintBtn(box,fn){const old=box.parentNode.querySelector('.hint-row');if(old)old.remove();
   const r=document.createElement('div');r.className='hint-row';const b=document.createElement('button');b.className='btn soft';b.textContent='💡 Подсказка';
   b.onclick=()=>{fn();b.disabled=true;b.style.opacity=.5};r.appendChild(b);box.after(r)}
-function dropWrong(box,isOk){const w=[...box.querySelectorAll('.opt')].filter(b=>!b.classList.contains('no')&&!b.classList.contains('yes')&&!isOk(b.textContent));if(w.length)w[0].classList.add('no');return w.length>0}
+function dropWrong(box,isOk){const w=[...box.querySelectorAll('.opt')].filter(b=>!b.classList.contains('no')&&!b.classList.contains('yes')&&!isOk(b.textContent,b));if(w.length)w[0].classList.add('no');return w.length>0}
 function nextPrize(k){const g=S.gameDay&&S.gameDay.d===today()?S.gameDay:{};const n=g[k]||0;return n===0?3:n<3?1:0}
 function prizeText(){const n=lessonPrize(lessonKey());return n?'За урок: ⭐ '+n:'Звёзды за этот урок сегодня уже есть'}
 function showPrize(id,k){const e=document.getElementById(id);if(e)e.textContent=prizeText(k)}
@@ -1489,6 +1500,17 @@ const ART=(()=>{
     we:at(30,46,1.05,kid(1,'#ff8fc0'))+at(70,46,1.05,kid(1,'#a77bff','#e0a84a')),
     they:at(20,52,.8,kid(1,'#ff8fc0'))+at(50,46,.9,kid(0,'#5aa9e6'))+at(80,52,.8,kid(1,'#8fd14f','#e0a84a'))
   };
+  /* семья */
+  const glasses=(y)=>P('M-12 '+y+' m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M12 '+y+' m-6 0 a6 6 0 1 0 12 0 a6 6 0 1 0 -12 0 M-6 '+y+' L6 '+y);
+  const adult=(girl,shirt,hair,old)=>kid(girl,shirt,hair)+(old?glasses(3):'')+(!girl?P('M-8 15 Q0 11 8 15',old?'#d8d8d8':hair):'');
+  A.mother=at(50,40,1.55,(C(-17,22,9,'#7a4a2e')+C(17,22,9,'#7a4a2e'))+adult(1,'#e35d8f','#7a4a2e'));
+  A.father=at(50,40,1.55,adult(0,'#3a6ea5','#4a3020'));
+  A.grandma=at(50,40,1.55,'<circle cx="0" cy="-26" r="8" fill="#c9c9c9" '+st+'/>'+adult(1,'#9b7bd1','#c9c9c9',1));
+  A.grandpa=at(50,40,1.55,adult(0,'#7a8a5a','#d8d8d8',1));
+  A.sister=at(50,46,1.3,kid(1,'#ff8fc0'));
+  A.brother=at(50,46,1.3,kid(0,'#5aa9e6'));
+  A.baby=at(50,52,1.15,kid(0,'#ffe27a','#e0a84a'))+C(50,64,5,'#ff7f99');
+  A.family=at(22,42,.85,adult(0,'#3a6ea5','#4a3020'))+at(78,42,.85,(C(-17,22,9,'#7a4a2e')+C(17,22,9,'#7a4a2e'))+adult(1,'#e35d8f','#7a4a2e'))+at(40,64,.65,kid(1,'#ff8fc0'))+at(60,68,.55,kid(0,'#5aa9e6'));
   A.it=A.cat;
   return k=>A[k]?'<svg class="art" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+A[k]+'</svg>':'';
 })();
@@ -1505,6 +1527,28 @@ const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестрич
 const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Хм… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
 let E=null;
 const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slice(0,n);
+/* ---------- новые уроки: части тела, семья, буквы ---------- */
+const BODY_W=[{en:'head',ru:'голова'},{en:'eyes',ru:'глаза'},{en:'ears',ru:'уши'},{en:'nose',ru:'нос'},{en:'mouth',ru:'рот'},{en:'hair',ru:'волосы'},{en:'hands',ru:'руки'},{en:'tummy',ru:'животик'},{en:'legs',ru:'ноги'},{en:'feet',ru:'ступни'}];
+const FAMILY=[{en:'mother',ru:'мама'},{en:'father',ru:'папа'},{en:'sister',ru:'сестра'},{en:'brother',ru:'брат'},{en:'baby',ru:'малыш'},{en:'grandma',ru:'бабушка'},{en:'grandpa',ru:'дедушка'},{en:'family',ru:'семья'}];
+const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+/* части тела: где обвести и куда можно нажать */
+const BODY_SPOT={head:[[50,26,24,24]],eyes:[[42,28,6,6],[58,28,6,6]],ears:[[26,30,6,8],[74,30,6,8]],nose:[[50,35,5,5]],mouth:[[50,42,8,5]],hair:[[50,10,22,9]],
+  hands:[[17,76,9,9],[83,76,9,9]],tummy:[[50,70,15,12]],legs:[[42,100,8,12],[58,100,8,12]],feet:[[40,121,11,6],[60,121,11,6]]};
+function BODY(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"',S='#ffd9b8';
+  let g='<rect x="35" y="88" width="13" height="30" rx="5" fill="#4a78c8" '+st+'/><rect x="52" y="88" width="13" height="30" rx="5" fill="#4a78c8" '+st+'/>'+
+    '<ellipse cx="40" cy="121" rx="11" ry="6" fill="#e8443a" '+st+'/><ellipse cx="60" cy="121" rx="11" ry="6" fill="#e8443a" '+st+'/>'+
+    '<path d="M30 56 L22 74 M70 56 L78 74" stroke="'+K+'" stroke-width="11" stroke-linecap="round"/><path d="M30 56 L22 74 M70 56 L78 74" stroke="#ff8fc0" stroke-width="6" stroke-linecap="round"/>'+
+    '<circle cx="17" cy="76" r="7" fill="'+S+'" '+st+'/><circle cx="83" cy="76" r="7" fill="'+S+'" '+st+'/>'+
+    '<path d="M30 92 Q28 54 50 52 Q72 54 70 92Z" fill="#ff8fc0" '+st+'/>'+
+    '<circle cx="26" cy="30" r="6" fill="'+S+'" '+st+'/><circle cx="74" cy="30" r="6" fill="'+S+'" '+st+'/><circle cx="50" cy="28" r="23" fill="'+S+'" '+st+'/>'+
+    '<path d="M27 24 Q28 3 50 3 Q72 3 73 24 Q64 12 52 13 Q38 11 27 24Z" fill="#7a4a2e" '+st+'/>'+
+    '<circle cx="42" cy="28" r="3.5" fill="#2a1d15"/><circle cx="58" cy="28" r="3.5" fill="#2a1d15"/><ellipse cx="50" cy="35" rx="2.6" ry="2" fill="#e8a07a"/><path d="M43 41 Q50 47 57 41" fill="none" '+st+'/>';
+  if(hl)(BODY_SPOT[hl]||[]).forEach(a=>g+='<ellipse cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+3)+'" ry="'+(a[3]+3)+'" fill="#ffe14d" fill-opacity=".55" stroke="#ff3b30" stroke-width="3.5"/>');
+  if(tap)Object.keys(BODY_SPOT).filter(k=>k!=='head').concat(['head']).reverse().forEach(k=>BODY_SPOT[k].forEach(a=>g+='<ellipse class="spot" data-p="'+k+'" cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+2)+'" ry="'+(a[3]+2)+'" fill="#000" fill-opacity="0"/>'));
+  return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
+/* картинка слова для любого списка */
+function wordPic(it){if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
+  if(BODY_W.includes(it))return BODY(it.en);return ART(it.en)}
 function engRound(){
   const one=a=>pick(a);
   const word=(cats)=>{const cat=one(cats||[COLORS,ANIMALS,SPOOKY,NUMBERS]);const it=one(cat);const isC=cat===COLORS;
@@ -1518,10 +1562,28 @@ function engRound(){
       ask:'Меня спросили «How are you?», а мне вот так, как на картинке. Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
   const paint=()=>{const it=one(PAINT);return {pic:ART(it.en),sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
       ask:'Я хочу рассказать про картинку. Какого она цвета?',r:'The '+it.en+' is '+it.c,say:'The '+it.en+' is '+it.c,fill:it.c}};
+  /* послушай и найди картинку */
+  const listen=(cat)=>{const it=one(cat),o=[it].concat(others(cat,it,2,'en'));return {listen:1,noGuess:1,opts:o.map(x=>x.en),picOpts:o.map(wordPic),
+      ask:'Послушай слово и найди картинку! Нажми на динамик, чтобы послушать ещё раз.',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+  /* покажи на человечке */
+  const tap=()=>{const it=one(BODY_W);return {tap:it.en,noGuess:1,opts:[it.en],ask:'Покажи на картинке, где это! Послушай слово.',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+  /* собери слово из букв */
+  const spell=(cat)=>{const it=one(cat.filter(x=>/^[a-z]{3,5}$/.test(x.en)));return {spell:it.en,noGuess:1,pic:wordPic(it),opts:[it.en],
+      ask:'Я хочу написать это слово по-английски, но буквы рассыпались. Собери их по порядку!',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+  /* какую букву я сказал */
+  const letter=()=>{const l=one(LETTERS);return {listen:1,noGuess:1,big:1,opts:[l].concat(shuffle(LETTERS.filter(x=>x!==l)).slice(0,2)),
+      ask:'Послушай, какую букву я говорю, и найди её!',r:'Это буква '+l,say:l}};
+  /* с какой буквы начинается */
+  const first=()=>{const it=one([...ANIMALS,...COLORS,...FAMILY].filter(x=>/^[a-z]/.test(x.en))),l=it.en[0].toUpperCase();
+      return {noGuess:1,big:1,pic:wordPic(it),opts:[l].concat(shuffle(LETTERS.filter(x=>x!==l)).slice(0,2)),
+      ask:'С какой буквы начинается это слово? Послушай!',r:'«'+it.en+'» начинается с буквы '+l,say:it.en,sayFirst:1}};
   const li=LESSON.subj==='en'?LESSON.i:0,CN=[COLORS,NUMBERS],AS=[ANIMALS,SPOOKY];
-  if(li===0)return [word(CN),word(CN),word(CN),word(CN),word(CN),word(CN)];
-  if(li===1)return [word(AS),word(AS),word(AS),paint(),word(AS),paint()];
-  return [pron(),be(),feel(),pron(),be(),feel()];
+  if(li===0)return [word(CN),listen(COLORS),word(CN),spell(COLORS),listen(NUMBERS),word(CN)];
+  if(li===1)return [word(AS),listen(ANIMALS),paint(),spell(ANIMALS),word(AS),paint()];
+  if(li===2)return [pron(),be(),feel(),pron(),be(),feel()];
+  if(li===3)return [tap(),listen(BODY_W),tap(),word([BODY_W]),tap(),listen(BODY_W)];
+  if(li===4)return [word([FAMILY]),listen(FAMILY),word([FAMILY]),spell(FAMILY),listen(FAMILY),word([FAMILY])];
+  return [letter(),first(),letter(),first(),spell(ANIMALS),letter()];
 }
 function startEng(){
   go('eng');showPrize('engPrize','ugu');E={list:engRound(),i:-1};engStep();
@@ -1544,14 +1606,31 @@ function engStep(){
   document.getElementById('engBody').style.display='block';btn.textContent='Дальше →';btn.onclick=engStep;
   const q=E.list[E.i];
   const Q=document.getElementById('engQ');
-  Q.innerHTML=(q.pic?'<div class="pic">'+q.pic+'</div>':'')+(q.sent?'<div class="sent">'+q.sent+'</div>':'')+(q.ru?'<div class="ru"></div>':'');
+  Q.innerHTML=(q.pic?'<div class="pic">'+q.pic+'</div>':'')+(q.tap?'<div class="pic">'+BODY(null,1)+'</div>':'')+(q.sent?'<div class="sent">'+q.sent+'</div>':'')+(q.ru?'<div class="ru"></div>':'')+
+    (q.spell?'<div class="slots">'+q.spell.split('').map(()=>'<i></i>').join('')+'</div>':'')+(q.listen||q.tap||q.sayFirst?'<button class="ear" aria-label="Послушать ещё раз"><img src="img/ic/speaker.webp" alt=""></button>':'');
+  {const ear=Q.querySelector('.ear');if(ear)ear.onclick=()=>speakEn(q.say)}
   if(q.ru)Q.querySelector('.ru').textContent=typo(q.ru);
   document.getElementById('engRule').textContent='';
   const wrong=q.opts[1+Math.floor(Math.random()*(q.opts.length-1))];
-  say('eng',q.ask+(Math.random()<.5?' По-моему, «'+wrong+'»… или нет?':''));
+  say('eng',q.ask+(!q.noGuess&&Math.random()<.5?' По-моему, «'+wrong+'»… или нет?':''));
+  if(q.listen||q.tap||q.sayFirst)setTimeout(()=>speakEn(q.say),2600);
   const box=document.getElementById('engOpts');box.innerHTML='';let done=false;
+  const win=()=>{done=true;document.getElementById('engRule').textContent=typo(q.r);say('eng',pick(B_OK));cheer();setTimeout(()=>speakEn(q.say),1200);document.getElementById('engNext').style.display='flex'};
+  const oops=()=>say('eng',pick(B_OOPS));
+  if(q.tap){Q.querySelectorAll('.spot').forEach(e=>e.addEventListener('click',()=>{if(done)return;
+      if(e.dataset.p===q.tap){Q.querySelector('.pic').innerHTML=BODY(q.tap);win()}else oops()}));
+    hintBtn(box,()=>{Q.querySelector('.pic').innerHTML=BODY(q.tap,1);Q.querySelectorAll('.spot').forEach(e=>e.addEventListener('click',()=>{if(done)return;if(e.dataset.p===q.tap){Q.querySelector('.pic').innerHTML=BODY(q.tap);win()}else oops()}));say('eng','Я обвёл это место! Нажми туда.')});
+    return}
+  if(q.spell){const w=q.spell;let k=0;const sl=Q.querySelectorAll('.slots i');
+    shuffle(w.split('').map((c,i)=>({c,i}))).forEach(x=>{const b=document.createElement('button');b.className='opt';b.textContent=x.c;
+      b.onclick=()=>{if(done||b.classList.contains('yes'))return;
+        if(x.c===w[k]){b.classList.add('yes');b.style.visibility='hidden';sl[k].textContent=x.c;k++;speakEn(x.c.toUpperCase());if(k===w.length)win()}
+        else{b.classList.add('no');setTimeout(()=>b.classList.remove('no'),500);oops()}};box.appendChild(b)});
+    hintBtn(box,()=>{if(k<w.length){const b=[...box.querySelectorAll('.opt')].find(b=>b.textContent===w[k]&&b.style.visibility!=='hidden');if(b){b.classList.add('glow');say('eng','Вот эта буква следующая!')}}});
+    return}
   shuffle(q.opts.map((o,k)=>({o,ok:k===0}))).forEach(x=>{
-    const b=document.createElement('button');b.className='opt';b.textContent=x.o;
+    const b=document.createElement('button');b.className='opt'+(q.picOpts?' popt':'')+(q.big?' big':'');b.textContent=x.o;
+    if(q.picOpts){b.innerHTML=q.picOpts[q.opts.indexOf(x.o)];b.dataset.w=x.o;b.setAttribute('aria-label','Картинка')}
     b.onclick=()=>{
       if(done||b.classList.contains('no'))return;
       if(x.ok){done=true;b.classList.add('yes');
@@ -1562,7 +1641,7 @@ function engStep(){
     };
     box.appendChild(b);
   });
-  hintBtn(box,()=>{if(dropWrong(box,t=>t===q.opts[0]))say('eng','Я убрал один неправильный ответ! Выбирай из двух.')});
+  hintBtn(box,()=>{if(dropWrong(box,(t,b)=>(b&&b.dataset.w?b.dataset.w:t)===q.opts[0]))say('eng','Я убрал один неправильный ответ! Выбирай из двух.')});
 }
 
 /* ---------- гардероб ---------- */
