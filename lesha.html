@@ -33,7 +33,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .dino.noacc .acc{display:none!important}
 .spose{height:130px;width:auto;display:block;margin:4px auto 0;animation:bob 2.8s ease-in-out infinite;transform-origin:50% 95%}
 .spose.cow{height:110px}
-.tile .ic img.tpic{height:1.5em;max-width:100%;object-fit:contain;width:auto;display:block;margin:0 auto}
+.tile .ic img.tpic{height:1.2em;max-width:100%;object-fit:contain;width:auto;display:block;margin:0 auto}
 .hint{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:#4a3200;border-radius:999px;padding:8px 18px;font-size:20px;pointer-events:none;animation:pulse 1.2s ease-in-out infinite;white-space:nowrap}
 @keyframes pulse{50%{transform:translateX(-50%) scale(1.12)}}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:18px}
@@ -141,7 +141,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 <div class="wrap">
   <header>
     <button class="who" onclick="toPicker()">← Кто играет?</button>
-    <div style="display:flex;gap:10px;align-items:center"><div class="stars">⭐ <span id="starN">0</span></div><img class="me" src="lesha.jpg" alt="Лёша"></div>
+    <div style="display:flex;gap:10px;align-items:center"><div class="stars">⭐ <span id="starN">0</span></div><img class="me" src="lesha.jpg" alt="Лёша" onclick="toPicker()" style="cursor:pointer"></div>
   </header>
 
   <section class="screen on" id="home">
@@ -150,19 +150,19 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div id="dinoHome" style="position:relative"></div>
     </div>
     <div class="tiles">
-      <button class="tile" onclick="startBalls()"><div class="ic">🎈</div><span>Шарики</span></button>
-      <button class="tile" onclick="startZoo()"><div class="ic">🐮</div><span>Кто как говорит</span></button>
-      <button class="tile" onclick="startFeed()"><div class="ic">🍓</div><span>Накорми Топу</span></button>
-      <button class="tile" onclick="startBlocks()"><div class="ic">🧱</div><span>Построй башню</span></button>
-      <button class="tile" onclick="startCars()"><div class="ic">🚗</div><span>Машинки</span></button>
-      <button class="tile" onclick="startPuzzle()"><div class="ic">🧩</div><span>Пазл</span></button>
-      <button class="tile" onclick="startTidy()"><div class="ic">🧹</div><span>Наведём порядок</span></button>
-      <button class="tile" onclick="startDress()"><div class="ic">👕</div><span>Одень Топу</span></button>
-      <button class="tile" onclick="go('tales')"><div class="ic">📖</div><span>Сказки</span></button>
-      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic">✅</div><span>Мои дела</span></button>
-      <button class="tile" onclick="go('toyshop')"><div class="ic">🛒</div><span>Магазин игрушек</span></button>
-      <button class="tile" onclick="go('shop')"><div class="ic">👑</div><span>Наряды Топы</span></button>
-      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic">🤒</div><span>Как ты себя чувствуешь?</span></button>
+      <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/ic/balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
+      <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/ic/cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
+      <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/ic/strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
+      <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/ic/blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
+      <button class="tile" onclick="startCars()"><div class="ic"><img src="img/ic/car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
+      <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/ic/puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
+      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
+      <button class="tile" onclick="startDress()"><div class="ic"><img src="img/ic/shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
+      <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/ic/book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
+      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/ic/check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
+      <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/ic/cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
+      <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/ic/crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
+      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/ic/sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
     </div>
     <div class="parent"><button onclick="go('parent')">Для родителей</button></div>
   </section>

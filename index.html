@@ -55,6 +55,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
 .bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
 .bubble.down:before{top:auto;bottom:-14px;border-top:12px solid var(--line);border-bottom:0}
+.say img{width:28px;height:28px;object-fit:contain;display:block;margin:auto}
 .say{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;background:var(--gold2);font-size:18px}
 
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
@@ -242,7 +243,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <!-- ДОМ -->
   <section class="screen on" id="home">
     <div class="stage">
-      <div class="bubble down" id="homeSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble down" id="homeSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
       <div id="owlHome"></div>
     </div>
     <div class="mission" id="missionBox" style="display:none">
@@ -261,7 +262,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="btn" onclick="momDone()">Сделала!</button>
     </div>
     <div class="cards">
-      <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic">🧹</div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
+      <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
       <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
@@ -275,7 +276,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="stage">
       <div id="owlTalk"></div>
       <div class="progress" id="talkProg"></div>
-      <div class="bubble" id="talkSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble" id="talkSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
       <div id="talkInput" style="width:100%;display:flex;flex-direction:column;align-items:center;margin-top:14px">
         <textarea id="talkText" placeholder="Напиши тут… или расскажи вслух маме"></textarea>
         <div class="chips" id="talkChips"></div>
@@ -290,7 +291,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="stage">
       <div id="owlGame"></div>
       <div class="progress" id="gameProg"></div>
-      <div class="bubble" id="gameSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble" id="gameSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="gameBody">
       <div class="word" id="gameWord"></div>
@@ -304,7 +305,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <section class="screen" id="help">
     <div class="stage">
       <div id="owlHelp"></div>
-      <div class="bubble" id="helpSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble" id="helpSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div class="tasks" id="helpMenu"></div>
     <div id="helpBody" style="display:none">
@@ -320,7 +321,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="stage">
       <div id="owlEng"></div>
       <div class="progress" id="engProg"></div>
-      <div class="bubble" id="engSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble" id="engSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="engBody">
       <div class="eq" id="engQ"></div>
@@ -334,7 +335,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <section class="screen" id="shop">
     <div class="stage">
       <div id="owlShop"></div>
-      <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать">🔊</button><span></span></div>
+      <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div class="shop" id="shopList"></div>
   </section>
@@ -642,11 +643,7 @@ function loadPhoto(inp){
   };im.src=URL.createObjectURL(f);
 }
 function clearPhoto(){try{localStorage.removeItem(PHOTO_KEY)}catch(e){}showPhoto()}
-function meClick(){
-  const scr=document.querySelector('.screen.on').id,isBaby=scr==='eng';
-  const t=isBaby?pick(['Алиса! Это ты! Моя любимая сестричка!','Угу! Ты самая добрая!']):pick(['Это ты, Алиса! Самая любопытная исследовательница!','Алиса пришла! Ух-ух, как я рада!','Привет, учительница Алиса!']);
-  say(scr,t);speak(typo(t),isBaby?'baby':'uh');cheer();
-}
+function meClick(){showPick()}
 const BABY_TICKLE=['Угу-угу! Хи-хи!','Ой! Я маленький, но пушистый!','Алиса, ты моя самая любимая!','Угу! Обними меня!'];
 
 /* ---------- общее ---------- */
@@ -855,7 +852,7 @@ function startLesha(){
   const I=document.getElementById('helpIdea');I.style.display='';
   let last=-1;
   const next=()=>{let i;do{i=Math.floor(Math.random()*LESHA_IDEAS.length)}while(i===last&&LESHA_IDEAS.length>1);last=i;
-    const x=LESHA_IDEAS[i];I.innerHTML='<button class="say" aria-label="Послушать">🔊</button><span class="ic"></span><span></span>';I.children[1].textContent=x.ic;I.children[2].textContent=typo(x.t);
+    const x=LESHA_IDEAS[i];I.innerHTML='<button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span class="ic"></span><span></span>';I.children[1].textContent=x.ic;I.children[2].textContent=typo(x.t);
     I.children[0].onclick=()=>speak(typo(x.t),'uh');
     say('help',pick(['Вот моя идея!','А как тебе такая игра?','Лёше точно понравится!','Попробуем вот так?']))};
   next();
