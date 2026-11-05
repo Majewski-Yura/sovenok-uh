@@ -47,6 +47,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .wing{transform-box:fill-box;transform-origin:50% 10%}
 @keyframes flap{50%{transform:rotate(-25deg)}}
 .owl .acc{display:none}
+.owl{overflow:visible}
 
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
 .bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
@@ -57,7 +58,10 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .card{background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:18px;text-align:left;box-shadow:var(--shadow);transition:transform .15s}
 .card:hover{transform:translateY(-3px)}
 .card:active{transform:translateY(2px);box-shadow:none}
-.card .ic{font-size:36px}
+.card .ic{font-size:36px;height:64px;display:flex;align-items:flex-end}
+.ic img{height:64px;width:auto;display:block}
+.mission .ic img{height:72px}
+.rule:not(:empty)::before{content:"";display:inline-block;width:52px;height:40px;background:url(img/zapiska.webp) center/contain no-repeat;vertical-align:middle;margin-right:10px}
 .card h3{margin:6px 0 4px;font-size:20px;font-weight:900}
 .card p{margin:0;color:var(--ink2);font-size:15px;line-height:1.35}
 .card.hot{border-color:var(--gold);background:var(--gold2)}
@@ -175,15 +179,15 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div id="owlHome"></div>
     </div>
     <div class="mission" id="missionBox" style="display:none">
-      <div class="ic">🎒</div>
+      <div class="ic"><img src="img/ryukzak.webp" alt="Рюкзак"></div>
       <div style="flex:1"><small>Задание от Уха на школьный день</small><p id="missionText"></p></div>
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
     <div class="cards">
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic">🌙</div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
-      <button class="card" onclick="startGame()"><div class="ic">✏️</div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
-      <button class="card" onclick="startEng()"><div class="ic">🐣</div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
-      <button class="card" onclick="go('shop')"><div class="ic">🎁</div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
+      <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
+      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
+      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic-uh-star.webp" alt="Ух со звездой"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
     <div class="foot"><button onclick="go('parent')">Для родителей</button></div>
   </section>
@@ -278,85 +282,40 @@ label.f{display:block;margin-top:14px;font-size:16px}
 
 <template id="owlTpl">
 <svg class="owl" viewBox="-80 -88 160 175" aria-label="Совёнок Ух">
-  <defs>
-    <radialGradient id="uhBody" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#e0ab86"/><stop offset=".55" stop-color="#b98060"/><stop offset="1" stop-color="#7f4d30"/></radialGradient>
-    <radialGradient id="uhBelly" cx="45%" cy="30%" r="80%"><stop offset="0" stop-color="#fff8ec"/><stop offset="1" stop-color="#e9cfa8"/></radialGradient>
-    <radialGradient id="uhWing" cx="35%" cy="25%" r="85%"><stop offset="0" stop-color="#b5805b"/><stop offset="1" stop-color="#704428"/></radialGradient>
-    <radialGradient id="uhEye" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#eadbc6"/></radialGradient>
-    <radialGradient id="uhPupil" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#55556e"/><stop offset="1" stop-color="#15151f"/></radialGradient>
-    <linearGradient id="uhBeak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc76e"/><stop offset="1" stop-color="#e4831a"/></linearGradient>
-    <radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-    <filter id="uhSoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/></filter>
-  </defs>
-  <ellipse cx="0" cy="74" rx="46" ry="8" fill="url(#uhShadow)"/>
-
-  <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="40" y="-52" font-size="18">z</text><text x="52" y="-66" font-size="13">z</text></g>
-  <path d="M-34 -36 q-6 -20 6 -22 q8 6 10 16 Z" fill="url(#uhWing)"/>
-  <path d="M34 -36 q6 -20 -6 -22 q-8 6 -10 16 Z" fill="url(#uhWing)"/>
-  <g class="acc acc-thermo"><g transform="rotate(-28 -42 20)"><rect x="-80" y="17" width="42" height="7" rx="3.5" fill="#f4f7fb" stroke="#9fb3c8" stroke-width="1.3"/><rect x="-66" y="19" width="26" height="3" rx="1.5" fill="#e8584f"/><path d="M-74 17 v2.5 M-70 17 v2.5 M-66 17 v2.5 M-62 17 v2.5" stroke="#9fb3c8" stroke-width="1"/></g></g>
-  <ellipse class="wing" cx="-47" cy="22" rx="11" ry="26" fill="url(#uhWing)"/>
-  <ellipse class="wing" cx="47" cy="22" rx="11" ry="26" fill="url(#uhWing)"/>
-  <ellipse cx="0" cy="12" rx="50" ry="54" fill="url(#uhBody)"/>
-  <ellipse cx="-14" cy="-26" rx="22" ry="12" fill="#fff" opacity=".35" filter="url(#uhSoft)"/>
-  <ellipse cx="0" cy="36" rx="30" ry="26" fill="url(#uhBelly)"/>
-  <path d="M-8 30 q3 4 6 0 M4 30 q3 4 6 0 M-2 42 q3 4 6 0" stroke="#d9b48c" stroke-width="2" fill="none"/>
-  <g class="acc acc-scarf"><path d="M-40 46 q40 18 80 0 l0 10 q-40 18 -80 0 Z" fill="#e8584f"/><path d="M18 56 l6 26 l10 -4 l-6 -24 Z" fill="#e8584f"/><path d="M-30 50 v10 M-14 54 v10 M2 55 v10 M18 54 v10" stroke="#fff" stroke-width="3" opacity=".6"/></g>
-  <circle cx="-19" cy="-4" r="17" fill="url(#uhEye)"/><circle cx="19" cy="-4" r="17" fill="url(#uhEye)"/>
-  <circle cx="-18" cy="-2" r="11" fill="url(#uhPupil)"/><circle cx="18" cy="-2" r="11" fill="url(#uhPupil)"/>
-  <circle cx="-22" cy="-7" r="4" fill="#fff"/><circle cx="14" cy="-7" r="4" fill="#fff"/>
-  <circle cx="-14" cy="2" r="1.8" fill="#fff"/><circle cx="22" cy="2" r="1.8" fill="#fff"/>
-  <ellipse class="lid" cx="-19" cy="-4" rx="18" ry="18" fill="url(#uhBody)"/>
-  <ellipse class="lid" cx="19" cy="-4" rx="18" ry="18" fill="url(#uhBody)"/>
-  <g class="zz"><path d="M-30 2 q11 8 22 0 M8 2 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
-  <path d="M-5 10 h10 l-5 7 Z" fill="url(#uhBeak)"/>
-  <ellipse cx="-34" cy="16" rx="7" ry="4" fill="#f7a8b8"/><ellipse cx="34" cy="16" rx="7" ry="4" fill="#f7a8b8"/>
-  <ellipse cx="-14" cy="66" rx="8" ry="4" fill="url(#uhBeak)"/><ellipse cx="14" cy="66" rx="8" ry="4" fill="url(#uhBeak)"/>
-  <g class="acc acc-glasses" fill="none" stroke="#3b6bd6" stroke-width="3.5"><circle cx="-19" cy="-4" r="20"/><circle cx="19" cy="-4" r="20"/><path d="M-2 -6 h4"/></g>
-  <g class="acc acc-cap"><path d="M-40 -34 q30 -40 76 -14 q8 -30 30 -24 q-30 -30 -70 -14 q-30 12 -36 52 Z" fill="#6c7cf0"/><circle cx="66" cy="-72" r="9" fill="#fff6c2"/><path d="M-42 -34 q38 -18 80 -10" stroke="#fff6c2" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="-6" cy="-52" r="3" fill="#fff6c2"/><circle cx="18" cy="-58" r="2.5" fill="#fff6c2"/></g>
-  <g class="acc acc-bow"><path d="M26 -46 l-18 -12 v24 Z M26 -46 l18 -12 v24 Z" fill="#ff8fb0"/><circle cx="26" cy="-46" r="6" fill="#ff6f9a"/></g>
-  <g class="acc acc-crown"><path d="M-26 -44 l4 -30 l12 16 l10 -22 l10 22 l12 -16 l4 30 Z" fill="#f5c84b" stroke="#d99a10" stroke-width="2"/><circle cx="0" cy="-58" r="4" fill="#ff6f9a"/><circle cx="-16" cy="-52" r="3" fill="#7fd99e"/><circle cx="16" cy="-52" r="3" fill="#8ec5ff"/></g>
-  <g class="acc acc-wizard"><path d="M-34 -38 L6 -86 L32 -40 Z" fill="#6c4ad6"/><ellipse cx="-1" cy="-38" rx="40" ry="7" fill="#5a3bb8"/><circle cx="-6" cy="-54" r="3" fill="#ffd84a"/><circle cx="10" cy="-68" r="2.5" fill="#ffd84a"/><path d="M10 -52 l2 5 h5 l-4 3 l2 5 l-5 -3 l-5 3 l2 -5 l-4 -3 h5 Z" fill="#ffd84a"/></g>
-  <g class="acc acc-wreath"><path d="M-40 -34 q40 -30 80 0" stroke="#6bbf59" stroke-width="5" fill="none"/><g fill="#ffd93b" stroke="#f0b400" stroke-width="1.5"><circle cx="-38" cy="-34" r="6"/><circle cx="-24" cy="-45" r="6"/><circle cx="-8" cy="-50" r="6"/><circle cx="8" cy="-50" r="6"/><circle cx="24" cy="-45" r="6"/><circle cx="38" cy="-34" r="6"/></g><g fill="#ff8fb0"><circle cx="-16" cy="-48" r="4"/><circle cx="16" cy="-48" r="4"/></g></g>
-  <g class="acc acc-phones"><path d="M-50 -4 q0 -60 50 -60 q50 0 50 60" stroke="#ff6f9a" stroke-width="7" fill="none"/><rect x="-60" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="44" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="-57" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/><rect x="47" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/></g>
-  <g class="acc acc-shades"><rect x="-39" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><rect x="3" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><path d="M-3 -8 h6" stroke="#1d1d2b" stroke-width="4"/><path d="M-32 -11 l8 0 M10 -11 l8 0" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></g>
-  <g class="acc acc-bowtie"><path d="M0 48 l-17 -10 v20 Z M0 48 l17 -10 v20 Z" fill="#3b6bd6"/><circle cx="0" cy="48" r="5" fill="#2d55b0"/><circle cx="-10" cy="45" r="2" fill="#fff" opacity=".7"/><circle cx="10" cy="51" r="2" fill="#fff" opacity=".7"/></g>
-  <g class="acc acc-medal"><path d="M-12 40 l12 20 l12 -20" stroke="#e8584f" stroke-width="7" fill="none"/><circle cx="0" cy="64" r="10" fill="#f5c84b" stroke="#d99a10" stroke-width="2.5"/><path d="M0 58 l2 4 h4 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 h4 Z" fill="#fff6c2"/></g>
-  <g class="acc acc-balloon"><path d="M50 40 q14 -30 12 -60" stroke="#999" stroke-width="1.5" fill="none"/><ellipse cx="62" cy="-38" rx="14" ry="17" fill="#ff5a6e"/><path d="M58 -21 l4 5 l4 -5 Z" fill="#ff5a6e"/><ellipse cx="57" cy="-44" rx="4" ry="6" fill="#fff" opacity=".45"/></g>
-  <g class="acc acc-pencil"><g transform="rotate(-25 52 40)"><rect x="47" y="4" width="11" height="46" fill="#f5c84b"/><rect x="47" y="0" width="11" height="7" rx="2" fill="#ff8fb0"/><path d="M47 50 l5.5 13 l5.5 -13 Z" fill="#f5d9b0"/><path d="M50.5 58 l2 5 l2 -5 Z" fill="#333"/><path d="M51 6 v44" stroke="#e0a400" stroke-width="1.5"/></g></g>
-  <g class="acc acc-book"><rect x="-26" y="40" width="52" height="34" rx="4" fill="#7fd99e" stroke="#3f9a62" stroke-width="2.5"/><path d="M0 40 v34" stroke="#3f9a62" stroke-width="2.5"/><path d="M-20 50 h14 M-20 58 h14 M6 50 h14 M6 58 h14" stroke="#fff" stroke-width="2.5"/></g>
+  <defs><radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="11" cy="72" rx="44" ry="7" fill="url(#uhShadow)"/>
+  <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="48" y="-62" font-size="18">z</text><text x="60" y="-76" font-size="13">z</text></g>
+  <g class="body"><image class="pose" href="img/uh-hello.webp" x="-79.35" y="-82" width="158.7" height="156"/>
+  <circle class="lid" cx="-8" cy="-37.4" r="14.5" fill="#efdcbd"/>
+  <circle class="lid" cx="29.7" cy="-37.4" r="14.5" fill="#efdcbd"/>
+  <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  <g class="acc acc-thermo" transform="translate(118 -30)"><g transform="rotate(-28 -42 20)"><rect x="-80" y="17" width="42" height="7" rx="3.5" fill="#f4f7fb" stroke="#9fb3c8" stroke-width="1.3"/><rect x="-66" y="19" width="26" height="3" rx="1.5" fill="#e8584f"/><path d="M-74 17 v2.5 M-70 17 v2.5 M-66 17 v2.5 M-62 17 v2.5" stroke="#9fb3c8" stroke-width="1"/></g></g>
+  <g class="acc acc-glasses" transform="translate(10.8 -33.4)" fill="none" stroke="#3b6bd6" stroke-width="3.5"><circle cx="-19" cy="-4" r="20"/><circle cx="19" cy="-4" r="20"/><path d="M-2 -6 h4"/></g>
+  <g class="acc acc-cap" transform="translate(10.8 -31) scale(.95)"><path d="M-40 -34 q30 -40 76 -14 q8 -30 30 -24 q-30 -30 -70 -14 q-30 12 -36 52 Z" fill="#6c7cf0"/><circle cx="66" cy="-72" r="9" fill="#fff6c2"/><path d="M-42 -34 q38 -18 80 -10" stroke="#fff6c2" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="-6" cy="-52" r="3" fill="#fff6c2"/><circle cx="18" cy="-58" r="2.5" fill="#fff6c2"/></g>
+  <g class="acc acc-bow" transform="translate(10.8 -31) scale(.95)"><path d="M26 -46 l-18 -12 v24 Z M26 -46 l18 -12 v24 Z" fill="#ff8fb0"/><circle cx="26" cy="-46" r="6" fill="#ff6f9a"/></g>
+  <g class="acc acc-crown" transform="translate(10.8 -31) scale(.95)"><path d="M-26 -44 l4 -30 l12 16 l10 -22 l10 22 l12 -16 l4 30 Z" fill="#f5c84b" stroke="#d99a10" stroke-width="2"/><circle cx="0" cy="-58" r="4" fill="#ff6f9a"/><circle cx="-16" cy="-52" r="3" fill="#7fd99e"/><circle cx="16" cy="-52" r="3" fill="#8ec5ff"/></g>
+  <g class="acc acc-wizard" transform="translate(10.8 -31) scale(.95)"><path d="M-34 -38 L6 -86 L32 -40 Z" fill="#6c4ad6"/><ellipse cx="-1" cy="-38" rx="40" ry="7" fill="#5a3bb8"/><circle cx="-6" cy="-54" r="3" fill="#ffd84a"/><circle cx="10" cy="-68" r="2.5" fill="#ffd84a"/><path d="M10 -52 l2 5 h5 l-4 3 l2 5 l-5 -3 l-5 3 l2 -5 l-4 -3 h5 Z" fill="#ffd84a"/></g>
+  <g class="acc acc-wreath" transform="translate(10.8 -31) scale(.95)"><path d="M-40 -34 q40 -30 80 0" stroke="#6bbf59" stroke-width="5" fill="none"/><g fill="#ffd93b" stroke="#f0b400" stroke-width="1.5"><circle cx="-38" cy="-34" r="6"/><circle cx="-24" cy="-45" r="6"/><circle cx="-8" cy="-50" r="6"/><circle cx="8" cy="-50" r="6"/><circle cx="24" cy="-45" r="6"/><circle cx="38" cy="-34" r="6"/></g><g fill="#ff8fb0"><circle cx="-16" cy="-48" r="4"/><circle cx="16" cy="-48" r="4"/></g></g>
+  <g class="acc acc-phones" transform="translate(10.8 -31) scale(.95)"><path d="M-50 -4 q0 -60 50 -60 q50 0 50 60" stroke="#ff6f9a" stroke-width="7" fill="none"/><rect x="-60" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="44" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="-57" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/><rect x="47" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/></g>
+  <g class="acc acc-shades" transform="translate(10.8 -33.4)"><rect x="-39" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><rect x="3" y="-17" width="36" height="24" rx="10" fill="#1d1d2b"/><path d="M-3 -8 h6" stroke="#1d1d2b" stroke-width="4"/><path d="M-32 -11 l8 0 M10 -11 l8 0" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7"/></g>
+  <g class="acc acc-bowtie" transform="translate(12 -20) scale(1.15)"><path d="M0 48 l-17 -10 v20 Z M0 48 l17 -10 v20 Z" fill="#3b6bd6"/><circle cx="0" cy="48" r="5" fill="#2d55b0"/><circle cx="-10" cy="45" r="2" fill="#fff" opacity=".7"/><circle cx="10" cy="51" r="2" fill="#fff" opacity=".7"/></g>
+  <g class="acc acc-medal" transform="translate(12 -20) scale(1.15)"><path d="M-12 40 l12 20 l12 -20" stroke="#e8584f" stroke-width="7" fill="none"/><circle cx="0" cy="64" r="10" fill="#f5c84b" stroke="#d99a10" stroke-width="2.5"/><path d="M0 58 l2 4 h4 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 h4 Z" fill="#fff6c2"/></g>
+  <g class="acc acc-balloon" transform="translate(12 -20) scale(1.15)"><path d="M50 40 q14 -30 12 -60" stroke="#999" stroke-width="1.5" fill="none"/><ellipse cx="62" cy="-38" rx="14" ry="17" fill="#ff5a6e"/><path d="M58 -21 l4 5 l4 -5 Z" fill="#ff5a6e"/><ellipse cx="57" cy="-44" rx="4" ry="6" fill="#fff" opacity=".45"/></g>
+  <g class="acc acc-pencil" transform="translate(12 -20) scale(1.15)"><g transform="rotate(-25 52 40)"><rect x="47" y="4" width="11" height="46" fill="#f5c84b"/><rect x="47" y="0" width="11" height="7" rx="2" fill="#ff8fb0"/><path d="M47 50 l5.5 13 l5.5 -13 Z" fill="#f5d9b0"/><path d="M50.5 58 l2 5 l2 -5 Z" fill="#333"/><path d="M51 6 v44" stroke="#e0a400" stroke-width="1.5"/></g></g>
+  <g class="acc acc-book" transform="translate(12 -20) scale(1.15)"><rect x="-26" y="40" width="52" height="34" rx="4" fill="#7fd99e" stroke="#3f9a62" stroke-width="2.5"/><path d="M0 40 v34" stroke="#3f9a62" stroke-width="2.5"/><path d="M-20 50 h14 M-20 58 h14 M6 50 h14 M6 58 h14" stroke="#fff" stroke-width="2.5"/></g></g>
 </svg>
 </template>
 
 <template id="babyTpl">
 <svg class="owl small" viewBox="-80 -88 160 175" aria-label="Братик Угу">
-  <defs>
-    <radialGradient id="bbBody" cx="38%" cy="30%" r="75%"><stop offset="0" stop-color="#f6d2b0"/><stop offset=".55" stop-color="#e3b892"/><stop offset="1" stop-color="#b9845c"/></radialGradient>
-    <radialGradient id="bbBelly" cx="45%" cy="30%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3dcbc"/></radialGradient>
-    <radialGradient id="bbWing" cx="35%" cy="25%" r="85%"><stop offset="0" stop-color="#dcaa82"/><stop offset="1" stop-color="#a8724c"/></radialGradient>
-    <radialGradient id="bbEye" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#eadbc6"/></radialGradient>
-    <radialGradient id="bbPupil" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#55556e"/><stop offset="1" stop-color="#15151f"/></radialGradient>
-    <linearGradient id="bbBeak" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc76e"/><stop offset="1" stop-color="#e4831a"/></linearGradient>
-    <radialGradient id="bbShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-    <filter id="bbSoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/></filter>
-  </defs>
-  <ellipse cx="0" cy="74" rx="46" ry="8" fill="url(#bbShadow)"/>
-
-  <path d="M0 -44 q-4 -18 8 -24 q-2 10 4 14 q-6 2 -12 10 Z" fill="url(#bbWing)"/>
-  <ellipse class="wing" cx="-44" cy="26" rx="10" ry="20" fill="url(#bbWing)"/>
-  <ellipse class="wing" cx="44" cy="26" rx="10" ry="20" fill="url(#bbWing)"/>
-  <ellipse cx="0" cy="14" rx="48" ry="50" fill="url(#bbBody)"/>
-  <ellipse cx="-14" cy="-26" rx="22" ry="12" fill="#fff" opacity=".45" filter="url(#bbSoft)"/>
-  <ellipse cx="0" cy="38" rx="28" ry="22" fill="url(#bbBelly)"/>
-  <path d="M-8 34 q3 4 6 0 M4 34 q3 4 6 0" stroke="#e3c39e" stroke-width="2" fill="none"/>
-  <circle cx="-19" cy="0" r="19" fill="url(#bbEye)"/><circle cx="19" cy="0" r="19" fill="url(#bbEye)"/>
-  <circle cx="-18" cy="2" r="13" fill="url(#bbPupil)"/><circle cx="18" cy="2" r="13" fill="url(#bbPupil)"/>
-  <circle cx="-23" cy="-4" r="5" fill="#fff"/><circle cx="13" cy="-4" r="5" fill="#fff"/>
-  <circle cx="-13" cy="7" r="2" fill="#fff"/><circle cx="23" cy="7" r="2" fill="#fff"/>
-  <ellipse class="lid" cx="-19" cy="0" rx="20" ry="20" fill="url(#bbBody)"/>
-  <ellipse class="lid" cx="19" cy="0" rx="20" ry="20" fill="url(#bbBody)"/>
-  <path d="M-4 16 h8 l-4 6 Z" fill="url(#bbBeak)"/>
-  <ellipse cx="-33" cy="20" rx="7" ry="4" fill="#f7a8b8"/><ellipse cx="33" cy="20" rx="7" ry="4" fill="#f7a8b8"/>
-  <ellipse cx="-12" cy="63" rx="7" ry="4" fill="url(#bbBeak)"/><ellipse cx="12" cy="63" rx="7" ry="4" fill="url(#bbBeak)"/>
+  <defs><radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="11" cy="72" rx="44" ry="7" fill="url(#uhShadow)"/>
+  <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="48" y="-62" font-size="18">z</text><text x="60" y="-76" font-size="13">z</text></g>
+  <g class="body"><image class="pose" href="img/ugu.webp" x="-79.35" y="-82" width="158.7" height="156"/>
+  <circle class="lid" cx="-8" cy="-37.4" r="14.5" fill="#efdcbd"/>
+  <circle class="lid" cx="29.7" cy="-37.4" r="14.5" fill="#efdcbd"/>
+  <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+</g>
 </svg>
 </template>
 
@@ -455,8 +414,13 @@ function mountOwl(id,small,tpl){
     if(svg.classList.contains('sleep')){speak('Хр-р-р…','uh');return}
     cheer(svg);speak(tpl?'Угу!':'Ух-ух!',tpl?'baby':'uh');
   });
-  el.appendChild(svg);owls[id]=svg;dress();
+  el.appendChild(svg);owls[id]=svg;if(!tpl)setPose(id);dress();
 }
+/* позы Уха: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
+const POSE={owlHome:'hello',owlTalk:'hello',owlGame:'pointer',owlShop:'star'};
+['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='img/uh-'+n+'.webp'});
+function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);im.setAttribute('href','img/uh-'+(name||POSE[id]||'hello')+'.webp')}
+function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;setPose(id,'star');svg._pt=setTimeout(()=>setPose(id,back),1700)}
 function dress(){
   Object.values(owls).forEach(svg=>{
     svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
@@ -504,7 +468,7 @@ function say(screen,text,silent){
 function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
 function setStars(){document.getElementById('starN').textContent=S.stars}
 function addStars(n,why){
-  S.stars+=n;save();setStars();
+  S.stars+=n;save();setStars();flashStar(current());
   const t=document.createElement('div');t.className='toast';t.textContent='+'+n+' ⭐ '+(why||'');document.body.appendChild(t);setTimeout(()=>t.remove(),1800);
   const r=document.querySelector('.stars').getBoundingClientRect();
   for(let i=0;i<10;i++){const s=document.createElement('div');s.className='burst';s.textContent=pick(['⭐','✨','🌟']);
@@ -642,7 +606,7 @@ const HOLIDAY_M=['Придумай с Лёшей общую игру и науч
 const SICK_M=['Расскажи Лёше сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
 let talk=null;
 function startTalk(){
-  go('talk');
+  go('talk');setPose('owlTalk');
   const md=mode();
   let qs;
   if(md==='sick')qs=[SICK_FIRST].concat(shuffle(SICK_Q).slice(0,2));
@@ -667,7 +631,7 @@ function talkNext(){
   addStars(1,'за рассказ');
   talk.i++;
   if(talk.i<talk.qs.length){say('talk',/Лёш/.test(talk.qs[talk.i-1].q)&&/мешал|Шумел/.test(a)?LESHA_REACT:pick(mode()==='sick'?SOFT_REACT:REACT));setTimeout(talkShow,1600);return}
-  S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
+  setTimeout(()=>setPose('owlTalk','book'),2000);S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
   document.getElementById('talkInput').style.display='none';document.getElementById('talkEnd').style.display='flex';
   document.getElementById('talkProg').innerHTML=talk.qs.map(()=>'<i class="done"></i>').join('');
   setTimeout(()=>{addStars(2,'за разговор с Ухом');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
@@ -709,7 +673,7 @@ function gameStep(){
   document.getElementById('gameNextBtn').textContent='Дальше →';document.getElementById('gameNextBtn').onclick=gameStep;
   const w=G.list[G.i];
   document.getElementById('gameWord').innerHTML=(w.pre?'<span style="font-size:.5em;color:var(--ink2)">'+w.pre+'</span>':'')+w.p+'<span class="gap" id="gap">?</span>'+w.s;
-  document.getElementById('gameRule').textContent='';
+  document.getElementById('gameRule').textContent='';setPose('owlGame','pointer');
   say('game',pick(DOUBT));
   const box=document.getElementById('gameOpts');box.innerHTML='';
   shuffle(w.o.map((o,k)=>({o,ok:k===0}))).forEach(x=>{
@@ -718,7 +682,7 @@ function gameStep(){
       if(b.classList.contains('no')||document.getElementById('gap').classList.contains('ok'))return;
       if(x.ok){
         b.classList.add('yes');const g=document.getElementById('gap');g.textContent=x.o||'';g.classList.add('ok');if(!x.o)g.style.minWidth='0';
-        document.getElementById('gameRule').textContent=typo(w.r);say('game',pick(OK));cheer();
+        document.getElementById('gameRule').textContent=typo(w.r);say('game',pick(OK));cheer();flashStar('owlGame','book');
         document.getElementById('gameNext').style.display='flex';
       }else{b.classList.add('no');say('game',pick(OOPS))}
     };
