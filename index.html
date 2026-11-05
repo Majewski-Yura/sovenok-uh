@@ -200,6 +200,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <div class="pin-dots" id="pinDots"><i></i><i></i><i></i><i></i></div>
   <div class="pin-pad" id="pinPad"></div>
   <div class="row"><button class="btn soft" onclick="pinClose()">Отмена</button></div>
+  <button id="pinForgot" onclick="pinForgot()" style="margin-top:10px;color:var(--ink2);font-size:14px;text-decoration:underline">Забыли код?</button>
 </div></div>
 <div class="reveal" id="confModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card" style="max-width:560px;text-align:left">
   <h2 style="margin:0 0 6px;text-align:center">Алиса помогла?</h2><p style="color:var(--ink2);text-align:center;margin-top:0">Подтвердите — и&nbsp;она получит звёздочки.</p>
@@ -441,13 +442,13 @@ try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catc
 if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
 /* разовое обнуление звёзд (04.11.2026) */
 if(S.starsReset!==1){S.stars=0;S.starsReset=1;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}cloudPush()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!fb&&!applyingRemote)localDirty=true;cloudPush()}
 
 /* ---------- общая база (Firebase): одни и те же звёзды, вещи и дневник на всех устройствах семьи ---------- */
 /* firebaseConfig проекта sovenok-uh (публичный, доступ ограничен правилами Firestore и семейным кодом) */
 const FB_CONFIG={apiKey:"AIzaSyDLZHhRwXYQU8fAOOlp4LzCODahdQuQ_mA",authDomain:"sovenok-uh.firebaseapp.com",projectId:"sovenok-uh",storageBucket:"sovenok-uh.firebasestorage.app",messagingSenderId:"495272253062",appId:"1:495272253062:web:18300d5cae9bae89756307"};
 const FB_V='10.12.2',FAM_KEY='uh-family';
-let fb=null,famId=null,applyingRemote=false,pushT=null,syncState='',joining=false;
+let fb=null,famId=null,applyingRemote=false,pushT=null,syncState='',joining=false,localDirty=false,pushing=false;
 try{
   const q=new URLSearchParams(location.search).get('family');
   if(q&&/^[A-Za-z0-9]{20,}$/.test(q)){if(localStorage.getItem(FAM_KEY)!==q)joining=true;localStorage.setItem(FAM_KEY,q);history.replaceState(null,'',location.pathname)}
@@ -457,7 +458,8 @@ const LOCAL_ONLY=['voices'];
 function cloudData(){const o=JSON.parse(JSON.stringify(S));LOCAL_ONLY.forEach(k=>delete o[k]);if(o.diary&&o.diary.length>300)o.diary=o.diary.slice(0,300);return o}
 function cloudPush(){
   if(!fb||applyingRemote)return;clearTimeout(pushT);
-  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>setSync('ok')).catch(()=>setSync('err'))},700);
+  pushing=true;
+  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>{pushing=false;setSync('ok')}).catch(()=>{pushing=false;setSync('err')})},700);
 }
 /* первое подключение устройства к семье: объединяем, а не затираем */
 function mergeJoin(r){
@@ -493,9 +495,11 @@ async function cloudInit(){
     const db=F.getFirestore(app),ref=F.doc(db,'families',famId);
     const snap=await F.getDoc(ref);
     fb={ref,setDoc:F.setDoc,ts:F.serverTimestamp};
-    if(snap.exists()&&snap.data().alisa){const r=snap.data().alisa;if(joining){applyRemote(mergeJoin(r));cloudPush()}else applyRemote(r)}else cloudPush();
+    /* изменения, сделанные до подключения к базе, важнее облачных */
+    if(snap.exists()&&snap.data().alisa){const r=snap.data().alisa;if(joining){applyRemote(mergeJoin(r));cloudPush()}else if(localDirty)cloudPush();else applyRemote(r)}else cloudPush();
+    localDirty=false;
     joining=false;
-    F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites)return;const d=x.data();if(d&&d.alisa)applyRemote(d.alisa)});
+    F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites||pushing)return;const d=x.data();if(d&&d.alisa)applyRemote(d.alisa)});
     setSync('ok');
   }catch(e){fb=null;setSync('err');console.warn('cloud',e)}
 }
@@ -892,7 +896,16 @@ function askPin(cb){
   document.getElementById('pinHint').textContent=typo(set?'4 цифры. Алисе его не говорите — им подтверждаются домашние дела и открывается этот раздел.':'Введите код, чтобы продолжить.');
   const P=document.getElementById('pinPad');P.innerHTML='';
   ['1','2','3','4','5','6','7','8','9','','0','⌫'].forEach(k=>{const b=document.createElement('button');b.textContent=k;if(!k)b.style.visibility='hidden';b.onclick=()=>pinKey(k);P.appendChild(b)});
+  document.getElementById('pinForgot').style.display=set?'none':'';
   pinDraw();document.getElementById('pinModal').classList.add('on');
+}
+/* сброс кода: пример для взрослых */
+function pinForgot(){
+  const a=12+Math.floor(Math.random()*15),b=13+Math.floor(Math.random()*14);
+  const v=prompt('Сброс кода мамы или папы. Сколько будет '+a+' × '+b+'?');
+  if(v===null)return;
+  if(parseInt(v,10)===a*b){S.pin='';save();const cb=pinCb;askPin(cb);document.getElementById('pinHint').textContent=typo('Старый код сброшен. Придумайте новый — 4 цифры.')}
+  else alert('Неверно. Код не сброшен.');
 }
 function pinClose(){document.getElementById('pinModal').classList.remove('on');pinCb=null;pinVal=''}
 function pinOk(){
