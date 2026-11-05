@@ -64,6 +64,10 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .plate{display:flex;justify-content:center;gap:18px;margin-top:16px;min-height:120px;flex-wrap:wrap}
 .food{font-size:96px;line-height:1;transition:transform .6s cubic-bezier(.5,-.3,.7,1),opacity .6s}
 .food.gone{opacity:0}
+.dragging{position:relative;z-index:60;transition:none!important;cursor:grabbing;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
+.dz-over{outline:6px dashed var(--gold);outline-offset:4px;border-radius:28px}
+.tray{display:flex;gap:14px;justify-content:center;margin-top:12px}
+.tray .src{width:96px;height:46px;border-radius:12px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),inset 0 6px 0 rgba(255,255,255,.35);touch-action:none;cursor:grab}
 .big-num{font-size:84px;font-weight:900;color:var(--green2);text-align:center;height:96px}
 /* самочувствие */
 .faces{display:flex;justify-content:center;gap:18px;margin-top:22px}
@@ -202,7 +206,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 
   <section class="screen" id="blocks">
     <div class="stage"><div class="bubble" id="blocksSay"></div><img class="spose" src="img/topa-blocks.webp" alt="Топа"></div>
-    <div class="build" id="build" onclick="addBlock()"></div>
+    <div class="build" id="build"></div>
+    <div class="tray" id="tray"></div>
     <div style="text-align:center;margin-top:12px"><button class="bigbtn" id="boom" onclick="boom()" style="visibility:hidden">💥 Бух!</button></div>
   </section>
 
@@ -414,20 +419,44 @@ const FOODS=[
 const NUMS=['Один!','Два!','Три!'];
 const YUM=['Ням-ням! Спасибо, Лёша!','Вкусно! Ещё хочу!','Ам-ам! Я сытый динозаврик!'];
 let F=null;
+/* ---------- перетаскивание пальцем ---------- */
+function hitEl(t,x,y){const r=t.getBoundingClientRect(),p=30;return x>r.left-p&&x<r.right+p&&y>r.top-p&&y<r.bottom+p}
+function draggable(el,o){
+  el.style.touchAction='none';
+  el.addEventListener('pointerdown',e=>{
+    if(el.classList.contains('gone')||el.classList.contains('used'))return;
+    e.preventDefault();const sx=e.clientX,sy=e.clientY,base=el.style.transform||'';let moved=false,dx=0,dy=0;
+    try{el.setPointerCapture(e.pointerId)}catch(_){}
+    el.classList.add('dragging');
+    const T=()=>o.targets().filter(Boolean);
+    const mv=ev=>{dx=ev.clientX-sx;dy=ev.clientY-sy;if(Math.hypot(dx,dy)>8)moved=true;
+      el.style.transform='translate('+dx+'px,'+dy+'px) scale(1.15)';T().forEach(t=>t.classList.toggle('dz-over',hitEl(t,ev.clientX,ev.clientY)))};
+    const up=ev=>{
+      el.removeEventListener('pointermove',mv);el.removeEventListener('pointerup',up);el.removeEventListener('pointercancel',up);
+      el.classList.remove('dragging');T().forEach(t=>t.classList.remove('dz-over'));
+      const t=moved&&T().find(t=>hitEl(t,ev.clientX,ev.clientY));
+      const back=()=>{el.style.transition='transform .3s';el.style.transform=base;setTimeout(()=>{el.style.transition=''},320)};
+      if(t){if(o.drop(t,el,dx,dy)===false)back()}
+      else{back();if(!moved)(o.tap||dragHint)(el)}
+    };
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+  });
+}
+function dragHint(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no');speak(pick(['Перетащи пальчиком!','Потяни меня пальчиком!','Тяни-тяни!']))}
+function vanish(el,dx,dy){el.style.transition='transform .35s,opacity .35s';el.style.transform='translate('+dx+'px,'+dy+'px) scale(.2)';el.classList.add('gone')}
 function startFeed(){go('feed');feedRound()}
 function feedRound(){
   const f=pick(FOODS),n=1+Math.floor(Math.random()*3);F={n,got:0,busy:false};
   document.getElementById('feedNum').textContent='';
   const pl=document.getElementById('plate');pl.innerHTML='';
   const total=Math.min(5,n+1+Math.floor(Math.random()*2));
-  for(let i=0;i<total;i++){const b=document.createElement('button');b.className='food';b.textContent=f.e;b.onclick=()=>eat(b);pl.appendChild(b)}
+  for(let i=0;i<total;i++){const b=document.createElement('button');b.className='food';b.textContent=f.e;draggable(b,{targets:()=>[document.getElementById('dinoFeed')],drop:(t,el,dx,dy)=>eat(el,dx,dy)});pl.appendChild(b)}
   dinos.dinoFeed.classList.add('eat');say('feed',f.ask[n-1]);
 }
-function eat(b){
-  if(!F||F.busy||b.classList.contains('gone'))return;
-  if(F.got>=F.n)return;
-  const d=dinos.dinoFeed.getBoundingClientRect(),r=b.getBoundingClientRect();
-  b.style.transform='translate('+(d.left+d.width*.45-r.left-r.width/2)+'px,'+(d.top+d.height*.45-r.top-r.height/2)+'px) scale(.3)';b.classList.add('gone');
+function eat(b,dx,dy){
+  if(!F||F.busy||b.classList.contains('gone'))return false;
+  if(F.got>=F.n){speak('Я уже наелся! Спасибо!');return false}
+  vanish(b,dx,dy);hop(dinos.dinoFeed);
   F.got++;document.getElementById('feedNum').textContent=F.got;speak(NUMS[F.got-1]);
   if(F.got===F.n){F.busy=true;
     setTimeout(()=>{dinos.dinoFeed.classList.remove('eat');hop(dinos.dinoFeed);say('feed',pick(YUM));addStar()},900);
@@ -469,11 +498,15 @@ function renderShop(quiet){
 const COUNT=['Один!','Два!','Три!','Четыре!','Пять!','Шесть!'];
 const BLOCK_COLORS=['#ff5a5f','#4a8cff','#ffd23f','#3ccf6e','#ff9a3c','#a77bff'];
 let tower=0,towerDone=false;
-function startBlocks(){go('blocks');resetTower();say('blocks','Давай построим башню! Нажимай, и кубики будут падать.')}
+function startBlocks(){go('blocks');resetTower();say('blocks','Давай построим башню! Тащи кубики наверх.');
+  const tr=document.getElementById('tray');tr.innerHTML='';
+  BLOCK_COLORS.slice(0,3).forEach(c=>{const b=document.createElement('div');b.className='src';b.style.background=c;
+    draggable(b,{targets:()=>[document.getElementById('build')],drop:()=>{addBlock(c);return false}});tr.appendChild(b)});
+}
 function resetTower(){tower=0;towerDone=false;document.getElementById('build').innerHTML='';document.getElementById('boom').style.visibility='hidden'}
-function addBlock(){
+function addBlock(col){
   if(towerDone)return;
-  const b=document.createElement('div');b.className='block';b.style.background=BLOCK_COLORS[tower%BLOCK_COLORS.length];
+  const b=document.createElement('div');b.className='block';b.style.background=col||BLOCK_COLORS[tower%BLOCK_COLORS.length];
   b.style.marginLeft=(Math.random()*24-12)+'px';document.getElementById('build').appendChild(b);
   speak(COUNT[tower]);tower++;
   if(tower===6){towerDone=true;
@@ -518,7 +551,7 @@ function dinoPicture(){
 }
 function startPuzzle(){
   PICS=PICS||[{src:'img/topa-hello.webp',say:'Ура! Получилось! Это я, динозаврик Топа!'},{src:'img/uh-hello.webp',say:'Ура! Получилось! Это совушка Ух!'},{src:'img/ugu.webp',say:'Ура! Получилось! Это совёнок Угу!'},{src:'img/reveal/balloon.webp',say:'Ура! Получилось! Это Ух с шариком!'}];
-  go('puzzle');newPuzzle();say('puzzle','Собери картинку! Нажми на два кусочка, и они поменяются местами.');
+  go('puzzle');newPuzzle();say('puzzle','Собери картинку! Перетащи кусочек на другой, и они поменяются местами.');
 }
 function newPuzzle(){
   pzDone=false;pzSel=null;document.getElementById('pz').classList.remove('done');
@@ -529,7 +562,7 @@ function drawPuzzle(){
   const P=PICS[pzPic%PICS.length],g=document.getElementById('pz');g.innerHTML='';
   pzOrder.forEach((piece,pos)=>{const b=document.createElement('button');
     b.style.backgroundImage='url("'+P.src+'")';b.style.backgroundPosition=(piece%2?'100%':'0%')+' '+(piece>1?'100%':'0%');
-    if(pzSel===pos)b.className='sel';b.onclick=()=>tapPiece(pos);g.appendChild(b)});
+    if(pzSel===pos)b.className='sel';b.dataset.pos=pos;draggable(b,{targets:()=>[...g.children].filter(x=>x!==b),drop:(t)=>{pzSel=pos;tapPiece(+t.dataset.pos)},tap:()=>tapPiece(pos)});g.appendChild(b)});
 }
 function tapPiece(pos){
   if(pzDone)return;
@@ -549,13 +582,14 @@ function startTidy(){
   tidyLeft=items.length;
   items.forEach((it,i)=>{const b=document.createElement('button');b.className='thing';b.textContent=it.e;
     b.style.left=(4+(i%4)*24+Math.random()*6)+'%';b.style.top=(8+Math.floor(i/4)*45+Math.random()*12)+'%';b.style.transform='rotate('+(Math.random()*40-20)+'deg)';
-    b.onclick=()=>putAway(b,it.toy);room.appendChild(b)});
-  say('tidy','Ой, какой беспорядок! Давай уберём. Нажимай на вещи!');
+    draggable(b,{targets:()=>[document.getElementById('binToys'),document.getElementById('binTrash')],drop:(t,el,dx,dy)=>putAway(el,it.toy,t,dx,dy)});room.appendChild(b)});
+  say('tidy','Ой, какой беспорядок! Давай уберём. Игрушки тащи в коробку, а мусор — в ведро!');
 }
-function putAway(b,toy){
-  if(b.classList.contains('gone'))return;
-  const t=document.getElementById(toy?'binToys':'binTrash'),d=t.getBoundingClientRect(),r=b.getBoundingClientRect();
-  b.style.transform='translate('+(d.left+d.width/2-r.left-r.width/2)+'px,'+(d.top+d.height/2-r.top-r.height/2)+'px) scale(.3)';b.classList.add('gone');
+function putAway(b,toy,into,dx,dy){
+  if(b.classList.contains('gone'))return false;
+  const t=document.getElementById(toy?'binToys':'binTrash');
+  if(into!==t){speak(toy?'Ой! Игрушку — в коробку!':'Ой! Мусор — в ведро!');return false}
+  vanish(b,dx,dy);
   setTimeout(()=>{t.classList.remove('yum');void t.offsetWidth;t.classList.add('yum')},650);
   speak(toy?'Игрушку — в коробку!':'Мусор — в ведро!');tidyLeft--;
   if(!tidyLeft)setTimeout(()=>{say('tidy','Ура! Как чисто! Ты настоящий помощник!');addStar()},900);
@@ -567,11 +601,12 @@ let dressStep=0;
 function startDress(){
   go('dress');dressStep=0;document.getElementById('worn').innerHTML='';
   const c=document.getElementById('clothes');c.innerHTML='';
-  shuffle(DRESS.map((d,i)=>({...d,i}))).forEach(d=>{const b=document.createElement('button');b.textContent=d.e;b.onclick=()=>putOn(b,d.i);c.appendChild(b)});
-  say('dress','Топа идёт гулять! Помоги ему одеться. '+DRESS[0].say);
+  shuffle(DRESS.map((d,i)=>({...d,i}))).forEach(d=>{const b=document.createElement('button');b.textContent=d.e;draggable(b,{targets:()=>[document.getElementById('dinoDress')],drop:(t,el)=>putOn(el,d.i)});c.appendChild(b)});
+  say('dress','Топа идёт гулять! Перетащи одежду на Топу. '+DRESS[0].say);
 }
 function putOn(b,i){
-  if(i!==dressStep){b.classList.remove('no');void b.offsetWidth;b.classList.add('no');say('dress','Ой, не так! '+DRESS[dressStep].say);return}
+  if(i!==dressStep){b.classList.remove('no');void b.offsetWidth;b.classList.add('no');say('dress','Ой, не так! '+DRESS[dressStep].say);return false}
+  b.style.transform='';
   b.classList.add('used');const w=document.createElement('span');w.textContent=DRESS[i].e;document.getElementById('worn').appendChild(w);
   hop(dinos.dinoDress);dressStep++;
   if(dressStep<DRESS.length)say('dress','Молодец! '+DRESS[dressStep].say);

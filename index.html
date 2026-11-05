@@ -58,11 +58,15 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .say img{width:28px;height:28px;object-fit:contain;display:block;margin:auto}
 .say{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;background:var(--gold2);font-size:18px}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:20px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:20px}
 .card{background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:18px;text-align:left;box-shadow:var(--shadow);transition:transform .15s}
 .card:hover{transform:translateY(-3px)}
 .card:active{transform:translateY(2px);box-shadow:none}
-.card .ic{font-size:36px;height:64px;display:flex;align-items:flex-end}
+.card .ic{font-size:36px;height:120px;display:flex;align-items:center;justify-content:center}
+.cards .card{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:16px 12px 18px}
+.cards .card .ic img{height:112px!important;width:auto;max-width:100%;object-fit:contain}
+.cards .card p{display:none}
+.cards .card h3{font-size:19px;margin-top:8px}
 .ic img{height:64px;width:auto;display:block}
 .mission .ic img{height:72px}
 .rule:not(:empty)::before{content:"";display:inline-block;width:52px;height:40px;background:url(img/zapiska.webp) center/contain no-repeat;vertical-align:middle;margin-right:10px}
@@ -265,8 +269,8 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
-      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
-      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic-uh-star.webp" alt="Ух со звездой"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
+      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Угу и<h3>Угу и&nbsp;английский</h3>nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
+      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
     <div class="foot"><button onclick="openParent()">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
   </section>
