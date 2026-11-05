@@ -177,7 +177,6 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="pend" id="pendBox"><span style="font-size:36px">⏳</span><div style="flex:1" id="pendText"></div><button class="pbtn gold" onclick="openConfirm()">Подтвердить</button></div>
     <div class="tiles">
       <button class="tile" onclick="openGames()"><div class="ic"><img src="img/ic/toybox.webp" alt="" class="tpic"></div><span>Игры</span></button>
-      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/ic/book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
       <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/ic/check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
       <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/ic/cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
@@ -196,6 +195,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/ic/blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
       <button class="tile" onclick="startCars()"><div class="ic"><img src="img/ic/car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
       <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/ic/puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
+      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="startDress()"><div class="ic"><img src="img/ic/shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
     </div>
   </section>
@@ -426,7 +426,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','feed','blocks','cars','puzzle','dress'];
+const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
 function goBack(){if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
