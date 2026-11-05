@@ -125,6 +125,14 @@ label.f{display:block;margin-top:14px;font-size:16px}
 @keyframes rvpop{from{transform:scale(.4) rotate(-8deg);opacity:0}}
 .rv-card h2{margin:6px 0 4px;font-weight:900;font-size:26px}
 .rv-card p{margin:0 0 16px;font-size:19px;color:var(--ink2)}
+.pick{position:fixed;inset:0;z-index:30;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:10px}
+.pick.on{display:flex}
+.pick h1{font-weight:900;font-size:34px;margin:0 0 10px}
+.pick-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.pick-card{background:var(--bg2);border:5px solid var(--line);border-radius:36px;padding:18px 18px 14px;width:min(42vw,230px);display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:var(--shadow);transition:transform .15s}
+.pick-card:active{transform:scale(.95)}
+.pick-card img,.pick-card svg{width:min(32vw,170px);height:min(32vw,170px);border-radius:50%;object-fit:cover;background:#eafbe9}
+.pick-card span{font-size:28px;font-weight:900}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--gold);color:#3b2a20;font-weight:900;font-size:20px;padding:10px 22px;border-radius:999px;z-index:10;box-shadow:0 5px 0 #d08f00;animation:in .3s}
 .sky{position:fixed;inset:0;pointer-events:none;z-index:-1;display:none}
 :root.night .sky{display:block}
@@ -153,6 +161,13 @@ label.f{display:block;margin-top:14px;font-size:16px}
 </style>
 </head>
 <body>
+<div class="pick" id="pick">
+  <h1>Кто играет?</h1>
+  <div class="pick-row">
+    <button class="pick-card" onclick="pickWho('alisa')"><img src="alisa.jpg" alt=""><span>Алиса</span></button>
+    <button class="pick-card" onclick="pickWho('lesha')"><svg viewBox="-60 -70 120 130"><ellipse cx="0" cy="30" rx="40" ry="34" fill="#5ccf6e"/><ellipse cx="-2" cy="38" rx="24" ry="24" fill="#f6eeb4"/><g fill="#ff9a3c"><path d="M16 -48 l8 -12 l6 14 Z"/><path d="M30 -34 l12 -8 l2 14 Z"/></g><circle cx="-4" cy="-22" r="36" fill="#6fd57d"/><circle cx="-18" cy="-28" r="11" fill="#fff"/><circle cx="8" cy="-28" r="11" fill="#fff"/><circle cx="-16" cy="-26" r="6.5" fill="#24242f"/><circle cx="10" cy="-26" r="6.5" fill="#24242f"/><circle cx="-18" cy="-29" r="2.5" fill="#fff"/><circle cx="8" cy="-29" r="2.5" fill="#fff"/><path d="M-16 -6 q12 10 24 0" stroke="#24442c" stroke-width="3.5" fill="none" stroke-linecap="round"/><ellipse cx="-28" cy="-12" rx="6" ry="3.5" fill="#ff9fb5"/><ellipse cx="18" cy="-12" rx="6" ry="3.5" fill="#ff9fb5"/></svg><span>Лёша</span></button>
+  </div>
+</div>
 <div class="sky" id="sky"></div>
 <div class="reveal" id="reveal" onclick="if(event.target===this)closeReveal()"><div class="rv-card"><div class="rv-pic" id="rvPic"></div><h2 id="rvTitle"></h2><p id="rvSay"></p><button class="btn" onclick="closeReveal()">Ура!</button></div></div>
 <div class="wrap">
@@ -203,7 +218,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic-ugu.webp" alt="Угу"></div><h3>Братик Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
       <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic-uh-star.webp" alt="Ух со звездой"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
-    <div class="foot"><button onclick="go('parent')">Для родителей</button></div>
+    <div class="foot"><button onclick="go('parent')">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
   </section>
 
   <!-- РАЗГОВОР -->
@@ -882,6 +897,11 @@ function renderParent(){
     d.children[0].textContent=e.d.split('-').reverse().join('.');d.children[1].textContent=e.q;d.children[2].textContent=e.a;L.appendChild(d)});
 }
 function saveTopic(){S.topic=document.getElementById('topicIn').value.trim();save();const t=document.createElement('div');t.className='toast';t.textContent='Сохранено';document.body.appendChild(t);setTimeout(()=>t.remove(),1400)}
+
+/* ---------- кто играет: Алиса или Лёша (lesha.html) ---------- */
+function showPick(){document.getElementById('pick').classList.add('on')}
+function pickWho(w){try{sessionStorage.setItem('who',w)}catch(e){}if(w==='lesha'){location.href='lesha.html';return}document.getElementById('pick').classList.remove('on')}
+(function(){let w=null;try{w=sessionStorage.getItem('who')}catch(e){}if(w!=='alisa')showPick()})();
 
 /* ---------- старт ---------- */
 (function(){
