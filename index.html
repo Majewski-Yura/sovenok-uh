@@ -48,7 +48,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 @keyframes flap{50%{transform:rotate(-25deg)}}
 .owl .acc{display:none}
 .owl{overflow:visible}
-.owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie{visibility:hidden}
+.owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie,.owl[data-pose=star] .acc-scarf,.owl[data-pose=book] .acc-scarf{visibility:hidden}
 
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
 .bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
@@ -299,6 +299,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <g class="acc acc-wreath" transform="translate(10.8 -31) scale(.95)"><path d="M-40 -34 q40 -30 80 0" stroke="#6bbf59" stroke-width="5" fill="none"/><g fill="#ffd93b" stroke="#f0b400" stroke-width="1.5"><circle cx="-38" cy="-34" r="6"/><circle cx="-24" cy="-45" r="6"/><circle cx="-8" cy="-50" r="6"/><circle cx="8" cy="-50" r="6"/><circle cx="24" cy="-45" r="6"/><circle cx="38" cy="-34" r="6"/></g><g fill="#ff8fb0"><circle cx="-16" cy="-48" r="4"/><circle cx="16" cy="-48" r="4"/></g></g>
   <g class="acc acc-phones" transform="translate(10.8 -31) scale(.95)"><path d="M-50 -4 q0 -60 50 -60 q50 0 50 60" stroke="#ff6f9a" stroke-width="7" fill="none"/><rect x="-60" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="44" y="-16" width="16" height="26" rx="7" fill="#ff6f9a"/><rect x="-57" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/><rect x="47" y="-12" width="10" height="18" rx="5" fill="#ffd0de"/></g>
   <g class="acc acc-shades"><image href="img/temnye-ochki.webp" x="-31.5" y="-50.0" width="83.7" height="32.1"/></g>
+  <g class="acc acc-scarf"><image href="img/sharf.webp" x="-43" y="-31" width="110" height="73" preserveAspectRatio="none"/></g>
   <g class="acc acc-bowtie"><image href="img/babochka.webp" x="-15.0" y="3.4" width="40" height="23.2"/></g>
   <g class="acc acc-medal" transform="translate(12 -20) scale(1.15)"><path d="M-12 40 l12 20 l12 -20" stroke="#e8584f" stroke-width="7" fill="none"/><circle cx="0" cy="64" r="10" fill="#f5c84b" stroke="#d99a10" stroke-width="2.5"/><path d="M0 58 l2 4 h4 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 h4 Z" fill="#fff6c2"/></g>
   <g class="acc acc-balloon" transform="translate(12 -20) scale(1.15)"><path d="M50 40 q14 -30 12 -60" stroke="#999" stroke-width="1.5" fill="none"/><ellipse cx="62" cy="-38" rx="14" ry="17" fill="#ff5a6e"/><path d="M58 -21 l4 5 l4 -5 Z" fill="#ff5a6e"/><ellipse cx="57" cy="-44" rx="4" ry="6" fill="#fff" opacity=".45"/></g>
@@ -425,7 +426,7 @@ function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;se
 function dress(){
   Object.values(owls).forEach(svg=>{
     svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
-    const w=Object.values(S.wear);if(S.mode==='sick')w.push('scarf','thermo');
+    const w=Object.values(S.wear);if(S.mode==='sick')w.push('thermo');
     w.forEach(k=>{if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}});
   });
 }
@@ -796,7 +797,7 @@ const ITEMS=[
   {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="img/kolpak.webp" alt="" style="height:44px">',p:5},
   {k:'bow',slot:'head',n:'Бантик',ic:'<img src="img/bantik.webp" alt="" style="height:44px">',p:5},
   {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="img/ochki.webp" alt="" style="height:30px">',p:8},
-  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'🧣',p:8},
+  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="img/sharf.webp" alt="" style="height:44px">',p:8},
   {k:'bowtie',slot:'neck',n:'Бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
   {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'✏️',p:6},
   {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'🎈',p:8},
