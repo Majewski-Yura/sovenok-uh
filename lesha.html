@@ -53,6 +53,10 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .palette{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px auto 0;max-width:560px}
 .palette button{width:64px;height:64px;border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
 .palette button.on{box-shadow:0 0 0 6px var(--ink);transform:scale(1.12)}
+.ppick{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px auto 0;max-width:560px}
+.ppick button{width:76px;height:76px;background:#fff;border:4px solid var(--line);border-radius:20px;padding:4px;box-shadow:var(--shadow)}
+.ppick button.on{border-color:var(--gold);background:var(--gold2)}
+.ppick img{width:100%;height:100%;object-fit:contain}
 .prow{display:flex;gap:14px;justify-content:center;margin-top:14px}
 .prow button{font-size:40px;background:var(--bg2);border:5px solid var(--line);border-radius:24px;padding:6px 18px;box-shadow:var(--shadow)}
 /* шарики */
@@ -278,6 +282,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 
   <section class="screen" id="paint">
     <div class="bubble" id="paintSay" style="margin:6px auto 0"></div>
+    <div class="ppick" id="ppick"></div>
     <div class="paint-wrap"><canvas id="paintCv" width="928" height="1152"></canvas></div>
     <div class="palette" id="palette"></div>
     <div class="prow"><button onclick="paintUndo()" aria-label="Назад">↩️</button><button onclick="paintLoad()" aria-label="Сначала">🧽</button></div>
@@ -464,13 +469,17 @@ function addStar(n){setTimeout(()=>cele(),400);
     s.style.setProperty('--dx',(r.left-innerWidth/2+Math.random()*80-40)+'px');s.style.setProperty('--dy',(r.top-innerHeight/2+Math.random()*80-40)+'px');s.style.animationDelay=i*.05+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}
 }
 /* ---------- раскраска ---------- */
-let pCol='#ff5a5f',pHist=[],pFills=0;
+let pCol='#ff5a5f',pHist=[],pFills=0,PK='topa';
+const PPICS=['topa','cap','balloon','crown','car','train'];
 function startPaint(){go('paint');const P=document.getElementById('palette');P.innerHTML='';
   COLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
     b.onclick=()=>{pCol=x.c;P.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');say('paint',x.say)};P.appendChild(b)});
-  paintLoad();say('paint','Выбери цвет и нажми на картинку!')}
+  const Q=document.getElementById('ppick');Q.innerHTML='';
+  PPICS.forEach(k=>{const b=document.createElement('button');b.innerHTML='<img src="img/color-topa/'+k+'.png" alt="">';if(k===PK)b.className='on';
+    b.onclick=()=>{PK=k;Q.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');paintLoad()};Q.appendChild(b)});
+  paintLoad();say('paint','Выбери картинку, потом цвет — и нажимай!')}
 function paintLoad(){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();pFills=0;
-  im.onload=()=>{c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[]};im.src='img/color-topa/topa.png';
+  im.onload=()=>{cv.width=im.naturalWidth;cv.height=im.naturalHeight;c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[]};im.src='img/color-topa/'+PK+'.png';
   cv.onclick=e=>{const r=cv.getBoundingClientRect();paintFill(Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height))}}
 function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),W=cv.width,H=cv.height,img=c.getImageData(0,0,W,H),d=img.data;
   const i0=(y*W+x)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];if(tr+tg+tb<200)return;
