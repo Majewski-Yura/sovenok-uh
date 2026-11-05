@@ -266,7 +266,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
     </div>
     <div class="mission" id="missionBox" style="display:none">
       <div class="ic"><img src="img/ryukzak.webp" alt="Рюкзак"></div>
-      <div style="flex:1"><small>Задание от Уха на школьный день</small><p id="missionText"></p></div>
+      <div style="flex:1"><small>Задание от Ух на школьный день</small><p id="missionText"></p></div>
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
     <div class="mission pend" id="pendBox" style="display:none">
@@ -281,10 +281,10 @@ label.f{display:block;margin-top:14px;font-size:16px}
     </div>
     <div class="cards">
       <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
-      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
-      <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
-      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Топа и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
-      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
+      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Ух, как прошёл день в школе</p></button>
+      <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Ух</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
+      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Топа и&nbsp;английский</h3><p>Младший братик Ух совсем не знает английского. Помоги малышу!</p></button>
+      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Ух</h3><p>Наряди Ух за звёздочки</p></button>
     </div>
     <div class="foot"><button onclick="openParent()">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
   </section>
@@ -298,7 +298,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <div id="talkInput" style="width:100%;display:flex;flex-direction:column;align-items:center;margin-top:14px">
         <textarea id="talkText" placeholder="Напиши тут… или расскажи вслух маме"></textarea>
         <div class="chips" id="talkChips"></div>
-        <div class="row"><button class="btn" onclick="talkNext()">Рассказать Уху</button></div>
+        <div class="row"><button class="btn" onclick="talkNext()">Рассказать Ух</button></div>
       </div>
       <div class="row" id="talkEnd" style="display:none"><button class="btn" onclick="go('home')">Пока, Ух!</button></div>
     </div>
@@ -364,7 +364,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <!-- РОДИТЕЛЯМ -->
   <section class="screen" id="parent">
     <h2 style="font-weight:900">Для родителей</h2>
-    <p style="color:var(--ink2);line-height:1.5;margin-top:0">Здесь видно, что Алиса рассказала Уху. Всё хранится только в&nbsp;этом браузере.</p>
+    <p style="color:var(--ink2);line-height:1.5;margin-top:0">Здесь видно, что Алиса рассказала Ух. Всё хранится только в&nbsp;этом браузере.</p>
     <label class="f">Что сейчас у Алисы
       <select class="t" id="modeIn">
         <option value="auto">Здорова — школа, выходные и каникулы по календарю</option>
@@ -633,7 +633,7 @@ function mountOwl(id,small,tpl){
   });
   el.appendChild(svg);owls[id]=svg;if(!tpl)setPose(id);dress();
 }
-/* позы Уха: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
+/* позы Ух: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
 const POSE={owlHome:'hello',owlTalk:'hello',owlGame:'pointer',owlShop:'star'};
 if(typeof Image!=='undefined')['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='img/uh-'+n+'.webp'});
 function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);const pn=name||POSE[id]||'hello';svg.dataset.pose=pn;im.setAttribute('href','img/uh-'+pn+'.webp')}
@@ -737,9 +737,9 @@ function daysLeft(){
 function daysWord(n){const a=n%10,b=n%100;return (a===1&&b!==11)?'день':(a>=2&&a<=4&&(b<10||b>=20))?'дня':'дней'}
 function countdown(){const n=daysLeft();if(n<=0)return '';if(n===1)return ' Завтра в школу! Ух уже ждёт твоих историй.';return ' До школы '+n+' '+daysWord(n)+'. А потом ты снова будешь приносить мне истории!'}
 const MODE_TXT={
-  school:{mission:'Задание от Уха на школьный день',talkT:'Вечерний разговор',talkP:'Расскажи Уху, как прошёл день в школе'},
-  holiday:{mission:'Задание от Уха на свободный день',talkT:'Поболтать с Ухом',talkP:'Расскажи, как прошёл твой день'},
-  sick:{mission:'Лёгкое задание от Уха — можно не вставая',talkT:'Поболтать с Ухом',talkP:'Ух скучает и хочет узнать, как ты'}
+  school:{mission:'Задание от Ух на школьный день',talkT:'Вечерний разговор',talkP:'Расскажи Ух, как прошёл день в школе'},
+  holiday:{mission:'Задание от Ух на свободный день',talkT:'Поболтать с Ух',talkP:'Расскажи, как прошёл твой день'},
+  sick:{mission:'Лёгкое задание от Ух — можно не вставая',talkT:'Поболтать с Ух',talkP:'Ух скучает и хочет узнать, как ты'}
 };
 function renderHome(){
   applyTime();
@@ -800,7 +800,7 @@ function missionDone(){
 
 /* ---------- помощница: уборка, посуда, игры с Лёшей ---------- */
 const HELP=[
-  {k:'room',ic:'🧸',n:'Уборка в комнате',p:'Наперегонки с Ухом!',stars:3},
+  {k:'room',ic:'🧸',n:'Уборка в комнате',p:'Наперегонки с Ух!',stars:3},
   {k:'dishes',ic:'🍽️',n:'Помыть посуду',p:'Пусть всё блестит',stars:2},
   {k:'lesha',ic:'🦖',n:'Поиграть с Лёшей',p:'Когда мама занята',stars:2}
 ];
@@ -867,7 +867,7 @@ function runTimer(){
 function finishChecks(){
   const room=H.k==='room',won=room&&H.iv&&H.left>0;stopHelpTimer();
   const mins=Math.max(1,Math.round((Date.now()-H.t0)/60000));
-  finishHelp(H.k,room?(won?'Убрала комнату наперегонки с Ухом, за '+mins+' мин.':'Убрала комнату'):'Помыла посуду',
+  finishHelp(H.k,room?(won?'Убрала комнату наперегонки с Ух, за '+mins+' мин.':'Убрала комнату'):'Помыла посуду',
     room?(won?'Ура! Ты быстрее совы! Комната сияет. Мама точно ахнет!':'Ура! Комната сияет. Мама точно ахнет!'):'Посуда блестит! Мама скажет тебе огромное спасибо!');
 }
 function startLesha(){
@@ -1036,10 +1036,10 @@ function talkNext(){
   setTimeout(()=>setPose('owlTalk','book'),2000);S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
   document.getElementById('talkInput').style.display='none';document.getElementById('talkEnd').style.display='flex';
   document.getElementById('talkProg').innerHTML=talk.qs.map(()=>'<i class="done"></i>').join('');
-  setTimeout(()=>{addStars(2,'за разговор с Ухом');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
+  setTimeout(()=>{addStars(2,'за разговор с Ух');say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
 }
 
-/* ---------- игра «Записка Уха» ---------- */
+/* ---------- игра «Записка Ух» ---------- */
 const R={zhi:'ЖИ и ШИ пиши с буквой И',cha:'ЧА и ЩА пиши с буквой А',chu:'ЧУ и ЩУ пиши с буквой У',chk:'ЧК и ЧН пишутся без мягкого знака',cap:'Имена, клички, города и реки пишем с большой буквы'};
 const WORDS=[
   {p:'ж',s:'раф',o:['и','ы'],r:R.zhi},{p:'ш',s:'шка',o:['и','ы'],r:R.zhi},{p:'маш',s:'на',o:['и','ы'],r:R.zhi},
@@ -1073,7 +1073,7 @@ function gameStep(){
   if(G.i>=G.list.length){
     document.getElementById('gameBody').style.display='none';
     say('game','Спасибо! Теперь моя записка без ловушек. Ты мне очень помогла!');
-    gameReward('uh','за помощь Уху');
+    gameReward('uh','за помощь Ух');
     document.getElementById('gameNext').style.display='flex';
     document.getElementById('gameNextBtn').textContent='Ещё записку!';document.getElementById('gameNextBtn').onclick=startGame;
     return;
@@ -1102,11 +1102,11 @@ function gameStep(){
 /* ---------- игра «Братик Топа и английский» (по темам занятий) ---------- */
 const speakEn=t=>speak(t,'en');
 /* выбор голосов в «Для родителей» */
-const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Р-р-р! Я Топа, братик Уха. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
+const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Р-р-р! Я Топа, братик Ух. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
 function setVoice(who,key,val){S.voices=S.voices||{};S.voices[who]=Object.assign(vset(who),{[key]:val});save()}
 function renderVoices(){
   const box=document.getElementById('voiceBox');if(!box)return;box.innerHTML='';
-  const rows=[['uh','Голос Уха'],['baby','Голос братика Топы'],['en','Английские слова']];
+  const rows=[['uh','Голос Ух'],['baby','Голос братика Топы'],['en','Английские слова']];
   rows.forEach(([who,title])=>{
     const c=vset(who),list=who==='en'?enVoices():ruVoices();
     const w=document.createElement('div');w.className='entry';w.style.marginTop='10px';
@@ -1129,7 +1129,7 @@ function renderVoices(){
 }
 if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',()=>{if(document.getElementById('parent').classList.contains('on'))renderVoices()});
 const COLORS=[{en:'red',ru:'красный',c:'#e8443a'},{en:'blue',ru:'синий',c:'#3a78e8'},{en:'green',ru:'зелёный',c:'#3fb35f'},{en:'yellow',ru:'жёлтый',c:'#f7d21e'},{en:'orange',ru:'оранжевый',c:'#f58a1f'},{en:'pink',ru:'розовый',c:'#ff8fc0'},{en:'purple',ru:'фиолетовый',c:'#9b5de5'},{en:'black',ru:'чёрный',c:'#222'},{en:'white',ru:'белый',c:'#fff'},{en:'brown',ru:'коричневый',c:'#8b5a2b'}];
-const ANIMALS=[{en:'cat',ru:'кошка',e:'🐱'},{en:'dog',ru:'собака',e:'🐶'},{en:'fox',ru:'лиса',e:'🦊'},{en:'frog',ru:'лягушка',e:'🐸'},{en:'rabbit',ru:'кролик',e:'🐰'},{en:'bird',ru:'птичка',e:'🐦'},{en:'fish',ru:'рыбка',e:'🐟'},{en:'mouse',ru:'мышка',e:'🐭'},{en:'bear',ru:'медведь',e:'🐻'},{en:'owl',ru:'сова — это мы с Ухом!',e:'🦉'}];
+const ANIMALS=[{en:'cat',ru:'кошка',e:'🐱'},{en:'dog',ru:'собака',e:'🐶'},{en:'fox',ru:'лиса',e:'🦊'},{en:'frog',ru:'лягушка',e:'🐸'},{en:'rabbit',ru:'кролик',e:'🐰'},{en:'bird',ru:'птичка',e:'🐦'},{en:'fish',ru:'рыбка',e:'🐟'},{en:'mouse',ru:'мышка',e:'🐭'},{en:'bear',ru:'медведь',e:'🐻'},{en:'owl',ru:'сова — это мы с Ух!',e:'🦉'}];
 const SPOOKY=[{en:'pumpkin',ru:'тыква',e:'🎃'},{en:'ghost',ru:'привидение',e:'👻'},{en:'bat',ru:'летучая мышь',e:'🦇'},{en:'monster',ru:'монстрик',e:'👾'},{en:'spider',ru:'паук',e:'🕷️'},{en:'witch',ru:'ведьма',e:'🧙‍♀️'}];
 const FEEL=[{en:"I'm happy",ru:'я счастливый',e:'😊'},{en:"I'm tired",ru:'я устал',e:'😴'},{en:"I'm angry",ru:'я злюсь',e:'😠'},{en:"I'm hungry",ru:'я голодный',e:'🤤'},{en:"I'm great!",ru:'у меня всё отлично',e:'🤩'},{en:"I'm bad",ru:'мне плохо',e:'🤒'}];
 const PRON=[{en:'I',ru:'я',e:'🙋‍♀️'},{en:'you',ru:'ты',e:'👉'},{en:'he',ru:'он',e:'👦'},{en:'she',ru:'она',e:'👧'},{en:'it',ru:'оно (зверёк или вещь)',e:'🐱'},{en:'we',ru:'мы',e:'👭'},{en:'they',ru:'они',e:'👨‍👩‍👧'}];
@@ -1157,7 +1157,7 @@ function engRound(){
 }
 function startEng(){
   go('eng');E={list:engRound(),i:-1};
-  say('eng','Привет! Я Топа, младший братик Уха. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Ух говорит, что ты ходишь на английский. А я ещё ничего-ничего не знаю… Научишь меня?');
+  say('eng','Привет! Я Топа, младший братик Ух. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Ух говорит, что ты ходишь на английский. А я ещё ничего-ничего не знаю… Научишь меня?');
   document.getElementById('engBody').style.display='none';
   const n=document.getElementById('engNext');n.style.display='flex';
   const b=document.getElementById('engNextBtn');b.textContent='Конечно, научу!';b.onclick=engStep;
@@ -1218,7 +1218,7 @@ const ITEMS=[
   {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="img/shlyapa.webp" alt="" style="height:44px">',p:70},
   {k:'crown',slot:'head',n:'Корона',ic:'<img src="img/korona.webp" alt="" style="height:44px">',p:75}
 ];
-/* обновка: Алиса видит Уха в вещи только после покупки.
+/* обновка: Алиса видит Ух в вещи только после покупки.
    Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
 /* вещи, для которых уже есть готовая картинка img/reveal/<k>.webp */
 const REVEAL_HAVE=['wizard','phones','wreath','balloon','cap','bowtie','shades','bow','medal','pencil','book','glasses','crown','butterfly','scarf'];
@@ -1270,7 +1270,7 @@ function draggable(el,o){
     el.addEventListener('pointermove',mv);el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
   });
 }
-/* полка «Мои вещи»: купленное, перетащи на Уха — надеть, нажатие — надеть или снять */
+/* полка «Мои вещи»: купленное, перетащи на Ух — надеть, нажатие — надеть или снять */
   const M=document.getElementById('myShelf');M.innerHTML='';
   const mine=ITEMS.filter(it=>S.owned.includes(it.k));
   if(!mine.length)M.innerHTML='<div class="empty">Полка пока пустая</div>';
