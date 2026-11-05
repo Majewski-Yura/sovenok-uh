@@ -47,6 +47,14 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .tile.hot{border-color:var(--gold);background:var(--gold2)}
 .home{position:fixed;left:12px;bottom:12px;width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:40px;box-shadow:0 6px 0 var(--green2);z-index:5;display:none}
 .home:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green2)}
+/* раскраска */
+.paint-wrap{max-width:520px;margin:10px auto 0;background:#fff;border:5px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
+.paint-wrap canvas{width:100%;height:auto;display:block;touch-action:manipulation;cursor:pointer}
+.palette{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:14px auto 0;max-width:560px}
+.palette button{width:64px;height:64px;border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
+.palette button.on{box-shadow:0 0 0 6px var(--ink);transform:scale(1.12)}
+.prow{display:flex;gap:14px;justify-content:center;margin-top:14px}
+.prow button{font-size:40px;background:var(--bg2);border:5px solid var(--line);border-radius:24px;padding:6px 18px;box-shadow:var(--shadow)}
 /* шарики */
 .sky{position:relative;height:min(62vh,520px);margin-top:10px;border-radius:32px;background:linear-gradient(#bfe6ff,#e9f7ff);overflow:hidden;border:5px solid #fff;box-shadow:var(--shadow)}
 .ball{position:absolute;bottom:-140px;width:96px;height:118px;border-radius:50% 50% 48% 48%;animation:rise linear forwards;cursor:pointer}
@@ -197,6 +205,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/ic/puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
       <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/ic/broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
       <button class="tile" onclick="startDress()"><div class="ic"><img src="img/ic/shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
+      <button class="tile" onclick="startPaint()"><div class="ic"><img src="img/color-topa/topa.png" alt="" class="tpic"></div><span>Раскраска</span></button>
     </div>
   </section>
 
@@ -265,6 +274,13 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="stage"><div class="bubble" id="dressSay"></div><div id="dinoDress"></div></div>
     <div class="worn" id="worn"></div>
     <div class="clothes" id="clothes"></div>
+  </section>
+
+  <section class="screen" id="paint">
+    <div class="bubble" id="paintSay" style="margin:6px auto 0"></div>
+    <div class="paint-wrap"><canvas id="paintCv" width="928" height="1152"></canvas></div>
+    <div class="palette" id="palette"></div>
+    <div class="prow"><button onclick="paintUndo()" aria-label="Назад">↩️</button><button onclick="paintLoad()" aria-label="Сначала">🧽</button></div>
   </section>
 
   <section class="screen" id="tales">
@@ -349,7 +365,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 <script>
 /* ---------- данные ---------- */
 const KEY='topa-v1';
-let S={stars:0,owned:[],wear:{},diary:[],feelDate:'',taleDate:'',deeds:{},toys:[]};
+let S={stars:0,owned:[],wear:{},diary:[],feelDate:'',taleDate:'',paintDate:'',deeds:{},toys:[]};
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
 if(S.wear&&S.wear.neck2==='bowtie')S.wear.neck2=null; /* бантик у Лёши убран (05.11.2026) */
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!fb&&!applyingRemote)localDirty=true;cloudPush()}
@@ -426,7 +442,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress'];
+const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress','paint'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
 function goBack(){if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
@@ -447,6 +463,28 @@ function addStar(n){setTimeout(()=>cele(),400);
   for(let i=0;i<12;i++){const s=document.createElement('div');s.className='burst';s.textContent=pick(['⭐','✨','🌟']);s.style.left=innerWidth/2+'px';s.style.top=innerHeight/2+'px';
     s.style.setProperty('--dx',(r.left-innerWidth/2+Math.random()*80-40)+'px');s.style.setProperty('--dy',(r.top-innerHeight/2+Math.random()*80-40)+'px');s.style.animationDelay=i*.05+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1800)}
 }
+/* ---------- раскраска ---------- */
+let pCol='#ff5a5f',pHist=[],pFills=0;
+function startPaint(){go('paint');const P=document.getElementById('palette');P.innerHTML='';
+  COLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
+    b.onclick=()=>{pCol=x.c;P.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');say('paint',x.say)};P.appendChild(b)});
+  paintLoad();say('paint','Выбери цвет и нажми на картинку!')}
+function paintLoad(){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();pFills=0;
+  im.onload=()=>{c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[]};im.src='img/color-topa/topa.png';
+  cv.onclick=e=>{const r=cv.getBoundingClientRect();paintFill(Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height))}}
+function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),W=cv.width,H=cv.height,img=c.getImageData(0,0,W,H),d=img.data;
+  const i0=(y*W+x)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];if(tr+tg+tb<200)return;
+  const n=parseInt(pCol.slice(1),16),nr=n>>16&255,ng=n>>8&255,nb=n&255;if(Math.abs(tr-nr)+Math.abs(tg-ng)+Math.abs(tb-nb)<10)return;
+  pHist.push(c.getImageData(0,0,W,H));if(pHist.length>15)pHist.shift();
+  const same=i=>Math.abs(d[i]-tr)+Math.abs(d[i+1]-tg)+Math.abs(d[i+2]-tb)<60;const st=[[x,y]];
+  while(st.length){let [px,py]=st.pop();let i=(py*W+px)*4;while(py>=0&&same(i)){py--;i-=W*4}py++;i+=W*4;let L=false,R=false;
+    while(py<H&&same(i)){d[i]=nr;d[i+1]=ng;d[i+2]=nb;d[i+3]=255;
+      if(px>0){if(same(i-4)){if(!L){st.push([px-1,py]);L=true}}else L=false}
+      if(px<W-1){if(same(i+4)){if(!R){st.push([px+1,py]);R=true}}else R=false}
+      py++;i+=W*4}}
+  c.putImageData(img,0,0);pFills++;
+  if(pFills===6){if(S.paintDate!==today()){S.paintDate=today();save();say('paint','Как красиво! Держи звёздочку!');addStar()}else say('paint','Как красиво! Ты настоящий художник!')}}
+function paintUndo(){const h=pHist.pop();if(h)document.getElementById('paintCv').getContext('2d').putImageData(h,0,0)}
 function counter(id,n,max){document.getElementById(id).innerHTML=Array.from({length:max},(_,k)=>'<i class="'+(k<n?'on':'')+'"></i>').join('')}
 
 /* ---------- дом ---------- */
