@@ -115,6 +115,15 @@ label.f{display:block;margin-top:14px;font-size:16px}
 
 .burst{position:fixed;pointer-events:none;font-size:28px;z-index:9;animation:fly 1.1s ease-out forwards}
 @keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(200deg);opacity:0}}
+.reveal{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(40,25,15,.55)}
+.reveal.on{display:flex;animation:in .3s}
+.rv-card{background:var(--bg2);border:4px solid var(--gold);border-radius:32px;padding:20px 22px 24px;max-width:420px;width:100%;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.15)}
+.rv-pic svg{height:250px!important;margin-top:56px}
+.rv-pic{height:320px;display:flex;align-items:center;justify-content:center}
+.rv-pic img,.rv-pic svg{max-height:320px;max-width:100%;width:auto;height:320px;animation:rvpop .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes rvpop{from{transform:scale(.4) rotate(-8deg);opacity:0}}
+.rv-card h2{margin:6px 0 4px;font-weight:900;font-size:26px}
+.rv-card p{margin:0 0 16px;font-size:19px;color:var(--ink2)}
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--gold);color:#3b2a20;font-weight:900;font-size:20px;padding:10px 22px;border-radius:999px;z-index:10;box-shadow:0 5px 0 #d08f00;animation:in .3s}
 .sky{position:fixed;inset:0;pointer-events:none;z-index:-1;display:none}
 :root.night .sky{display:block}
@@ -144,6 +153,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
 </head>
 <body>
 <div class="sky" id="sky"></div>
+<div class="reveal" id="reveal" onclick="if(event.target===this)closeReveal()"><div class="rv-card"><div class="rv-pic" id="rvPic"></div><h2 id="rvTitle"></h2><p id="rvSay"></p><button class="btn" onclick="closeReveal()">Ура!</button></div></div>
 <div class="wrap">
   <header>
     <div class="logo">🦉 Совёнок Ух</div>
@@ -292,7 +302,6 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <circle class="lid" cx="-8" cy="-37.4" r="14.5" fill="#efdcbd"/>
   <circle class="lid" cx="29.7" cy="-37.4" r="14.5" fill="#efdcbd"/>
   <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
-  <g class="acc acc-thermo" transform="translate(118 -30)"><g transform="rotate(-28 -42 20)"><rect x="-80" y="17" width="42" height="7" rx="3.5" fill="#f4f7fb" stroke="#9fb3c8" stroke-width="1.3"/><rect x="-66" y="19" width="26" height="3" rx="1.5" fill="#e8584f"/><path d="M-74 17 v2.5 M-70 17 v2.5 M-66 17 v2.5 M-62 17 v2.5" stroke="#9fb3c8" stroke-width="1"/></g></g>
   <g class="acc acc-glasses"><image href="img/ochki.webp" x="-26.9" y="-56.1" width="80.3" height="32.5"/></g>
   <g class="acc acc-cap"><image href="img/kolpak.webp" x="-51" y="-119.7" width="100" height="91.7"/></g>
   <g class="acc acc-butterfly"><image class="flutter" href="img/babochka-podruzhka.webp" x="-49.0" y="-93.2" width="38" height="38.5"/></g>
@@ -423,13 +432,13 @@ function mountOwl(id,small,tpl){
 }
 /* позы Уха: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
 const POSE={owlHome:'hello',owlTalk:'hello',owlGame:'pointer',owlShop:'star'};
-['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='img/uh-'+n+'.webp'});
+if(typeof Image!=='undefined')['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='img/uh-'+n+'.webp'});
 function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);const pn=name||POSE[id]||'hello';svg.dataset.pose=pn;im.setAttribute('href','img/uh-'+pn+'.webp')}
 function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;setPose(id,'star');svg._pt=setTimeout(()=>setPose(id,back),1700)}
 function dress(){
   Object.values(owls).forEach(svg=>{
     svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
-    const w=Object.values(S.wear);if(S.mode==='sick')w.push('thermo');
+    const w=Object.values(S.wear);
     w.forEach(k=>{if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}});
   });
 }
@@ -813,6 +822,31 @@ const ITEMS=[
   {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="img/shlyapa.webp" alt="" style="height:44px">',p:14},
   {k:'crown',slot:'head',n:'Корона',ic:'<img src="img/korona.webp" alt="" style="height:44px">',p:15}
 ];
+/* обновка: Алиса видит Уха в вещи только после покупки.
+   Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
+/* вещи, для которых уже есть готовая картинка img/reveal/<k>.webp */
+const REVEAL_HAVE=[];
+const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самый нарядный совёнок на свете!'];
+function revealOwl(k){
+  const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
+  svg.classList.remove('small');svg.style.animation='none';
+  svg.querySelector('image.pose').setAttribute('href','img/uh-hello.webp');
+  svg.querySelectorAll('.acc').forEach(a=>a.style.display=a.classList.contains('acc-'+k)?'block':'none');
+  return svg;
+}
+function showReveal(it){
+  const pic=document.getElementById('rvPic');pic.innerHTML='';
+  if(!REVEAL_HAVE.includes(it.k)){pic.appendChild(revealOwl(it.k))}else{
+  const img=new Image();img.alt='Ух: '+it.n;
+  img.onload=()=>{pic.innerHTML='';pic.appendChild(img)};
+  img.onerror=()=>{pic.innerHTML='';pic.appendChild(revealOwl(it.k))};
+  img.src='img/reveal/'+it.k+'.webp';}
+  document.getElementById('rvTitle').textContent=typo('Обновка: '+it.n.toLowerCase()+'!');
+  const t=pick(REVEAL_SAY);document.getElementById('rvSay').textContent=typo(t);
+  document.getElementById('reveal').classList.add('on');
+  setTimeout(()=>speak(t,'uh'),400);
+}
+function closeReveal(){document.getElementById('reveal').classList.remove('on')}
 function renderShop(){
   say('shop',S.owned.length?'Нажми на вещь, чтобы надеть или снять. Мне всё к лицу!':'Тут можно купить мне наряды за звёздочки. Звёздочки дают за рассказы и помощь, а не за оценки!');
   const L=document.getElementById('shopList');L.innerHTML='';
@@ -823,7 +857,7 @@ function renderShop(){
     b.onclick=()=>{
       if(!own){
         if(S.stars<it.p){say('shop','Пока не хватает звёздочек. Ещё '+(it.p-S.stars)+' — и будет моё!');return}
-        S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop','Ух ты! Это мне? Спасибо-спасибо!');cheer();
+        S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop','Ух ты! Это мне? Спасибо-спасибо!');cheer();showReveal(it);
       }else{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!');}
       save();dress();renderShop();
     };
