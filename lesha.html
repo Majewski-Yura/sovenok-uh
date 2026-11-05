@@ -134,6 +134,21 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .burst{position:fixed;pointer-events:none;font-size:34px;z-index:19;animation:fly 1.2s ease-out forwards}
 @keyframes fly{to{transform:translate(var(--dx),var(--dy)) rotate(220deg);opacity:0}}
 .parent{margin-top:34px;text-align:center}
+.gate{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(20,50,30,.5)}
+.gate.on{display:flex}
+.gate-card{background:#fff;border:5px solid var(--gold);border-radius:30px;padding:18px 20px 22px;max-width:420px;width:100%;text-align:center}
+.gate-card h2{margin:4px 0}
+.gate-ans{margin:8px auto 14px;min-width:150px;font-size:34px;font-weight:900;border-bottom:4px solid var(--gold);width:max-content;padding:0 18px}
+.gate-pad{display:grid;grid-template-columns:repeat(3,68px);gap:10px;justify-content:center}
+.gate-pad button{height:58px;border-radius:18px;background:var(--bg);border:3px solid var(--line);font-size:26px;font-weight:900;color:var(--ink)}
+.gate-pad button.ok{background:var(--gold);border-color:var(--gold)}
+.shake{animation:wiggle .4s}
+.pbtn{background:var(--bg2);border:3px solid var(--line);border-radius:16px;padding:10px 16px;font-size:16px;font-weight:800;color:var(--ink);box-shadow:var(--shadow);margin:6px 6px 0 0}
+.pbtn.gold{background:var(--gold);border-color:var(--gold)}
+.pend{display:none;align-items:center;gap:12px;margin:14px auto 0;max-width:560px;background:var(--gold2);border:4px solid var(--gold);border-radius:24px;padding:12px 16px;font-size:18px;font-weight:800}
+.pend.on{display:flex}
+.ask{display:none;align-items:center;gap:12px;margin:14px auto 0;max-width:560px;background:#ffe9f1;border:4px dashed #ff8fb0;border-radius:24px;padding:12px 16px;font-size:20px;font-weight:800}
+.ask.on{display:flex}
 .parent button{color:var(--ink2);font-size:14px;text-decoration:underline;font-weight:700}
 .diary{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .entry{background:var(--bg2);border:3px solid var(--line);border-radius:16px;padding:10px 14px;font-size:16px;font-weight:700}
@@ -153,6 +168,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div class="bubble" id="homeSay"></div>
       <div id="dinoHome" style="position:relative"></div>
     </div>
+    <div class="ask" id="askBox"><span style="font-size:40px">💌</span><div style="flex:1"><small style="color:var(--ink2)">Мама просит</small><div id="askText"></div></div><button class="pbtn gold" onclick="askDone()">Сделал!</button></div>
+    <div class="pend" id="pendBox"><span style="font-size:36px">⏳</span><div style="flex:1" id="pendText"></div><button class="pbtn gold" onclick="openConfirm()">Подтвердить</button></div>
     <div class="tiles">
       <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/ic/balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
       <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/ic/cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
@@ -168,7 +185,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/ic/crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
       <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/ic/sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
     </div>
-    <div class="parent"><button onclick="go('parent')">Для родителей</button></div>
+    <div class="parent"><button onclick="openParent()">Для родителей</button></div>
   </section>
 
   <section class="screen" id="balls">
@@ -271,8 +288,19 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 
   <section class="screen" id="parent">
     <h2 style="font-weight:900">Для родителей</h2>
-    <p style="color:var(--ink2);font-weight:700;line-height:1.5;margin-top:0">Это приложение Лёши: всё озвучено, читать не нужно. Звёздочки — за игру, ошибок здесь не бывает. Данные хранятся только в&nbsp;этом браузере, отдельно от&nbsp;Алисиных.</p>
-    <h3>Самочувствие, сказки и дела Лёши</h3>
+    <p style="color:var(--ink2);font-weight:700;line-height:1.5;margin-top:0">Это приложение Лёши: всё озвучено, читать не&nbsp;нужно. Звёздочки — за&nbsp;игру, ошибок здесь не&nbsp;бывает. За&nbsp;дела из&nbsp;«Моих дел» и&nbsp;просьбы звёздочку даёт мама или папа — после подтверждения. Если у&nbsp;Алисы включена общая база, данные Лёши тоже общие для всех устройств семьи.</p>
+    <h3>Ждут подтверждения</h3>
+    <div class="diary" id="pendList"></div>
+    <h3 style="margin-top:20px">Попросить Лёшу</h3>
+    <p style="color:var(--ink2);font-weight:700;margin:0">Топа прочитает просьбу вслух на главной.</p>
+    <div><button class="pbtn" onclick="sendAsk(ASKS[0])">🧸 Убрать игрушки</button><button class="pbtn" onclick="sendAsk(ASKS[1])">👕 Одеться самому</button><button class="pbtn" onclick="sendAsk(ASKS[2])">🗑️ Выбросить мусор</button><button class="pbtn" onclick="sendAsk(ASKS[3])">📚 Почитать книжку</button></div>
+    <h3 style="margin-top:20px">Звёзды</h3>
+    <div><button class="pbtn" onclick="S.stars=0;save();setStars();this.textContent='Звёзды обнулены'">Обнулить звёзды</button></div>
+    <h3 style="margin-top:20px">☁️ Общая база</h3>
+    <p id="syncNote" style="color:var(--ink2);font-weight:700;margin:0"></p>
+    <h3 style="margin-top:20px">Копия данных</h3>
+    <div><button class="pbtn" onclick="saveBackup()">💾 Сохранить копию</button><label class="pbtn" style="display:inline-block;cursor:pointer">📂 Восстановить<input type="file" accept=".json,application/json" style="display:none" onchange="loadBackup(this)"></label></div>
+    <h3 style="margin-top:20px">Самочувствие, сказки и дела Лёши</h3>
     <div class="diary" id="diary"></div>
   </section>
 </div>
@@ -291,12 +319,44 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </svg>
 </template>
 
+<div class="gate" id="gate" onclick="if(event.target===this)gateClose()"><div class="gate-card">
+  <div style="font-size:46px">🔐</div><h2>Вход для мамы и папы</h2><p id="gateQ" style="color:var(--ink2);font-weight:800;margin:4px 0"></p>
+  <div class="gate-ans" id="gateAns">…</div><div class="gate-pad" id="gatePad"></div>
+  <div style="margin-top:12px"><button class="pbtn" onclick="gateClose()">Отмена</button></div>
+</div></div>
+<div class="gate" id="confModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="gate-card" style="max-width:540px;text-align:left">
+  <h2 style="text-align:center">Лёша сделал сам?</h2><div class="diary" id="confList"></div>
+  <div style="text-align:center;margin-top:12px"><button class="pbtn" onclick="document.getElementById('confModal').classList.remove('on')">Закрыть</button></div>
+</div></div>
 <script>
 /* ---------- данные ---------- */
 const KEY='topa-v1';
 let S={stars:0,owned:[],wear:{},diary:[],feelDate:'',taleDate:'',deeds:{},toys:[]};
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!fb&&!applyingRemote)localDirty=true;cloudPush()}
+/* ---------- общая база (та же семья, что у Алисы; поле lesha) ---------- */
+const FB_CONFIG={apiKey:"AIzaSyDLZHhRwXYQU8fAOOlp4LzCODahdQuQ_mA",authDomain:"sovenok-uh.firebaseapp.com",projectId:"sovenok-uh",storageBucket:"sovenok-uh.firebasestorage.app",messagingSenderId:"495272253062",appId:"1:495272253062:web:18300d5cae9bae89756307"};
+let fb=null,famId=null,applyingRemote=false,pushT=null,pushing=false,localDirty=false,syncState='';
+try{famId=localStorage.getItem('uh-family')}catch(e){}
+function cloudData(){const o=JSON.parse(JSON.stringify(S));if(o.diary&&o.diary.length>300)o.diary=o.diary.slice(0,300);return o}
+function cloudPush(){if(!fb||applyingRemote)return;clearTimeout(pushT);pushing=true;
+  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{lesha:cloudData(),updated:fb.ts()},{merge:true}).then(()=>{pushing=false;syncState='ok'}).catch(()=>{pushing=false;syncState='err'})},700)}
+function applyRemote(r){if(JSON.stringify(r)===JSON.stringify(cloudData()))return;applyingRemote=true;S=Object.assign({},r);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  setStars();dress();renderPend();renderAsk();if(cur()==='parent')renderParent();applyingRemote=false}
+function mergeTopa(r){const L=cloudData(),uq=(a,k)=>{const m=new Map();a.forEach(x=>{const key=k(x);if(!m.has(key))m.set(key,x)});return[...m.values()]};
+  const o=Object.assign({},L,r);o.stars=Math.max(L.stars||0,r.stars||0);o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];o.toys=[...new Set([...(r.toys||[]),...(L.toys||[])])];
+  o.diary=uq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.t+'|'+x.a).sort((a,b)=>(a.d+a.t)<(b.d+b.t)?1:-1).slice(0,300);
+  o.pending=uq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));o.ask=r.ask||L.ask||null;return o}
+async function cloudInit(){if(!famId||fb)return;
+  try{syncState='wait';const base='https://www.gstatic.com/firebasejs/10.12.2/';
+    const [A,U,F]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-firestore.js')]);
+    const app=A.initializeApp(FB_CONFIG,'topa');await U.signInAnonymously(U.getAuth(app));
+    const ref=F.doc(F.getFirestore(app),'families',famId);const snap=await F.getDoc(ref);fb={ref,setDoc:F.setDoc,ts:F.serverTimestamp};
+    const jk='topa-joined-'+famId,joined=localStorage.getItem(jk);
+    if(snap.exists()&&snap.data().lesha){const r=snap.data().lesha;if(!joined){applyRemote(mergeTopa(r));cloudPush()}else if(localDirty)cloudPush();else applyRemote(r)}else cloudPush();
+    try{localStorage.setItem(jk,'1')}catch(e){}localDirty=false;
+    F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites||pushing)return;const d=x.data();if(d&&d.lesha)applyRemote(d.lesha)});syncState='ok';
+  }catch(e){fb=null;syncState='err';console.warn('cloud',e)}}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
@@ -673,8 +733,10 @@ function renderDeeds(){
     b.innerHTML='<div class="ic">'+d.ic+'</div><span>'+d.n+(done.includes(d.k)?' ✓':'')+'</span>';
     b.onclick=()=>{
       S.deeds=S.deeds||{};const t=S.deeds[today()]=S.deeds[today()]||[];hop(dinos.dinoDeeds);
-      if(t.includes(d.k)){say('deeds','Ты уже получил звёздочку за это сегодня. Молодец!');return}
-      t.push(d.k);S.diary.unshift({d:today(),t:new Date().toTimeString().slice(0,5),a:d.n});save();say('deeds',d.say);addStar();renderDeeds()};
+      if(t.includes(d.k)){say('deeds','Ты уже это сделал сегодня. Молодец!');return}
+      t.push(d.k);S.diary.unshift({d:today(),t:new Date().toTimeString().slice(0,5),a:d.n});
+      S.pending=S.pending||[];S.pending.push({id:Date.now()+Math.random(),d:today(),what:d.n,stars:1});save();
+      say('deeds',d.say.replace(/ ?Держи звёздочку!/,'')+' Покажи маме — она даст звёздочку!');renderDeeds();renderPend()};
     L.appendChild(b)});
 }
 
@@ -708,7 +770,45 @@ function renderToyshop(quiet){
 }
 
 /* ---------- родителям ---------- */
+/* ---------- для родителей: вход через пример, подтверждение дел, просьбы ---------- */
+let gateCb=null,gateA=0,gateB=0,gateV='';
+function gateNew(){gateA=12+Math.floor(Math.random()*15);gateB=13+Math.floor(Math.random()*14);document.getElementById('gateQ').textContent='Сколько будет '+gateA+' × '+gateB+'?';gateV='';gateDraw()}
+function gateDraw(){document.getElementById('gateAns').textContent=gateV||'…'}
+function gateKey(k){if(k==='⌫')gateV=gateV.slice(0,-1);else if(k==='✓'){gateOk();return}else if(gateV.length<4)gateV+=k;gateDraw()}
+function askGate(cb){gateCb=cb;const P=document.getElementById('gatePad');P.innerHTML='';
+  ['1','2','3','4','5','6','7','8','9','⌫','0','✓'].forEach(k=>{const b=document.createElement('button');b.textContent=k;if(k==='✓')b.className='ok';b.onclick=()=>gateKey(k);P.appendChild(b)});
+  gateNew();document.getElementById('gate').classList.add('on')}
+function gateClose(){document.getElementById('gate').classList.remove('on');gateCb=null}
+function gateOk(){if(!gateV)return;if(parseInt(gateV,10)!==gateA*gateB){const a=document.getElementById('gateAns');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');setTimeout(gateNew,450);return}
+  const cb=gateCb;gateClose();cb&&cb()}
+function openParent(){askGate(()=>go('parent'))}
+function openConfirm(){askGate(showConfirm)}
+function renderPend(){const b=document.getElementById('pendBox'),L=S.pending||[];b.classList.toggle('on',L.length>0);
+  document.getElementById('pendText').textContent=L.length===1?L[0].what+' — ждёт маму':'Ждут маму: '+L.length}
+function showConfirm(){const L=document.getElementById('confList');L.innerHTML='';
+  (S.pending||[]).forEach(x=>{const r=document.createElement('div');r.className='entry';r.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap';
+    r.innerHTML='<div style="flex:1;min-width:140px"></div><button class="pbtn gold">✓ Да</button><button class="pbtn">Не сейчас</button>';
+    r.firstChild.textContent=x.d.split('-').reverse().join('.')+' · '+x.what+' · ⭐ '+x.stars;
+    const [ok,no]=r.querySelectorAll('button');
+    ok.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);save();r.remove();addStar(x.stars);after()};
+    no.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);save();r.remove();after()};L.appendChild(r)});
+  if(!L.children.length)L.innerHTML='<div class="entry">Нет дел, которые ждут подтверждения.</div>';
+  document.getElementById('confModal').classList.add('on')}
+function after(){renderPend();if(cur()==='parent')renderParent();if(!(S.pending||[]).length){document.getElementById('confModal').classList.remove('on');if(cur()==='home')speak('Ура! Мама подтвердила! Ты молодец!')}}
+const ASKS=['Убери, пожалуйста, игрушки!','Оденься, пожалуйста, сам!','Выбрось, пожалуйста, мусор в ведро!','Принеси книжку, почитаем вместе!'];
+let askSaid='';
+function sendAsk(t){S.ask={t,d:today()};save();renderAsk();const x=document.createElement('div');x.className='toast';x.textContent='Топа передаст Лёше';document.body.appendChild(x);setTimeout(()=>x.remove(),1500)}
+function renderAsk(){const b=document.getElementById('askBox');const on=!!(S.ask&&S.ask.t);b.classList.toggle('on',on);if(on){document.getElementById('askText').textContent=S.ask.t;b.onclick=e=>{if(e.target.tagName!=='BUTTON')speak('Мама просит! '+S.ask.t)};if(askSaid!==S.ask.t&&cur()==='home'){askSaid=S.ask.t;setTimeout(()=>speak('Мама просит! '+S.ask.t),1200)}}}
+function askDone(){if(!S.ask)return;const t=S.ask.t;S.ask=null;S.pending=S.pending||[];S.pending.push({id:Date.now()+Math.random(),d:today(),what:'Мама просила: '+t,stars:2});
+  S.diary.unshift({d:today(),t:new Date().toTimeString().slice(0,5),a:'Сделал просьбу: '+t});save();renderAsk();renderPend();hop(dinos.dinoHome);speak('Молодец! Покажи маме — она даст звёздочку!')}
+function saveBackup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'topa',v:1,saved:new Date().toISOString(),S})],{type:'application/json'}));a.download='топа-копия-'+today()+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function loadBackup(inp){const f=inp.files&&inp.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='topa'||!d.S)throw 0;S=Object.assign(S,d.S);save();setStars();dress();renderParent();renderPend();renderAsk()}catch(e){}inp.value=''};r.readAsText(f)}
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 function renderParent(){
+  const PL=document.getElementById('pendList'),pl=S.pending||[];PL.innerHTML=pl.length?'':'<div class="entry">Пока ничего.</div>';
+  pl.forEach(x=>{const d=document.createElement('div');d.className='entry';d.textContent=x.d.split('-').reverse().join('.')+' · '+x.what+' · ⭐ '+x.stars;PL.appendChild(d)});
+  if(pl.length){const b=document.createElement('button');b.className='pbtn gold';b.textContent='Подтвердить дела';b.onclick=showConfirm;PL.appendChild(b)}
+  const n=document.getElementById('syncNote');n.textContent=famId?(syncState==='ok'?'✓ Данные Лёши общие для всех устройств семьи.':syncState==='err'?'Нет связи с базой — данные сохраняются на устройстве.':'Подключаюсь…'):'Общая база включается у Алисы: «Для родителей» → «Общая база». После этого Лёша подключится сам на этом устройстве.';
   const L=document.getElementById('diary');
   L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Лёша отвечает Топе через кнопку «Как ты себя чувствуешь?»</div>';
   S.diary.slice(0,40).forEach(e=>{const d=document.createElement('div');d.className='entry';d.textContent=e.d.split('-').reverse().join('.')+' '+e.t+' — '+e.a;L.appendChild(d)});
@@ -717,7 +817,7 @@ function renderParent(){
 /* ---------- старт ---------- */
 mountDino('dinoHome');mountDino('dinoFeed',true);mountDino('dinoFeel',true);mountDino('dinoShop',true);mountDino('dinoDress',true);mountDino('dinoDeeds',true);
 (function(){const h=document.createElement('div');h.className='hint';h.id='hint';h.textContent='👆 Нажми!';document.getElementById('dinoHome').appendChild(h)})();
-setStars();homeTalk();
+setStars();homeTalk();renderPend();renderAsk();cloudInit();
 </script>
 </body>
 </html>
