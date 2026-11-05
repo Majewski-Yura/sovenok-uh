@@ -825,7 +825,9 @@ const ITEMS=[
 /* обновка: Алиса видит Уха в вещи только после покупки.
    Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
 /* вещи, для которых уже есть готовая картинка img/reveal/<k>.webp */
-const REVEAL_HAVE=['wizard','phones','wreath','balloon'];
+const REVEAL_HAVE=['wizard','phones','wreath','balloon','cap'];
+/* своя фраза для вещи, если картинка особенная */
+const REVEAL_ITEM_SAY={cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
 const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самый нарядный совёнок на свете!'];
 function revealOwl(k){
   const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
@@ -842,7 +844,7 @@ function showReveal(it){
   img.onerror=()=>{pic.innerHTML='';pic.appendChild(revealOwl(it.k))};
   img.src='img/reveal/'+it.k+'.webp';}
   document.getElementById('rvTitle').textContent=typo('Обновка: '+it.n.toLowerCase()+'!');
-  const t=pick(REVEAL_SAY);document.getElementById('rvSay').textContent=typo(t);
+  const t=REVEAL_ITEM_SAY[it.k]||pick(REVEAL_SAY);document.getElementById('rvSay').textContent=typo(t);
   document.getElementById('reveal').classList.add('on');
   setTimeout(()=>speak(t,'uh'),400);
 }
