@@ -31,6 +31,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .dino.eat .body{transform-box:fill-box;transform-origin:50% 100%;animation:chomp .22s ease 4}@keyframes chomp{50%{transform:scale(1.06,.94)}}
 .dino .acc{display:none}
 .dino.noacc .acc{display:none!important}
+.spose{height:130px;width:auto;display:block;margin:4px auto 0;animation:bob 2.8s ease-in-out infinite;transform-origin:50% 95%}
+.spose.cow{height:110px}
 .tile .ic img.tpic{height:1.5em;max-width:100%;object-fit:contain;width:auto;display:block;margin:0 auto}
 .hint{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:#4a3200;border-radius:999px;padding:8px 18px;font-size:20px;pointer-events:none;animation:pulse 1.2s ease-in-out infinite;white-space:nowrap}
 @keyframes pulse{50%{transform:translateX(-50%) scale(1.12)}}
@@ -148,19 +150,19 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <div id="dinoHome" style="position:relative"></div>
     </div>
     <div class="tiles">
-      <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/topa-balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
-      <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/topa-cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
-      <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/topa-strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
-      <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/topa-blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
-      <button class="tile" onclick="startCars()"><div class="ic"><img src="img/topa-car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
-      <button class="tile" onclick="startPuzzle()"><div class="ic"><img src="img/topa-puzzle.webp" alt="" class="tpic"></div><span>Пазл</span></button>
-      <button class="tile" onclick="startTidy()"><div class="ic"><img src="img/topa-broom.webp" alt="" class="tpic"></div><span>Наведём порядок</span></button>
-      <button class="tile" onclick="startDress()"><div class="ic"><img src="img/topa-shirt.webp" alt="" class="tpic"></div><span>Одень Топу</span></button>
-      <button class="tile" onclick="go('tales')"><div class="ic"><img src="img/topa-book.webp" alt="" class="tpic"></div><span>Сказки</span></button>
-      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic"><img src="img/topa-check.webp" alt="" class="tpic"></div><span>Мои дела</span></button>
-      <button class="tile" onclick="go('toyshop')"><div class="ic"><img src="img/topa-cart.webp" alt="" class="tpic"></div><span>Магазин игрушек</span></button>
-      <button class="tile" onclick="go('shop')"><div class="ic"><img src="img/topa-crown.webp" alt="" class="tpic"></div><span>Наряды Топы</span></button>
-      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic"><img src="img/topa-sick.webp" alt="" class="tpic"></div><span>Как ты себя чувствуешь?</span></button>
+      <button class="tile" onclick="startBalls()"><div class="ic">🎈</div><span>Шарики</span></button>
+      <button class="tile" onclick="startZoo()"><div class="ic">🐮</div><span>Кто как говорит</span></button>
+      <button class="tile" onclick="startFeed()"><div class="ic">🍓</div><span>Накорми Топу</span></button>
+      <button class="tile" onclick="startBlocks()"><div class="ic">🧱</div><span>Построй башню</span></button>
+      <button class="tile" onclick="startCars()"><div class="ic">🚗</div><span>Машинки</span></button>
+      <button class="tile" onclick="startPuzzle()"><div class="ic">🧩</div><span>Пазл</span></button>
+      <button class="tile" onclick="startTidy()"><div class="ic">🧹</div><span>Наведём порядок</span></button>
+      <button class="tile" onclick="startDress()"><div class="ic">👕</div><span>Одень Топу</span></button>
+      <button class="tile" onclick="go('tales')"><div class="ic">📖</div><span>Сказки</span></button>
+      <button class="tile" id="tileDeeds" onclick="go('deeds')"><div class="ic">✅</div><span>Мои дела</span></button>
+      <button class="tile" onclick="go('toyshop')"><div class="ic">🛒</div><span>Магазин игрушек</span></button>
+      <button class="tile" onclick="go('shop')"><div class="ic">👑</div><span>Наряды Топы</span></button>
+      <button class="tile" id="tileFeel" onclick="go('feel')"><div class="ic">🤒</div><span>Как ты себя чувствуешь?</span></button>
     </div>
     <div class="parent"><button onclick="go('parent')">Для родителей</button></div>
   </section>
@@ -172,7 +174,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="zoo">
-    <div class="stage"><div class="bubble" id="zooSay"></div></div>
+    <div class="stage"><div class="bubble" id="zooSay"></div><img class="spose" src="img/topa-cow.webp" alt="Топа и коровка"></div>
     <div class="zoo" id="zooGrid"></div>
     <div class="counter" id="zooCnt"></div>
   </section>
@@ -199,13 +201,13 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="blocks">
-    <div class="stage"><div class="bubble" id="blocksSay"></div></div>
+    <div class="stage"><div class="bubble" id="blocksSay"></div><img class="spose" src="img/topa-blocks.webp" alt="Топа"></div>
     <div class="build" id="build" onclick="addBlock()"></div>
     <div style="text-align:center;margin-top:12px"><button class="bigbtn" id="boom" onclick="boom()" style="visibility:hidden">💥 Бух!</button></div>
   </section>
 
   <section class="screen" id="cars">
-    <div class="stage"><div class="bubble" id="carsSay"></div></div>
+    <div class="stage"><div class="bubble" id="carsSay"></div><img class="spose" src="img/topa-car.webp" alt="Топа"></div>
     <div class="road" id="road">
       <button class="light" id="light" onclick="toggleLight()" aria-label="Светофор"><i class="r"></i><i class="g"></i></button>
       <div class="car" id="car" onclick="drive()">🚗</div>
@@ -215,12 +217,12 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="puzzle">
-    <div class="stage"><div class="bubble" id="puzzleSay"></div></div>
+    <div class="stage"><div class="bubble" id="puzzleSay"></div><img class="spose" src="img/topa-puzzle.webp" alt="Топа"></div>
     <div class="pz" id="pz"></div>
   </section>
 
   <section class="screen" id="tidy">
-    <div class="stage"><div class="bubble" id="tidySay"></div></div>
+    <div class="stage"><div class="bubble" id="tidySay"></div><img class="spose" src="img/topa-broom.webp" alt="Топа"></div>
     <div class="room" id="room"></div>
     <div class="bins"><div class="bin" id="binToys">📦<span>игрушки</span></div><div class="bin" id="binTrash">🗑️<span>мусор</span></div></div>
   </section>
@@ -232,7 +234,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="tales">
-    <div class="stage"><div class="bubble" id="talesSay"></div></div>
+    <div class="stage"><div class="bubble" id="talesSay"></div><img class="spose" src="img/topa-book.webp" alt="Топа"></div>
     <div class="books" id="books"></div>
     <div class="page" id="page" style="display:none">
       <div class="pic" id="pagePic"></div>
@@ -247,7 +249,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="toyshop">
-    <div class="stage"><div class="bubble" id="toyshopSay"></div></div>
+    <div class="stage"><div class="bubble" id="toyshopSay"></div><img class="spose" src="img/topa-cart.webp" alt="Топа"></div>
     <h3 class="shelf-h">Мои игрушки</h3>
     <div class="shelf" id="shelf"></div>
     <h3 class="shelf-h">Магазин</h3>
@@ -328,7 +330,7 @@ function mountDino(id,small){
   svg.querySelectorAll('[id]').forEach(n=>{const o=n.id,nn=o+'_'+id;n.id=nn;svg.querySelectorAll('[fill="url(#'+o+')"]').forEach(e=>e.setAttribute('fill','url(#'+nn+')'))});
   if(small)svg.classList.add('small');
   /* позы Топы: картинка 672×900 на высоту 200 */
-  const POSE={dinoFeel:['sick',176]};
+  const POSE={dinoFeel:['sick',176],dinoDeeds:['check',182],dinoDress:['shirt',158]};
   if(POSE[id]){const [n,w]=POSE[id],im=svg.querySelector('image.pose');im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.add('noacc')}
   svg.addEventListener('click',()=>{if(id==='dinoFeed')return;hop(svg);if(id==='dinoHome')hello();else say(id.replace('dino','').toLowerCase(),pick(TAP))});
   el.appendChild(svg);dinos[id]=svg;dress();
