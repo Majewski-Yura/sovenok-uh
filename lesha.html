@@ -48,15 +48,16 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .home{position:fixed;left:12px;bottom:12px;width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:40px;box-shadow:0 6px 0 var(--green2);z-index:5;display:none}
 .home:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green2)}
 /* раскраска */
-.paint-wrap{max-width:520px;width:fit-content;margin:8px auto 0;background:#fff;border:5px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
+.pline{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+.paint-wrap{position:relative;max-width:520px;width:fit-content;margin:8px auto 0;background:#fff;border:5px solid var(--line);border-radius:32px;overflow:hidden;box-shadow:var(--shadow)}
 .paint-wrap canvas{max-width:100%;max-height:48vh;width:auto;height:auto;display:block;touch-action:manipulation;cursor:pointer}
+.pgal{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px auto 0;max-width:560px}
+.pgal button{background:#fff;border:5px solid var(--line);border-radius:28px;padding:10px;box-shadow:var(--shadow);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.pgal button:active{transform:scale(.95)}
+.pgal img{max-width:100%;max-height:100%;object-fit:contain}
 .palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px auto 0;max-width:560px}
 .palette button{width:min(10.5vw,60px);height:min(10.5vw,60px);border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
 .palette button.on{box-shadow:0 0 0 6px var(--ink);transform:scale(1.12)}
-.ppick{display:flex;gap:8px;justify-content:center;margin:8px auto 0;max-width:560px}
-.ppick button{width:min(14vw,72px);height:min(14vw,72px);flex:none;background:#fff;border:4px solid var(--line);border-radius:20px;padding:4px;box-shadow:var(--shadow)}
-.ppick button.on{border-color:var(--gold);background:var(--gold2)}
-.ppick img{width:100%;height:100%;object-fit:contain}
 .prow{display:flex;gap:14px;justify-content:center;margin-top:10px}
 .prow button{font-size:40px;background:var(--bg2);border:5px solid var(--line);border-radius:24px;padding:6px 18px;box-shadow:var(--shadow)}
 /* шарики */
@@ -280,10 +281,14 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="clothes" id="clothes"></div>
   </section>
 
+  <section class="screen" id="paintpick">
+    <div class="bubble" id="paintpickSay" style="margin:6px auto 0"></div>
+    <div class="pgal" id="pgal"></div>
+  </section>
+
   <section class="screen" id="paint">
     <div class="bubble" id="paintSay" style="margin:6px auto 0"></div>
-    <div class="ppick" id="ppick"></div>
-    <div class="paint-wrap"><canvas id="paintCv" width="928" height="1152"></canvas></div>
+    <div class="paint-wrap"><canvas id="paintCv" width="928" height="1152"></canvas><img id="paintImg" class="pline" alt=""></div>
     <div class="palette" id="palette"></div>
     <div class="prow"><button onclick="paintUndo()" aria-label="Назад">↩️</button><button onclick="paintLoad()" aria-label="Сначала">🧽</button></div>
   </section>
@@ -447,9 +452,9 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress','paint'];
+const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
-function goBack(){if(GAMES.includes(cur()))openGames();else go('home')}
+function goBack(){if(cur()==='paint')startPaint();else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
@@ -471,15 +476,18 @@ function addStar(n){setTimeout(()=>cele(),400);
 /* ---------- раскраска ---------- */
 let pCol='#ff5a5f',pHist=[],pFills=0,PK='topa',pCur=null;
 const PPICS=['topa','cap','balloon','crown','car','train'];
-function startPaint(){go('paint');const P=document.getElementById('palette');P.innerHTML='';
-  COLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
+/* раскраска: сначала выбор картинки, потом отдельный экран раскрашивания */
+const PCOLORS=[{c:'#ff5a5f',say:'Красный!'},{c:'#ff9a3c',say:'Оранжевый!'},{c:'#ffd23f',say:'Жёлтый!'},{c:'#a6e05a',say:'Салатовый!'},{c:'#3ccf6e',say:'Зелёный!'},{c:'#6fd0ff',say:'Голубой!'},{c:'#4a8cff',say:'Синий!'},
+  {c:'#a77bff',say:'Фиолетовый!'},{c:'#ff8fc8',say:'Розовый!'},{c:'#b07a4f',say:'Коричневый!'},{c:'#ffe1c2',say:'Бежевый!'},{c:'#ffffff',say:'Белый!'},{c:'#9aa3ad',say:'Серый!'},{c:'#2b2b33',say:'Чёрный!'}];
+function startPaint(){go('paintpick');const G=document.getElementById('pgal');G.innerHTML='';
+  PPICS.forEach(k=>{const b=document.createElement('button');b.innerHTML='<img src="img/color-topa/'+k+'.png?v=2" alt="">';b.onclick=()=>openPic(k);G.appendChild(b)});
+  say('paintpick','Выбери картинку, которую будем раскрашивать!')}
+function openPic(k){PK=k;go('paint');const P=document.getElementById('palette');P.innerHTML='';
+  PCOLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
     b.onclick=()=>{pCol=x.c;P.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');say('paint',x.say)};P.appendChild(b)});
-  const Q=document.getElementById('ppick');Q.innerHTML='';
-  PPICS.forEach(k=>{const b=document.createElement('button');b.innerHTML='<img src="img/color-topa/'+k+'.png" alt="">';if(k===PK)b.className='on';
-    b.onclick=()=>{PK=k;Q.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');paintLoad()};Q.appendChild(b)});
-  paintLoad();say('paint','Выбери картинку, потом цвет — и нажимай!')}
+  paintLoad();say('paint','Выбери цвет и нажимай на картинку!')}
 function paintLoad(){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();pFills=0;
-  im.onload=()=>{const k=Math.min(1,640/im.naturalWidth);cv.width=Math.round(im.naturalWidth*k);cv.height=Math.round(im.naturalHeight*k);c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[];pCur=c.getImageData(0,0,cv.width,cv.height)};im.src='img/color-topa/'+PK+'.png';
+  im.onload=()=>{const k=Math.min(1,640/im.naturalWidth);cv.width=Math.round(im.naturalWidth*k);cv.height=Math.round(im.naturalHeight*k);c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[];pCur=c.getImageData(0,0,cv.width,cv.height)};const src='img/color-topa/'+PK+'.png?v=2';document.getElementById('paintImg').src=src;im.src=src;
   cv.onclick=e=>{const r=cv.getBoundingClientRect();paintFill(Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height))}}
 function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),W=cv.width,H=cv.height,img=c.getImageData(0,0,W,H),d=img.data;
   const i0=(y*W+x)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];if(tr+tg+tb<200)return;
