@@ -362,6 +362,8 @@ label.f{display:block;margin-top:14px;font-size:16px}
     </div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
     <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="if(confirm('Обнулить звёзды?')){S.stars=0;save();setStars()}">Обнулить звёзды</button></div>
+    <h3 style="margin-top:24px">☁️ Общая база</h3>
+    <div id="syncBox"></div>
     <h3 style="margin-top:24px">Чтобы звёзды и&nbsp;вещи не&nbsp;пропадали</h3>
     <p style="color:var(--ink2);font-size:14px;line-height:1.5;margin:0">Всё хранится в&nbsp;браузере этого устройства. На&nbsp;iPhone и&nbsp;iPad Safari стирает данные сайта, если его не&nbsp;открывать 7&nbsp;дней, — поэтому добавьте сайт на&nbsp;экран «Домой»: «Поделиться» → «На&nbsp;экран „Домой“» и&nbsp;открывайте оттуда. И&nbsp;время от&nbsp;времени сохраняйте копию.</p>
     <p id="persistNote" style="color:var(--ink2);font-size:14px;margin:6px 0 0"></p>
@@ -431,7 +433,67 @@ try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catc
 if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
 /* разовое обнуление звёзд (04.11.2026) */
 if(S.starsReset!==1){S.stars=0;S.starsReset=1;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}cloudPush()}
+
+/* ---------- общая база (Firebase): одни и те же звёзды, вещи и дневник на всех устройствах семьи ---------- */
+/* firebaseConfig проекта sovenok-uh (публичный, доступ ограничен правилами Firestore и семейным кодом) */
+const FB_CONFIG={apiKey:"AIzaSyDLZHhRwXYQU8fAOOlp4LzCODahdQuQ_mA",authDomain:"sovenok-uh.firebaseapp.com",projectId:"sovenok-uh",storageBucket:"sovenok-uh.firebasestorage.app",messagingSenderId:"495272253062",appId:"1:495272253062:web:18300d5cae9bae89756307"};
+const FB_V='10.12.2',FAM_KEY='uh-family';
+let fb=null,famId=null,applyingRemote=false,pushT=null,syncState='';
+try{
+  const q=new URLSearchParams(location.search).get('family');
+  if(q&&/^[A-Za-z0-9]{20,}$/.test(q)){localStorage.setItem(FAM_KEY,q);history.replaceState(null,'',location.pathname)}
+  famId=localStorage.getItem(FAM_KEY);
+}catch(e){}
+const LOCAL_ONLY=['voices'];
+function cloudData(){const o=JSON.parse(JSON.stringify(S));LOCAL_ONLY.forEach(k=>delete o[k]);if(o.diary&&o.diary.length>300)o.diary=o.diary.slice(0,300);return o}
+function cloudPush(){
+  if(!fb||applyingRemote)return;clearTimeout(pushT);
+  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>setSync('ok')).catch(()=>setSync('err'))},700);
+}
+function applyRemote(r){
+  if(JSON.stringify(r)===JSON.stringify(cloudData()))return;
+  applyingRemote=true;
+  const keep={};LOCAL_ONLY.forEach(k=>keep[k]=S[k]);
+  S=Object.assign({},r,keep);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  setStars();dress();
+  const on=document.querySelector('.screen.on');const id=on&&on.id;
+  if(id==='home')renderHome();else if(id==='shop')renderShop();else if(id==='parent')renderParent();
+  if(typeof renderPending==='function')renderPending();
+  applyingRemote=false;
+}
+function setSync(st){syncState=st;const n=document.getElementById('syncNote');if(n)renderSync()}
+async function cloudInit(){
+  if(!FB_CONFIG||!famId||fb)return;
+  try{
+    setSync('wait');
+    const base='https://www.gstatic.com/firebasejs/'+FB_V+'/';
+    const [A,U,F]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-firestore.js')]);
+    const app=A.initializeApp(FB_CONFIG);await U.signInAnonymously(U.getAuth(app));
+    const db=F.getFirestore(app),ref=F.doc(db,'families',famId);
+    const snap=await F.getDoc(ref);
+    fb={ref,setDoc:F.setDoc,ts:F.serverTimestamp};
+    if(snap.exists()&&snap.data().alisa)applyRemote(snap.data().alisa);else cloudPush();
+    F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites)return;const d=x.data();if(d&&d.alisa)applyRemote(d.alisa)});
+    setSync('ok');
+  }catch(e){fb=null;setSync('err');console.warn('cloud',e)}
+}
+function newFamily(){
+  const a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789',r=new Uint32Array(24);crypto.getRandomValues(r);
+  famId=Array.from(r,x=>a[x%a.length]).join('');try{localStorage.setItem(FAM_KEY,famId)}catch(e){}
+  cloudInit().then(renderSync);renderSync();
+}
+function familyLink(){return location.origin+location.pathname+'?family='+famId}
+function copyFamily(){const l=familyLink();(navigator.clipboard?navigator.clipboard.writeText(l):Promise.reject()).then(()=>alert('Ссылка скопирована. Откройте её на другом устройстве.')).catch(()=>prompt('Скопируйте ссылку:',l))}
+function leaveFamily(){if(!confirm('Отключить общую базу на этом устройстве? Данные в облаке останутся.'))return;try{localStorage.removeItem(FAM_KEY)}catch(e){}famId=null;location.reload()}
+function renderSync(){
+  const box=document.getElementById('syncBox');if(!box)return;
+  if(!FB_CONFIG){box.innerHTML='<p style="color:var(--ink2);font-size:14px;margin:0">Общая база ещё не&nbsp;настроена.</p>';return}
+  if(!famId){box.innerHTML='<p style="color:var(--ink2);font-size:14px;margin:0">Звёзды, вещи, дневник, просьбы и&nbsp;подтверждения будут общими на&nbsp;всех устройствах семьи.</p><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="newFamily()">☁️ Включить для нашей семьи</button></div><p style="color:var(--ink2);font-size:14px">Уже включили на&nbsp;другом устройстве? Откройте здесь ссылку оттуда.</p>';return}
+  const st={ok:'✓ Синхронизировано',wait:'Подключаюсь…',err:'Нет связи с базой — данные сохраняются на устройстве и отправятся позже.'}[syncState]||'';
+  box.innerHTML='<p id="syncNote" style="font-size:15px;margin:0 0 8px"></p><p style="color:var(--ink2);font-size:14px;margin:0">Откройте эту ссылку на&nbsp;телефоне мамы или папы и&nbsp;на других устройствах Алисы. Никому больше её не&nbsp;давайте.</p><input class="t" readonly onclick="this.select()"><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="copyFamily()">📋 Скопировать ссылку</button><button class="btn soft" onclick="leaveFamily()">Отключить здесь</button></div>';
+  box.querySelector('#syncNote').textContent=st;box.querySelector('input').value=familyLink();
+}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 
 /* ---------- типографика: без висячих строк ---------- */
@@ -1156,7 +1218,7 @@ function saveMode(){
 }
 function renderParent(){
   document.getElementById('modeIn').value=mode();document.getElementById('backIn').value=S.backDate||'';
-  document.getElementById('topicIn').value=S.topic||'';renderVoices();checkPersist();
+  document.getElementById('topicIn').value=S.topic||'';renderVoices();checkPersist();renderSync();
   const PP=document.getElementById('parentPend'),pl=S.pending||[];
   PP.innerHTML=pl.length?'':'<div class="entry">Пока ничего.</div>';
   pl.forEach(x=>{const d=document.createElement('div');d.className='entry';d.textContent=x.d.split('-').reverse().join('.')+' · '+x.what+' · ⭐ '+x.stars;PP.appendChild(d)});
@@ -1177,7 +1239,7 @@ function pickWho(w){try{sessionStorage.setItem('who',w)}catch(e){}if(w==='lesha'
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
   mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlShop');
-  typoDom(document.body);setStars();renderHome();showPhoto();
+  typoDom(document.body);setStars();renderHome();showPhoto();cloudInit();
 })();
 </script>
 </body>
