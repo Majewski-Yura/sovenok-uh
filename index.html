@@ -129,7 +129,9 @@ textarea:focus{outline:none;border-color:var(--gold)}
 
 .shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
 .item{background:var(--bg2);border:3px solid var(--line);border-radius:22px;padding:14px;text-align:center;box-shadow:var(--shadow)}
-.item .ic{font-size:40px}
+.item .ic{font-size:40px;height:104px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.item .ic img{height:auto!important;max-height:96px;max-width:90%;width:auto;display:block;margin:auto;object-fit:contain}
+.item .ic img[src*="ochki"],.item .ic img[src*="temnye"],.item .ic img[src*="venok"],.item .ic img[src*="babochka."]{width:86%;max-height:none}
 .item b{display:block;font-size:17px;margin:4px 0}
 .item span{font-size:15px;color:var(--ink2)}
 .item.on{border-color:var(--mint);background:#e9faef}
@@ -270,7 +272,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Лёшей. Ух будет болеть за&nbsp;тебя!</p></button>
       <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><p>Расскажи Уху, как прошёл день в школе</p></button>
       <button class="card" onclick="startGame()"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот и карандаш"></div><h3>Записка Уха</h3><p>Ух пишет слова и сомневается. Подскажи ему букву!</p></button>
-      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Угу и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
+      <button class="card" onclick="startEng()"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Топа и&nbsp;английский</h3><p>Младший братик Уха совсем не знает английского. Помоги малышу!</p></button>
       <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Уха</h3><p>Наряди Уха за звёздочки</p></button>
     </div>
     <div class="foot"><button onclick="openParent()">Для родителей</button> · <button onclick="showPick()">Кто играет?</button></div>
@@ -393,7 +395,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="btn soft" onclick="clearPhoto()">Убрать фото</button>
     </div>
     <h3 style="margin-top:24px">Голоса</h3>
-    <p style="color:var(--ink2);font-size:14px;margin:0">Ух, Угу и&nbsp;английские слова говорят живыми записанными голосами. Настройки ниже — запасной голос устройства для фраз, которых нет в&nbsp;записи (например, с&nbsp;темой урока).</p>
+    <p style="color:var(--ink2);font-size:14px;margin:0">Ух, Топа и&nbsp;английские слова говорят живыми записанными голосами. Настройки ниже — запасной голос устройства для фраз, которых нет в&nbsp;записи (например, с&nbsp;темой урока).</p>
     <div id="voiceBox"></div>
     <h3 style="margin-top:24px">Дневник разговоров</h3>
     <div class="diary" id="diaryList"></div>
@@ -428,11 +430,11 @@ label.f{display:block;margin-top:14px;font-size:16px}
 </template>
 
 <template id="babyTpl">
-<svg class="owl small" viewBox="-80 -88 160 175" aria-label="Братик Угу">
+<svg class="owl small" viewBox="-80 -88 160 175" aria-label="Братик Топа">
   <defs><radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
   <ellipse cx="11" cy="72" rx="44" ry="7" fill="url(#uhShadow)"/>
   <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="48" y="-62" font-size="18">z</text><text x="60" y="-76" font-size="13">z</text></g>
-  <g class="body"><image class="pose" href="img/ugu.webp" x="-79.35" y="-82" width="158.7" height="156"/>
+  <g class="body"><image class="pose" href="img/topa-hello.webp" x="-62" y="-84" width="124" height="160"/>
   <circle class="lid" cx="-8" cy="-37.4" r="14.5" fill="#efdcbd"/>
   <circle class="lid" cx="29.7" cy="-37.4" r="14.5" fill="#efdcbd"/>
   <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
@@ -609,7 +611,7 @@ function mountOwl(id,small,tpl){
   svg.addEventListener('mouseenter',()=>{
     const now=Date.now();if(now-lastHoot<1500)return;lastHoot=now;
     if(svg.classList.contains('sleep')){speak('Хр-р-р…','uh');return}
-    cheer(svg);speak(tpl?'Угу!':'Ух-ух!',tpl?'baby':'uh');
+    cheer(svg);speak(tpl?'Р-р-р!':'Ух-ух!',tpl?'baby':'uh');
   });
   el.appendChild(svg);owls[id]=svg;if(!tpl)setPose(id);dress();
 }
@@ -649,7 +651,7 @@ function loadPhoto(inp){
 }
 function clearPhoto(){try{localStorage.removeItem(PHOTO_KEY)}catch(e){}showPhoto()}
 function meClick(){showPick()}
-const BABY_TICKLE=['Угу-угу! Хи-хи!','Ой! Я маленький, но пушистый!','Алиса, ты моя самая любимая!','Угу! Обними меня!'];
+const BABY_TICKLE=['Р-р-р! Хи-хи!','Ой! Я маленький, но зубастый!','Алиса, ты моя самая любимая!','Р-р-р! Обними меня!'];
 
 /* ---------- общее ---------- */
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -888,7 +890,7 @@ function momDone(){
 let pinCb=null;
 /* вход для взрослых: пример, который ребёнок не решит (кода нет) */
 let pinVal='',gateA=0,gateB=0;
-function gateNew(){gateA=12+Math.floor(Math.random()*15);gateB=13+Math.floor(Math.random()*14);
+function gateNew(){gateA=6+Math.floor(Math.random()*4);gateB=6+Math.floor(Math.random()*4);
   document.getElementById('pinHint').textContent=typo('Сколько будет '+gateA+' × '+gateB+'?');pinVal='';pinDraw()}
 function pinDraw(){const d=document.getElementById('pinDots');d.textContent=pinVal||'…'}
 function pinKey(k){if(k==='⌫')pinVal=pinVal.slice(0,-1);else if(k==='✓'){pinOk();return}else if(pinVal.length<4)pinVal+=k;pinDraw()}
@@ -959,9 +961,9 @@ const QUESTIONS=[
   {q:'Какое у тебя было настроение в школе? Покажи цветом: солнечное, облачное или грозовое?',chips:['☀️ Солнечное','⛅ Облачное','⛈ Грозовое']},
   {q:'Учительница сегодня сказала что-нибудь интересное? Повтори, пожалуйста, мне тоже хочется знать!',chips:['Да!','Не помню']},
   {q:'Что ты сегодня ела в столовой? Совы едят мышей, мне очень любопытно, что едят девочки!',chips:['Кашу','Суп','Не помню']},
-  {q:'Мой братик Угу спрашивает: а что сегодня делал Лёша? Вы во что-нибудь играли?',chips:['Играли!','Не успели','Он мешал']}
+  {q:'Мой братик Топа спрашивает: а что сегодня делал Лёша? Вы во что-нибудь играли?',chips:['Играли!','Не успели','Он мешал']}
 ];
-const LESHA_REACT='Угу передаёт: младшие братики иногда шалят, потому что очень хотят играть со старшей сестрой. Он тебя любит!';
+const LESHA_REACT='Топа передаёт: младшие братики иногда шалят, потому что очень хотят играть со старшей сестрой. Он тебя любит!';
 const REACT=['Ух ты! Вот это да!','Ничего себе! Я бы так не смогла.','Как интересно! Ух запомнит.','Ух-ух! А дальше?','Здорово! Ты так понятно объясняешь, как учительница!','Хи-хи! Вот это история!'];
 const MISSIONS=['После школы разложи свои вещи по местам','Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
 const HOLIDAY_Q=[
@@ -972,7 +974,7 @@ const HOLIDAY_Q=[
   {q:'Что интересного ты расскажешь в классе, когда вернёшься?',chips:['Пока не знаю','Есть одна история!']},
   {q:'Если бы я пришла в твою школу, что бы ты мне показала первым делом?',chips:['Свой класс','Столовую','Спортзал']},
   {q:'Какую книжку или мультик ты сегодня видела? О чём он?',chips:['Книжку','Мультик','Ничего']},
-  {q:'Мой братик Угу спрашивает: а во что вы сегодня играли с Лёшей? Он тоже хочет так научиться!',chips:['Играли!','Не успели','Он мешал']}
+  {q:'Мой братик Топа спрашивает: а во что вы сегодня играли с Лёшей? Он тоже хочет так научиться!',chips:['Играли!','Не успели','Он мешал']}
 ];
 const SICK_Q=[
   {q:'Что самое уютное у тебя в кровати?',chips:['Подушка','Одеяло','Игрушка']},
@@ -981,11 +983,11 @@ const SICK_Q=[
   {q:'По кому из класса ты соскучилась?',chips:['По подружке','По учительнице','По всем']},
   {q:'Посмотри в окно. На что похоже небо или облако?',chips:['На зверя','На вату','Серое']},
   {q:'Какую сказку тебе сегодня читали? Чем она закончилась?',chips:['Не читали','Расскажу!']},
-  {q:'Мой братик Угу спрашивает: а Лёша заходил тебя проведать? Что он делал?',chips:['Заходил!','Принёс игрушку','Шумел']}
+  {q:'Мой братик Топа спрашивает: а Лёша заходил тебя проведать? Что он делал?',chips:['Заходил!','Принёс игрушку','Шумел']}
 ];
 const SICK_FIRST={q:'Как ты себя чувствуешь сегодня?',chips:['Получше','Так себе','Плохо']};
 const SOFT_REACT=['Спасибо, что рассказала!','Ух укроет тебя крылышком.','Как хорошо, что ты мне это рассказала!','Ух-ух, понятно. А ещё?'];
-const HOLIDAY_M=['Убери свою комнату так, чтобы мама ахнула','Помоги маме помыть посуду после обеда','Поиграй с Лёшей, когда мама будет занята','Придумай с Лёшей общую игру и научи ей потом Угу','Насмеши Лёшу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
+const HOLIDAY_M=['Убери свою комнату так, чтобы мама ахнула','Помоги маме помыть посуду после обеда','Поиграй с Лёшей, когда мама будет занята','Придумай с Лёшей общую игру и научи ей потом Топу','Насмеши Лёшу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
 const SICK_M=['Расскажи Лёше сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
 let talk=null;
 function startTalk(){
@@ -1080,14 +1082,14 @@ function gameStep(){
   });
 }
 
-/* ---------- игра «Братик Угу и английский» (по темам занятий) ---------- */
+/* ---------- игра «Братик Топа и английский» (по темам занятий) ---------- */
 const speakEn=t=>speak(t,'en');
 /* выбор голосов в «Для родителей» */
-const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Угу! Я братик Уха. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
+const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Р-р-р! Я Топа, братик Уха. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
 function setVoice(who,key,val){S.voices=S.voices||{};S.voices[who]=Object.assign(vset(who),{[key]:val});save()}
 function renderVoices(){
   const box=document.getElementById('voiceBox');if(!box)return;box.innerHTML='';
-  const rows=[['uh','Голос Уха'],['baby','Голос братика Угу'],['en','Английские слова']];
+  const rows=[['uh','Голос Уха'],['baby','Голос братика Топы'],['en','Английские слова']];
   rows.forEach(([who,title])=>{
     const c=vset(who),list=who==='en'?enVoices():ruVoices();
     const w=document.createElement('div');w.className='entry';w.style.marginTop='10px';
@@ -1117,15 +1119,15 @@ const PRON=[{en:'I',ru:'я',e:'🙋‍♀️'},{en:'you',ru:'ты',e:'👉'},{en
 const BE=[['I','am','happy','Я счастлива'],['She','is','tired','Она устала'],['He','is','hungry','Он голодный'],['They','are','angry','Они злятся'],['We','are','friends','Мы друзья'],['You','are','my friend','Ты мой друг'],['It','is','a cat','Это кошка'],['I','am','a girl','Я девочка'],['The ghost','is','white','Привидение белое'],['We','are','happy','Мы счастливы']];
 const PAINT=[{e:'🐸',en:'frog',c:'green'},{e:'🦊',en:'fox',c:'orange'},{e:'👻',en:'ghost',c:'white'},{e:'🦇',en:'bat',c:'black'},{e:'🐻',en:'bear',c:'brown'},{e:'🎃',en:'pumpkin',c:'orange'},{e:'🍎',en:'apple',c:'red'},{e:'☀️',en:'sun',c:'yellow'},{e:'🐷',en:'pig',c:'pink'},{e:'🍇',en:'grapes',c:'purple'}];
 const BE_RULE='I — am, he / she / it — is, you / we / they — are';
-const B_OK=['Угу! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Угу-угу! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
-const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Угу… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
+const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Ура-ура! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
+const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Хм… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
 let E=null;
 const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slice(0,n);
 function engRound(){
   const one=a=>pick(a);
   const word=()=>{const cat=one([COLORS,ANIMALS,SPOOKY]);const it=one(cat);const isC=cat===COLORS;
     return {word:1,pic:isC?'<span class="sw" style="background:'+it.c+'"></span>':it.e,ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
-      ask:'Угу! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
+      ask:'Р-р-р! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
   const pron=()=>{const it=one(PRON);return {pic:it.e,ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
       ask:'Как сказать по-английски «'+it.ru+'»? Я забыл…',r:'«'+it.ru+'» по-английски — '+it.en,say:it.en}};
   const be=()=>{const b=one(BE);return {sent:b[0]+' <span class="gap">?</span> '+b[2],ru:b[3],opts:[b[1]].concat(['am','is','are'].filter(x=>x!==b[1])),
@@ -1138,7 +1140,7 @@ function engRound(){
 }
 function startEng(){
   go('eng');E={list:engRound(),i:-1};
-  say('eng','Привет! Я Угу, младший братик Уха. Ух говорит, что ты ходишь на английский. А я ещё ничего-ничего не знаю… Научишь меня?');
+  say('eng','Привет! Я Топа, младший братик Уха. Да-да, я динозаврик, а Ух — сова, но мы всё равно братья! Ух говорит, что ты ходишь на английский. А я ещё ничего-ничего не знаю… Научишь меня?');
   document.getElementById('engBody').style.display='none';
   const n=document.getElementById('engNext');n.style.display='flex';
   const b=document.getElementById('engNextBtn');b.textContent='Конечно, научу!';b.onclick=engStep;
@@ -1151,11 +1153,11 @@ function engStep(){
   if(E.i>=E.list.length){
     document.getElementById('engBody').style.display='none';
     const lw=pick(E.list.filter(q=>q.word)).opts[0];
-    say('eng','Угу-угу! Я теперь столько знаю! Ух говорит, у тебя тоже есть младший братик — Лёша. Ты, наверное, самая лучшая старшая сестра! Может, научишь и Лёшу слову «'+lw+'»? Вот он удивится!');
-    S.mission='Научи Лёшу английскому слову «'+lw+'» и расскажи Угу, как у него получилось';
-    gameReward('ugu','за помощь Угу');
-    S.diary.unshift({d:today(),q:'Английский с братиком Угу',a:'Научила Угу '+E.list.length+' вещам'});save();
-    document.getElementById('engNext').style.display='flex';btn.textContent='Ещё поучить Угу!';btn.onclick=startEng;
+    say('eng','Ура! Я теперь столько знаю! Ух говорит, у тебя тоже есть младший братик — Лёша. Ты, наверное, самая лучшая старшая сестра! Может, научишь и Лёшу слову «'+lw+'»? Вот он удивится!');
+    S.mission='Научи Лёшу английскому слову «'+lw+'» и расскажи Топе, как у него получилось';
+    gameReward('ugu','за помощь Топе');
+    S.diary.unshift({d:today(),q:'Английский с братиком Топой',a:'Научила Топу '+E.list.length+' вещам'});save();
+    document.getElementById('engNext').style.display='flex';btn.textContent='Ещё поучить Топу!';btn.onclick=startEng;
     return;
   }
   document.getElementById('engBody').style.display='block';btn.textContent='Дальше →';btn.onclick=engStep;
