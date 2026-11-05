@@ -119,8 +119,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .reveal.on{display:flex;animation:in .3s}
 .rv-card{background:var(--bg2);border:4px solid var(--gold);border-radius:32px;padding:20px 22px 24px;max-width:420px;width:100%;text-align:center;box-shadow:0 10px 0 rgba(0,0,0,.15)}
 .rv-pic svg{height:250px!important;margin-top:56px}
-.rv-pic{height:320px;display:flex;align-items:center;justify-content:center}
-.rv-pic img,.rv-pic svg{max-height:320px;max-width:100%;width:auto;height:320px;animation:rvpop .6s cubic-bezier(.3,1.6,.5,1)}
+.rv-pic{background:#fff;border-radius:24px;overflow:hidden;height:320px;display:flex;align-items:center;justify-content:center}
+.rv-pic img{width:100%;height:100%;object-fit:contain;}
+.rv-pic img,.rv-pic svg{animation:rvpop .6s cubic-bezier(.3,1.6,.5,1)}
 @keyframes rvpop{from{transform:scale(.4) rotate(-8deg);opacity:0}}
 .rv-card h2{margin:6px 0 4px;font-weight:900;font-size:26px}
 .rv-card p{margin:0 0 16px;font-size:19px;color:var(--ink2)}
@@ -825,9 +826,9 @@ const ITEMS=[
 /* обновка: Алиса видит Уха в вещи только после покупки.
    Готовая картинка — img/reveal/<k>.webp; если её нет — сова из шаблона с одной этой вещью. */
 /* вещи, для которых уже есть готовая картинка img/reveal/<k>.webp */
-const REVEAL_HAVE=['wizard','phones','wreath','balloon','cap','bowtie','shades','bow','medal','pencil','book'];
+const REVEAL_HAVE=['wizard','phones','wreath','balloon','cap','bowtie','shades','bow','medal','pencil','book','glasses','crown','butterfly'];
 /* своя фраза для вещи, если картинка особенная */
-const REVEAL_ITEM_SAY={book:'Моя собственная книжка! Почитаешь мне её вечером, Алиса?',pencil:'Волшебный карандаш! Теперь я напишу записку без единой ошибки. Ну, почти…',medal:'Настоящая медаль! Я так горжусь! А ты, Алиса, — моя чемпионка!',bow:'Ой, какой бантик! Теперь я совсем как ты, Алиса!',shades:'Йо! Самая крутая совушка в городе. Класс!',bowtie:'Смотри, какая я нарядная! Совсем как настоящая учительница.',cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
+const REVEAL_ITEM_SAY={crown:'Корона! Теперь я настоящая королева совушек. А ты — моя принцесса, Алиса!',butterfly:'Ой, бабочка! Она светится! Теперь у меня есть подружка.',glasses:'В очках я выгляжу очень умной! Теперь проверю все-все буквы.',book:'Моя собственная книжка! Почитаешь мне её вечером, Алиса?',pencil:'Волшебный карандаш! Теперь я напишу записку без единой ошибки. Ну, почти…',medal:'Настоящая медаль! Я так горжусь! А ты, Алиса, — моя чемпионка!',bow:'Ой, какой бантик! Теперь я совсем как ты, Алиса!',shades:'Йо! Самая крутая совушка в городе. Класс!',bowtie:'Смотри, какая я нарядная! Совсем как настоящая учительница.',cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
 const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самая нарядная совушка на свете!'];
 function revealOwl(k){
   const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
