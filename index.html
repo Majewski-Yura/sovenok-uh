@@ -48,6 +48,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 @keyframes flap{50%{transform:rotate(-25deg)}}
 .owl .acc{display:none}
 .owl{overflow:visible}
+.flutter{transform-box:fill-box;transform-origin:30% 90%;animation:flutter 2.6s ease-in-out infinite}
+@keyframes flutter{0%,100%{transform:rotate(-6deg) translateY(0)}50%{transform:rotate(5deg) translateY(-3px)}}
 .owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie,.owl[data-pose=star] .acc-scarf,.owl[data-pose=book] .acc-book,.owl[data-pose=star] .acc-medal,.owl[data-pose=book] .acc-medal,.owl[data-pose=book] .acc-scarf{visibility:hidden}
 
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
@@ -293,6 +295,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <g class="acc acc-thermo" transform="translate(118 -30)"><g transform="rotate(-28 -42 20)"><rect x="-80" y="17" width="42" height="7" rx="3.5" fill="#f4f7fb" stroke="#9fb3c8" stroke-width="1.3"/><rect x="-66" y="19" width="26" height="3" rx="1.5" fill="#e8584f"/><path d="M-74 17 v2.5 M-70 17 v2.5 M-66 17 v2.5 M-62 17 v2.5" stroke="#9fb3c8" stroke-width="1"/></g></g>
   <g class="acc acc-glasses"><image href="img/ochki.webp" x="-26.9" y="-56.1" width="80.3" height="32.5"/></g>
   <g class="acc acc-cap"><image href="img/kolpak.webp" x="-51" y="-119.7" width="100" height="91.7"/></g>
+  <g class="acc acc-butterfly"><image class="flutter" href="img/babochka-podruzhka.webp" x="-49.0" y="-93.2" width="38" height="38.5"/></g>
   <g class="acc acc-bow"><image href="img/bantik.webp" x="15.0" y="-87.4" width="44" height="34.8" transform="rotate(14 37 -70)"/></g>
   <g class="acc acc-crown"><image href="img/korona.webp" x="-24.2" y="-116.6" width="70" height="64.6"/></g>
   <g class="acc acc-wizard"><image href="img/shlyapa.webp" x="-35.2" y="-125" width="92" height="75.5"/></g>
@@ -798,8 +801,9 @@ const ITEMS=[
   {k:'bow',slot:'head',n:'Бантик',ic:'<img src="img/bantik.webp" alt="" style="height:44px">',p:5},
   {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="img/ochki.webp" alt="" style="height:30px">',p:8},
   {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="img/sharf.webp" alt="" style="height:44px">',p:8},
-  {k:'bowtie',slot:'neck',n:'Бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
+  {k:'bowtie',slot:'neck',n:'Галстук-бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
   {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="img/karandash.webp" alt="" style="height:48px">',p:6},
+  {k:'butterfly',slot:'pet',n:'Бабочка-подружка',ic:'<img src="img/babochka-podruzhka.webp" alt="" style="height:44px">',p:9},
   {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="img/sharik.webp" alt="" style="height:48px">',p:8},
   {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="img/knizhka.webp" alt="" style="height:40px">',p:10},
   {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="img/venok.webp" alt="" style="height:36px">',p:10},
