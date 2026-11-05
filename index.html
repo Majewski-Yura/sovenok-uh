@@ -48,7 +48,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 @keyframes flap{50%{transform:rotate(-25deg)}}
 .owl .acc{display:none}
 .owl{overflow:visible}
-.owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie,.owl[data-pose=star] .acc-scarf,.owl[data-pose=star] .acc-medal,.owl[data-pose=book] .acc-medal,.owl[data-pose=book] .acc-scarf{visibility:hidden}
+.owl[data-pose=star] .acc-bowtie,.owl[data-pose=book] .acc-bowtie,.owl[data-pose=star] .acc-scarf,.owl[data-pose=book] .acc-book,.owl[data-pose=star] .acc-medal,.owl[data-pose=book] .acc-medal,.owl[data-pose=book] .acc-scarf{visibility:hidden}
 
 .bubble{position:relative;background:var(--bg2);border:3px solid var(--line);border-radius:24px;padding:16px 52px 16px 20px;font-size:20px;line-height:1.4;max-width:560px;width:100%;box-shadow:var(--shadow)}
 .bubble:before{content:"";position:absolute;top:-14px;left:50%;margin-left:-12px;border:12px solid transparent;border-bottom-color:var(--line);border-top:0}
@@ -304,7 +304,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <g class="acc acc-medal"><image href="img/medal.webp" x="-22.0" y="-0.9" width="56" height="53.8"/></g>
   <g class="acc acc-balloon"><image href="img/sharik.webp" x="44.7" y="-83.0" width="49.7" height="95" transform="rotate(10 74 12)"/></g>
   <g class="acc acc-pencil"><image href="img/karandash.webp" x="46.8" y="-23.0" width="46.5" height="62"/></g>
-  <g class="acc acc-book" transform="translate(12 -20) scale(1.15)"><rect x="-26" y="40" width="52" height="34" rx="4" fill="#7fd99e" stroke="#3f9a62" stroke-width="2.5"/><path d="M0 40 v34" stroke="#3f9a62" stroke-width="2.5"/><path d="M-20 50 h14 M-20 58 h14 M6 50 h14 M6 58 h14" stroke="#fff" stroke-width="2.5"/></g></g>
+  <g class="acc acc-book"><image href="img/knizhka.webp" x="39.0" y="1.5" width="50" height="45.0"/></g>
 </svg>
 </template>
 
@@ -801,7 +801,7 @@ const ITEMS=[
   {k:'bowtie',slot:'neck',n:'Бабочка',ic:'<img src="img/babochka.webp" alt="" style="height:36px">',p:6},
   {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="img/karandash.webp" alt="" style="height:48px">',p:6},
   {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="img/sharik.webp" alt="" style="height:48px">',p:8},
-  {k:'book',slot:'hands',n:'Своя книжка',ic:'📗',p:10},
+  {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="img/knizhka.webp" alt="" style="height:40px">',p:10},
   {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="img/venok.webp" alt="" style="height:36px">',p:10},
   {k:'shades',slot:'face',n:'Тёмные очки',ic:'<img src="img/temnye-ochki.webp" alt="" style="height:30px">',p:10},
   {k:'phones',slot:'head',n:'Наушники',ic:'<img src="img/naushniki.webp" alt="" style="height:40px">',p:12},
