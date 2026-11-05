@@ -221,6 +221,8 @@ label.f{display:block;margin-top:14px;font-size:16px}
 @keyframes tw{50%{opacity:.2}}
 .eq{text-align:center;margin:14px 0 8px}
 .eq .pic{font-size:84px;line-height:1.1}
+.eq .pic .art{width:140px;height:140px;display:block;margin:0 auto}
+.eq .pic .num{display:inline-block;font-size:96px;font-weight:900;color:#f58a1f;line-height:1;text-shadow:0 5px 0 rgba(0,0,0,.08)}
 .eq .ru{font-size:22px;color:var(--ink2);margin-top:2px}
 .eq .sent{font-size:34px;font-weight:900;margin-top:6px}
 .eq .sent .gap{display:inline-block;min-width:64px;border-bottom:5px solid var(--gold);color:var(--brown2)}
@@ -1409,14 +1411,94 @@ function renderVoices(){
   if(!ruVoices().length)box.insertAdjacentHTML('beforeend','<p style="color:var(--ink2);font-size:14px">На этом устройстве нет русского голоса. На iPhone его можно добавить: Настройки → Универсальный доступ → Устный контент → Голоса.</p>');
 }
 if('speechSynthesis' in window)speechSynthesis.addEventListener('voiceschanged',()=>{if(document.getElementById('parent').classList.contains('on'))renderVoices()});
-const NUMBERS=[{en:'one',ru:'один',e:'1️⃣'},{en:'two',ru:'два',e:'2️⃣'},{en:'three',ru:'три',e:'3️⃣'},{en:'four',ru:'четыре',e:'4️⃣'},{en:'five',ru:'пять',e:'5️⃣'},{en:'six',ru:'шесть',e:'6️⃣'},{en:'seven',ru:'семь',e:'7️⃣'},{en:'eight',ru:'восемь',e:'8️⃣'},{en:'nine',ru:'девять',e:'9️⃣'},{en:'ten',ru:'десять',e:'🔟'}];
+/* ---------- векторные картинки для английского (вместо эмодзи) ---------- */
+const ART=(()=>{
+  const K='#3b2a20',st='stroke="'+K+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+  const eye=(x,y,r)=>{r=r||4.5;return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#2a1d15"/><circle cx="'+(x+r*.35)+'" cy="'+(y-r*.4)+'" r="'+(r*.38)+'" fill="#fff"/>'};
+  const C=(x,y,r,f)=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+f+'" '+st+'/>';
+  const F=(x,y,r,f)=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+f+'"/>';
+  const E=(x,y,rx,ry,f,rot)=>'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+f+'" '+st+(rot?' transform="rotate('+rot+' '+x+' '+y+')"':'')+'/>';
+  const EF=(x,y,rx,ry,f,rot)=>'<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="'+f+'"'+(rot?' transform="rotate('+rot+' '+x+' '+y+')"':'')+'/>';
+  const P=(d,f)=>'<path d="'+d+'" fill="'+(f||'none')+'" '+st+'/>';
+  const PF=(d,f)=>'<path d="'+d+'" fill="'+f+'"/>';
+  const smile=(x,y,w)=>P('M'+(x-w)+' '+y+'Q'+x+' '+(y+w)+' '+(x+w)+' '+y);
+  const blush=(x,y)=>EF(x,y,5.5,3,'#ff8fa3" opacity=".6');
+  const star=(cx,cy,r,f)=>{let d='';for(let i=0;i<10;i++){const a=Math.PI/5*i-Math.PI/2,q=i%2?r*.45:r;d+=(i?'L':'M')+(cx+q*Math.cos(a)).toFixed(1)+' '+(cy+q*Math.sin(a)).toFixed(1)}return P(d+'Z',f)};
+  const SKIN='#ffd9b8';
+  /* человечек: голова в (0,0) радиус 20, плечи снизу */
+  const kid=(girl,shirt,hair)=>{hair=hair||(girl?'#7a4a2e':'#4a3020');
+    return P('M-24 50 Q-24 24 0 24 Q24 24 24 50Z',shirt)+(girl?C(-22,4,8,hair)+C(22,4,8,hair):'')+C(0,0,20,SKIN)+
+      P(girl?'M-20 0 Q-21 -24 0 -24 Q21 -24 20 0 Q12 -12 2 -11 Q-10 -14 -20 0Z':'M-20 -1 Q-21 -24 0 -24 Q21 -24 20 -1 Q16 -12 6 -12 L9 -17 Q-2 -11 -20 -1Z',hair)+
+      eye(-7,3,3)+eye(7,3,3)+smile(0,10,5)+blush(-12,9)+blush(12,9)};
+  const at=(x,y,s,g)=>'<g transform="translate('+x+' '+y+') scale('+s+')">'+g+'</g>';
+  const A={
+    cat:P('M24 44 L26 12 L48 32Z','#f6a64a')+P('M76 44 L74 12 L52 32Z','#f6a64a')+PF('M29 34 L30 21 L40 30Z','#ffb3c1')+PF('M71 34 L70 21 L60 30Z','#ffb3c1')+C(50,58,32,'#f6a64a')+
+      P('M44 28 L46 36 M56 28 L54 36')+eye(39,55)+eye(61,55)+PF('M46 63 L54 63 L50 68Z','#ff7f99')+P('M50 68 Q45 74 41 70 M50 68 Q55 74 59 70')+
+      P('M30 66 L14 63 M30 71 L15 74 M70 66 L86 63 M70 71 L85 74')+blush(31,66)+blush(69,66),
+    dog:C(50,54,30,'#c98b55')+E(23,52,10,21,'#7a4a2e',15)+E(77,52,10,21,'#7a4a2e',-15)+E(50,69,16,12,'#f4dcc0')+EF(50,63,6,4.5,'#2a1d15')+eye(39,49)+eye(61,49)+
+      PF('M46 73 Q50 84 54 73Z','#ff7f99')+P('M50 67 L50 72 Q45 77 41 73 M50 72 Q55 77 59 73'),
+    fox:P('M22 46 L24 10 L46 30Z','#f08a2c')+P('M78 46 L76 10 L54 30Z','#f08a2c')+PF('M28 37 L29 20 L39 30Z','#5a3420')+PF('M72 37 L71 20 L61 30Z','#5a3420')+
+      P('M16 46 Q50 18 84 46 Q80 70 50 90 Q20 70 16 46Z','#f08a2c')+PF('M22 56 Q38 58 50 74 Q62 58 78 56 Q72 74 50 88 Q28 74 22 56Z','#fff')+
+      eye(37,50)+eye(63,50)+EF(50,83,5,4,'#2a1d15'),
+    frog:C(32,38,14,'#6cc56a')+C(68,38,14,'#6cc56a')+E(50,64,40,26,'#6cc56a')+F(32,37,8.5,'#fff')+F(68,37,8.5,'#fff')+eye(32,38,4.5)+eye(68,38,4.5)+
+      P('M28 66 Q50 84 72 66')+blush(22,62)+blush(78,62)+F(44,56,1.6,'#2f7a32')+F(56,56,1.6,'#2f7a32'),
+    rabbit:E(38,28,9,22,'#ece7f2',-8)+E(62,28,9,22,'#ece7f2',8)+EF(38,29,4,14,'#ffb3c1',-8)+EF(62,29,4,14,'#ffb3c1',8)+C(50,65,27,'#ece7f2')+
+      eye(40,61)+eye(60,61)+EF(50,70,4,3,'#ff7f99')+P('M50 73 Q46 78 42 75 M50 73 Q54 78 58 75')+blush(33,70)+blush(67,70),
+    bird:P('M24 62 L8 52 L12 72Z','#3f86c9')+C(50,55,30,'#5aa9e6')+EF(55,67,17,13,'#d8ecff')+E(39,60,12,8,'#3f86c9',-20)+eye(60,46)+P('M76 49 L91 54 L76 60Z','#ffb02e')+
+      P('M44 85 L44 93 M56 85 L56 93')+P('M46 26 Q50 14 58 21')+blush(66,56),
+    fish:P('M40 32 Q52 16 62 32','#ff7a2e')+P('M74 50 L94 33 L92 67Z','#ff7a2e')+E(46,50,32,22,'#ff9a3c')+P('M58 33 Q51 50 58 67')+eye(30,46,5)+P('M16 55 Q20 58 23 54')+
+      '<circle cx="10" cy="28" r="4" fill="none" stroke="#7cc4f0" stroke-width="2.5"/><circle cx="18" cy="16" r="3" fill="none" stroke="#7cc4f0" stroke-width="2.5"/>',
+    mouse:C(26,36,16,'#b9b9c4')+C(74,36,16,'#b9b9c4')+F(26,36,9,'#ffc2d0')+F(74,36,9,'#ffc2d0')+C(50,60,27,'#c9c9d4')+eye(40,56)+eye(60,56)+F(50,68,4,'#ff7f99')+
+      P('M36 68 L18 64 M36 72 L19 77 M64 68 L82 64 M64 72 L81 77')+smile(50,73,4),
+    bear:C(26,30,12,'#a8703f')+C(74,30,12,'#a8703f')+F(26,30,6,'#e8c49c')+F(74,30,6,'#e8c49c')+C(50,56,32,'#a8703f')+E(50,68,14,11,'#e8c49c')+EF(50,63,6,4.5,'#2a1d15')+
+      P('M50 67 L50 71 Q45 76 41 72 M50 71 Q55 76 59 72')+eye(38,50)+eye(62,50),
+    owl:P('M22 32 L24 10 L40 24Z','#7a4a2e')+P('M78 32 L76 10 L60 24Z','#7a4a2e')+E(50,57,33,36,'#9b6a43')+EF(50,70,20,19,'#f3e1c4')+P('M43 66 q3 3 6 0 M51 73 q3 3 6 0 M42 76 q3 3 6 0')+
+      C(37,44,12,'#fff')+C(63,44,12,'#fff')+eye(37,45,6)+eye(63,45,6)+P('M46 54 L54 54 L50 62Z','#ffb02e'),
+    pig:P('M24 34 L30 13 L44 28Z','#ff9fba')+P('M76 34 L70 13 L56 28Z','#ff9fba')+C(50,56,32,'#ffb3c8')+E(50,64,13,10,'#ff8fae')+EF(45,64,2.3,3.6,'#7a2e3e')+EF(55,64,2.3,3.6,'#7a2e3e')+
+      eye(38,48)+eye(62,48)+smile(50,77,6)+blush(29,62)+blush(71,62),
+    pumpkin:'<path d="M48 26 Q48 13 58 9" stroke="#4f8a3a" stroke-width="7" fill="none" stroke-linecap="round"/>'+E(31,60,20,28,'#f58a1f')+E(69,60,20,28,'#f58a1f')+E(50,60,22,30,'#ff9a33')+
+      PF('M36 52 L43 42 L48 54Z','#3b2a20')+PF('M64 52 L57 42 L52 54Z','#3b2a20')+PF('M34 66 Q50 82 66 66 Q50 74 34 66Z','#3b2a20'),
+    ghost:P('M24 88 L24 44 Q24 14 50 14 Q76 14 76 44 L76 88 Q70 80 63 88 Q57 80 50 88 Q43 80 37 88 Q30 80 24 88Z','#fff')+eye(41,44)+eye(59,44)+EF(50,58,5,7,'#3b2a20')+blush(33,54)+blush(67,54),
+    bat:P('M40 40 L39 25 L47 36Z','#3a3340')+P('M60 40 L61 25 L53 36Z','#3a3340')+P('M42 50 Q30 30 8 34 Q14 44 10 54 Q20 50 22 62 Q30 54 42 60Z','#3a3340')+
+      P('M58 50 Q70 30 92 34 Q86 44 90 54 Q80 50 78 62 Q70 54 58 60Z','#3a3340')+E(50,54,15,18,'#3a3340')+F(44,51,5,'#fff')+F(56,51,5,'#fff')+F(44,52,2.4,'#2a1d15')+F(56,52,2.4,'#2a1d15')+
+      PF('M46 61 L48 66 L50 61Z M50 61 L52 66 L54 61Z','#fff')+blush(39,59)+blush(61,59),
+    monster:P('M30 28 L25 9 L41 22Z','#ffd23f')+P('M70 28 L75 9 L59 22Z','#ffd23f')+P('M18 90 L18 50 Q18 18 50 18 Q82 18 82 50 L82 90Z','#8fd14f')+F(28,74,5,'#6cb33a')+F(72,66,6,'#6cb33a')+F(66,82,4,'#6cb33a')+
+      C(50,44,15,'#fff')+eye(50,45,7)+P('M32 64 Q50 82 68 64Z','#3b2a20')+PF('M40 65.5 L43 71 L46 66.5Z M54 66.5 L57 71 L60 65.5Z','#fff'),
+    spider:P('M50 0 L50 40')+P('M38 54 Q22 40 12 50 M37 60 Q19 58 10 68 M38 66 Q22 72 18 86 M42 70 Q32 82 32 94 M62 54 Q78 40 88 50 M63 60 Q81 58 90 68 M62 66 Q78 72 82 86 M58 70 Q68 82 68 94')+
+      C(50,60,19,'#3a3340')+F(43,56,5.5,'#fff')+F(57,56,5.5,'#fff')+F(43,57,2.6,'#2a1d15')+F(57,57,2.6,'#2a1d15')+'<path d="M43 66 Q50 72 57 66" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'+blush(37,64)+blush(63,64),
+    witch:P('M28 50 Q22 74 32 84 L36 60Z','#f58a1f')+P('M72 50 Q78 74 68 84 L64 60Z','#f58a1f')+C(50,60,22,SKIN)+eye(42,59)+eye(58,59)+smile(50,68,6)+blush(36,67)+blush(64,67)+
+      E(50,40,36,8,'#7b4bb5')+P('M30 40 L54 2 L70 40Z','#7b4bb5')+PF('M33 33 L67 33 L69 39 L31 39Z','#ffd23f')+star(62,22,5,'#ffd23f'),
+    apple:P('M50 30 Q34 18 22 32 Q10 50 24 72 Q36 92 50 82 Q64 92 76 72 Q90 50 78 32 Q66 18 50 30Z','#e8443a')+P('M50 30 Q50 18 56 11')+P('M54 20 Q66 8 77 16 Q66 27 54 20Z','#5bb04a')+EF(33,45,5,9,'#fff" opacity=".5',-15),
+    sun:(()=>{let r='';for(let i=0;i<8;i++){const a=Math.PI/4*i;r+='<line x1="'+(50+30*Math.cos(a)).toFixed(1)+'" y1="'+(50+30*Math.sin(a)).toFixed(1)+'" x2="'+(50+44*Math.cos(a)).toFixed(1)+'" y2="'+(50+44*Math.sin(a)).toFixed(1)+'" stroke="#ffb02e" stroke-width="7" stroke-linecap="round"/>'}
+      return r+C(50,50,24,'#ffd23f')+eye(42,47)+eye(58,47)+smile(50,56,7)+blush(36,56)+blush(64,56)})(),
+    grapes:P('M50 22 Q52 12 58 8')+P('M52 18 Q64 6 76 14 Q64 24 52 18Z','#5bb04a')+[[34,32],[50,30],[66,32],[42,46],[58,46],[34,60],[50,60],[66,60],[42,74],[58,74],[50,87]].map(p=>C(p[0],p[1],10,'#9b5de5')).join('')+
+      EF(47,27,2.5,4,'#fff" opacity=".6')+EF(39,43,2.5,4,'#fff" opacity=".6'),
+    /* настроение */
+    "I'm happy":C(50,52,38,'#ffd45c')+eye(37,45,5)+eye(63,45,5)+P('M32 60 Q50 78 68 60')+blush(26,58)+blush(74,58),
+    "I'm tired":C(50,52,38,'#ffd45c')+P('M29 48 Q37 53 45 48 M55 48 Q63 53 71 48')+EF(50,67,5,4,'#3b2a20')+'<text x="74" y="26" font-size="20" font-weight="900" fill="#5a78c8" font-family="sans-serif">z</text><text x="84" y="14" font-size="14" font-weight="900" fill="#5a78c8" font-family="sans-serif">z</text>',
+    "I'm angry":C(50,52,38,'#ff8a5c')+P('M28 36 L45 43 M72 36 L55 43')+eye(38,49)+eye(62,49)+P('M35 70 Q50 60 65 70'),
+    "I'm hungry":C(50,52,38,'#ffd45c')+eye(37,42)+eye(63,42)+P('M33 56 Q50 80 67 56Z','#7a2e2e')+E(60,68,8,6,'#ff7f99',-20)+PF('M36 66 Q34 76 37 79 Q40 76 38 66Z','#8fd0ff'),
+    "I'm great!":C(50,52,38,'#ffd45c')+star(37,43,9,'#ff9a3c')+star(63,43,9,'#ff9a3c')+P('M30 58 Q50 84 70 58Z','#7a2e2e')+blush(24,60)+blush(76,60),
+    "I'm bad":C(50,52,38,'#cde68a')+P('M31 47 Q38 42 45 47 M55 47 Q62 42 69 47')+eye(38,52,3.5)+eye(62,52,3.5)+P('M35 70 Q40 65 45 70 Q50 75 55 70 Q60 65 65 70')+PF('M78 30 Q74 40 78 43 Q82 40 78 30Z','#8fd0ff'),
+    /* местоимения */
+    I:'<path d="M66 70 Q84 50 80 24" stroke="'+K+'" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M66 70 Q84 50 80 24" stroke="'+SKIN+'" stroke-width="7" fill="none" stroke-linecap="round"/>'+C(80,20,6,SKIN)+at(50,44,1.25,kid(1,'#ff8fc0')),
+    you:'<rect x="6" y="40" width="16" height="26" rx="3" fill="#5aa9e6" '+st+'/><rect x="38" y="30" width="11" height="18" rx="5.5" fill="'+SKIN+'" '+st+'/><rect x="48" y="40" width="44" height="13" rx="6.5" fill="'+SKIN+'" '+st+'/><rect x="20" y="38" width="40" height="32" rx="13" fill="'+SKIN+'" '+st+'/>'+P('M42 52 L56 52 M42 60 L54 60'),
+    he:at(50,42,1.5,kid(0,'#5aa9e6')),
+    she:at(50,42,1.5,kid(1,'#ff8fc0')),
+    we:at(30,46,1.05,kid(1,'#ff8fc0'))+at(70,46,1.05,kid(1,'#a77bff','#e0a84a')),
+    they:at(20,52,.8,kid(1,'#ff8fc0'))+at(50,46,.9,kid(0,'#5aa9e6'))+at(80,52,.8,kid(1,'#8fd14f','#e0a84a'))
+  };
+  A.it=A.cat;
+  return k=>A[k]?'<svg class="art" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+A[k]+'</svg>':'';
+})();
+const NUMBERS=[{en:'one',ru:'один'},{en:'two',ru:'два'},{en:'three',ru:'три'},{en:'four',ru:'четыре'},{en:'five',ru:'пять'},{en:'six',ru:'шесть'},{en:'seven',ru:'семь'},{en:'eight',ru:'восемь'},{en:'nine',ru:'девять'},{en:'ten',ru:'десять'}];
 const COLORS=[{en:'red',ru:'красный',c:'#e8443a'},{en:'blue',ru:'синий',c:'#3a78e8'},{en:'green',ru:'зелёный',c:'#3fb35f'},{en:'yellow',ru:'жёлтый',c:'#f7d21e'},{en:'orange',ru:'оранжевый',c:'#f58a1f'},{en:'pink',ru:'розовый',c:'#ff8fc0'},{en:'purple',ru:'фиолетовый',c:'#9b5de5'},{en:'black',ru:'чёрный',c:'#222'},{en:'white',ru:'белый',c:'#fff'},{en:'brown',ru:'коричневый',c:'#8b5a2b'}];
-const ANIMALS=[{en:'cat',ru:'кошка',e:'🐱'},{en:'dog',ru:'собака',e:'🐶'},{en:'fox',ru:'лиса',e:'🦊'},{en:'frog',ru:'лягушка',e:'🐸'},{en:'rabbit',ru:'кролик',e:'🐰'},{en:'bird',ru:'птичка',e:'🐦'},{en:'fish',ru:'рыбка',e:'🐟'},{en:'mouse',ru:'мышка',e:'🐭'},{en:'bear',ru:'медведь',e:'🐻'},{en:'owl',ru:'сова — это мы с Ух!',e:'🦉'}];
-const SPOOKY=[{en:'pumpkin',ru:'тыква',e:'🎃'},{en:'ghost',ru:'привидение',e:'👻'},{en:'bat',ru:'летучая мышь',e:'🦇'},{en:'monster',ru:'монстрик',e:'👾'},{en:'spider',ru:'паук',e:'🕷️'},{en:'witch',ru:'ведьма',e:'🧙‍♀️'}];
-const FEEL=[{en:"I'm happy",ru:'я счастливый',e:'😊'},{en:"I'm tired",ru:'я устал',e:'😴'},{en:"I'm angry",ru:'я злюсь',e:'😠'},{en:"I'm hungry",ru:'я голодный',e:'🤤'},{en:"I'm great!",ru:'у меня всё отлично',e:'🤩'},{en:"I'm bad",ru:'мне плохо',e:'🤒'}];
-const PRON=[{en:'I',ru:'я',e:'🙋‍♀️'},{en:'you',ru:'ты',e:'👉'},{en:'he',ru:'он',e:'👦'},{en:'she',ru:'она',e:'👧'},{en:'it',ru:'оно (зверёк или вещь)',e:'🐱'},{en:'we',ru:'мы',e:'👭'},{en:'they',ru:'они',e:'👨‍👩‍👧'}];
+const ANIMALS=[{en:'cat',ru:'кошка'},{en:'dog',ru:'собака'},{en:'fox',ru:'лиса'},{en:'frog',ru:'лягушка'},{en:'rabbit',ru:'кролик'},{en:'bird',ru:'птичка'},{en:'fish',ru:'рыбка'},{en:'mouse',ru:'мышка'},{en:'bear',ru:'медведь'},{en:'owl',ru:'сова — это мы с Ух!'}];
+const SPOOKY=[{en:'pumpkin',ru:'тыква'},{en:'ghost',ru:'привидение'},{en:'bat',ru:'летучая мышь'},{en:'monster',ru:'монстрик'},{en:'spider',ru:'паук'},{en:'witch',ru:'ведьма'}];
+const FEEL=[{en:"I'm happy",ru:'я счастливый'},{en:"I'm tired",ru:'я устал'},{en:"I'm angry",ru:'я злюсь'},{en:"I'm hungry",ru:'я голодный'},{en:"I'm great!",ru:'у меня всё отлично'},{en:"I'm bad",ru:'мне плохо'}];
+const PRON=[{en:'I',ru:'я'},{en:'you',ru:'ты'},{en:'he',ru:'он'},{en:'she',ru:'она'},{en:'it',ru:'оно (зверёк или вещь)'},{en:'we',ru:'мы'},{en:'they',ru:'они'}];
 const BE=[['I','am','happy','Я счастлива'],['She','is','tired','Она устала'],['He','is','hungry','Он голодный'],['They','are','angry','Они злятся'],['We','are','friends','Мы друзья'],['You','are','my friend','Ты мой друг'],['It','is','a cat','Это кошка'],['I','am','a girl','Я девочка'],['The ghost','is','white','Привидение белое'],['We','are','happy','Мы счастливы']];
-const PAINT=[{e:'🐸',en:'frog',c:'green'},{e:'🦊',en:'fox',c:'orange'},{e:'👻',en:'ghost',c:'white'},{e:'🦇',en:'bat',c:'black'},{e:'🐻',en:'bear',c:'brown'},{e:'🎃',en:'pumpkin',c:'orange'},{e:'🍎',en:'apple',c:'red'},{e:'☀️',en:'sun',c:'yellow'},{e:'🐷',en:'pig',c:'pink'},{e:'🍇',en:'grapes',c:'purple'}];
+const PAINT=[{en:'frog',c:'green'},{en:'fox',c:'orange'},{en:'ghost',c:'white'},{en:'bat',c:'black'},{en:'bear',c:'brown'},{en:'pumpkin',c:'orange'},{en:'apple',c:'red'},{en:'sun',c:'yellow'},{en:'pig',c:'pink'},{en:'grapes',c:'purple'}];
 const BE_RULE='I — am, he / she / it — is, you / we / they — are';
 const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Ура-ура! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
 const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Хм… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
@@ -1425,15 +1507,15 @@ const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slic
 function engRound(){
   const one=a=>pick(a);
   const word=(cats)=>{const cat=one(cats||[COLORS,ANIMALS,SPOOKY,NUMBERS]);const it=one(cat);const isC=cat===COLORS;
-    return {word:1,pic:isC?'<span class="sw" style="background:'+it.c+'"></span>':it.e,ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
+    return {word:1,pic:isC?'<span class="sw" style="background:'+it.c+'"></span>':cat===NUMBERS?'<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>':ART(it.en),ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
       ask:'Р-р-р! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
-  const pron=()=>{const it=one(PRON);return {pic:it.e,ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
+  const pron=()=>{const it=one(PRON);return {pic:ART(it.en),ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
       ask:'Как сказать по-английски «'+it.ru+'»? Я забыл…',r:'«'+it.ru+'» по-английски — '+it.en,say:it.en}};
   const be=()=>{const b=one(BE);return {sent:b[0]+' <span class="gap">?</span> '+b[2],ru:b[3],opts:[b[1]].concat(['am','is','are'].filter(x=>x!==b[1])),
       ask:'Тут дырка! Что вставить: am, is или are?',r:BE_RULE,say:b[0]+' '+b[1]+' '+b[2],fill:b[1]}};
-  const feel=()=>{const it=one(FEEL);return {pic:it.e,ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
-      ask:'Меня спросили «How are you?», а мне вот так: '+it.e+' Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
-  const paint=()=>{const it=one(PAINT);return {pic:it.e,sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
+  const feel=()=>{const it=one(FEEL);return {pic:ART(it.en),ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
+      ask:'Меня спросили «How are you?», а мне вот так, как на картинке. Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
+  const paint=()=>{const it=one(PAINT);return {pic:ART(it.en),sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
       ask:'Я хочу рассказать про картинку. Какого она цвета?',r:'The '+it.en+' is '+it.c,say:'The '+it.en+' is '+it.c,fill:it.c}};
   const li=LESSON.subj==='en'?LESSON.i:0,CN=[COLORS,NUMBERS],AS=[ANIMALS,SPOOKY];
   if(li===0)return [word(CN),word(CN),word(CN),word(CN),word(CN),word(CN)];
