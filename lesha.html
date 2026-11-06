@@ -215,6 +215,18 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .shp.no{animation:wiggle .5s}
 .sh-tile{height:1.2em;width:auto;display:block;margin:0 auto}
 @media (min-width:1100px){.shg{max-width:900px;gap:24px}}
+
+/* раскраска на телефоне (06.11.2026): компактный верх, картинка по высоте экрана, ↩️ 🧽 в правом нижнем углу напротив «Домой» */
+@media (max-width:700px){
+  #paint,#paintpick{padding-bottom:96px}
+  #paint .bubble{font-size:17px;padding:6px 14px;margin-top:2px!important}
+  #paint .paint-wrap{margin-top:6px;border-width:4px;border-radius:24px}
+  #paint .paint-wrap canvas{max-height:calc(100dvh - 330px)}
+  #paint .palette{gap:6px;margin-top:8px}
+  #paint .palette button{width:min(9.6vw,46px);height:min(9.6vw,46px);border-width:4px}
+  #paint .prow{position:fixed;right:12px;bottom:12px;margin:0;gap:8px;z-index:5}
+  #paint .prow button{font-size:30px;padding:8px 12px;border-radius:22px}
+}
 @media (prefers-reduced-motion:reduce){.dino,.dino .lid{animation:none}}
 </style>
 </head>
