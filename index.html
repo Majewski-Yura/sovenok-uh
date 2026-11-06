@@ -2576,8 +2576,8 @@ function tripOpen(ii,wi,si){const D=T().done;
 function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4&&T().done[tripKey(ii,3,3)])}
 /* яркая карта (06.11.2026): море, острова на маршруте, кораблик с Топой, туман над закрытыми; остров изнутри — тропинка с пристанями */
 /* art — заглушка, пока нет острова из Gemini; когда появится img/trip/isl-N.webp — поставить real:1 и art:'trip/isl-N' */
-const TRIP_LOOK=[{x:30,y:86,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'trip/isl-1',real:1},{x:70,y:69,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'trip/isl-2',real:1},{x:30,y:53,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'trip/isl-3',real:1},
-  {x:70,y:37,g1:'#e6ccff',g2:'#b892ff',f:'#9b5de5',art:'trip/isl-4',real:1},{x:30,y:21,g1:'#b7f0a0',g2:'#3fb35f',f:'#2f9a5a',art:'trip/isl-5',real:1},{x:68,y:6,g1:'#cfe9ff',g2:'#7fb8ff',f:'#3a78e8',art:'trip/isl-6',real:1}];
+const TRIP_LOOK=[{x:30,y:88,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'trip/isl-1',real:1},{x:71,y:75,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'trip/isl-2',real:1},{x:58,y:56,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'trip/isl-3',real:1},
+  {x:22,y:40,g1:'#e6ccff',g2:'#b892ff',f:'#9b5de5',art:'trip/isl-4',real:1},{x:68,y:26,g1:'#b7f0a0',g2:'#3fb35f',f:'#2f9a5a',art:'trip/isl-5',real:1},{x:28,y:11,g1:'#cfe9ff',g2:'#7fb8ff',f:'#3a78e8',art:'trip/isl-6',real:1}];
 /* тропа по острову (в % от картинки): 4 ряда снизу вверх змейкой, последняя точка — экзамен */
 const TRIP_PATH=[[16,86],[34,90],[54,90],[74,86],[86,73],[67,71],[47,74],[27,72],[15,59],[33,56],[53,59],[73,56],[83,42],[64,40],[44,43],[26,40],[50,22]];
 const TRIP_WCOL=['#ff7aa2','#4cc3f5','#7bd389','#b38cff'];
@@ -2608,7 +2608,8 @@ function renderTrip(){
   if(tripView===null)say('trip',stamps?'Капитан Алиса, продолжаем кругосветку! Жми «Плыть дальше» или открой остров.':'Капитан Алиса, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
 }
 /* на широком экране карта горизонтальная: острова волной слева направо */
-const TRIP_WIDE=[[11,70],[27,34],[43,70],[59,34],[75,70],[89,32]];
+/* острова в свободном порядке (06.11.2026, просьба родителя) */
+const TRIP_WIDE=[[9,74],[24,34],[40,70],[55,28],[71,62],[88,28]];
 function tripPos(ii){const w=innerWidth>=1100;return w?{x:TRIP_WIDE[ii][0],y:TRIP_WIDE[ii][1]}:{x:TRIP_LOOK[ii].x,y:TRIP_LOOK[ii].y}}
 function tripWorld(box,D){
   const wide=innerWidth>=1100,VW=wide?1000:390,VH=wide?560:860;
