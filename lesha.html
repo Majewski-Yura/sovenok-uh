@@ -738,7 +738,7 @@ function tapPiece(pos){
 
 /* ---------- наведём порядок ---------- */
 /* картинки вместо эмодзи: что есть в img/toys — показываем картинкой (06.11.2026) */
-const EMO={'🧸':'bear','🧱':'blocks','🪀':'yoyo','🎈':'balloon','🚂':'train','🥁':'drum','📄':'trash-paper','🍬':'trash-candy','🥤':'trash-cup','🍌':'trash-peel','🧃':'trash-juice','🫧':'bubbles','✈️':'plane','🚀':'rocket','🎹':'piano','🏰':'castle','⚽':'ball','🦖':'dino','🦕':'dino','🚗':'car','🧩':'puzzle'};
+const EMO={'🧸':'bear','🧱':'blocks','🪀':'yoyo','🎈':'balloon','🚂':'train','🥁':'drum','📄':'trash-paper','🍬':'trash-candy','🥤':'trash-cup','🍌':'trash-peel','🧃':'trash-juice','🫧':'bubbles','✈️':'plane','🚀':'rocket','🎹':'piano','🏰':'castle','⚽':'ball','🦖':'dino','🦕':'dino','🚗':'car','🧩':'puzzle','👕':'shirt','👖':'pants','🧦':'socks','🧥':'jacket','🧢':'hat','👟':'boots'};
 const emo=e=>EMO[e]?'<img class="emo" src="img/toys/'+EMO[e]+'.webp" alt="" draggable="false">':e;
 const TOYS=['🧸','🚗','🧱','⚽','🦖','🪀','🎈','🧩'],TRASH=['📄','🍬','🥤','🍌','🧃'];
 let tidyLeft=0;
@@ -767,13 +767,13 @@ let dressStep=0;
 function startDress(){
   go('dress');dressStep=0;document.getElementById('worn').innerHTML='';
   const c=document.getElementById('clothes');c.innerHTML='';
-  shuffle(DRESS.map((d,i)=>({...d,i}))).forEach(d=>{const b=document.createElement('button');b.textContent=d.e;draggable(b,{targets:()=>[document.getElementById('dinoDress')],drop:(t,el)=>putOn(el,d.i)});c.appendChild(b)});
+  shuffle(DRESS.map((d,i)=>({...d,i}))).forEach(d=>{const b=document.createElement('button');b.innerHTML=emo(d.e);draggable(b,{targets:()=>[document.getElementById('dinoDress')],drop:(t,el)=>putOn(el,d.i)});c.appendChild(b)});
   say('dress','Топа идёт гулять! Перетащи одежду на Топу. '+DRESS[0].say);
 }
 function putOn(b,i){
   if(i!==dressStep){b.classList.remove('no');void b.offsetWidth;b.classList.add('no');say('dress','Ой, не так! '+DRESS[dressStep].say);return false}
   b.style.transform='';
-  b.classList.add('used');const w=document.createElement('span');w.textContent=DRESS[i].e;document.getElementById('worn').appendChild(w);
+  b.classList.add('used');const w=document.createElement('span');w.innerHTML=emo(DRESS[i].e);document.getElementById('worn').appendChild(w);
   hop(dinos.dinoDress);dressStep++;
   if(dressStep<DRESS.length)say('dress','Молодец! '+DRESS[dressStep].say);
   else{say('dress','Ура! Топа одет и готов гулять! А ты умеешь одеваться сам?');addStar()}
