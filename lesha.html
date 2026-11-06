@@ -80,6 +80,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .plate{display:flex;justify-content:center;gap:18px;margin-top:16px;min-height:120px;flex-wrap:wrap}
 .food{font-size:96px;line-height:1;transition:transform .6s cubic-bezier(.5,-.3,.7,1),opacity .6s}
 .food.gone{opacity:0}
+.food img{height:104px;width:auto;display:block;pointer-events:none;filter:drop-shadow(0 5px 6px rgba(80,50,20,.18))}
 .dragging{position:relative;z-index:60;transition:none!important;cursor:grabbing;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
 .dz-over{outline:6px dashed var(--gold);outline-offset:4px;border-radius:28px}
 .tray{display:flex;gap:14px;justify-content:center;margin-top:12px}
@@ -569,11 +570,11 @@ function startZoo(){
 
 /* ---------- накорми Топу ---------- */
 const FOODS=[
-  {e:'🍓',ask:['Дай мне одну клубничку!','Дай мне две клубнички!','Дай мне три клубнички!']},
-  {e:'🍎',ask:['Дай мне одно яблочко!','Дай мне два яблочка!','Дай мне три яблочка!']},
-  {e:'🍌',ask:['Дай мне один бананчик!','Дай мне два бананчика!','Дай мне три бананчика!']},
-  {e:'🥕',ask:['Дай мне одну морковку!','Дай мне две морковки!','Дай мне три морковки!']},
-  {e:'🍪',ask:['Дай мне одну печеньку!','Дай мне две печеньки!','Дай мне три печеньки!']}
+  {e:'🍓',img:'strawberry',ask:['Дай мне одну клубничку!','Дай мне две клубнички!','Дай мне три клубнички!']},
+  {e:'🍎',img:'apple',ask:['Дай мне одно яблочко!','Дай мне два яблочка!','Дай мне три яблочка!']},
+  {e:'🍌',img:'banana',ask:['Дай мне один бананчик!','Дай мне два бананчика!','Дай мне три бананчика!']},
+  {e:'🥕',img:'carrot',ask:['Дай мне одну морковку!','Дай мне две морковки!','Дай мне три морковки!']},
+  {e:'🍪',img:'cookie',ask:['Дай мне одну печеньку!','Дай мне две печеньки!','Дай мне три печеньки!']}
 ];
 const NUMS=['Один!','Два!','Три!'];
 const YUM=['Ням-ням! Спасибо, Лёша!','Вкусно! Ещё хочу!','Ам-ам! Я сытый динозаврик!'];
@@ -609,7 +610,7 @@ function feedRound(){
   document.getElementById('feedNum').textContent='';
   const pl=document.getElementById('plate');pl.innerHTML='';
   const total=Math.min(5,n+1+Math.floor(Math.random()*2));
-  for(let i=0;i<total;i++){const b=document.createElement('button');b.className='food';b.textContent=f.e;draggable(b,{targets:()=>[document.getElementById('dinoFeed')],drop:(t,el,dx,dy)=>eat(el,dx,dy)});pl.appendChild(b)}
+  for(let i=0;i<total;i++){const b=document.createElement('button');b.className='food';if(f.img)b.innerHTML='<img src="img/food/'+f.img+'.webp" alt="" draggable="false">';else b.textContent=f.e;draggable(b,{targets:()=>[document.getElementById('dinoFeed')],drop:(t,el,dx,dy)=>eat(el,dx,dy)});pl.appendChild(b)}
   dinos.dinoFeed.classList.add('eat');say('feed',f.ask[n-1]);
 }
 function eat(b,dx,dy){
