@@ -348,6 +348,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .tfog{position:absolute;inset:-12% -14% 0}.tfog i{position:absolute;background:rgba(255,255,255,.93);border-radius:50%;box-shadow:0 5px 0 rgba(160,190,220,.55);transition:transform .9s,opacity .9s}
 .tlock{position:absolute;left:50%;top:22%;transform:translateX(-50%);width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.9);color:#5d7894;font-size:22px;font-weight:900;display:grid;place-items:center;box-shadow:0 3px 0 rgba(0,0,0,.12)}
 .tisl.reveal .tlock{animation:tfogaway 1s forwards}
+.tisl .tbadge{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:3;background:#fff;color:#3b2a20;border-radius:999px;padding:6px 12px;font-size:14px;font-weight:900;white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.tisl .tbadge.pay{background:#ffd166;font-size:16px;animation:tpay 1.6s ease-in-out infinite}
+@keyframes tpay{50%{transform:translate(-50%,-50%) scale(1.08)}}
 .tisl.locked .tname{z-index:2;color:#5d7894}
 .tisl.reveal .tfog i{animation:tfogaway 1.4s forwards}
 .tisl.reveal .tfog i:nth-child(1){--x:-120px}.tisl.reveal .tfog i:nth-child(2){--x:0;--y:-120px}.tisl.reveal .tfog i:nth-child(3){--x:120px}
@@ -1013,7 +1016,7 @@ function mergeJoin(r){
   o.pin=r.pin||L.pin||'';o.momAsk=r.momAsk||L.momAsk||null;o.mission=L.mission||r.mission||null;
   /* прогресс — объединяем, чтобы ничего не терялось ни с одного устройства */
   o.lessonsDone=Object.assign({},L.lessonsDone||{},r.lessonsDone||{});
-  if(L.trip||r.trip)o.trip=Object.assign({},L.trip||{},r.trip||{},{done:Object.assign({},(L.trip||{}).done||{},(r.trip||{}).done||{})});
+  if(L.trip||r.trip)o.trip=Object.assign({},L.trip||{},r.trip||{},{done:Object.assign({},(L.trip||{}).done||{},(r.trip||{}).done||{}),paid:Object.assign({},(L.trip||{}).paid||{},(r.trip||{}).paid||{})});
   if(L.dn||r.dn){const a=L.dn||{},b=r.dn||{},hw=Object.assign({},a.hw||{});Object.keys(b.hw||{}).forEach(k=>{hw[k]=uniq([...(b.hw[k]||[]),...(hw[k]||[])],x=>String(x.id))});o.dn={sched:Object.keys(b.sched||{}).length?b.sched:(a.sched||{}),hw}}
   o.mist=Object.assign({},L.mist||{});Object.keys(r.mist||{}).forEach(k=>o.mist[k]=Math.max(o.mist[k]||0,r.mist[k]));
   return o;
@@ -2505,7 +2508,21 @@ const TRIP=[
    b:[['My ball is red.','Мой мяч красный.'],['I have got a car.','У меня есть машинка.'],['This is my teddy.','Это мой мишка.'],['Have you got a train?','У тебя есть паровозик?'],['Have you got a doll?','У тебя есть кукла?'],['My robot is big.','Мой робот большой.']],
    d:[['Have you got a ball?','Yes, I have.',['I am eight.','Goodbye!']],['What is this? It is red and round.',"It's a ball.",['Hello!','Five.']],['Do you like your teddy?','Yes, I do!',['Seven.','I am tired.']]]}
  ]},
- {n:'Снежный остров',c:'#bde0fe',soon:'одежда, погода, Новый год'},
+ /* остров 2 (06.11.2026): одежда, погода, Новый год, зимние забавы; во фразах — I like / I don't like */
+ {n:'Снежный остров',c:'#bde0fe',weeks:[
+  {t:'Тёплая одежда',w:[['hat','шапка','toys/hat',1],['scarf','шарф','words/scarf',1],['coat','пальто','toys/jacket',1],['boots','сапоги','toys/boots',1],['gloves','перчатки','words/gloves',1],['sweater','свитер','words/sweater',1],['socks','носки','toys/socks',1],['dress','платье','words/dress',1]],
+   b:[['Put on your hat!','Надень шапку!'],['Put on your boots!','Надень сапоги!'],['I have got a scarf.','У меня есть шарф.'],['My coat is red.','Моё пальто красное.'],['I like my dress.','Мне нравится моё платье.'],["I don't like socks.",'Я не люблю носки.']],
+   d:[['It is cold! What do you put on?','My coat!',['Ten.','Goodbye!']],['Do you like your scarf?','Yes, I do!',['I am eight.','A ball.']],['Have you got gloves?','Yes, I have.',['Hello!','Seven.']],['Put on your hat, Topa!','Okay!',['I am hungry.','Five.']]]},
+  {t:'Погода и времена года',w:[['sunny','солнечно','words/sunny',1],['rainy','дождливо','words/rainy',1],['snowy','снежно','words/snowy',1],['windy','ветрено','words/windy',1],['winter','зима','words/winter',1],['spring','весна','words/spring',1],['summer','лето','words/summer',1],['autumn','осень','words/autumn',1]],
+   b:[["What's the weather like?",'Какая погода?'],["It's snowy.",'Идёт снег.'],["It's sunny today.",'Сегодня солнечно.'],['I like winter.','Я люблю зиму.'],["I don't like rain.",'Я не люблю дождь.']],
+   d:[["What's the weather like?","It's snowy.",['I am eight.','A hat.']],['Do you like summer?','Yes, I do!',['Two.','Goodbye!']],['Is it rainy today?','Yes, it is.',['I have got a cat.','Seven.']],['Do you like rain?',"No, I don't.",['Hello!','A scarf.']]]},
+  {t:'Новый год',w:[['Christmas tree','ёлка','words/christmas-tree',1],['present','подарок','words/present',1],['snowman','снеговик','words/snowman',1],['Father Frost','Дед Мороз','words/father-frost',1],['bell','колокольчик','words/bell',1],['candle','свечка','words/candle',1],['card','открытка','words/card',1]],
+   b:[['Happy New Year!','С Новым годом!'],['Merry Christmas!','Счастливого Рождества!'],['This is my present.','Это мой подарок.'],['I like the Christmas tree.','Мне нравится ёлка.'],['Thank you for the present!','Спасибо за подарок!']],
+   d:[['Happy New Year!','Happy New Year!',['I am eight.','A sledge.']],['Here is a present for you!','Thank you!',['Goodbye!','Five.']],['Do you like presents?','Yes, I do!',["It's rainy.",'Ten.']],['It is big and white. Who is it?',"It's a snowman.",['Hello!','A bell.']]]},
+  {t:'Зимние забавы',w:[['skis','лыжи','words/skis',1],['skates','коньки','words/skates',1],['sledge','санки','words/sledge',1],['snowman','снеговик','words/snowman',1],['winter','зима','words/winter',1],['gloves','перчатки','words/gloves',1]],
+   b:[['I can ski.','Я умею кататься на лыжах.'],['Can you skate?','Ты умеешь кататься на коньках?'],['Yes, I can.','Да, умею.'],["Let's make a snowman!",'Давай слепим снеговика!'],['I like my sledge.','Я люблю свои санки.']],
+   d:[['Can you skate?','Yes, I can!',['A hat.','Seven.']],['Can Topa ski?',"No, he can't.",['Happy New Year!','Two.']],["Let's make a snowman!",'Yes, please!',['I am tired.','A present.']],['Do you like winter?','Yes, I do!',['It is a bell.','Five.']]]}
+ ]},
  {n:'Вкусный остров',c:'#ffc6a8',soon:'еда, I like, кафе'},
  {n:'Остров Домик',c:'#cdb4db',soon:'комнаты, мебель, in / on / under'},
  {n:'Остров Зверей',c:'#b7e4c7',soon:'дикие звери, can, что делает'},
@@ -2538,8 +2555,22 @@ const TRIP_TEST=['pic','listen','ru','build','dialog','review','listen','pic','b
 const TRIP_EXAM=['pic','listen','build','dialog','ru','pic','listen','build','dialog','ru'];
 const T=()=>{if(!S.trip)S.trip={done:{},stamps:0};return S.trip};
 const tripKey=(ii,wi,si)=>ii+'-'+wi+'-'+si;            /* si: 0..2 остановки, 3 — тест недели; экзамен острова — ii+'-exam' */
+/* вход на остров (06.11.2026, решение родителя): после экзамена прошлого острова — таймер до даты острова, потом вход за звёзды: 50, 100, 150… (T().paid) */
+const TRIP_DATE=[null,'2026-11-11','2027-01-11','2027-02-08','2027-03-08','2027-04-05'];
+const tripPrice=ii=>ii*50;
+function tripLeft(ii){const d=TRIP_DATE[ii];return d?Math.max(0,new Date(d+'T00:00:00')-Date.now()):0}
+function tripState(ii){const D=T().done,I=TRIP[ii];
+  if(ii===0||(T().paid||{})[ii])return I.weeks?'open':'fill';
+  if(!D[(ii-1)+'-exam'])return 'exam';if(!I.weeks)return 'fill';if(tripLeft(ii)>0)return 'time';return 'pay'}
+function tripLeftTxt(ii){const ms=tripLeft(ii),d=Math.ceil(ms/864e5),h=Math.ceil(ms/36e5);
+  return d>1?'через '+d+' '+plural(d,['день','дня','дней']):'через '+h+' '+plural(h,['час','часа','часов'])}
+let tripPayAsk=null;
+function tripPay(ii){const p=tripPrice(ii);
+  if(S.stars<p){say('trip','Чтобы открыть остров, нужно больше звёздочек. Собирай звёзды в уроках и возвращайся!');toast('Нужно ещё '+(p-S.stars)+' ⭐');return}
+  if(tripPayAsk!==ii){tripPayAsk=ii;say('trip','Остров уже можно открыть! Вход стоит звёздочки. Нажми на остров ещё раз — и поплыли!');toast('Вход: '+p+' ⭐. Нажми ещё раз');setTimeout(()=>{if(tripPayAsk===ii)tripPayAsk=null},8000);return}
+  tripPayAsk=null;S.stars-=p;T().paid=T().paid||{};T().paid[ii]=1;setStars();save();tripSnd('fan');say('trip','Ура! Остров открыт! Плывём!');renderTrip()}
 function tripOpen(ii,wi,si){const D=T().done;
-  if(ii>0&&!D[(ii-1)+'-exam'])return false;if(!TRIP[ii].weeks)return false;
+  if(tripState(ii)!=='open')return false;
   if(si>0)return !!D[tripKey(ii,wi,si-1)];
   if(wi>0)return !!D[tripKey(ii,wi-1,3)];return true}
 function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4&&T().done[tripKey(ii,3,3)])}
@@ -2585,25 +2616,28 @@ function tripWorld(box,D){
   sea.innerHTML='<div class="twave" style="top:14%"></div><div class="twave" style="top:44%;animation-delay:-2s"></div><div class="twave" style="top:74%;animation-delay:-1s"></div>'+
     '<svg class="troute" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none"><path d="'+TRIP.map((_,i)=>{const p=tripPos(i),x=p.x*VW/100,y=(p.y+3)*VH/100;if(!i)return 'M'+x+' '+y;const q=tripPos(i-1),qx=q.x*VW/100,qy=(q.y+3)*VH/100;return wide?'Q'+(qx+x)/2+' '+(qy<y?qy:y)+' '+x+' '+y:'Q'+(x<qx?x-60:x+60)+' '+(qy+y)/2+' '+x+' '+y}).join(' ')+'" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="1 16" stroke-linecap="round"/></svg>';
   let boatAt=0;
-  TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],open=ii===0||!!D[(ii-1)+'-exam'],ready=open&&!!I.weeks;if(ready)boatAt=ii;
+  TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],st=tripState(ii),ready=st==='open',fog=st==='exam'||st==='fill';if(ready)boatAt=ii;
     const P=tripPos(ii),e=document.createElement('button');e.className='tisl'+(ready?'':' locked')+(L.real?' real':'')+(D[ii+'-exam']?' won':'');e.style.left=P.x+'%';e.style.top=P.y+'%';e.style.setProperty('--g1',L.g1);e.style.setProperty('--g2',L.g2);e.style.setProperty('--f',L.f);
     e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<img class="tflagimg" src="img/trip/flag-'+(ii+1)+'.webp" alt="">':'')+
-      (ready?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
+      (st==='time'?'<b class="tbadge"></b>':st==='pay'?'<b class="tbadge pay"></b>':'')+(!fog?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
     e.querySelector('.tname').textContent=I.n;
+    const bd=e.querySelector('.tbadge');if(bd)bd.textContent=st==='time'?'Откроется '+tripLeftTxt(ii):'Вход '+tripPrice(ii)+' ⭐';
     e.onclick=()=>{if(ready){tripSnd('go');tripView=ii;renderTrip();return}
-      say('trip',!I.weeks&&open?'Этот остров ещё в тумане. Скоро я приплыву туда с новыми словами!':'Этот остров в тумане! Сдай экзамен острова «'+TRIP[ii-1].n+'», и туман разлетится.')};
+      if(st==='pay'){tripPay(ii);return}
+      if(st==='time'){say('trip','Этот остров откроется совсем скоро! Я считаю дни. А пока можно повторить слова на прошлом острове.');toast('«'+I.n+'» откроется '+tripLeftTxt(ii));return}
+      say('trip',st==='fill'?'Этот остров ещё в тумане. Скоро я приплыву туда с новыми словами!':'Этот остров в тумане! Сдай экзамен острова «'+TRIP[ii-1].n+'», и туман разлетится.')};
     sea.appendChild(e)});
   const BP=tripPos(boatAt),bt=document.createElement('div');bt.className='tboat';bt.style.left=(wide?BP.x+9:BP.x+(BP.x<50?26:-26))+'%';bt.style.top=(wide?BP.y+12:BP.y+2)+'%';
   bt.innerHTML='<img class="tboatimg" src="img/trip/boat.webp" alt="Топа на кораблике">';sea.appendChild(bt);
   box.appendChild(sea);
   if(T().reveal!==undefined){const k=T().reveal;delete T().reveal;save();const el=sea.querySelectorAll('.tisl')[k];if(el){el.classList.add('reveal');tripSnd('fan')}}
 }
-const TRIP_STICK=['en/happy','en/apple','en/family','toys/ball'];
+const TRIP_STICK=[['en/happy','en/apple','en/family','toys/ball'],['words/scarf','words/snowy','words/christmas-tree','words/sledge']];
 function tripIsle(box,D,ii){
   const I=TRIP[ii],L=TRIP_LOOK[ii],v=document.createElement('div');v.className='tisle big';v.style.setProperty('--g1',L.g1);v.style.setProperty('--f',L.f);
   v.innerHTML='<div class="tisle-sky"><b class="ttitle"></b><div class="tstick"></div></div><div class="ttrail"></div>';v.querySelector('.ttitle').textContent=I.n;
   const st=v.querySelector('.tstick');I.weeks.forEach((W,wi)=>{const ok=!!D[tripKey(ii,wi,3)],s=document.createElement('span');s.className=ok?'on':'';s.style.setProperty('--r',((wi%2?1:-1)*(3+wi))+'deg');
-    s.innerHTML=ok?'<img src="img/'+(TRIP_STICK[wi]||'en/happy')+'.webp" alt="">':'<em>'+(wi+1)+'</em>';s.title='Наклейка недели «'+W.t+'»';st.appendChild(s)});
+    s.innerHTML=ok?'<img src="img/'+((TRIP_STICK[ii]||[])[wi]||'en/happy')+'.webp" alt="">':'<em>'+(wi+1)+'</em>';s.title='Наклейка недели «'+W.t+'»';st.appendChild(s)});
   /* остров на весь экран: тропа из 4 рядов (неделя = 3 остановки + подарок-тест), наверху экзамен */
   const tr=v.querySelector('.ttrail');let cur=false;tr.className='tbig';
   const land=document.createElement('div');land.className='tbig-in';
