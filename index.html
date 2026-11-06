@@ -2145,7 +2145,7 @@ function tripOpen(ii,wi,si){const D=T().done;
 function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4&&T().done[tripKey(ii,3,3)])}
 /* яркая карта (06.11.2026): море, острова на маршруте, кораблик с Топой, туман над закрытыми; остров изнутри — тропинка с пристанями */
 /* art — заглушка, пока нет острова из Gemini; когда появится img/trip/isl-N.webp — поставить real:1 и art:'trip/isl-N' */
-const TRIP_LOOK=[{x:30,y:86,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'uh-hello'},{x:70,y:69,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'ic/gift'},{x:30,y:53,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'en/apple'},
+const TRIP_LOOK=[{x:30,y:86,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'trip/isl-1',real:1},{x:70,y:69,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'ic/gift'},{x:30,y:53,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'en/apple'},
   {x:70,y:37,g1:'#e6ccff',g2:'#b892ff',f:'#9b5de5',art:'toys/castle'},{x:30,y:21,g1:'#b7f0a0',g2:'#3fb35f',f:'#2f9a5a',art:'en/bear'},{x:68,y:6,g1:'#cfe9ff',g2:'#7fb8ff',f:'#3a78e8',art:'ic/book'}];
 let tripView=null;
 function tripNextStop(){const D=T().done;for(let ii=0;ii<TRIP.length;ii++){const I=TRIP[ii];if(!I.weeks)continue;
