@@ -80,6 +80,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .plate{display:flex;justify-content:center;gap:18px;margin-top:16px;min-height:120px;flex-wrap:wrap}
 .food{font-size:96px;line-height:1;transition:transform .6s cubic-bezier(.5,-.3,.7,1),opacity .6s}
 .food.gone{opacity:0}
+.emo{height:1.15em;width:auto;display:inline-block;vertical-align:middle;pointer-events:none;filter:drop-shadow(0 4px 5px rgba(80,50,20,.18))}
 .food img{height:104px;width:auto;display:block;pointer-events:none;filter:drop-shadow(0 5px 6px rgba(80,50,20,.18))}
 .dragging{position:relative;z-index:60;transition:none!important;cursor:grabbing;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
 .dz-over{outline:6px dashed var(--gold);outline-offset:4px;border-radius:28px}
@@ -736,13 +737,16 @@ function tapPiece(pos){
 }
 
 /* ---------- наведём порядок ---------- */
+/* картинки вместо эмодзи: что есть в img/toys — показываем картинкой (06.11.2026) */
+const EMO={'🧸':'bear'};
+const emo=e=>EMO[e]?'<img class="emo" src="img/toys/'+EMO[e]+'.webp" alt="" draggable="false">':e;
 const TOYS=['🧸','🚗','🧱','⚽','🦖','🪀','🎈','🧩'],TRASH=['📄','🍬','🥤','🍌','🧃'];
 let tidyLeft=0;
 function startTidy(){
   go('tidy');const room=document.getElementById('room');room.innerHTML='';
   const items=shuffle(shuffle(TOYS).slice(0,5).map(e=>({e,toy:true})).concat(shuffle(TRASH).slice(0,3).map(e=>({e,toy:false}))));
   tidyLeft=items.length;
-  items.forEach((it,i)=>{const b=document.createElement('button');b.className='thing';b.textContent=it.e;
+  items.forEach((it,i)=>{const b=document.createElement('button');b.className='thing';b.innerHTML=emo(it.e);
     b.style.left=(4+(i%4)*24+Math.random()*6)+'%';b.style.top=(8+Math.floor(i/4)*45+Math.random()*12)+'%';b.style.transform='rotate('+(Math.random()*40-20)+'deg)';
     draggable(b,{targets:()=>[document.getElementById('binToys'),document.getElementById('binTrash')],drop:(t,el,dx,dy)=>putAway(el,it.toy,t,dx,dy)});room.appendChild(b)});
   say('tidy','Ой, какой беспорядок! Давай уберём. Игрушки тащи в коробку, а мусор — в ведро!');
@@ -832,7 +836,7 @@ function renderDeeds(){
   const done=(S.deeds||{})[today()]||[];
   const L=document.getElementById('deedList');L.innerHTML='';
   DEEDS.forEach(d=>{const b=document.createElement('button');b.className=done.includes(d.k)?'did':'';
-    b.innerHTML='<div class="ic">'+d.ic+'</div><span>'+d.n+(done.includes(d.k)?' ✓':' · ⭐ 1')+'</span>';
+    b.innerHTML='<div class="ic">'+emo(d.ic)+'</div><span>'+d.n+(done.includes(d.k)?' ✓':' · ⭐ 1')+'</span>';
     b.onclick=()=>{
       S.deeds=S.deeds||{};const t=S.deeds[today()]=S.deeds[today()]||[];hop(dinos.dinoDeeds);
       if(t.includes(d.k)){say('deeds','Ты уже это сделал сегодня. Молодец!');return}
@@ -858,12 +862,12 @@ const TOYSHOP=[
 function renderToyshop(quiet){
   if(!quiet)say('toyshop',(S.toys||[]).length?'Перетащи игрушку ко мне, и мы поиграем! Или купи новую!':'Это магазин игрушек! Выбирай, что купим за звёздочки.');
   const mine=S.toys||[],sh=document.getElementById('shelf');sh.innerHTML=mine.length?'':'<span class="empty">Полка пока пустая</span>';
-  TOYSHOP.filter(t=>mine.includes(t.k)).forEach(t=>{const b=document.createElement('button');b.textContent=t.ic;b.setAttribute('aria-label',t.say);
+  TOYSHOP.filter(t=>mine.includes(t.k)).forEach(t=>{const b=document.createElement('button');b.innerHTML=emo(t.ic);b.setAttribute('aria-label',t.say);
     const play=()=>{b.classList.remove('play');void b.offsetWidth;b.classList.add('play');say('toyshop',t.say)};
     draggable(b,{targets:()=>[document.querySelector('#toyshop .spose')],drop:()=>{const p=document.querySelector('#toyshop .spose');p.classList.remove('hopp');void p.offsetWidth;p.classList.add('hopp');say('toyshop','Ура! Поиграем вместе! '+t.say);return false},tap:play});sh.appendChild(b)});
   const L=document.getElementById('toyList');L.innerHTML='';
   TOYSHOP.filter(t=>!mine.includes(t.k)).forEach(t=>{const b=document.createElement('button');b.className='item'+(S.stars<t.p?' lock':'');
-    b.innerHTML='<div class="ic">'+t.ic+'</div><span>⭐ '+t.p+'</span>';
+    b.innerHTML='<div class="ic">'+emo(t.ic)+'</div><span>⭐ '+t.p+'</span>';
     b.onclick=()=>{
       if(S.stars<t.p){say('toyshop','Пока не хватает звёздочек. Поиграй ещё!');return}
       S.stars-=t.p;S.toys=(S.toys||[]).concat(t.k);setStars();
