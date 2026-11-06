@@ -1074,7 +1074,7 @@ function renderPath(){
     if(i===now){const g=document.createElement('button');g.className='p-go';g.textContent=s.k==='gift'?'Открыть':'Начать';g.onclick=n.onclick;l.appendChild(g)}
     r.appendChild(n);r.appendChild(l);box.appendChild(r)});
 }
-let pathW=innerWidth;addEventListener('resize',()=>{if((innerWidth>=900)!==(pathW>=900)){pathW=innerWidth;if(document.getElementById('home').classList.contains('on'))renderPath()}});
+let pathW=innerWidth;window.addEventListener('resize',()=>{if((innerWidth>=900)!==(pathW>=900)){pathW=innerWidth;if(document.getElementById('home').classList.contains('on'))renderPath()}});
 function stepCard(k){
   const c=document.getElementById('stepCard'),b=document.getElementById('scBtn');
   const done=k==='mission'?!S.mission:!(S.momAsk&&S.momAsk.t);
@@ -1843,7 +1843,7 @@ const SPOOKY=[{en:'pumpkin',ru:'тыква'},{en:'ghost',ru:'привидени�
 const FEEL=[{en:"I'm happy",ru:'я счастливый'},{en:"I'm tired",ru:'я устал'},{en:"I'm angry",ru:'я злюсь'},{en:"I'm hungry",ru:'я голодный'},{en:"I'm great!",ru:'у меня всё отлично'},{en:"I'm bad",ru:'мне плохо'}];
 const PRON=[{en:'I',ru:'я'},{en:'you',ru:'ты'},{en:'he',ru:'он'},{en:'she',ru:'она'},{en:'it',ru:'оно (зверёк или вещь)'},{en:'we',ru:'мы'},{en:'they',ru:'они'}];
 const BE=[['I','am','happy','Я счастлива'],['She','is','tired','Она устала'],['He','is','hungry','Он голодный'],['They','are','angry','Они злятся'],['We','are','friends','Мы друзья'],['You','are','my friend','Ты мой друг'],['It','is','a cat','Это кошка'],['I','am','a girl','Я девочка'],['The ghost','is','white','Привидение белое'],['We','are','happy','Мы счастливы']];
-const PAINT=[{en:'frog',c:'green'},{en:'fox',c:'orange'},{en:'ghost',c:'white'},{en:'bat',c:'black'},{en:'bear',c:'brown'},{en:'pumpkin',c:'orange'},{en:'apple',c:'red'},{en:'sun',c:'yellow'},{en:'pig',c:'pink'},{en:'grapes',c:'purple'}];
+const PAINT=[{en:'frog',c:'green'},{en:'fox',c:'orange'},{en:'ghost',c:'white'},{en:'bat',c:'purple'},{en:'bear',c:'brown'},{en:'pumpkin',c:'orange'},{en:'apple',c:'red'},{en:'sun',c:'yellow'},{en:'pig',c:'pink'},{en:'grapes',c:'purple'}];
 const BE_RULE='I — am, he / she / it — is, you / we / they — are';
 const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Ура-ура! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
 const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Хм… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
@@ -1878,7 +1878,7 @@ function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
 /* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
-const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear'];
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch'];
 /* картинка слова: из Gemini, если есть; сова — наша Ух; иначе векторная */
 const enPic=k=>EN_IMG.includes(k)?'<img class="art photo" src="img/en/'+k+'.webp" alt="">':k==='owl'?'<img class="art photo" src="img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
 function wordPic(it){if(EN_IMG.includes(it.en)||it.en==='owl')return enPic(it.en);if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
