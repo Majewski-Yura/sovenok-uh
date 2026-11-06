@@ -1878,9 +1878,10 @@ function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
 /* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
-const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch','apple','sun','pig','grapes'];
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch','apple','sun','pig','grapes','happy','tired','angry','hungry','great','bad','pron-i','pron-you','pron-he','pron-she','pron-it','pron-we','pron-they'];
+const EN_ALIAS={"I'm happy":'happy',"I'm tired":'tired',"I'm angry":'angry',"I'm hungry":'hungry',"I'm great!":'great',"I'm bad":'bad',I:'pron-i',you:'pron-you',he:'pron-he',she:'pron-she',it:'pron-it',we:'pron-we',they:'pron-they'};
 /* картинка слова: из Gemini, если есть; сова — наша Ух; иначе векторная */
-const enPic=k=>EN_IMG.includes(k)?'<img class="art photo" src="img/en/'+k+'.webp" alt="">':k==='owl'?'<img class="art photo" src="img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
+const enPic=k=>EN_IMG.includes(EN_ALIAS[k]||k)?'<img class="art photo" src="img/en/'+(EN_ALIAS[k]||k)+'.webp" alt="">':k==='owl'?'<img class="art photo" src="img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
 function wordPic(it){if(EN_IMG.includes(it.en)||it.en==='owl')return enPic(it.en);if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
   if(BODY_W.includes(it))return BODY(it.en);return enPic(it.en)}
 /* ошибка в английском: это же задание повторится в конце урока (не больше двух за урок) */
@@ -1892,11 +1893,11 @@ function engRound(){
   const word=(cats)=>{const cat=one(cats||[COLORS,ANIMALS,SPOOKY,NUMBERS]);const it=one(cat);const isC=cat===COLORS;
     return {word:1,pic:wordPic(it),ru:'',opts:[it.en].concat(others(cat,it,2,'en').map(x=>x.en)),
       ask:'Р-р-р! Что это? Как это будет по-английски?',r:'«'+it.en+'» — это «'+it.ru+'»',say:it.en}};
-  const pron=()=>{const it=one(PRON);return {pic:ART(it.en),ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
+  const pron=()=>{const it=one(PRON);return {pic:enPic(it.en),ru:it.ru,opts:[it.en].concat(others(PRON,it,2,'en').map(x=>x.en)),
       ask:'Как сказать по-английски «'+it.ru+'»? Я забыл…',r:'«'+it.ru+'» по-английски — '+it.en,say:it.en}};
   const be=()=>{const b=one(BE);return {sent:b[0]+' <span class="gap">?</span> '+b[2],ru:b[3],opts:[b[1]].concat(['am','is','are'].filter(x=>x!==b[1])),
       ask:'Тут дырка! Что вставить: am, is или are?',r:BE_RULE,say:b[0]+' '+b[1]+' '+b[2],fill:b[1]}};
-  const feel=()=>{const it=one(FEEL);return {pic:ART(it.en),ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
+  const feel=()=>{const it=one(FEEL);return {pic:enPic(it.en),ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
       ask:'Меня спросили «How are you?», а мне вот так, как на картинке. Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
   const paint=()=>{const it=one(PAINT);return {pic:enPic(it.en),sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
       ask:'Я хочу рассказать про картинку. Какого она цвета?',r:'The '+it.en+' is '+it.c,say:'The '+it.en+' is '+it.c,fill:it.c}};
