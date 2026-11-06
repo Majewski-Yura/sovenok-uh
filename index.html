@@ -85,6 +85,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .chk .ic{font-size:44px;display:block;margin-bottom:4px}
 .chk.on{border-color:#2f9a5a;background:#dff6e6;color:#1d6b3e}
 :root.night .chk.on{background:#2f5a4a;color:#e9fff0}
+.task .ic img{height:110px;width:auto;max-width:100%;object-fit:contain;display:block;margin:0 auto}
+.chk .ic img{height:84px;width:auto;max-width:100%;object-fit:contain;display:block;margin:0 auto}
 .chk.on .ic:after{content:" ✓";font-size:26px}
 .timer{font-size:46px;font-weight:900;text-align:center;margin-top:12px;font-variant-numeric:tabular-nums}
 .timer.low{color:#e8584f}
@@ -1147,12 +1149,13 @@ function openGift(){
 function openPaints(){go('shop');setTimeout(()=>{const p=document.getElementById('paints');if(p)p.previousElementSibling.scrollIntoView({behavior:'smooth'})},150)}
 /* ---------- помощница: уборка, посуда, игры с Лёшей ---------- */
 const HELP=[
-  {k:'room',ic:'🧸',n:'Уборка в комнате',p:'Наперегонки с Ух!',stars:4},
-  {k:'dishes',ic:'🍽️',n:'Помыть посуду',p:'Пусть всё блестит',stars:3},
-  {k:'lesha',ic:'🦖',n:'Поиграть с Лёшей',p:'Когда мама занята',stars:3}
+  {k:'room',ic:'🧸',img:'help-room',n:'Уборка в комнате',p:'Наперегонки с Ух!',stars:4},
+  {k:'dishes',ic:'🍽️',img:'help-dishes',n:'Помыть посуду',p:'Пусть всё блестит',stars:3},
+  {k:'lesha',ic:'🦖',img:'help-lesha',n:'Поиграть с Лёшей',p:'Когда мама занята',stars:3}
 ];
-const ROOM=[['🧸','Игрушки — по домикам'],['👕','Одежда — в шкаф'],['📚','Книжки — на полку'],['✏️','Стол — чистый'],['🛏️','Кровать заправлена'],['🗑️','Мусор — в ведро']];
-const DISH=[['🥛','Чашки и стаканы'],['🍽️','Тарелки'],['🥄','Ложки и вилки'],['🧽','Раковина чистая, губка отжата']];
+const ROOM=[['🧸','Игрушки — по домикам','room-toys'],['👕','Одежда — в шкаф','room-clothes'],['📚','Книжки — на полку','room-books'],['✏️','Стол — чистый','room-desk'],['🛏️','Кровать заправлена','room-bed'],['🗑️','Мусор — в ведро','room-trash']];
+const DISH=[['🥛','Чашки и стаканы','dish-cups'],['🍽️','Тарелки','dish-plates'],['🥄','Ложки и вилки','dish-spoons'],['🧽','Раковина чистая, губка отжата','dish-sink']];
+const helpImg=(el,k,e)=>{if(k)el.innerHTML='<img src="img/help/'+k+'.webp" alt="">';else el.textContent=e};
 const LESHA_IDEAS=[
   {ic:'🧱',t:'Постройте из кубиков высокую башню. А потом пусть Лёша её сломает — бух!'},
   {ic:'🚗',t:'Устройте гонки машинок по коридору. Чья машинка первой доедет до двери?'},
@@ -1176,7 +1179,7 @@ function startHelp(){
   const M=document.getElementById('helpMenu');M.style.display='';M.innerHTML='';
   HELP.forEach(h=>{const b=document.createElement('button');b.className='task';
     b.innerHTML='<div class="ic"></div><h3></h3><p></p>'+(helpDoneToday(h.k)?'<span class="badge">✓ Сегодня</span>':'');
-    b.querySelector('.ic').textContent=h.ic;b.querySelector('h3').textContent=typo(h.n);b.querySelector('p').textContent=typo(h.p);b.insertAdjacentHTML('beforeend','<div style="margin-top:6px"><b class="starsTag">⭐ '+h.stars+' от мамы</b></div>');
+    helpImg(b.querySelector('.ic'),h.img,h.ic);b.querySelector('h3').textContent=typo(h.n);b.querySelector('p').textContent=typo(h.p);b.insertAdjacentHTML('beforeend','<div style="margin-top:6px"><b class="starsTag">⭐ '+h.stars+' от мамы</b></div>');
     b.onclick=()=>h.k==='lesha'?startLesha():startChecks(h.k);M.appendChild(b)});
   say('help',mode()==='sick'?'Если чувствуешь себя хорошо, давай поможем маме! Только без спешки. Что выберешь?'
     :pick(['Ух-ух! Давай поможем маме! Что выберешь?','Мама так много всего делает. Давай ей поможем? Выбирай!','Я тоже люблю помогать маме-сове. Что сделаем сегодня?']));
@@ -1189,7 +1192,7 @@ function startChecks(k){
   document.getElementById('helpIdea').style.display='none';
   const C=document.getElementById('helpChecks');C.innerHTML='';
   list.forEach((x,i)=>{const b=document.createElement('button');b.className='chk';b.innerHTML='<span class="ic"></span><span></span>';
-    b.children[0].textContent=x[0];b.children[1].textContent=x[1].replace(/ — /,'\u00a0— ').replace(/(^|\s)([а-яё]{1,2})\s/gi,'$1$2\u00a0');
+    helpImg(b.children[0],x[2],x[0]);b.children[1].textContent=x[1].replace(/ — /,'\u00a0— ').replace(/(^|\s)([а-яё]{1,2})\s/gi,'$1$2\u00a0');
     b.onclick=()=>{if(H.on.has(i))return;H.on.add(i);b.classList.add('on');cheer();
       if(H.on.size===list.length)finishChecks();else say('help',pick(room?ROOM_OK:DISH_OK))};
     C.appendChild(b)});
