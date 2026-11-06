@@ -19,7 +19,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .logo img{height:40px;width:auto}
 .who{background:var(--bg2);border:3px solid var(--line);border-radius:999px;padding:6px 14px;font-size:15px;color:var(--ink2)}
 .me{width:54px;height:54px;border-radius:50%;border:4px solid var(--gold);object-fit:cover}
-.stars{background:var(--gold2);border:4px solid var(--gold);border-radius:999px;padding:6px 18px;font-size:26px;font-weight:900}
+.stars{background:var(--gold2);border:4px solid var(--gold);border-radius:999px;padding:6px 18px;font-size:26px;font-weight:900;white-space:nowrap;display:flex;align-items:center;gap:4px}
 .screen{display:none}.screen.on{display:block;animation:in .35s}
 @keyframes in{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
 .stage{display:flex;flex-direction:column;align-items:center;position:relative}
@@ -204,6 +204,17 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   #tales .ptext{font-size:22px;line-height:1.35;margin:6px 4px 12px}
   #tales .pnav button{width:76px;height:76px;font-size:32px}
 }
+
+/* игра «Формы» */
+.shg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px auto 0;max-width:620px}
+.shp{background:#fff;border:5px solid var(--line);border-radius:28px;padding:10px;aspect-ratio:1;box-shadow:var(--shadow);animation:shin .5s cubic-bezier(.3,1.4,.6,1) both}
+.shp svg{width:100%;height:100%;display:block;filter:drop-shadow(0 5px 0 rgba(0,0,0,.12))}
+@keyframes shin{from{transform:translateX(120%) rotate(20deg);opacity:0}}
+.shp.yes{border-color:var(--gold);background:var(--gold2);animation:shyes .7s}
+@keyframes shyes{40%{transform:translateY(-26px) scale(1.12)}}
+.shp.no{animation:wiggle .5s}
+.sh-tile{height:1.2em;width:auto;display:block;margin:0 auto}
+@media (min-width:1100px){.shg{max-width:900px;gap:24px}}
 @media (prefers-reduced-motion:reduce){.dino,.dino .lid{animation:none}}
 </style>
 </head>
@@ -238,6 +249,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="tiles">
       <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/ic/balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
       <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/ic/cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
+      <button class="tile" onclick="startShapes()"><div class="ic"><svg viewBox="0 0 120 100" class="tpic sh-tile" aria-hidden="true"><circle cx="28" cy="66" r="24" fill="#ff5a5f"/><polygon points="60,8 88,58 32,58" fill="#ffd23f"/><rect x="70" y="44" width="44" height="44" rx="6" fill="#4a8cff"/></svg></div><span>Формы</span></button>
       <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/ic/strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
       <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/ic/blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
       <button class="tile" onclick="startCars()"><div class="ic"><img src="img/ic/car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
@@ -258,6 +270,12 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="stage"><div class="bubble" id="zooSay"></div><img class="spose" src="img/topa-cow.webp" alt="Топа и коровка"></div>
     <div class="zoo" id="zooGrid"></div>
     <div class="counter" id="zooCnt"></div>
+  </section>
+
+  <section class="screen" id="shapes">
+    <div class="stage"><div class="bubble" id="shapesSay"></div><img class="spose" src="img/topa-hello.webp" alt="Топа"></div>
+    <div class="shg" id="shGrid"></div>
+    <div class="counter" id="shCnt"></div>
   </section>
 
   <section class="screen" id="feed">
@@ -491,7 +509,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
+const GAMES=['balls','zoo','shapes','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
 function goBack(){if(cur()==='paint')startPaint();else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
@@ -592,6 +610,27 @@ function startZoo(){
     b.onclick=()=>{b.classList.remove('go');void b.offsetWidth;b.classList.add('go');say('zoo',a.say);zooTaps++;counter('zooCnt',Math.min(zooTaps,6),6);
       if(zooTaps===6){addStar();zooTaps=0;setTimeout(()=>{counter('zooCnt',0,6)},1500)}};
     g.appendChild(b)});
+}
+
+/* ---------- формы (06.11.2026, идея родителя): круг, треугольник, квадрат — Топа говорит, на какую нажать ---------- */
+const SHAPES={
+  circle:{svg:c=>'<circle cx="50" cy="50" r="44" fill="'+c+'"/>',ask:'Нажми на круг!',ok:'Молодец! Это круг!',no:'Это круг.',find:'Найди круг!'},
+  triangle:{svg:c=>'<polygon points="50,6 96,90 4,90" fill="'+c+'" stroke="'+c+'" stroke-width="6" stroke-linejoin="round"/>',ask:'Нажми на треугольник!',ok:'Молодец! Это треугольник!',no:'Это треугольник.',find:'Найди треугольник!'},
+  square:{svg:c=>'<rect x="8" y="8" width="84" height="84" rx="10" fill="'+c+'"/>',ask:'Нажми на квадрат!',ok:'Молодец! Это квадрат!',no:'Это квадрат.',find:'Найди квадрат!'}};
+const SH_COL=['#ff5a5f','#4a8cff','#ffd23f','#3ccf6e','#ff9a3c','#a77bff','#ff8fc8'];
+let shOk=0,shWant=null,shBusy=false;
+function startShapes(){go('shapes');shOk=0;counter('shCnt',0,6);shRound(true)}
+function shRound(first){
+  const g=document.getElementById('shGrid');g.innerHTML='';shBusy=false;
+  const keys=shuffle(Object.keys(SHAPES)),cols=shuffle(SH_COL);shWant=pick(keys);
+  keys.forEach((k,i)=>{const b=document.createElement('button');b.className='shp';b.style.animationDelay=(i*.12)+'s';b.setAttribute('aria-label',SHAPES[k].no);
+    b.innerHTML='<svg viewBox="0 0 100 100">'+SHAPES[k].svg(cols[i])+'</svg>';
+    b.onclick=()=>{if(shBusy)return;
+      if(k===shWant){shBusy=true;b.classList.add('yes');say('shapes',SHAPES[k].ok);shOk++;counter('shCnt',Math.min(shOk,6),6);
+        if(shOk===6){addStar();shOk=0;setTimeout(()=>counter('shCnt',0,6),1500)}setTimeout(()=>shRound(),1700)}
+      else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');say('shapes',SHAPES[k].no+' '+SHAPES[shWant].find)}};
+    g.appendChild(b)});
+  setTimeout(()=>say('shapes',SHAPES[shWant].ask),first?300:500);
 }
 
 /* ---------- накорми Топу ---------- */
