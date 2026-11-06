@@ -510,11 +510,21 @@ function mountDino(id,small){
   if(small)svg.classList.add('small');
   /* позы Топы: картинка 672×900 на высоту 200 */
   const POSE={dinoFeel:['blanket',199],dinoDeeds:['check',182],dinoDress:['shirt',158]};
-  if(POSE[id]){const [n,w]=POSE[id],im=svg.querySelector('image.pose');im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.add('noacc')}
+  if(POSE[id]){const [n,w]=POSE[id],im=svg.querySelector('image.pose');im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.add('noacc');svg.dataset.fixed=1}
   svg.addEventListener('click',()=>{if(id==='dinoFeed')return;hop(svg);if(id==='dinoHome')hello();else say(id.replace('dino','').toLowerCase(),pick(TAP))});
   el.appendChild(svg);dinos[id]=svg;dress();
 }
-function dress(){Object.values(dinos).forEach(svg=>{svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');Object.values(S.wear).forEach(k=>{if(!k)return;const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'})})}
+/* наряды: Топа носит одну вещь; если есть 3D-картинка «Топа в вещи» (WEAR_IMG: имя, ширина при высоте 200), показываем её вместо рисованной вещи */
+const WEAR_IMG={crown:['crown',172],balloon:['balloon',128]};
+const wornItem=()=>['head','face','neck','hand'].map(s=>S.wear[s]).find(Boolean)||Object.values(S.wear).find(Boolean)||null;
+function wearOne(slot,k){Object.keys(S.wear).forEach(s=>S.wear[s]=null);S.wear[slot]=k}
+function dress(){const k=wornItem();Object.entries(dinos).forEach(([id,svg])=>{
+  svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
+  if(svg.dataset.fixed)return;  /* у этого Топы своя поза (градусник, футболка, сон) */
+  const im=svg.querySelector('image.pose'),wi=k&&WEAR_IMG[k];
+  if(wi){im.setAttribute('href','img/topa-'+wi[0]+'.webp');im.setAttribute('width',wi[1]);im.setAttribute('x',-wi[1]/2);return}
+  im.setAttribute('href','img/topa-hello.webp');im.setAttribute('width',155);im.setAttribute('x',-77.5);
+  if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}})}
 function hop(svg){svg=svg||dinos['dino'+cap(cur())];if(!svg)return;svg.classList.remove('hop');void svg.getBBox();svg.classList.add('hop')}
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекотно!','Топ-топ-топ!','Я тебя люблю, Лёша!','Обнимашки!'];
@@ -580,7 +590,8 @@ let greeted=false;
 /* поздно вечером Топа на главной спит с мишкой */
 const sleepy=()=>{const h=new Date().getHours();return h>=20||h<7};
 function homePose(){const svg=dinos.dinoHome;if(!svg)return;const im=svg.querySelector('image.pose'),sl=sleepy(),w=sl?169:155;
-  im.setAttribute('href','img/topa-'+(sl?'sleep':'hello')+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.toggle('noacc',sl)}
+  if(sl){im.setAttribute('href','img/topa-sleep.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.dataset.fixed=1}else delete svg.dataset.fixed;
+  svg.classList.toggle('noacc',sl);dress()}
 function homeTalk(){
   document.getElementById('tileFeel').classList.toggle('hot',S.feelDate!==today());homePose();
   if(sleepy()){document.getElementById('homeSay').textContent=typo('Тс-с-с… Топа засыпает. Скоро и Лёше пора в кроватку!');return}
@@ -720,15 +731,15 @@ function renderShop(quiet){
   /* полка «Мои наряды»: купленное — перетащить на Топу или нажать */
   const M=document.getElementById('outfitShelf');M.innerHTML='';const mine=ITEMS.filter(it=>S.owned.includes(it.k));
   if(!mine.length)M.innerHTML='<span class="empty">Полка пока пустая</span>';
-  mine.forEach(it=>{const on=S.wear[it.slot]===it.k,b=document.createElement('button');b.textContent=it.ic;if(on)b.style.background='#d9f7dd';b.style.borderRadius='18px';
-    const toggle=()=>{S.wear[it.slot]=on?null:it.k;save();dress();hop(dinos.dinoShop);say('shop',on?'Сниму пока.':'Красота!');renderShop(true)};
-    draggable(b,{targets:()=>[document.getElementById('dinoShop')],drop:()=>{S.wear[it.slot]=it.k;save();dress();hop(dinos.dinoShop);say('shop','Красота!');renderShop(true)},tap:toggle});M.appendChild(b)});
+  mine.forEach(it=>{const on=wornItem()===it.k,b=document.createElement('button');b.textContent=it.ic;if(on)b.style.background='#d9f7dd';b.style.borderRadius='18px';
+    const toggle=()=>{if(on)Object.keys(S.wear).forEach(s=>S.wear[s]=null);else wearOne(it.slot,it.k);save();dress();hop(dinos.dinoShop);say('shop',on?'Сниму пока.':'Красота!');renderShop(true)};
+    draggable(b,{targets:()=>[document.getElementById('dinoShop')],drop:()=>{wearOne(it.slot,it.k);save();dress();hop(dinos.dinoShop);say('shop','Красота!');renderShop(true)},tap:toggle});M.appendChild(b)});
   const L=document.getElementById('shopList');L.innerHTML='';
   ITEMS.filter(it=>!S.owned.includes(it.k)).forEach(it=>{
     const b=document.createElement('button');b.className='item'+(S.stars<it.p?' lock':'');
     b.innerHTML='<div class="ic">'+it.ic+'</div><span>⭐ '+it.p+'</span>';
     b.onclick=()=>{if(S.stars<it.p){say('shop','Пока не хватает звёздочек. Поиграй ещё!');return}
-      S.stars-=it.p;S.owned.push(it.k);S.wear[it.slot]=it.k;setStars();say('shop',pick(NEW));save();dress();hop(dinos.dinoShop);renderShop(true);cele('Новый наряд!')};
+      S.stars-=it.p;S.owned.push(it.k);wearOne(it.slot,it.k);setStars();say('shop',pick(NEW));save();dress();hop(dinos.dinoShop);renderShop(true);cele('Новый наряд!')};
     L.appendChild(b)});
   if(!L.children.length)L.innerHTML='<span class="empty" style="color:var(--ink2)">Ты купил все наряды!</span>';
 }
