@@ -288,7 +288,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   <section class="screen" id="tidy">
     <div class="stage"><div class="bubble" id="tidySay"></div><img class="spose" src="img/topa-broom.webp" alt="Топа"></div>
     <div class="room" id="room"></div>
-    <div class="bins"><div class="bin" id="binToys">📦<span>игрушки</span></div><div class="bin" id="binTrash">🗑️<span>мусор</span></div></div>
+    <div class="bins"><div class="bin" id="binToys"><img class="emo" src="img/toys/toybox.webp" alt="" draggable="false"><span>игрушки</span></div><div class="bin" id="binTrash"><img class="emo" src="img/toys/bin.webp" alt="" draggable="false"><span>мусор</span></div></div>
   </section>
 
   <section class="screen" id="dress">
@@ -740,7 +740,7 @@ function tapPiece(pos){
 
 /* ---------- наведём порядок ---------- */
 /* картинки вместо эмодзи: что есть в img/toys — показываем картинкой (06.11.2026) */
-const EMO={'🧸':'bear','🧱':'blocks','🪀':'yoyo','🎈':'balloon','🚂':'train','🥁':'drum','📄':'trash-paper','🍬':'trash-candy','🥤':'trash-cup','🍌':'trash-peel','🧃':'trash-juice','🫧':'bubbles','✈️':'plane','🚀':'rocket','🎹':'piano','🏰':'castle','⚽':'ball','🦖':'dino','🦕':'dino','🚗':'car','🧩':'puzzle','👕':'shirt','👖':'pants','🧦':'socks','🧥':'jacket','🧢':'hat','👟':'boots'};
+const EMO={'🗑️':'bin','📚':'book','📦':'toybox','🧸':'bear','🧱':'blocks','🪀':'yoyo','🎈':'balloon','🚂':'train','🥁':'drum','📄':'trash-paper','🍬':'trash-candy','🥤':'trash-cup','🍌':'trash-peel','🧃':'trash-juice','🫧':'bubbles','✈️':'plane','🚀':'rocket','🎹':'piano','🏰':'castle','⚽':'ball','🦖':'dino','🦕':'dino','🚗':'car','🧩':'puzzle','👕':'shirt','👖':'pants','🧦':'socks','🧥':'jacket','🧢':'hat','👟':'boots'};
 const emo=e=>EMO[e]?'<img class="emo" src="img/toys/'+EMO[e]+'.webp" alt="" draggable="false">':e;
 const TOYS=['🧸','🚗','🧱','⚽','🦖','🪀','🎈','🧩'],TRASH=['📄','🍬','🥤','🍌','🧃'];
 let tidyLeft=0;
