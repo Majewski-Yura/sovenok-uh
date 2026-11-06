@@ -667,6 +667,10 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .mrow-t{flex:1;min-width:0}.mrow-t b{display:block;font-size:17px;line-height:1.2}.mrow-t small{display:block;color:var(--ink2);font-size:13px;margin-top:2px}
 .mrow-p{flex:none;font-weight:900;font-size:14px;color:#b8860b}
 @media (max-width:480px){.msecbox summary{padding:12px}.msec-t b{font-size:17px}.mrows{grid-template-columns:1fr;padding:0 10px 10px}}
+
+/* дневник: страница и номер задачи (06.11.2026) */
+.dn-pg{display:flex;gap:10px;margin-top:10px}.dn-pg label{flex:1;font-size:14px;font-weight:800;color:var(--ink2)}.dn-pg input{display:block;width:100%;margin-top:4px;font-size:20px}
+.dn-pghint{min-height:1.2em;margin:8px 0 0;font-size:14px;font-weight:800;color:#2f9a5a}
 </style>
 </head>
 <body>
@@ -1468,6 +1472,19 @@ function openPaints(){go('pbook');renderPbook();say('pbook','Что будем �
 const DN_SUBJ=['Русский язык','Литературное чтение','Математика','Белорусский язык','Человек и мир','Английский язык','Изобразительное искусство','Музыка','Трудовое обучение','Физкультура'];
 /* куда ведёт «Потренироваться»; точные уроки добавим, когда заполним программу (поле go у задания) */
 const DN_GO={'Русский язык':()=>openSubject('ru'),'Литературное чтение':()=>openSubject('read'),'Математика':()=>openSubject('math'),'Английский язык':()=>openTrip()};
+/* страница учебника математики → урок (06.11.2026). Учебник: Муравьёва, Урбан «Математика 2», ч. 1. Главы — по оглавлению, уроки внутри глав пока примерно по порядку тем;
+   когда родитель присылает фото страницы — уточнять диапазоны здесь. [с, по, раздел (MATH_SECS), название урока] */
+const MATH_PAGES=[[6,9,0,'Сложение и вычитание до 10'],[10,13,0,'Числовые домики'],[14,17,0,'Числовая прямая'],[18,21,0,'Отрезки и линейка'],[22,25,0,'Задачи со схемой'],
+  [26,31,1,'Десяточки'],[32,39,1,'Прибавляем через десяток'],[40,47,1,'Вычитаем через десяток'],[48,53,1,'Домики до 18'],[54,59,1,'Весы'],[60,69,1,'На сколько больше?'],[70,75,1,'Проверь себя'],
+  [76,80,2,'Пучки палочек'],[81,86,2,'Как записать число'],[87,91,2,'Числовой паровозик'],[92,96,2,'Больше, меньше, равно'],[97,101,2,'Дециметр и метр'],
+  [102,107,3,'40 + 7, 47 − 7, 47 − 40'],[108,113,3,'Круглые десятки'],[114,121,3,'34 + 2 и 34 + 20'],[122,127,3,'36 − 2 и 36 − 20'],[128,131,3,'Скобки'],[132,135,3,'Задачи до 100'],[136,140,3,'Проверь себя']];
+function mathByPage(pg){const m=MATH_PAGES.find(x=>pg>=x[0]&&pg<=x[1]);if(!m)return -1;return LESSONS.math.list.findIndex(x=>(x.sec||0)===m[2]&&x.n===m[3])}
+/* номер страницы и задачи: из полей или из текста «с. 34 № 5» */
+function dnPage(h){if(h.pg)return +h.pg;const m=(h.t||'').match(/(?:с|стр)\.?\s*(\d{1,3})/i);return m?+m[1]:0}
+function dnGoHw(s,h){const pg=s==='Математика'?dnPage(h):0;
+  if(pg){const i=mathByPage(pg);if(i>=0){toast('С. '+pg+': урок «'+LESSONS.math.list[i].n+'»');startLesson('math',i);return}}
+  if(h.go&&typeof h.go==='string'){const m=h.go.match(/^([a-z]+)(\d+)$/);if(m){startLesson(m[1],+m[2]);return}}
+  const f=DN_GO[s];if(f)f()}
 const DN_DAYS=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
 const DN_MON=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
 const DN=()=>{if(!S.dn)S.dn={sched:{},hw:{}};S.dn.sched=S.dn.sched||{};S.dn.hw=S.dn.hw||{};return S.dn};
@@ -1508,25 +1525,29 @@ function dnDay(d){
 function dnRow(key,s,h,num){
   const r=document.createElement('div');r.className='dn-row'+(h&&(h.done||h.pend)?' ok':'');
   r.innerHTML='<i></i><span class="dn-s"></span><span class="dn-t"></span><span class="dn-act"></span>';r.querySelector('i').textContent=num;
-  r.querySelector('.dn-s').textContent=s;r.querySelector('.dn-t').textContent=h?h.t:'';
+  r.querySelector('.dn-s').textContent=s;r.querySelector('.dn-t').textContent=h?h.t+((h.pg&&!/с\.?\s*\d/i.test(h.t))||h.no?' · '+[h.pg?'с. '+h.pg:'',h.no?'№ '+h.no:''].filter(Boolean).join(', '):''):'';
   r.onclick=e=>{if(e.target.closest('.dn-act'))return;dnEdit(key,h,s)};
   const a=r.querySelector('.dn-act');
   if(h){const ok=document.createElement('button');ok.className='dn-ok';ok.textContent=h.done||h.pend?'✓':'Сделала';ok.title='Отметить, что сделала';
       ok.onclick=()=>{if(h.done||h.pend){toast(h.pend?'Ждёт подтверждения мамы или папы':'Уже сделано!');return}h.pend=today();addPending('Домашнее задание: '+s+' — '+h.t,1);save();cheer();renderDnev();if(document.getElementById('home').classList.contains('on'))renderPath()};a.appendChild(ok);
-    const go=h.go||DN_GO[s];if(go){const p=document.createElement('button');p.className='dn-go';p.textContent='▶';p.title='Потренироваться';p.setAttribute('aria-label','Потренироваться');p.onclick=()=>{typeof go==='function'?go():startLesson(go.slice(0,-1),+go.slice(-1))};a.appendChild(p)}}
+    if(h.go||DN_GO[s]){const p=document.createElement('button');p.className='dn-go';p.textContent='▶';p.title='Потренироваться';p.setAttribute('aria-label','Потренироваться');p.onclick=()=>{document.getElementById('dnModal').classList.remove('on');dnGoHw(s,h)};a.appendChild(p)}}
   return r}
 /* окно записи задания */
 function dnModal(html){const m=document.getElementById('dnModal'),c=document.getElementById('dnCard');c.innerHTML=html;m.classList.add('on');return c}
 function dnEdit(key,h,s){
   const D=DN(),d=new Date(key+'T12:00'),subs=[...new Set((D.sched[d.getDay()]||[]).concat(DN_SUBJ))];
-  const c=dnModal('<h2>'+DN_DAYS[d.getDay()]+', '+d.getDate()+' '+DN_MON[d.getMonth()]+'</h2><p class="dn-lbl">Предмет</p><div class="chips dn-chips"></div><p class="dn-lbl">Задание</p><textarea class="t dn-ta" placeholder="Например: упр. 45, выучить правило на с. 30"></textarea><div class="row" style="justify-content:center;gap:10px;margin-top:12px"><button class="btn">Записать</button><button class="btn soft">Отмена</button></div>');
+  const c=dnModal('<h2>'+DN_DAYS[d.getDay()]+', '+d.getDate()+' '+DN_MON[d.getMonth()]+'</h2><p class="dn-lbl">Предмет</p><div class="chips dn-chips"></div><p class="dn-lbl">Задание</p><textarea class="t dn-ta" placeholder="Например: упр. 45, выучить правило на с. 30"></textarea><div class="dn-pg"><label>Страница<input class="t" inputmode="numeric" maxlength="3" data-f="pg"></label><label>Задача №<input class="t" inputmode="numeric" maxlength="3" data-f="no"></label></div><p class="dn-pghint"></p><div class="row" style="justify-content:center;gap:10px;margin-top:12px"><button class="btn">Записать</button><button class="btn soft">Отмена</button></div>');
   let cur=s||(h&&h.s)||subs[0];const ch=c.querySelector('.dn-chips');
   subs.forEach(x=>{const b=document.createElement('button');b.className='chip'+(x===cur?' on':'');b.textContent=x;b.onclick=()=>{cur=x;ch.querySelectorAll('.chip').forEach(y=>y.classList.toggle('on',y===b))};ch.appendChild(b)});
   const ta=c.querySelector('.dn-ta');ta.value=h?h.t:'';setTimeout(()=>ta.focus(),50);
+  const fPg=c.querySelector('[data-f=pg]'),fNo=c.querySelector('[data-f=no]'),hint=c.querySelector('.dn-pghint');fPg.value=h&&h.pg||'';fNo.value=h&&h.no||'';
+  const upd=()=>{const pg=+fPg.value||dnPage({t:ta.value});const i=cur==='Математика'&&pg?mathByPage(pg):-1;hint.textContent=i>=0?'▶ откроет урок «'+LESSONS.math.list[i].n+'»':''};
+  [fPg,ta].forEach(x=>x.addEventListener('input',upd));ch.addEventListener('click',()=>setTimeout(upd));upd();
   const [ok,no]=c.querySelectorAll('.row .btn');no.onclick=()=>document.getElementById('dnModal').classList.remove('on');
   if(h){const del=document.createElement('button');del.className='btn soft';del.textContent='Удалить';del.onclick=()=>{D.hw[key]=(D.hw[key]||[]).filter(x=>x!==h);save();document.getElementById('dnModal').classList.remove('on');renderDnev()};ok.parentNode.appendChild(del)}
   ok.onclick=()=>{const t=ta.value.trim();if(!t){ta.focus();return}
-    if(h){h.s=cur;h.t=t}else{(D.hw[key]=D.hw[key]||[]).push({id:Date.now(),s:cur,t,done:0,pend:0})}
+    const pg=(fPg.value.match(/\d+/)||[''])[0],no=(fNo.value.match(/\d+/)||[''])[0];
+    if(h){h.s=cur;h.t=t;h.pg=pg;h.no=no}else{(D.hw[key]=D.hw[key]||[]).push({id:Date.now(),s:cur,t,pg,no,done:0,pend:0})}
     save();document.getElementById('dnModal').classList.remove('on');renderDnev()};
 }
 /* расписание уроков по дням недели */
