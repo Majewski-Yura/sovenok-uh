@@ -1878,7 +1878,7 @@ function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
 /* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
-const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch'];
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch','apple','sun','pig','grapes'];
 /* картинка слова: из Gemini, если есть; сова — наша Ух; иначе векторная */
 const enPic=k=>EN_IMG.includes(k)?'<img class="art photo" src="img/en/'+k+'.webp" alt="">':k==='owl'?'<img class="art photo" src="img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
 function wordPic(it){if(EN_IMG.includes(it.en)||it.en==='owl')return enPic(it.en);if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
