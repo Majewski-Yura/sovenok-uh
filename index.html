@@ -125,6 +125,21 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .card.done .lesson-n:after{content:' ✓';color:#2f9a5a;font-size:30px}
 .paints button{width:92px;height:112px;border-radius:18px;background:#fff;border:3px solid var(--line);padding:4px;box-shadow:var(--shadow)}
 .paints button img{width:100%;height:100%;object-fit:contain}
+/* магазин раскрасок и кисть (06.11.2026) */
+.pshop{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.pshop button{background:#fff;border:3px solid var(--line);border-radius:18px;padding:6px 6px 8px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:4px;color:#3b2a20;font:inherit}
+.pshop button img{width:100%;aspect-ratio:1;object-fit:contain}
+.pshop button b{font-size:14px;line-height:1.15}
+.pshop button span{font-size:14px;font-weight:800;opacity:.75}
+.pshop button.lock{opacity:.6}
+.ptools{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:12px auto 0;max-width:560px}
+.ptools>button{border:3px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-weight:800;color:#3b2a20}
+.ptools button.on{border-color:#3b2a20;background:#fff6d6}
+.psizes{display:flex;gap:6px}
+.psizes button{width:44px;height:44px;border-radius:50%;border:3px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;padding:0}
+.psizes button.on{border-color:#3b2a20}
+.psizes button i{display:block;border-radius:50%;background:#3b2a20}
+.ptools:not(.brush) .psizes{display:none}
 .story{background:var(--bg2);border:3px solid var(--line);border-radius:28px;padding:20px 22px;box-shadow:var(--shadow);max-width:720px;margin:14px auto 0}
 .story-pic{display:flex;justify-content:center;align-items:flex-end;gap:6px;height:170px}
 .story-pic img{height:100%;width:auto;object-fit:contain}
@@ -748,6 +763,11 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <!-- РАСКРАСКА -->
   <section class="screen" id="paint">
     <div class="paint-wrap"><canvas id="paintCv" width="800" height="993"></canvas><img id="paintImg" class="pline" alt=""></div>
+    <div class="ptools" id="ptools">
+      <button data-t="fill" class="on" onclick="pTool('fill')">🪣 Заливка</button>
+      <button data-t="brush" onclick="pTool('brush')">🖌️ Кисть</button>
+      <span class="psizes"><button data-s="6" onclick="pSz(6)"><i style="width:8px;height:8px"></i></button><button data-s="16" class="on" onclick="pSz(16)"><i style="width:15px;height:15px"></i></button><button data-s="34" onclick="pSz(34)"><i style="width:24px;height:24px"></i></button></span>
+    </div>
     <div class="palette" id="palette"></div>
     <div class="row">
       <button class="btn soft" onclick="paintUndo()">↩️ Назад</button>
@@ -842,6 +862,8 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="shelf" id="myShelf"></div>
     <h3 class="shelf-h">🎨 Раскраски за купленные вещи</h3>
     <div class="paints" id="paints"></div>
+    <h3 class="shelf-h">Магазин раскрасок</h3>
+    <div class="pshop" id="paintShop"></div>
     <h3 class="shelf-h">Магазин</h3>
     <div class="shop" id="shopList"></div>
   </section>
@@ -984,6 +1006,7 @@ function mergeJoin(r){
   const o=Object.assign({},L,r);
   o.stars=Math.max(L.stars||0,r.stars||0);
   o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];
+  o.paintsOwned=[...new Set([...(r.paintsOwned||[]),...(L.paintsOwned||[])])];
   o.wear=Object.assign({},L.wear||{},r.wear||{});
   o.diary=uniq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.q+'|'+x.a).sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0).slice(0,300);
   o.pending=uniq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));
@@ -1671,15 +1694,38 @@ function talkNext(){
   setTimeout(()=>{if(firstTalk)addStars(5,'за разговор с Ух');setTimeout(()=>celebrate('Спасибо за рассказ! Ух всё запомнила.','uh-book'),2500);say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
 }
 
-/* ---------- раскраска: заливка пальцем ---------- */
+/* ---------- раскраска: заливка пальцем и кисть ---------- */
 const PCOL=['#ff5a5f','#ff9a3c','#ffd23f','#8fd14f','#3ccf6e','#4ac6ff','#4a8cff','#a77bff','#ff8fc0','#b98060','#7a4a2e','#ffe0c2','#ffffff','#9aa3ad'];
-let PK='',pCol=PCOL[0],pHist=[];
+let PK='',pCol=PCOL[0],pHist=[],pT='fill',pSize=16,pLine=null;
+/* раскраски из магазина (06.11.2026): ключ 't-…' — контур из img/color-topa, покупка за звёзды, купленные — S.paintsOwned */
+const PSHOP=[['topa','Топа'],['cap','Топа в кепке'],['balloon','Топа с шариком'],['crown','Топа в короне'],['topa-book','Топа с книжкой'],['car','Машинка'],['train','Паровозик'],
+  ['repka','Дед и репка'],['repka-mouse','Мышка на репке'],['kolobok','Колобок'],['kolobok-hare','Колобок и заяц'],['fox','Лиса'],['bear','Медведь'],['hen','Курочка Ряба'],['dedbaba','Дед и баба'],['mouse-egg','Мышка и яичко']];
+const PSHOP_PRICE=20;
+const pSrc=k=>k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
+function buyPaint(k){
+  if(S.stars<PSHOP_PRICE){say('shop','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
+  S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('t-'+k);setStars();save();cheer();say('shop','Новая раскраска! Давай раскрасим её вместе!');renderShop();
+  setTimeout(()=>openPaint('t-'+k),900)}
+function pTool(t){pT=t;document.querySelectorAll('#ptools>button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.getElementById('ptools').classList.toggle('brush',t==='brush');
+  document.getElementById('paintCv').style.touchAction=t==='brush'?'none':'manipulation'}
+function pSz(n){pSize=n;document.querySelectorAll('.psizes button').forEach(b=>b.classList.toggle('on',+b.dataset.s===n))}
 function openPaint(k){go('paint');PK=k;const P=document.getElementById('palette');P.innerHTML='';
   PCOL.forEach(c=>{const b=document.createElement('button');b.style.background=c;if(c===pCol)b.className='on';b.onclick=()=>{pCol=c;P.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on')};P.appendChild(b)});
-  paintLoad(k);speak('Выбери цвет и нажми на рисунок!','uh')}
+  pTool(pT);paintLoad(k);speak('Выбери цвет и нажми на рисунок!','uh')}
 function paintLoad(k){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();
-  im.onload=()=>{c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[]};const src='img/color/'+k+'.png?v=2';document.getElementById('paintImg').src=src;im.src=src;
-  cv.onclick=e=>{const r=cv.getBoundingClientRect();paintFill(Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height))}}
+  im.onload=()=>{const z=Math.min(1,800/im.naturalWidth);cv.width=Math.round(im.naturalWidth*z);cv.height=Math.round(im.naturalHeight*z);
+    c.fillStyle='#fff';c.fillRect(0,0,cv.width,cv.height);c.drawImage(im,0,0,cv.width,cv.height);pHist=[];pLine=im};const src=pSrc(k)+'?v=2';document.getElementById('paintImg').src=src;im.src=src;
+  const xy=e=>{const r=cv.getBoundingClientRect();return[Math.floor((e.clientX-r.left)*cv.width/r.width),Math.floor((e.clientY-r.top)*cv.height/r.height)]};
+  let last=null;cv.onclick=null;
+  cv.onpointerdown=e=>{const [x,y]=xy(e);if(pT==='fill'){paintFill(x,y);return}
+    e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    pHist.push(c.getImageData(0,0,cv.width,cv.height));if(pHist.length>15)pHist.shift();
+    c.strokeStyle=c.fillStyle=pCol;c.lineCap=c.lineJoin='round';c.lineWidth=pSize*cv.width/800;
+    c.beginPath();c.arc(x,y,c.lineWidth/2,0,7);c.fill();last=[x,y]};
+  cv.onpointermove=e=>{if(!last)return;const [x,y]=xy(e);c.beginPath();c.moveTo(last[0],last[1]);c.lineTo(x,y);c.stroke();last=[x,y]};
+  cv.onpointerup=cv.onpointercancel=()=>{if(!last)return;last=null;
+    /* контур поверх мазков, чтобы заливка потом не протекала через закрашенную линию */
+    if(pLine){c.globalCompositeOperation='multiply';c.drawImage(pLine,0,0,cv.width,cv.height);c.globalCompositeOperation='source-over'}}}
 function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),W=cv.width,H=cv.height,img=c.getImageData(0,0,W,H),d=img.data;
   const i0=(y*W+x)*4,tr=d[i0],tg=d[i0+1],tb=d[i0+2];if(tr+tg+tb<200)return;
   const n=parseInt(pCol.slice(1),16),nr=n>>16&255,ng=n>>8&255,nb=n&255;if(Math.abs(tr-nr)+Math.abs(tg-ng)+Math.abs(tb-nb)<10)return;
@@ -1693,7 +1739,7 @@ function paintFill(x,y){const cv=document.getElementById('paintCv'),c=cv.getCont
   c.putImageData(img,0,0)}
 function paintUndo(){const h=pHist.pop();if(h)document.getElementById('paintCv').getContext('2d').putImageData(h,0,0)}
 function paintSave(outline){const a=document.createElement('a');a.download='раскраска-ух-'+PK+(outline?'-контур':'')+'.png';
-  if(outline){a.href='img/color/'+PK+'.png'}else a.href=document.getElementById('paintCv').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+  if(outline){a.href=pSrc(PK)}else a.href=document.getElementById('paintCv').toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
   if(!outline)toast('Картинка сохранена!')}
 
 /* ---------- уроки: по три в каждом предмете ---------- */
@@ -2736,6 +2782,12 @@ function draggable(el,o){
     draggable(b,{targets:()=>[document.getElementById('owlShop')],drop:()=>{S.wear[it.slot]=it.k;say('shop',pick(['Красота!','Ух ты, как мне идёт!','Спасибо! Я самая нарядная!']));save();dress();cheer();renderShop();return false},tap:toggle});M.appendChild(b)});
   const PA=document.getElementById('paints');PA.innerHTML=mine.length?'':'<div class="empty" style="color:var(--ink2)">Купи вещь — и появится раскраска с Ух в ней!</div>';
   mine.forEach(it=>{const b=document.createElement('button');b.innerHTML='<img src="img/color/'+it.k+'.png" alt="">';b.title='Раскрасить: '+it.n;b.onclick=()=>openPaint(it.k);PA.appendChild(b)});
+  const bought=S.paintsOwned||[];if(bought.length&&!mine.length)PA.innerHTML='';
+  PSHOP.filter(([k])=>bought.includes('t-'+k)).forEach(([k,n])=>{const b=document.createElement('button');b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt="">';b.title='Раскрасить: '+n;b.onclick=()=>openPaint('t-'+k);PA.appendChild(b)});
+  const PS=document.getElementById('paintShop');PS.innerHTML='';const left=PSHOP.filter(([k])=>!bought.includes('t-'+k));
+  if(!left.length)PS.innerHTML='<div class="empty" style="color:var(--ink2)">Ты купила все раскраски!</div>';
+  left.forEach(([k,n])=>{const b=document.createElement('button');if(S.stars<PSHOP_PRICE)b.className='lock';
+    b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt=""><b>'+n+'</b><span>⭐ '+PSHOP_PRICE+'</span>';b.onclick=()=>buyPaint(k);PS.appendChild(b)});
   const L=document.getElementById('shopList');L.innerHTML='';
   const rest=ITEMS.filter(it=>!S.owned.includes(it.k));
   if(!rest.length)L.innerHTML='<div class="item" style="grid-column:1/-1">Ты купила всё! Ух — самая нарядная совушка на свете!</div>';

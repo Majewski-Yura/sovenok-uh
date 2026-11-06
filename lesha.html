@@ -959,7 +959,7 @@ function startPuzzle(){
     b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(S.pzSolved.includes(P.k)?'<i class="pzok">⭐</i>':'');b.onclick=()=>openPuzzle(i);G.appendChild(b)});
   say('puzzlepick','Выбери картинку, которую будем собирать!');
 }
-function openPuzzle(i){pzPic=i;go('puzzle');newPuzzle();say('puzzle','Собери картинку! Подвинь кусочек к другому, и они слипнутся.')}
+function openPuzzle(i){pzPic=i;go('puzzle');newPuzzle();say('puzzle','Собери картинку! Подвинь кусочек к соседу — они слипнутся!')}
 let pzX=[],pzY=[],pzG=[];
 function newPuzzle(){
   pzDone=false;document.getElementById('pz').classList.remove('done');
