@@ -1699,7 +1699,9 @@ const PCOL=['#ff5a5f','#ff9a3c','#ffd23f','#8fd14f','#3ccf6e','#4ac6ff','#4a8cff
 let PK='',pCol=PCOL[0],pHist=[],pT='fill',pSize=16,pLine=null;
 /* раскраски из магазина (06.11.2026): ключ 't-…' — контур из img/color-topa, покупка за звёзды, купленные — S.paintsOwned */
 const PSHOP=[['topa','Топа'],['cap','Топа в кепке'],['balloon','Топа с шариком'],['crown','Топа в короне'],['topa-book','Топа с книжкой'],['car','Машинка'],['train','Паровозик'],
-  ['repka','Дед и репка'],['repka-mouse','Мышка на репке'],['kolobok','Колобок'],['kolobok-hare','Колобок и заяц'],['fox','Лиса'],['bear','Медведь'],['hen','Курочка Ряба'],['dedbaba','Дед и баба'],['mouse-egg','Мышка и яичко']];
+  ['repka','Дед и репка'],['repka-mouse','Мышка на репке'],['kolobok','Колобок'],['kolobok-hare','Колобок и заяц'],['fox','Лиса'],['bear','Медведь'],['hen','Курочка Ряба'],['dedbaba','Дед и баба'],['mouse-egg','Мышка и яичко'],
+  ['topa-ball','Топа с мячом'],['topa-bike','Топа на велосипеде'],['uh-topa','Ух и Топа'],['firetruck','Пожарная машина'],['bus','Автобус'],['tractor','Трактор'],['rocket','Ракета'],
+  ['castle','Замок'],['kitten','Котик'],['puppy','Щенок'],['frog','Лягушка'],['piglet','Поросёнок'],['cow','Коровка'],['dinos','Динозаврики']];
 const PSHOP_PRICE=20;
 const pSrc=k=>k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
 function buyPaint(k){
