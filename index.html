@@ -501,14 +501,14 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .gf-w{font-family:Caveat,cursive;font-size:32px;color:#1d4fb8;padding:0 6px;border-radius:8px;background:none;line-height:40px}
 .gf-w.ok{color:#2f9a5a;text-decoration:underline wavy #7bd389;text-underline-offset:6px}.gf-w.shake{animation:shake .35s;background:#fff1c7}
 .gl{position:relative;max-width:640px;margin:8px auto 0;padding-top:78px}
-.gl-frog{position:absolute;top:6px;width:64px;height:64px;object-fit:contain;transform:translateX(-50%);transition:left .3s}
+.gl-frog{position:absolute;top:6px;width:64px;height:64px;object-fit:contain;transform:translateX(-50%);transition:left .3s;mix-blend-mode:multiply}
 .gl-frog.hop{animation:glhop .3s}@keyframes glhop{50%{transform:translateX(-50%) translateY(-26px)}}
 .gl-ticks{display:grid;grid-template-columns:repeat(11,1fr);border-top:5px solid #3b2a20;border-radius:3px}
 .gl-t{display:flex;flex-direction:column;align-items:center;padding:4px 0 6px;font-weight:900;font-size:clamp(16px,4vw,22px);background:none;color:var(--ink);border-radius:10px}
 .gl-t:before{content:"";width:4px;height:14px;background:#3b2a20;margin:-11px 0 4px}
 .gl-t.ok{background:#dff6e6;color:#1d6b3e}.gl-t.shake{animation:shake .35s;background:#ffe3e3}
 .gk{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:4px}
-.gk-face{width:min(260px,70vw);height:auto;display:block}.gk-wrap{display:block}.gk-wrap.shake{animation:shake .35s}
+.gk-face{width:min(240px,58vw);height:auto;display:block}.gk-wrap{display:block}.gk-wrap.shake{animation:shake .35s}
 .gk-n{cursor:pointer}.gk-n:hover{fill:#e85a2c}
 .gk-goal{text-align:center}.gk-goal b{display:block;font-size:40px;font-weight:900;color:#e85a2c;line-height:1}.gk-goal span{color:var(--ink2);font-size:17px}
 .gk .opts{margin-top:4px}
@@ -2355,9 +2355,9 @@ function gMatch(q,c){
     b.addEventListener('pointerdown',e=>{if(b.classList.contains('ok'))return;e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}
       lefts.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;const s=pt(b,0);let tmp=null,moved=false;
       const mv=ev=>{const bb=box.getBoundingClientRect(),p=[ev.clientX-bb.left,ev.clientY-bb.top];if(Math.hypot(p[0]-s[0],p[1]-s[1])>12)moved=true;if(!moved)return;if(!tmp)tmp=line(s,p,'tmp');tmp.setAttribute('x2',p[0]);tmp.setAttribute('y2',p[1])};
-      const up=ev=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);if(tmp)tmp.remove();
+      const up=ev=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);if(tmp)tmp.remove();
         if(moved){const t=document.elementFromPoint(ev.clientX,ev.clientY),r=t&&t.closest('.gm-it.r');b.classList.remove('sel');sel=null;if(r)tryPair(b,r)}};
-      b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up)})});
+      window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up)})});
   rights.forEach(b=>{R.appendChild(b);b.onclick=()=>{if(sel){const a=sel;a.classList.remove('sel');sel=null;tryPair(a,b)}else c.say&&c.say('Сначала нажми на карточку слева, а потом на её пару справа. Или проведи линию пальцем!')}});
 }
 /* поймай на лету: сверху падают слова, ловим только нужные; проиграть нельзя — ждём, пока поймает need штук */
