@@ -398,6 +398,32 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .tpflag{width:30px;height:22px;background:#e6e0d6;clip-path:polygon(0 0,100% 30%,0 100%)}.tpflag.on{background:var(--f)}
 .tpst{width:34px;height:34px;border-radius:50%;border:3px dashed #cbbfae}.tpst.on{border:3px solid #2f6fb0;background:radial-gradient(circle,#fff 30%,#cfe3ff 31% 45%,#2f6fb0 46% 52%,#cfe3ff 53%);animation:pop .4s}
 @media (prefers-reduced-motion:reduce){.tsea:before,.twave,.tring,.tboat,.tpier.now,.texam.now,.tbig .tpier.now{animation:none}}
+/* сцена на весь экран (06.11.2026): остров во всю высоту, управление и облачко Топы поверх */
+#trip.on{display:block!important}
+#trip>.stage{display:none}
+#tripMap{max-width:none!important;width:100%;margin:6px 0 0}
+#tripMap.isle .tgo{position:absolute;left:12px;right:12px;bottom:12px;width:auto;margin:0}
+#tripMap:not(.isle){max-width:560px!important;margin:6px auto 0}
+@media (min-width:1100px){#tripMap:not(.isle){max-width:none!important}}
+.tisle.big{position:relative;height:calc(100dvh - 92px);min-height:600px;padding:0;container-type:size;background:radial-gradient(ellipse at 50% 58%,#7fdcff 0,#3fb8ee 45%,#1690d8 100%)}
+.tisle.big:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.35) 0 2px,transparent 3px) 0 0/46px 46px,radial-gradient(circle at 70% 60%,rgba(255,255,255,.25) 0 2px,transparent 3px) 0 0/62px 62px;animation:tspark 6s linear infinite}
+.tisle.big .tisle-sky{position:absolute;top:0;left:0;right:0;z-index:3;padding:56px 10px 0;background:none;pointer-events:none}
+.tisle.big .tisle-sky>*{pointer-events:auto}.tisle.big .tisle-sky:after{display:none}
+.tisle.big .tbig{position:absolute;inset:0;padding:0}
+.tisle.big .tbig-in{position:absolute;left:50%;top:calc(50% - 4px);transform:translate(-50%,-50%);margin:0;max-width:none!important;width:min(98cqw,calc((100cqh - 300px) * var(--ar,1.12)));aspect-ratio:var(--ar,1.12)}
+.tisle.big .tbig-pic{width:100%;height:100%;object-fit:contain}
+.tisle.big .tlegend{position:absolute;left:12px;right:12px;bottom:92px;z-index:3;margin:0;grid-template-columns:repeat(4,1fr);gap:6px}
+.tisle.big .tlegend div{padding:5px 8px 5px 28px;background:rgba(255,255,255,.88)}
+.tisle.big .tlegend i{left:8px;width:13px;height:13px;margin-top:-6px}
+.tbub{position:absolute!important;left:12px;top:60px;z-index:6;max-width:min(400px,calc(100% - 24px));width:auto!important;margin:0!important;padding:12px 46px 12px 66px!important;font-size:17px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 6px 0 rgba(0,40,80,.18)!important;transition:all .35s}
+.tbub:before{content:""!important;position:absolute;left:8px!important;top:50%!important;margin:-25px 0 0!important;width:50px;height:50px;border:0!important;background:url(img/topa-hello.webp) center/contain no-repeat}
+.tbub.min{width:62px!important;height:62px;padding:0!important;border-radius:50%!important;overflow:hidden;cursor:pointer}
+.tbub.min span,.tbub.min .say{display:none}
+.tbub.min:before{left:6px!important;margin-top:-25px!important}
+#tripMap.isle .tbub{max-width:min(330px,28%)}
+@media (max-width:700px){.tisle.big .tlegend{grid-template-columns:repeat(4,1fr);bottom:86px}.tisle.big .tlegend b{display:none}.tisle.big .tlegend div{text-align:center;padding:6px 4px 6px 22px}.tisle.big .tlegend i{left:6px}
+  .tisle.big .tbig-in{width:min(100cqw,calc((100cqh - 270px) * var(--ar,1.12)))}.tbub{font-size:15px!important}#tripMap .tbub,#tripMap.isle .tbub{top:56px;bottom:auto;max-width:calc(100% - 24px)}#tripMap .tbub.min{top:112px;left:auto;right:8px;width:50px!important;height:50px}#tripMap .tbub.min:before{left:4px!important;width:42px;height:42px;margin-top:-21px!important}}
+
 .trip-card .ic img{height:112px!important}
 .eq .pic .art.photo.fit,.opts.en .opt.popt .art.photo.fit{object-fit:contain;padding:6px}
 .eq .pic .cnt{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:300px;margin:0 auto}.eq .pic .cnt .art.photo{width:84px;height:84px;border:0;background:none}
@@ -1051,7 +1077,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 function say(screen,text,silent){
   const b=document.getElementById(screen+'Say');if(!b)return;
-  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t,(screen==='eng'||screen==='trip'||screen==='tripL'||(screen==='lessons'&&LESSON.subj==='en'))?'baby':'uh');
+  const t=typo(text);b.querySelector('span').textContent=t;if(screen==='trip')tripBubShow();b.querySelector('.say').onclick=()=>speak(t,(screen==='eng'||screen==='trip'||screen==='tripL'||(screen==='lessons'&&LESSON.subj==='en'))?'baby':'uh');
 }
 function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
 function setStars(){document.getElementById('starN').textContent=S.stars;const b=document.getElementById('dayBar');if(b){const n=S.day&&S.day.d===today()?S.day.n:0;b.innerHTML='Сегодня: '+n+' из 50 ⭐<i><b style="width:'+Math.min(100,n*2)+'%"></b></i>'}}
@@ -2187,14 +2213,19 @@ function tripGoBtn(){const n=tripNextStop(),b=document.createElement('button');b
   b.querySelector('small').textContent=n.wi==='exam'?I.n:'Неделя '+(n.wi+1)+' · '+(n.si===3?'тест':'остановка '+(n.si+1))+' · '+I.weeks[n.wi].t;
   b.onclick=()=>{tripSnd('go');startTripStop(n.ii,n.wi,n.si)};return b}
 function openTrip(keep){if(keep!==true)tripView=null;go('trip');renderTrip()}
+/* облачко Топы живёт поверх сцены и само сворачивается в кружок с Топой */
+let tripBubT=null;
+function tripBubShow(){const b=document.getElementById('tripSay');if(!b)return;b.classList.remove('min');clearTimeout(tripBubT);tripBubT=setTimeout(()=>b.classList.add('min'),8000)}
 function renderTrip(){
-  const D=T().done,box=document.getElementById('tripMap');box.innerHTML='';
+  const D=T().done,box=document.getElementById('tripMap'),bub=document.getElementById('tripSay');if(bub)bub.remove();box.innerHTML='';
   const stamps=Object.keys(D).filter(k=>/-3$/.test(k)).length,flags=Object.keys(D).filter(k=>/-exam$/.test(k)).length;
   const top=document.createElement('div');top.className='ttop';
   top.innerHTML=(tripView!==null?'<button class="tpill tback">← Карта</button>':'<span></span>')+'<button class="tpill tpass"><img src="img/ic/book.webp" alt="">Паспорт <b>'+stamps+' / 24</b></button>';
   box.appendChild(top);top.querySelector('.tpass').onclick=tripPassport;if(tripView!==null)top.querySelector('.tback').onclick=()=>{tripView=null;renderTrip()};
   if(tripView===null)tripWorld(box,D);else tripIsle(box,D,tripView);
   box.appendChild(tripGoBtn());
+  if(bub){bub.classList.add('tbub');box.appendChild(bub);if(!bub._t){bub._t=1;bub.addEventListener('click',e=>{if(bub.classList.contains('min')){e.stopPropagation();tripBubShow()}},true)}}
+  box.classList.toggle('isle',tripView!==null);
   if(tripView===null)say('trip',stamps?'Капитан Алиса, продолжаем кругосветку! Жми «Плыть дальше» или открой остров.':'Капитан Алиса, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
 }
 /* на широком экране карта горизонтальная: острова волной слева направо */
@@ -2228,7 +2259,7 @@ function tripIsle(box,D,ii){
   /* остров на весь экран: тропа из 4 рядов (неделя = 3 остановки + подарок-тест), наверху экзамен */
   const tr=v.querySelector('.ttrail');let cur=false;tr.className='tbig';
   const land=document.createElement('div');land.className='tbig-in';
-  const pic=document.createElement('img');pic.className='tbig-pic';pic.alt='';pic.src='img/'+L.art+(L.real?'-big':'')+'.webp';land.appendChild(pic);
+  const pic=document.createElement('img');pic.className='tbig-pic';pic.alt='';pic.src='img/'+L.art+(L.real?'-big':'')+'.webp';pic.onload=()=>land.style.setProperty('--ar',pic.naturalWidth/pic.naturalHeight);land.appendChild(pic);
   const PTS=TRIP_PATH,NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.classList.add('tbig-path');
   const all=[];I.weeks.forEach((W,wi)=>{for(let si=0;si<4;si++)all.push(PTS[wi*4+si])});all.push(PTS[16]);
   const pl=document.createElementNS(NS,'polyline');pl.setAttribute('points',all.map(q=>q.join(',')).join(' '));svg.appendChild(pl);land.appendChild(svg);
