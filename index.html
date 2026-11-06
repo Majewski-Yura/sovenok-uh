@@ -971,10 +971,12 @@ try{
 }catch(e){}
 const LOCAL_ONLY=['voices'];
 function cloudData(){const o=JSON.parse(JSON.stringify(S));LOCAL_ONLY.forEach(k=>delete o[k]);if(o.diary&&o.diary.length>300)o.diary=o.diary.slice(0,300);return o}
+/* «pushing» держится, пока не ушла ПОСЛЕДНЯЯ запись: иначе чужое обновление в окне 0,7 с откатывало свежие изменения (06.11.2026) */
+let pushSeq=0;
 function cloudPush(){
   if(!fb||applyingRemote)return;clearTimeout(pushT);
-  pushing=true;
-  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>{pushing=false;setSync('ok')}).catch(()=>{pushing=false;setSync('err')})},700);
+  pushing=true;const seq=++pushSeq;
+  pushT=setTimeout(()=>{fb.setDoc(fb.ref,{alisa:cloudData(),updated:fb.ts()},{merge:true}).then(()=>{if(seq===pushSeq)pushing=false;setSync('ok')}).catch(()=>{if(seq===pushSeq)pushing=false;setSync('err')})},700);
 }
 /* первое подключение устройства к семье: объединяем, а не затираем */
 function mergeJoin(r){
