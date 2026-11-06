@@ -364,13 +364,40 @@ label.f{display:block;margin-top:14px;font-size:16px}
 @keyframes tpulse{50%{transform:translateY(var(--dy)) scale(1.13);box-shadow:0 0 0 10px rgba(255,210,63,.4),0 6px 0 rgba(0,0,0,.15)}}
 .tpier.tchest{width:76px;height:76px;background:radial-gradient(circle at 35% 30%,#fff3c4,#ffd166)}.tpier.tchest img{width:54px;height:54px;object-fit:contain}
 .tpier.tchest.done{background:radial-gradient(circle at 35% 30%,#7be495,#2f9a5a)}.tpier.tchest.off img{filter:grayscale(.7);opacity:.6}
+.tisle.big{max-width:none;background:linear-gradient(180deg,#9fe3ff 0,#c9f1ff 150px,#5cc8f2 150px,#2f9fe0 100%)}
+.tisle.big .tstick span{background:rgba(255,255,255,.75);width:46px;height:46px;border-radius:12px}
+.tisle.big .tstick img{width:36px;height:36px}
+.tisle.big .tisle-sky{height:auto;flex-direction:column;align-items:center;gap:10px;padding:54px 10px 40px}
+.tisle.big .tstick{margin:0;position:relative;z-index:1}
+.tisle.big{background:linear-gradient(180deg,#9fe3ff 0,#c9f1ff 120px,#5cc8f2 200px,#2f9fe0 100%)}
+.tbig .tpier.now{animation:tpulse3 1.4s ease-in-out infinite}
+@keyframes tpulse3{50%{transform:translate(-50%,-50%) scale(1.15);box-shadow:0 0 0 10px rgba(255,210,63,.55),0 5px 0 rgba(0,0,0,.18)}}
+.tbig .tpier.done:after{right:-4px;top:-4px;width:20px;height:20px;font-size:13px}
+.tbig{padding:0 10px}
+.tbig-in{position:relative;margin:-6px auto 0;max-width:min(100%,calc((100vh - 360px)*1.15))}
+@media (max-width:700px){.tbig-in{max-width:100%}}
+.tbig-pic{display:block;width:100%;height:auto;filter:drop-shadow(0 14px 18px rgba(0,60,120,.25))}
+.tbig-path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tbig-path polyline{fill:none;stroke:#fff;stroke-width:1.1;stroke-dasharray:.2 2.2;stroke-linecap:round;stroke-linejoin:round;vector-effect:none;opacity:.95;filter:drop-shadow(0 .3px 0 rgba(0,0,0,.25))}
+.tbig .tpier{position:absolute;width:clamp(36px,8.4%,74px);height:auto;aspect-ratio:1;transform:translate(-50%,-50%);font-size:clamp(16px,3.4vw,28px);border-width:clamp(3px,.6vw,5px);border-color:var(--wc,#fff);box-shadow:0 5px 0 rgba(0,0,0,.18),0 0 0 3px #fff;z-index:1}
+.tbig .tpier.tchest{width:clamp(42px,9.6%,84px);background:radial-gradient(circle at 35% 30%,#fff3c4,#ffd166)}
+.tbig .tpier.tchest img{width:72%;height:72%}
+.tbig .tpier.now{z-index:2}
+.tbig .texam-pin{width:clamp(64px,15%,128px);border-radius:24px;aspect-ratio:auto;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:0;background:linear-gradient(135deg,#ffd166,#ff9f1c);border-color:#fff;color:#5a3000;font-size:clamp(11px,1.8vw,17px)}
+.tbig .texam-pin img{width:70%;height:auto}
+.tbig .texam-pin.done{background:linear-gradient(135deg,#7be495,#2f9a5a);color:#fff}
+.tbig .texam-pin.off img{filter:grayscale(.7);opacity:.6}
+.tlegend{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:14px 0 0}
+.tlegend div{background:rgba(255,255,255,.85);border-radius:16px;padding:8px 10px 8px 34px;position:relative;line-height:1.2}
+.tlegend i{position:absolute;left:10px;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--wc);box-shadow:0 0 0 3px #fff}
+.tlegend small{display:block;color:#1d6a9a;font-size:12px;font-weight:900}.tlegend b{font-size:15px;color:#13405e}
 .texam{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;margin-top:16px;padding:12px;border-radius:24px;background:linear-gradient(135deg,#ffd166,#ff9f1c);border:4px solid #fff;font-size:20px;font-weight:900;color:#5a3000;box-shadow:0 6px 0 #c47f00}
 .texam img{width:52px;height:52px;object-fit:contain}.texam.off{filter:grayscale(.6);opacity:.55}.texam.done{background:linear-gradient(135deg,#7be495,#2f9a5a);color:#fff}
 .texam.now{animation:tpulse2 1.4s ease-in-out infinite}@keyframes tpulse2{50%{transform:scale(1.04);box-shadow:0 0 0 10px rgba(255,210,63,.4),0 6px 0 #c47f00}}
 .tpgrid{display:flex;flex-direction:column;gap:8px;margin:6px 0 4px}.tprow{display:flex;gap:8px;justify-content:center;align-items:center}
 .tpflag{width:30px;height:22px;background:#e6e0d6;clip-path:polygon(0 0,100% 30%,0 100%)}.tpflag.on{background:var(--f)}
 .tpst{width:34px;height:34px;border-radius:50%;border:3px dashed #cbbfae}.tpst.on{border:3px solid #2f6fb0;background:radial-gradient(circle,#fff 30%,#cfe3ff 31% 45%,#2f6fb0 46% 52%,#cfe3ff 53%);animation:pop .4s}
-@media (prefers-reduced-motion:reduce){.tsea:before,.twave,.tring,.tboat,.tpier.now,.texam.now{animation:none}}
+@media (prefers-reduced-motion:reduce){.tsea:before,.twave,.tring,.tboat,.tpier.now,.texam.now,.tbig .tpier.now{animation:none}}
 .trip-card .ic img{height:112px!important}
 .eq .pic .art.photo.fit,.opts.en .opt.popt .art.photo.fit{object-fit:contain;padding:6px}
 .eq .pic .cnt{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:300px;margin:0 auto}.eq .pic .cnt .art.photo{width:84px;height:84px;border:0;background:none}
@@ -2147,6 +2174,9 @@ function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4
 /* art — заглушка, пока нет острова из Gemini; когда появится img/trip/isl-N.webp — поставить real:1 и art:'trip/isl-N' */
 const TRIP_LOOK=[{x:30,y:86,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'trip/isl-1',real:1},{x:70,y:69,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'trip/isl-2',real:1},{x:30,y:53,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'trip/isl-3',real:1},
   {x:70,y:37,g1:'#e6ccff',g2:'#b892ff',f:'#9b5de5',art:'trip/isl-4',real:1},{x:30,y:21,g1:'#b7f0a0',g2:'#3fb35f',f:'#2f9a5a',art:'trip/isl-5',real:1},{x:68,y:6,g1:'#cfe9ff',g2:'#7fb8ff',f:'#3a78e8',art:'trip/isl-6',real:1}];
+/* тропа по острову (в % от картинки): 4 ряда снизу вверх змейкой, последняя точка — экзамен */
+const TRIP_PATH=[[16,86],[34,90],[54,90],[74,86],[86,73],[67,71],[47,74],[27,72],[15,59],[33,56],[53,59],[73,56],[83,42],[64,40],[44,43],[26,40],[50,22]];
+const TRIP_WCOL=['#ff7aa2','#4cc3f5','#7bd389','#b38cff'];
 let tripView=null;
 function tripNextStop(){const D=T().done;for(let ii=0;ii<TRIP.length;ii++){const I=TRIP[ii];if(!I.weeks)continue;
   for(let wi=0;wi<I.weeks.length;wi++)for(let si=0;si<4;si++)if(!D[tripKey(ii,wi,si)]&&tripOpen(ii,wi,si))return {ii,wi,si};
@@ -2191,23 +2221,30 @@ function tripWorld(box,D){
 }
 const TRIP_STICK=['en/happy','en/apple','en/family','toys/ball'];
 function tripIsle(box,D,ii){
-  const I=TRIP[ii],L=TRIP_LOOK[ii],v=document.createElement('div');v.className='tisle';v.style.setProperty('--g1',L.g1);v.style.setProperty('--f',L.f);
-  v.innerHTML='<div class="tisle-sky"><b class="ttitle"></b></div><div class="tstick"></div><div class="ttrail"></div>';v.querySelector('.ttitle').textContent=I.n;
+  const I=TRIP[ii],L=TRIP_LOOK[ii],v=document.createElement('div');v.className='tisle big';v.style.setProperty('--g1',L.g1);v.style.setProperty('--f',L.f);
+  v.innerHTML='<div class="tisle-sky"><b class="ttitle"></b><div class="tstick"></div></div><div class="ttrail"></div>';v.querySelector('.ttitle').textContent=I.n;
   const st=v.querySelector('.tstick');I.weeks.forEach((W,wi)=>{const ok=!!D[tripKey(ii,wi,3)],s=document.createElement('span');s.className=ok?'on':'';s.style.setProperty('--r',((wi%2?1:-1)*(3+wi))+'deg');
     s.innerHTML=ok?'<img src="img/'+(TRIP_STICK[wi]||'en/happy')+'.webp" alt="">':'<em>'+(wi+1)+'</em>';s.title='Наклейка недели «'+W.t+'»';st.appendChild(s)});
-  const tr=v.querySelector('.ttrail');let cur=false;
-  I.weeks.forEach((W,wi)=>{const w=document.createElement('div');w.className='tweek';w.innerHTML='<div class="tweek-h"><small>Неделя '+(wi+1)+'</small><b></b></div><div class="tpiers"></div>';w.querySelector('b').textContent=W.t;
-    const ps=w.querySelector('.tpiers');
-    for(let si=0;si<4;si++){const k=tripKey(ii,wi,si),ok=tripOpen(ii,wi,si),b=document.createElement('button');
-      b.className='tpier'+(si===3?' tchest':'')+(D[k]?' done':ok?'':' off');b.style.setProperty('--dy',(si%2?14:-6)+'px');
-      b.innerHTML=si===3?'<img src="img/ic/gift.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label',si===3?'Тест недели':'Остановка '+(si+1));
+  /* остров на весь экран: тропа из 4 рядов (неделя = 3 остановки + подарок-тест), наверху экзамен */
+  const tr=v.querySelector('.ttrail');let cur=false;tr.className='tbig';
+  const land=document.createElement('div');land.className='tbig-in';
+  const pic=document.createElement('img');pic.className='tbig-pic';pic.alt='';pic.src='img/'+L.art+(L.real?'-big':'')+'.webp';land.appendChild(pic);
+  const PTS=TRIP_PATH,NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.classList.add('tbig-path');
+  const all=[];I.weeks.forEach((W,wi)=>{for(let si=0;si<4;si++)all.push(PTS[wi*4+si])});all.push(PTS[16]);
+  const pl=document.createElementNS(NS,'polyline');pl.setAttribute('points',all.map(q=>q.join(',')).join(' '));svg.appendChild(pl);land.appendChild(svg);
+  const leg=document.createElement('div');leg.className='tlegend';
+  I.weeks.forEach((W,wi)=>{const col=TRIP_WCOL[wi%4];
+    const lg=document.createElement('div');lg.style.setProperty('--wc',col);lg.innerHTML='<i></i><small>Неделя '+(wi+1)+'</small><b></b>';lg.querySelector('b').textContent=typo(W.t);leg.appendChild(lg);
+    for(let si=0;si<4;si++){const k=tripKey(ii,wi,si),ok=tripOpen(ii,wi,si),b=document.createElement('button'),q=PTS[wi*4+si];
+      b.className='tpier'+(si===3?' tchest':'')+(D[k]?' done':ok?'':' off');b.style.left=q[0]+'%';b.style.top=q[1]+'%';b.style.setProperty('--wc',col);
+      b.innerHTML=si===3?'<img src="img/ic/gift.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label','Неделя '+(wi+1)+': '+(si===3?'тест недели':'остановка '+(si+1)));
       if(ok&&!D[k]&&!cur){cur=true;b.classList.add('now')}
-      b.onclick=()=>{if(!ok){say('trip',si===3?'Сначала пройди три остановки этой недели!':'Сначала пройди предыдущую остановку!');return}tripSnd('go');startTripStop(ii,wi,si)};ps.appendChild(b)}
-    tr.appendChild(w)});
-  const eo=tripExamOpen(ii),ex=document.createElement('button');ex.className='texam'+(D[ii+'-exam']?' done':eo?'':' off');
-  ex.innerHTML='<img src="img/ic/gift.webp" alt=""><span>'+(D[ii+'-exam']?'Экзамен острова сдан!':'Экзамен острова')+'</span>';
+      b.onclick=()=>{if(!ok){say('trip',si===3?'Сначала пройди три остановки этой недели!':'Сначала пройди предыдущую остановку!');return}tripSnd('go');startTripStop(ii,wi,si)};land.appendChild(b)}});
+  const eo=tripExamOpen(ii),ex=document.createElement('button'),q=PTS[16];ex.className='tpier texam-pin'+(D[ii+'-exam']?' done':eo?'':' off');ex.style.left=q[0]+'%';ex.style.top=q[1]+'%';
+  ex.innerHTML='<img src="img/ic/gift.webp" alt=""><span>Экзамен</span>';ex.setAttribute('aria-label','Экзамен острова');
   if(eo&&!D[ii+'-exam']&&!cur)ex.classList.add('now');
-  ex.onclick=()=>{if(!eo){say('trip','Экзамен откроется, когда сдашь тесты всех четырёх недель!');return}tripSnd('go');startTripStop(ii,'exam')};tr.appendChild(ex);
+  ex.onclick=()=>{if(!eo){say('trip','Экзамен откроется, когда сдашь тесты всех четырёх недель!');return}tripSnd('go');startTripStop(ii,'exam')};land.appendChild(ex);
+  tr.appendChild(land);tr.appendChild(leg);
   box.appendChild(v);
   say('trip','Это '+I.n+'! Пройди остановки по порядку, а в конце каждой недели — тест. Наклейки собираются наверху!');
 }
