@@ -480,6 +480,44 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .dn-sl .dn-none{color:var(--ink2);font-weight:700;list-style:none;margin-left:-26px;text-align:center;border:0}
 @media (max-width:700px){.dn-row{grid-template-columns:20px 1fr auto;grid-template-areas:'n s a' 'n t t';row-gap:0;padding:4px 0}.dn-row i{grid-area:n}.dn-s{grid-area:s;font-size:14px}.dn-act{grid-area:a}.dn-t{grid-area:t;font-size:24px;padding-bottom:2px}.dn-row.empty{grid-template-areas:'n s a'}}
 @media (max-width:480px){.tabs button span{font-size:11px}.tabs img{width:32px;height:32px}}
+
+/* новые механики заданий */
+.gm{position:relative;display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(56px,16vw,150px);max-width:640px;margin:12px auto 0}
+.gm-col{display:flex;flex-direction:column;gap:12px;position:relative;z-index:1}
+.gm-it{background:#fff;border:4px solid var(--line);border-radius:18px;min-height:66px;padding:6px 10px;font-size:20px;font-weight:900;display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:var(--shadow);color:var(--ink);line-height:1.1}
+.gm-it .art.photo{width:62px;height:62px;border:0;border-radius:10px}.gm-it .num{font-size:40px;font-weight:900;color:#f58a1f}
+.gm-it.sel{border-color:var(--gold);background:var(--gold2)}.gm-it.ok{border-color:#2f9a5a;background:#dff6e6;color:#1d6b3e}.gm-it.shake{animation:shake .35s}
+.gm-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.gm-svg line{stroke-width:6;stroke-linecap:round}.gm-svg line.tmp{stroke:#f5a800;stroke-dasharray:2 10}.gm-svg line.ok{stroke:#2f9a5a}
+.gc{position:relative;height:360px;max-width:640px;margin:12px auto 0;border-radius:24px;background:linear-gradient(#bfe9ff,#eaf9ff);overflow:hidden;border:4px solid #fff;box-shadow:var(--shadow)}
+.gc-sky{position:absolute;inset:0}
+.gc-it{position:absolute;top:-64px;transform:translateX(-50%);animation:gcfall linear forwards;background:#fff;border:3px solid var(--line);border-radius:16px;padding:8px 14px;font-size:21px;font-weight:900;color:var(--ink);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.1)}
+@keyframes gcfall{to{top:105%}}
+.gc-it.hit{animation-play-state:paused;background:#dff6e6;border-color:#2f9a5a;color:#1d6b3e;transform:translateX(-50%) scale(1.25);opacity:0;transition:transform .4s,opacity .45s}
+.gc-it.bad{animation-play-state:paused;background:#ffe3e3;border-color:#e05a5a;color:#b03030}
+.gc-score{position:absolute;top:8px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:2;pointer-events:none}
+.gc-score i{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.8);border:3px solid #9cc4ea}.gc-score i.on{background:#ffd23f;border-color:#f5a800}
+.gf{max-width:580px;margin:12px auto 0;background:repeating-linear-gradient(#fffdf6 0 46px,#cfe1f2 46px 47px);border-left:3px solid #f2a7a7;border-radius:12px;padding:12px 18px 14px;display:flex;flex-wrap:wrap;gap:6px 16px;box-shadow:var(--shadow)}
+.gf-w{font-family:Caveat,cursive;font-size:32px;color:#1d4fb8;padding:0 6px;border-radius:8px;background:none;line-height:40px}
+.gf-w.ok{color:#2f9a5a;text-decoration:underline wavy #7bd389;text-underline-offset:6px}.gf-w.shake{animation:shake .35s;background:#fff1c7}
+.gl{position:relative;max-width:640px;margin:8px auto 0;padding-top:78px}
+.gl-frog{position:absolute;top:6px;width:64px;height:64px;object-fit:contain;transform:translateX(-50%);transition:left .3s}
+.gl-frog.hop{animation:glhop .3s}@keyframes glhop{50%{transform:translateX(-50%) translateY(-26px)}}
+.gl-ticks{display:grid;grid-template-columns:repeat(11,1fr);border-top:5px solid #3b2a20;border-radius:3px}
+.gl-t{display:flex;flex-direction:column;align-items:center;padding:4px 0 6px;font-weight:900;font-size:clamp(16px,4vw,22px);background:none;color:var(--ink);border-radius:10px}
+.gl-t:before{content:"";width:4px;height:14px;background:#3b2a20;margin:-11px 0 4px}
+.gl-t.ok{background:#dff6e6;color:#1d6b3e}.gl-t.shake{animation:shake .35s;background:#ffe3e3}
+.gk{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:4px}
+.gk-face{width:min(260px,70vw);height:auto;display:block}.gk-wrap{display:block}.gk-wrap.shake{animation:shake .35s}
+.gk-n{cursor:pointer}.gk-n:hover{fill:#e85a2c}
+.gk-goal{text-align:center}.gk-goal b{display:block;font-size:40px;font-weight:900;color:#e85a2c;line-height:1}.gk-goal span{color:var(--ink2);font-size:17px}
+.gk .opts{margin-top:4px}
+.gs{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:8px}
+.gs-mic{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a8a,#e04848);box-shadow:0 7px 0 #a82e2e;color:#fff;font-weight:900;font-size:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.gs-mic i{width:20px;height:32px;border-radius:12px;background:#fff;position:relative}.gs-mic i:after{content:"";position:absolute;left:-7px;right:-7px;top:16px;height:18px;border:3px solid #fff;border-top:0;border-radius:0 0 18px 18px}
+.gs-mic.on{animation:pnow 1s ease-in-out infinite}.gs-mic:disabled{opacity:.5}
+.gs-heard{color:var(--ink2);font-size:16px;min-height:22px;text-align:center}
+@media (max-width:480px){.gm-it{font-size:17px;min-height:58px}.gc{height:330px}.gc-it{font-size:18px}.gf-w{font-size:28px}}
 /* новые уроки русского */
 .word.long{font-size:34px;letter-spacing:0}
 .opts.ruw{flex-wrap:wrap;gap:12px}.opts.ruw .opt{font-size:28px;min-width:0;padding:12px 22px}.opts.ruw.small .opt{font-size:20px;width:100%;max-width:420px;text-align:left}
@@ -913,7 +951,10 @@ try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catc
 if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
 /* разовое обнуление звёзд (04.11.2026) */
 /* разовый сброс купленных вещей (просьба родителя 05.11.2026, цены выросли) */
-function applyResets(){if(S.ownedReset!==1){S.owned=[];S.wear={};S.ownedReset=1;return true}return false}
+function applyResets(){let ch=false;if(S.ownedReset!==1){S.owned=[];S.wear={};S.ownedReset=1;ch=true}
+  /* 06.11.2026: бантик пропал из-за перезаписи общей базы старой копией — возвращаем один раз */
+  if(S.bowBack!==1){S.owned=S.owned||[];if(!S.owned.includes('bow'))S.owned.push('bow');S.bowBack=1;ch=true}
+  return ch}
 if(applyResets()){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 if(S.starsReset!==1){S.stars=0;S.starsReset=1;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!fb&&!applyingRemote)localDirty=true;cloudPush()}
@@ -945,6 +986,11 @@ function mergeJoin(r){
   o.diary=uniq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.q+'|'+x.a).sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0).slice(0,300);
   o.pending=uniq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));
   o.pin=r.pin||L.pin||'';o.momAsk=r.momAsk||L.momAsk||null;o.mission=L.mission||r.mission||null;
+  /* прогресс — объединяем, чтобы ничего не терялось ни с одного устройства */
+  o.lessonsDone=Object.assign({},L.lessonsDone||{},r.lessonsDone||{});
+  if(L.trip||r.trip)o.trip=Object.assign({},L.trip||{},r.trip||{},{done:Object.assign({},(L.trip||{}).done||{},(r.trip||{}).done||{})});
+  if(L.dn||r.dn){const a=L.dn||{},b=r.dn||{},hw=Object.assign({},a.hw||{});Object.keys(b.hw||{}).forEach(k=>{hw[k]=uniq([...(b.hw[k]||[]),...(hw[k]||[])],x=>String(x.id))});o.dn={sched:Object.keys(b.sched||{}).length?b.sched:(a.sched||{}),hw}}
+  o.mist=Object.assign({},L.mist||{});Object.keys(r.mist||{}).forEach(k=>o.mist[k]=Math.max(o.mist[k]||0,r.mist[k]));
   return o;
 }
 function applyRemote(r){
@@ -970,7 +1016,7 @@ async function cloudInit(){
     const snap=await F.getDoc(ref);
     fb={ref,setDoc:F.setDoc,ts:F.serverTimestamp};
     /* изменения, сделанные до подключения к базе, важнее облачных */
-    if(snap.exists()&&snap.data().alisa){const r=snap.data().alisa;if(joining){applyRemote(mergeJoin(r));cloudPush()}else if(localDirty)cloudPush();else applyRemote(r)}else cloudPush();
+    if(snap.exists()&&snap.data().alisa){const r=snap.data().alisa;if(joining||localDirty){applyRemote(mergeJoin(r));cloudPush()}else applyRemote(r)}else cloudPush();
     localDirty=false;
     joining=false;
     F.onSnapshot(ref,x=>{if(x.metadata.hasPendingWrites||pushing)return;const d=x.data();if(d&&d.alisa)applyRemote(d.alisa)});
@@ -1659,7 +1705,9 @@ const LESSONS={
     {n:'Безударные гласные',p:'Проверь слово ударением',g:['bez','chk','bez','bez','chk','bez']},
     {n:'Семья слов и слова-друзья',p:'Корень, синонимы, антонимы',g:['odd','synAnt','odd','synAnt','odd']},
     {n:'Собери предложение',p:'Слова по порядку, большая буква и точка',g:['sent','sentOk','sent','sent','sentOk']},
-    {n:'Алфавит',p:'Буквы и слова по порядку',g:['abc','after','abcW','abc','after','abcW']}]},
+    {n:'Алфавит',p:'Буквы и слова по порядку',g:['abc','after','abcW','abc','after','abcW']},
+    {n:'Ух ошибается',p:'Найди ошибки и лови слова',g:['fix','catchZhi','fix','catchKto','fix']},
+    {n:'Соедини линией',p:'Слова наоборот и похожие слова',g:['matchAnt','matchSyn','catchKto','matchAnt','matchSyn']}]},
   read:{name:'Чтение',say:'Выбирай историю! Прочитай её сама, а я помогу, если надо.',list:[
     {n:'Один трудный день',p:'Как Ух помогала Топе'},{n:'Пирог для мамы',p:'Как Ух и Топа пекли пирог'},{n:'Топа идёт в садик',p:'Почему учиться интересно'}]},
   en:{name:'Английский',say:'Привет! Я Топа, младший братик Ух. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Выбирай урок и научи меня английскому!',list:[
@@ -1667,7 +1715,9 @@ const LESSONS={
   math:{name:'Математика',say:'Выбирай урок математики! Будем считать вместе.',list:[
     {n:'Сложение и вычитание до 20',p:'Жёлуди, пёрышки и ягодки',t:['add20','sub20','miss']},
     {n:'Десятки и сравнение',p:'Больше, меньше или равно',t:['tens','add2','cmp']},
-    {n:'Умножение на 2',p:'По два, по два, по два',t:['x2']}]}};
+    {n:'Умножение на 2',p:'По два, по два, по два',t:['x2']},
+    {n:'Числовая прямая',p:'Лягушка прыгает по числам',g:['line','line','line','line','line','line']},
+    {n:'Часы',p:'Который час? Поставь стрелки',g:['clockRead','clockSet','clockRead','clockSet','clockRead','clockSet']}]}};
 let LESSON={subj:'ru',i:0};
 function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   document.getElementById('owlLessons').style.display=k==='en'?'none':'';document.getElementById('owlLessonsT').style.display=k==='en'?'':'none';say('lessons',L.say);
@@ -1683,7 +1733,7 @@ function dropWrong(box,isOk){const w=[...box.querySelectorAll('.opt')].filter(b=
 function nextPrize(k){const g=S.gameDay&&S.gameDay.d===today()?S.gameDay:{};const n=g[k]||0;return n===0?3:n<3?1:0}
 function prizeText(){const n=lessonPrize(lessonKey());return n?'За урок: ⭐ '+n:'Звёзды за этот урок сегодня уже есть'}
 function showPrize(id,k){const e=document.getElementById(id);if(e)e.textContent=prizeText(k)}
-function startLesson(k,i){LESSON={subj:k,i};if(k==='ru'&&LESSONS.ru.list[i].g)return startRu();({ru:startGame,read:startRead,en:startEng,math:startMath})[k]()}
+function startLesson(k,i){LESSON={subj:k,i};if(LESSONS[k].list[i]&&LESSONS[k].list[i].g)return startRu();({ru:startGame,read:startRead,en:startEng,math:startMath})[k]()}
 function lessonDone(){S.lessonsDone=S.lessonsDone||{};S.lessonsDone[LESSON.subj+LESSON.i]=today();save();todayCheck()}
 /* ---------- урок дня и огонёк серии ---------- */
 const dayOff=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
@@ -1930,20 +1980,33 @@ const RU_GEN={
   abc:()=>{const i=Math.floor(Math.random()*(RU_ABC.length-12)),l=shuffle(RU_ABC.slice(i,i+12).replace(/[ЁЙЪЫЬ]/g,'').split('')).slice(0,4);return {t:'order',ask:'Расставь буквы по алфавиту!',seq:l.sort((a,b)=>RU_ABC.indexOf(a)-RU_ABC.indexOf(b)),joiner:' ',r:RQ.abc}},
   abcW:()=>{const w=pick(RU_ABCW);return {t:'order',ask:'Расставь слова по алфавиту — по первой букве!',seq:w,joiner:' ',r:RQ.abc}},
   after:()=>{const i=1+Math.floor(Math.random()*(RU_ABC.length-3)),a=RU_ABC[i],n=RU_ABC[i+1];return {t:'choose',ask:'Какая буква идёт следом?',show:RU_ABC[i-1]+', '+a+', ?',opts:[n].concat(shuffle(RU_ABC.split('').filter(x=>x!==n&&x!==a)).slice(0,2)),r:RQ.abc}}};
+/* новые задания (06.11.2026) */
+const RU_SPELL=()=>WORDS.filter(w=>!w.pre).map(w=>({ok:w.p+w.o[0]+w.s,bad:w.p+w.o[1]+w.s,r:w.r}));
+Object.assign(RU_GEN,{
+  fix:()=>{const all=shuffle(RU_SPELL()).slice(0,6),bad=all.slice(0,3);return {t:'fix',ask:'Ух написала записку и наделала ошибок! Нажми на неправильные слова — я их исправлю.',items:shuffle(all.map(x=>bad.includes(x)?{w:x.bad,fix:x.ok,bad:1,r:x.r}:{w:x.ok})),r:'Ищи ловушки: жи-ши, ча-ща, чу-щу, чк-чн и парные согласные на конце.'}},
+  catchZhi:()=>{const all=RU_SPELL();return {t:'catch',ask:'Лови только слова без ошибок! Нажимай на них, пока они падают.',good:all.map(x=>x.ok),bad:all.map(x=>x.bad),r:'Ищи ловушки: жи-ши, ча-ща, чу-щу, чк-чн и парные согласные на конце.'}},
+  catchKto:()=>({t:'catch',ask:'Лови слова, которые отвечают на вопрос «кто?»!',good:RU_KTO,bad:RU_CHTO,r:RQ.kto}),
+  matchAnt:()=>({t:'match',ask:'Соедини линией слова наоборот! Веди пальцем от слова слева к его паре справа.',pairs:shuffle(RU_ANT).slice(0,4).map(x=>x.split(' — ')),r:RQ.syn}),
+  matchSyn:()=>({t:'match',ask:'Соедини линией похожие слова! Веди пальцем от слова слева к его паре справа.',pairs:shuffle(RU_SYN).slice(0,4).map(x=>x.split(' — ')),r:RQ.syn}),
+  line:()=>{const op=Math.random()<.5?1:-1;let a,b;if(op>0){a=Math.floor(Math.random()*12);b=1+Math.floor(Math.random()*8)}else{a=4+Math.floor(Math.random()*16);b=1+Math.floor(Math.random()*Math.min(8,a))}
+    return {t:'line',ask:'Помоги лягушке прыгнуть! Нажми на число, куда она допрыгнет.',a,b,op,ans:a+op*b,r:'Плюс — прыгаем вправо, минус — влево. Считай прыжки!'}},
+  clockRead:()=>{const h=1+Math.floor(Math.random()*12),m=Math.random()<.5?0:30,o=[gTimeTxt(h,m),gTimeTxt(h,30-m),gTimeTxt(h%12+1,m)];return {t:'clock',mode:'read',ask:'Который час на часах?',h,m,opts:o,r:'Короткая стрелка — часы, длинная — минуты. Длинная вверху — ровно, внизу — половина.'}},
+  clockSet:()=>{const h=1+Math.floor(Math.random()*12),m=Math.random()<.5?0:30;return {t:'clock',mode:'set',ask:'Поставь стрелки! Нажми на число для короткой стрелки и выбери «ровно» или «половина».',h,m,r:'Короткая стрелка — часы, длинная — минуты. Длинная вверху — ровно, внизу — половина.'}}
+});
 const RU_OOPS=['Ой, тут ловушка! Вот правило.','Почти! Давай вспомним правило.','Ничего страшного! Вот подсказка.'];
 const RU_AGAIN=['А теперь похожее задание! Справишься?','Ещё одно на это же правило. Проверим, как ты запомнила!'];
 const RU_SORT_OK=['Точно, сюда!','Правильно!','Ух-ух, верно!'];
 const RU_PLACE_NO=['Хм, не сюда. Подумай ещё!','Почти! Попробуй другую корзинку.'];
 const RU_ORDER_NO=['Хм, это слово пока рано. Какое идёт раньше?','Не то место! Что идёт следующим?'];
 let RG=null;
-function startRu(){go('game');showPrize('gamePrize','uh');const L=LESSONS.ru.list[LESSON.i];
+function startRu(){go('game');showPrize('gamePrize','uh');const L=LESSONS[LESSON.subj].list[LESSON.i];
   RG={list:L.g.map(k=>Object.assign(RU_GEN[k](),{gen:k})),i:-1,extra:0};ruStep()}
 function ruStep(){
   RG.i++;const prog=document.getElementById('gameProg');prog.innerHTML=RG.list.map((_,k)=>'<i class="'+(k<RG.i?'done':'')+'"></i>').join('');
   const nx=document.getElementById('gameNext'),nb=document.getElementById('gameNextBtn');nx.style.display='none';
   if(RG.i>=RG.list.length){document.getElementById('gameBody').style.display='none';
     say('game','Вот это урок! Ты меня столькому научила. Спасибо!');
-    lessonDone();lessonReward('за урок русского');celebrate('Урок русского пройден! Ух теперь знает больше.');
+    lessonDone();lessonReward('за урок');celebrate(LESSON.subj==='math'?'Урок математики пройден! Ух теперь считает лучше.':'Урок русского пройден! Ух теперь знает больше.');
     nx.style.display='flex';nb.textContent='Ещё раз!';nb.onclick=startRu;return}
   document.getElementById('gameBody').style.display='block';nb.textContent='Дальше →';nb.onclick=ruStep;
   const q=RG.list[RG.i],W=document.getElementById('gameWord'),box=document.getElementById('gameOpts'),rl=document.getElementById('gameRule');
@@ -1955,6 +2018,7 @@ function ruStep(){
   const win=()=>{if(!q.missed){rl.textContent=typo(q.r);rl.classList.remove('explain')}cheer();flashStar('owlGame','book');
     if(q.missed&&RG.extra<2){RG.list.splice(RG.i+1,0,Object.assign(RU_GEN[q.gen](),{gen:q.gen,again:1}));RG.extra++}
     nx.style.display='flex'};
+  if(G_KIND[q.t]){if(['line','say','clock'].includes(q.t))W.className='eq';G_KIND[q.t](q,{Q:W,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('game',t),snd:tripSnd});return}
   ({choose:ruChoose,fill:ruFill,sort:ruSort,order:ruOrder})[q.t](q,W,box,miss,win);
 }
 function ruChoose(q,W,box,miss,win){
@@ -2272,6 +2336,105 @@ function engStep(){
   hintBtn(box,()=>{if(dropWrong(box,(t,b)=>(b&&b.dataset.w?b.dataset.w:t)===q.opts[0]))say('eng','Я убрал один неправильный ответ! Выбирай из двух.')});
 }
 
+/* ---------- новые механики заданий (06.11.2026): соедини линией, поймай на лету, найди ошибки у Ух, числовая прямая, часы, скажи вслух ---------- */
+/* у всех одна подпись: (q, c) где c={Q, box, miss, win, rule(текст)}; работают и в уроках Ух (ruStep), и в «Кругосветке» (tripStep) */
+const G_EL=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e};
+/* соедини линией: ведёшь пальцем от левой карточки к правой (или нажимаешь одну, потом другую) */
+function gMatch(q,c){
+  const box=c.box;box.className='gm';box.innerHTML='';
+  const NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('class','gm-svg');
+  const L=G_EL('div','gm-col'),R=G_EL('div','gm-col');box.appendChild(L);box.appendChild(R);box.appendChild(svg);
+  let left=q.pairs.length,sel=null;
+  const pt=(el,side)=>{const b=box.getBoundingClientRect(),r=el.getBoundingClientRect();return [side?r.left-b.left:r.right-b.left,r.top-b.top+r.height/2]};
+  const line=(a,b,cls)=>{const l=document.createElementNS(NS,'line');l.setAttribute('x1',a[0]);l.setAttribute('y1',a[1]);l.setAttribute('x2',b[0]);l.setAttribute('y2',b[1]);l.setAttribute('class',cls);svg.appendChild(l);return l};
+  const tryPair=(a,b)=>{if(!a||!b||a.classList.contains('ok')||b.classList.contains('ok'))return;
+    if(a.dataset.i===b.dataset.i){a.classList.add('ok');b.classList.add('ok');line(pt(a,0),pt(b,1),'ok');left--;cheer();if(c.snd)c.snd('ok');if(!left)setTimeout(c.win,250)}
+    else{ruShake(a);ruShake(b);c.miss()}};
+  const lefts=q.pairs.map((p,i)=>{const b=G_EL('button','gm-it',p[0]);b.dataset.i=i;return b}),rights=shuffle(q.pairs.map((p,i)=>{const b=G_EL('button','gm-it r',p[1]);b.dataset.i=i;return b}));
+  lefts.forEach(b=>{L.appendChild(b);
+    b.addEventListener('pointerdown',e=>{if(b.classList.contains('ok'))return;e.preventDefault();try{b.setPointerCapture(e.pointerId)}catch(_){}
+      lefts.forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;const s=pt(b,0);let tmp=null,moved=false;
+      const mv=ev=>{const bb=box.getBoundingClientRect(),p=[ev.clientX-bb.left,ev.clientY-bb.top];if(Math.hypot(p[0]-s[0],p[1]-s[1])>12)moved=true;if(!moved)return;if(!tmp)tmp=line(s,p,'tmp');tmp.setAttribute('x2',p[0]);tmp.setAttribute('y2',p[1])};
+      const up=ev=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);if(tmp)tmp.remove();
+        if(moved){const t=document.elementFromPoint(ev.clientX,ev.clientY),r=t&&t.closest('.gm-it.r');b.classList.remove('sel');sel=null;if(r)tryPair(b,r)}};
+      b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up)})});
+  rights.forEach(b=>{R.appendChild(b);b.onclick=()=>{if(sel){const a=sel;a.classList.remove('sel');sel=null;tryPair(a,b)}else c.say&&c.say('Сначала нажми на карточку слева, а потом на её пару справа. Или проведи линию пальцем!')}});
+}
+/* поймай на лету: сверху падают слова, ловим только нужные; проиграть нельзя — ждём, пока поймает need штук */
+function gCatch(q,c){
+  const box=c.box;box.className='gc';box.innerHTML='';const sky=G_EL('div','gc-sky'),sc=G_EL('div','gc-score');box.appendChild(sky);box.appendChild(sc);
+  let got=0;const need=q.need||5;let alive=true;
+  const upd=()=>{sc.innerHTML=Array.from({length:need},(_,i)=>'<i class="'+(i<got?'on':'')+'"></i>').join('')};upd();
+  const spawn=()=>{if(!alive||!sky.isConnected)return;const good=Math.random()<.5,t=pick(good?q.good:q.bad),b=G_EL('button','gc-it',t);
+    b.style.left=(10+Math.random()*80)+'%';b.style.animationDuration=(5600+Math.random()*1600)+'ms';
+    b.onclick=()=>{if(b.classList.contains('hit')||b.classList.contains('bad'))return;
+      if(good){b.classList.add('hit');got++;upd();cheer();if(c.snd)c.snd('ok');if(got>=need){alive=false;setTimeout(c.win,350)}}
+      else{b.classList.add('bad');c.miss();setTimeout(()=>b.remove(),500)}};
+    b.addEventListener('animationend',()=>b.remove());sky.appendChild(b);setTimeout(spawn,850+Math.random()*450)};
+  spawn();
+}
+/* найди ошибки у Ух: записка из слов, часть с ошибками; нажми на неправильное — Ух исправит */
+function gFix(q,c){
+  const box=c.box;box.className='gf';box.innerHTML='';let left=q.items.filter(x=>x.bad).length;
+  q.items.forEach(x=>{const b=G_EL('button','gf-w');b.textContent=x.w;
+    b.onclick=()=>{if(b.classList.contains('ok'))return;
+      if(x.bad){b.textContent=x.fix;b.classList.add('ok');left--;cheer();if(c.snd)c.snd('ok');if(c.rule)c.rule(x.r);if(!left)setTimeout(c.win,400)}
+      else{ruShake(b);c.miss()}};box.appendChild(b)});
+}
+/* числовая прямая: лягушка стоит на a и прыгает на b вправо (+) или влево (−); нажми, куда она допрыгнет */
+function gLine(q,c){
+  const box=c.box;box.className='gl';box.innerHTML='';const lo=Math.max(0,Math.min(q.a,q.ans)-2),hi=lo+10;
+  if(c.Q){c.Q.innerHTML='<div class="sent"></div>';c.Q.querySelector('.sent').textContent=q.a+' '+(q.op>0?'+':'−')+' '+q.b+' = ?'}
+  const fr=G_EL('img','gl-frog');fr.src='img/en/frog.webp';fr.alt='Лягушка';box.appendChild(fr);
+  const tk=G_EL('div','gl-ticks');box.appendChild(tk);const pos=n=>((n-lo)+.5)/11*100+'%';fr.style.left=pos(q.a);
+  let done=false;
+  for(let n=lo;n<=hi;n++){const b=G_EL('button','gl-t');b.textContent=n;
+    b.onclick=()=>{if(done)return;if(n!==q.ans){ruShake(b);c.miss();return}done=true;b.classList.add('ok');
+      let cur=q.a;const iv=setInterval(()=>{cur+=q.op;fr.style.left=pos(cur);fr.classList.remove('hop');void fr.offsetWidth;fr.classList.add('hop');if(cur===q.ans){clearInterval(iv);setTimeout(c.win,350)}},320)};tk.appendChild(b)}
+}
+/* часы: «который час?» (выбор) или «поставь стрелки» (нажми на число + «ровно / половина») */
+const G_HOURG=['двенадцатого','первого','второго','третьего','четвёртого','пятого','шестого','седьмого','восьмого','девятого','десятого','одиннадцатого','двенадцатого'];
+const gTimeTxt=(h,m)=>h+':'+(m?'30':'00');
+const gTimeWords=(h,m)=>m?'половина '+G_HOURG[h%12+1===13?1:h%12+1]:(h+' '+(h===1?'час':h<5?'часа':'часов')+' ровно');
+function gClockSvg(h,m,pick){
+  let s='<svg viewBox="-110 -110 220 220" class="gk-face"><circle r="104" fill="#fff" stroke="#3b2a20" stroke-width="6"/>';
+  for(let i=1;i<=12;i++){const a=i*Math.PI/6,x=Math.sin(a)*80,y=-Math.cos(a)*80;s+='<text x="'+x.toFixed(1)+'" y="'+(y+9).toFixed(1)+'" text-anchor="middle" font-size="26" font-weight="900" fill="#3b2a20" class="'+(pick?'gk-n':'')+'" data-h="'+i+'">'+i+'</text>'}
+  for(let i=0;i<60;i++){if(i%5)s+='<circle r="1.6" cx="'+(Math.sin(i*Math.PI/30)*96).toFixed(1)+'" cy="'+(-Math.cos(i*Math.PI/30)*96).toFixed(1)+'" fill="#b9a68f"/>'}
+  const ha=((h%12)+m/60)*30,ma=m*6;
+  s+='<line class="gk-h" x1="0" y1="0" x2="0" y2="-48" stroke="#3b2a20" stroke-width="9" stroke-linecap="round" transform="rotate('+ha+')"/>';
+  s+='<line class="gk-m" x1="0" y1="0" x2="0" y2="-76" stroke="#e85a2c" stroke-width="5" stroke-linecap="round" transform="rotate('+ma+')"/><circle r="8" fill="#3b2a20"/></svg>';return s}
+function gClock(q,c){
+  const box=c.box;box.className='gk';box.innerHTML='';
+  if(q.mode==='read'){box.innerHTML=gClockSvg(q.h,q.m);const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
+    shuffle(q.opts.map((t,k)=>({t,k}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t;b.onclick=()=>{if(done||b.classList.contains('no'))return;if(!x.k){done=true;b.classList.add('yes');if(c.rule)c.rule(gTimeWords(q.h,q.m));c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)});return}
+  let h=12,m=0;const face=G_EL('div','gk-wrap');box.appendChild(face);
+  const goal=G_EL('div','gk-goal');goal.innerHTML='<b></b><span></span>';goal.querySelector('b').textContent=gTimeTxt(q.h,q.m);goal.querySelector('span').textContent=gTimeWords(q.h,q.m);box.prepend(goal);
+  const draw=()=>{face.innerHTML=gClockSvg(h,m,1);face.querySelectorAll('.gk-n').forEach(t=>t.addEventListener('click',()=>{h=+t.dataset.h;draw()}))};draw();
+  const ch=G_EL('div','chips');[['ровно',0],['половина',30]].forEach(([t,v])=>{const b=G_EL('button','chip'+(v===m?' on':''));b.textContent=t;b.onclick=()=>{m=v;ch.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b));draw()};ch.appendChild(b)});box.appendChild(ch);
+  const ok=G_EL('button','btn');ok.textContent='Готово';box.appendChild(ok);
+  ok.onclick=()=>{if(h===q.h&&m===q.m){ok.disabled=true;if(c.rule)c.rule(gTimeTxt(q.h,q.m)+' — '+gTimeWords(q.h,q.m));c.win()}else{ruShake(face);c.miss()}};
+}
+/* скажи вслух: распознавание речи в браузере; если его нет — «Я сказала!» */
+function gSay(q,c){
+  const box=c.box;box.className='gs';box.innerHTML='';
+  if(c.Q){c.Q.innerHTML=(q.pic?'<div class="pic">'+q.pic+'</div>':'')+'<div class="sent"></div>';c.Q.querySelector('.sent').textContent=q.text}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition,heard=G_EL('div','gs-heard'),row=G_EL('div','row');row.style.justifyContent='center';row.style.gap='12px';
+  const ear=G_EL('button','btn soft');ear.textContent='Послушать';ear.onclick=()=>q.lang==='ru'?speak(q.text):speakEn(q.text);
+  const mic=G_EL('button','gs-mic','<i></i><span>Сказать</span>'),self=G_EL('button','btn soft');self.textContent='Я сказала!';
+  let tries=0,done=false;const norm=t=>t.toLowerCase().replace(/ё/g,'е').replace(/[^a-zа-я0-9 ]/g,' ').replace(/\s+/g,' ').trim(),goal=norm(q.text);
+  const ok=()=>{if(done)return;done=true;mic.disabled=true;self.disabled=true;c.win()};
+  self.onclick=ok;row.appendChild(ear);box.appendChild(mic);box.appendChild(heard);box.appendChild(row);
+  if(!SR){mic.style.display='none';heard.textContent='Скажи вслух, а потом нажми «Я сказала!»';row.appendChild(self);return}
+  mic.onclick=()=>{if(done)return;const r=new SR();r.lang=q.lang==='ru'?'ru-RU':'en-GB';r.maxAlternatives=5;r.interimResults=false;
+    mic.classList.add('on');heard.textContent='Слушаю…';
+    r.onresult=e=>{const alts=[...e.results[0]].map(a=>norm(a.transcript));heard.textContent='Я услышал: «'+(e.results[0][0].transcript||'')+'»';
+      if(alts.some(a=>a===goal||a.includes(goal)||goal.includes(a)&&a.length>2))ok();
+      else{tries++;c.miss();if(tries>=2&&!row.contains(self))row.appendChild(self)}};
+    r.onerror=()=>{heard.textContent='Не получилось услышать. Попробуй ещё раз или нажми «Я сказала!»';if(!row.contains(self))row.appendChild(self)};
+    r.onend=()=>mic.classList.remove('on');try{r.start()}catch(_){}};
+}
+const G_KIND={match:gMatch,catch:gCatch,fix:gFix,line:gLine,clock:gClock,say:gSay};
+
 /* ---------- «Кругосветка Топы»: курс английского на полгода (часть 1 — остров «Привет», 06.11.2026) ---------- */
 /* неделя = 3 остановки + тест недели; остров = 4 недели + экзамен острова. Дальше — только после сданного теста (до 2 ошибок на 10). */
 const TI=(img,fit)=>'<img class="art photo'+(fit?' fit':'')+'" src="img/'+img+'.webp" alt="">';
@@ -2298,7 +2461,7 @@ const TRIP=[
  {n:'Остров Зверей',c:'#b7e4c7',soon:'дикие звери, can, что делает'},
  {n:'Остров Школа',c:'#a2d2ff',soon:'школа, дни недели, мой день'}
 ];
-const TRIP_ASK={pic:'Что это? Как это по-английски?',listen:'Послушай слово и найди картинку!',ru:'Как это будет по-английски?',build:'Помоги собрать фразу! Перетаскивай слова по порядку.',dialog:'Я спрашиваю по-английски. Что мне ответить?',memory:'Найди пары: картинка и слово!',review:'А это мы уже учили! Помнишь?'};
+const TRIP_ASK={match:'Соедини картинку со словом линией! Веди пальцем от картинки к слову.',catch:'Лови слова этой недели! Нажимай на них, пока они падают.',say:'Скажи это слово вслух по-английски! Нажми на красную кнопку и говори.',pic:'Что это? Как это по-английски?',listen:'Послушай слово и найди картинку!',ru:'Как это будет по-английски?',build:'Помоги собрать фразу! Перетаскивай слова по порядку.',dialog:'Я спрашиваю по-английски. Что мне ответить?',memory:'Найди пары: картинка и слово!',review:'А это мы уже учили! Помнишь?'};
 const TRIP_TEST_HI=['Это тест недели! Сдашь — получишь штамп в паспорт и откроешь новую пристань.','Последняя проверка на этой пристани! Не торопись, я в тебя верю.'];
 const TRIP_EXAM_HI='Это экзамен острова! Сдашь — получишь флаг и откроешь новый остров. Поплыли!';
 const TRIP_FAIL=['Чуть-чуть не хватило! Давай повторим остановки и попробуем ещё раз. Я подожду!','Почти получилось! Ошибаться не страшно. Попробуем ещё разок?'];
@@ -2315,9 +2478,12 @@ const TRIP_GEN={
   review:(W,P)=>{const g=pick(['pic','listen']);return Object.assign(TRIP_GEN[g](P.length>=3?P:W),{k:'review'})},
   memory:(W,P)=>({k:'memory',pairs:shuffle(W).slice(0,4)}),
   build:(W,P,B)=>{const b=pick(B);return {k:'build',seq:b[0].split(' '),say:b[0],ru:b[1]}},
+  match:(W,P)=>({k:'match',pairs:shuffle(W.filter(x=>!x.n||x.n<=10)).slice(0,4).map(x=>[x.pic,x.en])}),
+  catch:(W,P)=>{const bad=(P.length>=3?P:ANIMALS).map(x=>x.en).filter(e=>!W.some(w=>w.en===e));return {k:'catch',good:W.map(x=>x.en),bad,need:5}},
+  say:(W,P)=>{const it=pick(W.filter(x=>!x.n||x.n<=10));return {k:'say',text:it.en,pic:it.pic,lang:'en',say:it.en,ru:it.ru}},
   dialog:(W,P,B,D)=>{const d=pick(D);return {k:'dialog',q:d[0],opts:[d[1]].concat(d[2]),say:d[1]}}
 };
-const TRIP_STOPS=[['pic','listen','pic','memory','listen','build'],['listen','ru','build','dialog','review','pic'],['memory','dialog','build','review','listen','ru']];
+const TRIP_STOPS=[['pic','listen','match','memory','say','build'],['listen','ru','catch','dialog','review','say'],['memory','dialog','build','match','listen','catch']];
 const TRIP_TEST=['pic','listen','ru','build','dialog','review','listen','pic','build','ru'];
 const TRIP_EXAM=['pic','listen','build','dialog','ru','pic','listen','build','dialog','ru'];
 const T=()=>{if(!S.trip)S.trip={done:{},stamps:0};return S.trip};
@@ -2443,6 +2609,7 @@ function tripStep(){
   const miss=()=>{tripSnd('no');if(!q.missed){q.missed=true;TR.miss++;if(!TR.test&&TR.extra<2){TR.list.push(Object.assign({},q,{again:1}));TR.extra++;document.getElementById('tripProg').innerHTML=TR.list.map((_,k)=>'<i class="'+(k<TR.i?'done':'')+'"></i>').join('')}}say('tripL',pick(B_OOPS))};
   const win=()=>{tripSnd('ok');rl.textContent=q.ru?typo(q.say+' — '+q.ru):'';say('tripL',pick(B_OK));cheer();if(q.say)setTimeout(()=>speakEn(q.say),400);nx.style.display='flex'};
   const ear=t=>'<button class="ear" aria-label="Послушать ещё раз"><img src="img/ic/speaker.webp" alt=""></button>';
+  if(G_KIND[q.k])return G_KIND[q.k](q,{Q,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('tripL',t),snd:tripSnd});
   if(q.k==='memory')return tripMemory(q,Q,box,miss,win);
   if(q.k==='build'){Q.innerHTML='<div class="ru"></div>';Q.querySelector('.ru').textContent=typo(q.ru);
     const ln=document.createElement('div');ln.className='line-ru';ln.innerHTML='<span class="line-ph">Перетащи слова сюда по порядку</span>';Q.appendChild(ln);box.className='chips-ru';let n=0;
