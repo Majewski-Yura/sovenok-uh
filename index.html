@@ -303,6 +303,33 @@ label.f{display:block;margin-top:14px;font-size:16px}
   .p-go{font-size:18px;padding:8px 18px}
   .tabs img{width:42px;height:42px}.tabs button{font-size:14px}
 }
+/* кругосветка Топы */
+.passport{background:#fff;border:3px solid var(--line);border-radius:22px;padding:12px 16px;margin:14px auto 0;max-width:760px;text-align:center}
+.passport b{display:block;font-size:19px}.passport span{color:var(--ink2);font-size:15px}
+.stamps{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:8px}
+.stamps i{width:18px;height:18px;border-radius:50%;border:2px dashed var(--line);display:block}.stamps i.on{background:#2f9a5a;border:2px solid #2f9a5a}
+.isl{background:linear-gradient(160deg,var(--ic),#fff 85%);border:3px solid var(--line);border-radius:26px;padding:14px 16px 16px;margin:14px auto 0;max-width:760px;box-shadow:var(--shadow)}
+.isl.lock{opacity:.45;filter:grayscale(.35);pointer-events:none}
+.isl-h b{display:block;font-size:22px;font-weight:900}.isl-h span{color:var(--ink2);font-size:14px}
+.wk{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(255,255,255,.75);border-radius:18px;padding:8px 10px;margin-top:8px}
+.wk-t{min-width:0}.wk-t small{display:block;color:var(--ink2);font-size:12px}.wk-t b{font-size:16px}
+.wk-s{display:flex;gap:6px;flex:none}
+.st{width:42px;height:42px;border-radius:50%;background:#fff;border:3px solid var(--line);font-weight:900;font-size:17px;display:grid;place-items:center;position:relative}
+.st img{width:28px;height:28px;object-fit:contain}.st.test{border-color:var(--gold)}
+.st.done{background:#dff6e6;border-color:#2f9a5a;color:#1d6b3e}.st.done:after{content:"✓";position:absolute;right:-5px;top:-5px;width:18px;height:18px;border-radius:50%;background:#2f9a5a;color:#fff;font-size:11px;display:grid;place-items:center}
+.st.off{opacity:.4}
+.st.now,.exam.now{box-shadow:0 0 0 5px rgba(245,184,46,.35);border-color:var(--gold);animation:pnow 1.6s ease-in-out infinite}
+.exam{display:block;width:100%;margin-top:10px;padding:10px;border-radius:18px;background:var(--gold2);border:3px solid var(--gold);font-weight:900;font-size:17px}
+.exam.off{opacity:.45}.exam.done{background:#dff6e6;border-color:#2f9a5a;color:#1d6b3e}
+.trip-card .ic img{height:112px!important}
+.eq .pic .art.photo.fit,.opts.en .opt.popt .art.photo.fit{object-fit:contain;padding:6px}
+.eq .pic .cnt{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:300px;margin:0 auto}.eq .pic .cnt .art.photo{width:84px;height:84px;border:0;background:none}
+.opts.en .opt.popt .num{font-size:64px;font-weight:900;color:#f58a1f;display:block;width:96px;line-height:96px}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:620px;margin:10px auto 0}
+.mc{background:#fff;border:4px solid var(--line);border-radius:18px;min-height:96px;display:grid;place-items:center;font-size:22px;font-weight:900;padding:6px;box-shadow:var(--shadow);color:var(--ink)}
+.mc .art.photo{width:84px;height:84px;border:0;border-radius:12px}.mc .num{font-size:48px;font-weight:900;color:#f58a1f}
+.mc.sel{border-color:var(--gold);background:var(--gold2)}.mc.ok{border-color:#2f9a5a;background:#dff6e6;opacity:.7}.mc.shake{animation:shake .35s}
+@media (max-width:480px){.mem{gap:6px}.mc{min-height:72px;font-size:15px;padding:3px;border-width:3px;border-radius:14px}.mc .art.photo{width:62px;height:62px}.mc .num{font-size:34px}.wk{flex-wrap:wrap}.st{width:40px;height:40px}}
 /* новые уроки русского */
 .word.long{font-size:34px;letter-spacing:0}
 .opts.ruw{flex-wrap:wrap;gap:12px}.opts.ruw .opt{font-size:28px;min-width:0;padding:12px 22px}.opts.ruw.small .opt{font-size:20px;width:100%;max-width:420px;text-align:left}
@@ -486,8 +513,34 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" onclick="openSubject('ru')"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот"></div><h3>Русский</h3><p>Записка Ух</p></button>
       <button class="card" onclick="openSubject('read')"><div class="ic"><img src="img/ic/book.webp" alt="Книжка"></div><h3>Чтение</h3><p>Истории про Ух и&nbsp;Топу</p></button>
       <button class="card" onclick="openSubject('en')"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Английский</h3><p>Научи Топу</p></button>
+      <button class="card trip-card" onclick="openTrip()"><div class="ic"><img src="img/topa-hello.webp" alt="Топа"></div><h3>Кругосветка Топы</h3><p>Английский по&nbsp;островам</p></button>
       <button class="card" onclick="openSubject('math')"><div class="ic"><img src="img/ic/abacus.webp" alt="Счёты"></div><h3>Математика</h3><p>Помоги Ух посчитать</p></button>
     </div>
+  </section>
+
+  <!-- КРУГОСВЕТКА ТОПЫ: карта -->
+  <section class="screen" id="trip">
+    <div class="stage">
+      <div id="owlTrip"></div>
+      <div class="bubble" id="tripSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
+    </div>
+    <div id="tripMap"></div>
+  </section>
+
+  <!-- КРУГОСВЕТКА ТОПЫ: остановка -->
+  <section class="screen" id="tripL">
+    <div class="stage">
+      <div id="owlTripL"></div>
+      <div class="prize" id="tripLPrize"></div>
+      <div class="progress" id="tripProg"></div>
+      <div class="bubble" id="tripLSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
+    </div>
+    <div id="tripBody">
+      <div class="eq" id="tripQ"></div>
+      <div class="opts en" id="tripOpts"></div>
+      <div class="rule" id="tripRule"></div>
+    </div>
+    <div class="row" id="tripNext" style="display:none"><button class="btn" id="tripNextBtn">Дальше →</button></div>
   </section>
 
   <!-- УРОКИ ПРЕДМЕТА -->
@@ -921,7 +974,7 @@ const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 function say(screen,text,silent){
   const b=document.getElementById(screen+'Say');if(!b)return;
-  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t,(screen==='eng'||(screen==='lessons'&&LESSON.subj==='en'))?'baby':'uh');
+  const t=typo(text);b.querySelector('span').textContent=t;b.querySelector('.say').onclick=()=>speak(t,(screen==='eng'||screen==='trip'||screen==='tripL'||(screen==='lessons'&&LESSON.subj==='en'))?'baby':'uh');
 }
 function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
 function setStars(){document.getElementById('starN').textContent=S.stars;const b=document.getElementById('dayBar');if(b){const n=S.day&&S.day.d===today()?S.day.n:0;b.innerHTML='Сегодня: '+n+' из 50 ⭐<i><b style="width:'+Math.min(100,n*2)+'%"></b></i>'}}
@@ -1423,7 +1476,7 @@ function todayCheck(){const L=dayLesson();if(L.done||LESSON.subj!==L.k||LESSON.i
 /* ---------- Умнее каждый день ---------- */
 const SMART=['game','eng','math','read'];
 function openSmart(){go('smart');say('smart',pick(['Что сегодня узнаем? Русский, чтение, английский или математика?','Каждый день — чуточку умнее! С чего начнём?','Выбирай! Я с тобой.']))}
-function goBack(){const c=document.querySelector('.screen.on').id;if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint')go('shop');else go('home')}
+function goBack(){const c=document.querySelector('.screen.on').id;if(c==='tripL'){openTrip();return}if(c==='trip'){openSmart();return}if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint')go('shop');else go('home')}
 
 /* ---------- математика: Ух считает и сомневается ---------- */
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -1984,6 +2037,148 @@ function engStep(){
   hintBtn(box,()=>{if(dropWrong(box,(t,b)=>(b&&b.dataset.w?b.dataset.w:t)===q.opts[0]))say('eng','Я убрал один неправильный ответ! Выбирай из двух.')});
 }
 
+/* ---------- «Кругосветка Топы»: курс английского на полгода (часть 1 — остров «Привет», 06.11.2026) ---------- */
+/* неделя = 3 остановки + тест недели; остров = 4 недели + экзамен острова. Дальше — только после сданного теста (до 2 ошибок на 10). */
+const TI=(img,fit)=>'<img class="art photo'+(fit?' fit':'')+'" src="img/'+img+'.webp" alt="">';
+const NUMW=['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+const NUMR=['один','два','три','четыре','пять','шесть','семь','восемь','девять','десять','одиннадцать','двенадцать','тринадцать','четырнадцать','пятнадцать','шестнадцать','семнадцать','восемнадцать','девятнадцать','двадцать'];
+const TRIP=[
+ {n:'Остров Привет',c:'#ffd166',weeks:[
+  {t:'Привет, как дела?',w:[['happy','весёлый','en/happy'],['sad','грустный','en/bad'],['tired','усталый','en/tired'],['hungry','голодный','en/hungry'],['angry','сердитый','en/angry'],['great','отлично','en/great']],
+   b:[['How are you?','Как дела?'],['I am happy.','Я весёлая.'],['I am tired.','Я устала.'],['Hello, Topa!','Привет, Топа!'],['Goodbye, Topa!','Пока, Топа!']],
+   d:[['How are you?',"I'm great!",['Goodbye!','Five.']],['Hello!','Hello!',['I am eight.','A ball.']],['Goodbye!','Goodbye!',['I am hungry.','Yes, I have.']],['Are you happy?','Yes, I am!',['Hello!','Seven.']]]},
+  {t:'Числа 1–20',num:1,
+   b:[['How old are you?','Сколько тебе лет?'],['I am eight.','Мне восемь.'],['How many?','Сколько?'],['I have got two hands.','У меня две руки.']],
+   d:[['How old are you?',"I'm eight.",['Hello!','A teddy.']],['How old is Topa?',"He's three.",['Goodbye!','I am happy.']],['How many hands have you got?','Two.',['Ten.','Hello!']]]},
+  {t:'Моя семья',w:[['mother','мама','en/mother'],['father','папа','en/father'],['sister','сестра','en/sister'],['brother','брат','en/brother'],['baby','малыш','en/baby'],['grandma','бабушка','en/grandma'],['grandpa','дедушка','en/grandpa'],['family','семья','en/family']],
+   b:[['I have got a brother.','У меня есть брат.'],['This is my mum.','Это моя мама.'],['This is my grandma.','Это моя бабушка.'],['I love my family.','Я люблю свою семью.']],
+   d:[['Have you got a brother?','Yes, I have.',['I am eight.','Goodbye!']],['Who is this? It is your mum.',"Yes, it's my mum.",['Two.','I am tired.']],['Have you got a sister?',"No, I haven't.",['Hello!','Seven.']]]},
+  {t:'Мои игрушки',w:[['ball','мяч','toys/ball',1],['car','машинка','toys/car',1],['teddy','мишка','toys/bear',1],['train','паровозик','toys/train',1],['blocks','кубики','toys/blocks',1],['plane','самолётик','toys/plane',1],['rocket','ракета','toys/rocket',1],['drum','барабан','toys/drum',1]],
+   b:[['My ball is red.','Мой мяч красный.'],['I have got a car.','У меня есть машинка.'],['This is my teddy.','Это мой мишка.'],['Have you got a train?','У тебя есть паровозик?']],
+   d:[['Have you got a ball?','Yes, I have.',['I am eight.','Goodbye!']],['What is this? It is red and round.',"It's a ball.",['Hello!','Five.']],['Do you like your teddy?','Yes, I do!',['Seven.','I am tired.']]]}
+ ]},
+ {n:'Снежный остров',c:'#bde0fe',soon:'одежда, погода, Новый год'},
+ {n:'Вкусный остров',c:'#ffc6a8',soon:'еда, I like, кафе'},
+ {n:'Остров Домик',c:'#cdb4db',soon:'комнаты, мебель, in / on / under'},
+ {n:'Остров Зверей',c:'#b7e4c7',soon:'дикие звери, can, что делает'},
+ {n:'Остров Школа',c:'#a2d2ff',soon:'школа, дни недели, мой день'}
+];
+const TRIP_ASK={pic:'Что это? Как это по-английски?',listen:'Послушай слово и найди картинку!',ru:'Как это будет по-английски?',build:'Помоги собрать фразу! Перетаскивай слова по порядку.',dialog:'Я спрашиваю по-английски. Что мне ответить?',memory:'Найди пары: картинка и слово!',review:'А это мы уже учили! Помнишь?'};
+const TRIP_TEST_HI=['Это тест недели! Сдашь — получишь штамп в паспорт и откроешь новую пристань.','Последняя проверка на этой пристани! Не торопись, я в тебя верю.'];
+const TRIP_EXAM_HI='Это экзамен острова! Сдашь — получишь флаг и откроешь новый остров. Поплыли!';
+const TRIP_FAIL=['Чуть-чуть не хватило! Давай повторим остановки и попробуем ещё раз. Я подожду!','Почти получилось! Ошибаться не страшно. Попробуем ещё разок?'];
+/* слова недели → карточки {en,ru,pic} */
+function tripItems(W){if(W.num)return NUMW.map((en,i)=>({en,ru:NUMR[i],n:i+1,pic:'<span class="num">'+(i+1)+'</span>'}));
+  return (W.w||[]).map(x=>({en:x[0],ru:x[1],pic:TI(x[2],x[3])}))}
+function tripPrevItems(ii,wi){let r=[];TRIP[ii].weeks.slice(0,wi).forEach(W=>r=r.concat(tripItems(W)));
+  if(!r.length)r=ANIMALS.filter(a=>a.en!=='owl').map(a=>({en:a.en,ru:a.ru.split(' ')[0],pic:enPic(a.en)}));return r}
+function tripCountPic(it){if(!it.n||it.n>6||Math.random()<.5)return it.pic;return '<span class="cnt">'+Array(it.n).fill(TI('en/apple')).join('')+'</span>'}
+const TRIP_GEN={
+  pic:(W,P)=>{const it=pick(W),o=shuffle(W.filter(x=>x!==it)).slice(0,2);return {k:'pic',pic:tripCountPic(it),opts:[it.en].concat(o.map(x=>x.en)),say:it.en,ru:it.ru}},
+  listen:(W,P)=>{const it=pick(W),o=shuffle(W.filter(x=>x!==it)).slice(0,2),all=[it].concat(o);return {k:'listen',ear:it.en,opts:all.map(x=>x.en),picOpts:all.map(x=>x.pic),say:it.en,ru:it.ru}},
+  ru:(W,P)=>{const it=pick(W),o=shuffle(W.filter(x=>x!==it)).slice(0,2);return {k:'ru',word:it.ru,opts:[it.en].concat(o.map(x=>x.en)),say:it.en}},
+  review:(W,P)=>{const g=pick(['pic','listen']);return Object.assign(TRIP_GEN[g](P.length>=3?P:W),{k:'review'})},
+  memory:(W,P)=>({k:'memory',pairs:shuffle(W).slice(0,4)}),
+  build:(W,P,B)=>{const b=pick(B);return {k:'build',seq:b[0].split(' '),say:b[0],ru:b[1]}},
+  dialog:(W,P,B,D)=>{const d=pick(D);return {k:'dialog',q:d[0],opts:[d[1]].concat(d[2]),say:d[1]}}
+};
+const TRIP_STOPS=[['pic','listen','pic','memory','listen','build'],['listen','ru','build','dialog','review','pic'],['memory','dialog','build','review','listen','ru']];
+const TRIP_TEST=['pic','listen','ru','build','dialog','review','listen','pic','build','ru'];
+const TRIP_EXAM=['pic','listen','build','dialog','ru','pic','listen','build','dialog','ru'];
+const T=()=>{if(!S.trip)S.trip={done:{},stamps:0};return S.trip};
+const tripKey=(ii,wi,si)=>ii+'-'+wi+'-'+si;            /* si: 0..2 остановки, 3 — тест недели; экзамен острова — ii+'-exam' */
+function tripOpen(ii,wi,si){const D=T().done;
+  if(ii>0&&!D[(ii-1)+'-exam'])return false;if(!TRIP[ii].weeks)return false;
+  if(si>0)return !!D[tripKey(ii,wi,si-1)];
+  if(wi>0)return !!D[tripKey(ii,wi-1,3)];return true}
+function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4&&T().done[tripKey(ii,3,3)])}
+function openTrip(){go('trip');renderTrip()}
+function renderTrip(){
+  const D=T().done,box=document.getElementById('tripMap');box.innerHTML='';
+  const stamps=Object.keys(D).filter(k=>/-3$/.test(k)).length,flags=Object.keys(D).filter(k=>/-exam$/.test(k)).length;
+  box.insertAdjacentHTML('beforeend','<div class="passport"><b>Паспорт путешественника</b><span>Штампы: '+stamps+' из 24 · Флаги: '+flags+' из 6</span><div class="stamps">'+Array.from({length:24},(_,i)=>'<i class="'+(i<stamps?'on':'')+'"></i>').join('')+'</div></div>');
+  let cur=null;
+  TRIP.forEach((I,ii)=>{const open=ii===0||D[(ii-1)+'-exam'];
+    const c=document.createElement('div');c.className='isl'+(open&&I.weeks?'':' lock');c.style.setProperty('--ic',I.c);
+    c.innerHTML='<div class="isl-h"><b></b><span></span></div>';c.querySelector('b').textContent=(ii+1)+'. '+I.n;
+    c.querySelector('span').textContent=D[ii+'-exam']?'Флаг получен!':!open?(ii?'Откроется после экзамена острова «'+TRIP[ii-1].n.replace('Остров ','').replace(' остров','')+'»':''):!I.weeks?'Скоро: '+I.soon:'';
+    if(I.weeks&&open){I.weeks.forEach((W,wi)=>{
+      const r=document.createElement('div');r.className='wk';r.innerHTML='<div class="wk-t"><small>Неделя '+(wi+1)+'</small><b></b></div><div class="wk-s"></div>';r.querySelector('b').textContent=W.t;
+      const s=r.querySelector('.wk-s');
+      for(let si=0;si<4;si++){const k=tripKey(ii,wi,si),ok=tripOpen(ii,wi,si),b=document.createElement('button');
+        b.className='st'+(D[k]?' done':'')+(!ok?' off':'')+(si===3?' test':'');b.innerHTML=si===3?'<img src="img/ic/gift.webp" alt="">':String(si+1);
+        b.setAttribute('aria-label',si===3?'Тест недели':'Остановка '+(si+1));
+        if(ok&&!D[k]&&!cur){cur=b;b.classList.add('now')}
+        b.onclick=()=>{if(!ok){say('trip',si===3?'Сначала пройди три остановки этой недели!':'Сначала пройди предыдущую остановку!');return}startTripStop(ii,wi,si)};s.appendChild(b)}
+      c.appendChild(r)});
+      const ex=document.createElement('button'),eo=tripExamOpen(ii);ex.className='exam'+(D[ii+'-exam']?' done':'')+(!eo?' off':'');
+      ex.textContent=D[ii+'-exam']?'Экзамен острова сдан!':'Экзамен острова';if(eo&&!D[ii+'-exam']&&!cur){cur=ex;ex.classList.add('now')}
+      ex.onclick=()=>{if(!eo){say('trip','Экзамен откроется, когда сдашь тесты всех четырёх недель!');return}startTripStop(ii,'exam')};c.appendChild(ex)}
+    box.appendChild(c)});
+  say('trip',stamps?'Капитан Алиса, продолжаем кругосветку! Нажимай на светящуюся остановку.':'Капитан Алиса, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
+}
+let TR=null;
+function startTripStop(ii,wi,si){
+  const I=TRIP[ii],exam=wi==='exam';let W,P,B=[],Dl=[],seq;
+  if(exam){W=[];I.weeks.forEach(x=>{W=W.concat(tripItems(x).filter(it=>!it.n||it.n<=10));B=B.concat(x.b);Dl=Dl.concat(x.d)});P=W;seq=TRIP_EXAM}
+  else{const X=I.weeks[wi];W=tripItems(X);P=tripPrevItems(ii,wi);B=X.b;Dl=X.d;seq=si===3?TRIP_TEST:TRIP_STOPS[si]}
+  if(!exam&&I.weeks[wi].num&&si<2)W=W.slice(0,si===0?10:20);
+  TR={ii,wi,si,exam,test:exam||si===3,list:seq.map(g=>TRIP_GEN[g](W,P,B,Dl)),i:-1,miss:0,extra:0};
+  go('tripL');showPrize('tripLPrize','trip');document.getElementById('tripLPrize').textContent=TR.test?'Нужно не больше 2 ошибок':prizeText();
+  say('tripL',TR.exam?TRIP_EXAM_HI:TR.test?pick(TRIP_TEST_HI):'Поплыли! Остановка '+(si+1)+' из трёх.');const me=TR;TR.tm=setTimeout(()=>{if(TR===me&&TR.i<0)tripStep()},TR.test?2600:900);
+}
+function tripStep(){
+  TR.i++;const L=TR.list,nx=document.getElementById('tripNext'),nb=document.getElementById('tripNextBtn');
+  document.getElementById('tripProg').innerHTML=L.map((_,k)=>'<i class="'+(k<TR.i?'done':'')+'"></i>').join('');nx.style.display='none';
+  if(TR.i>=L.length)return tripEnd();
+  document.getElementById('tripBody').style.display='block';nb.textContent='Дальше →';nb.onclick=tripStep;
+  const q=L[TR.i],Q=document.getElementById('tripQ'),box=document.getElementById('tripOpts'),rl=document.getElementById('tripRule');
+  rl.textContent='';box.className='opts en';box.innerHTML='';Q.innerHTML='';{const o=box.parentNode.querySelector('.hint-row');if(o)o.remove()}
+  say('tripL',(q.again?'Это задание было трудным. Попробуем ещё раз! ':'')+TRIP_ASK[q.k]);q.missed=false;
+  const miss=()=>{if(!q.missed){q.missed=true;TR.miss++;if(!TR.test&&TR.extra<2){TR.list.push(Object.assign({},q,{again:1}));TR.extra++;document.getElementById('tripProg').innerHTML=TR.list.map((_,k)=>'<i class="'+(k<TR.i?'done':'')+'"></i>').join('')}}say('tripL',pick(B_OOPS))};
+  const win=()=>{rl.textContent=q.ru?typo(q.say+' — '+q.ru):'';say('tripL',pick(B_OK));cheer();if(q.say)setTimeout(()=>speakEn(q.say),400);nx.style.display='flex'};
+  const ear=t=>'<button class="ear" aria-label="Послушать ещё раз"><img src="img/ic/speaker.webp" alt=""></button>';
+  if(q.k==='memory')return tripMemory(q,Q,box,miss,win);
+  if(q.k==='build'){Q.innerHTML='<div class="ru"></div>';Q.querySelector('.ru').textContent=typo(q.ru);
+    const ln=document.createElement('div');ln.className='line-ru';ln.innerHTML='<span class="line-ph">Перетащи слова сюда по порядку</span>';Q.appendChild(ln);box.className='chips-ru';let n=0;
+    const place=(t,el)=>{if(el.textContent===q.seq[n]){const ph=ln.querySelector('.line-ph');if(ph)ph.remove();el.classList.add('in');ln.appendChild(el);n++;speakEn(el.textContent.replace(/[.,!?]/g,''));if(n===q.seq.length){ln.classList.add('done');win()}}else{ruShake(el);miss()}};
+    let it=shuffle(q.seq.slice());if(it.join()===q.seq.join())it.reverse();
+    it.forEach(w=>{const c=document.createElement('button');c.className='chip-ru';c.textContent=w;ruDrag(c,()=>[ln],place,el=>place(ln,el));box.appendChild(c)});
+    hintBtn(box,()=>{const c=[...box.querySelectorAll('.chip-ru')].find(x=>x.textContent===q.seq[n]);if(c){c.classList.add('sel');if(TR.test&&!q.missed){q.missed=true;TR.miss++}}});return}
+  if(q.k==='pic'||q.k==='review'&&q.pic)Q.innerHTML='<div class="pic">'+q.pic+'</div>';
+  if(q.k==='listen'||q.k==='review'&&q.ear){Q.innerHTML=ear();Q.querySelector('.ear').onclick=()=>speakEn(q.ear);setTimeout(()=>speakEn(q.ear),1800)}
+  if(q.k==='ru'){Q.innerHTML='<div class="sent"></div>';Q.querySelector('.sent').textContent=q.word}
+  if(q.k==='dialog'){Q.innerHTML='<div class="sent"></div>'+ear();Q.querySelector('.sent').textContent=q.q;Q.querySelector('.ear').onclick=()=>speakEn(q.q);setTimeout(()=>speakEn(q.q),1800);box.className='opts ruw small'}
+  let done=false;
+  shuffle(q.opts.map((o,k)=>({o,k}))).forEach(x=>{const b=document.createElement('button');b.className='opt'+(q.picOpts?' popt':'');
+    if(q.picOpts){b.innerHTML=q.picOpts[x.k];b.dataset.w=x.o;b.setAttribute('aria-label','Картинка')}else b.textContent=x.o;
+    b.onclick=()=>{if(done||b.classList.contains('no'))return;if(x.k===0){done=true;b.classList.add('yes');win()}else{b.classList.add('no');miss()}};box.appendChild(b)});
+  hintBtn(box,()=>{if(dropWrong(box,(t,b)=>(b&&b.dataset.w?b.dataset.w:t)===q.opts[0])){say('tripL','Я убрал один неправильный ответ!');if(TR.test&&!q.missed){q.missed=true;TR.miss++}}});
+}
+function tripMemory(q,Q,box,miss,win){
+  box.className='mem';let sel=null,left=q.pairs.length;
+  const cards=shuffle(q.pairs.map(p=>({p,pic:1}))).concat(shuffle(q.pairs.map(p=>({p,pic:0}))));
+  cards.forEach(c=>{const b=document.createElement('button');b.className='mc'+(c.pic?' mp':' mw');if(c.pic)b.innerHTML=c.p.pic;else b.textContent=c.p.en;
+    b.onclick=()=>{if(b.classList.contains('ok'))return;if(!c.pic)speakEn(c.p.en);
+      if(!sel||sel.c.pic===c.pic){if(sel)sel.b.classList.remove('sel');sel={b,c};b.classList.add('sel');return}
+      if(sel.c.p===c.p){sel.b.classList.remove('sel');sel.b.classList.add('ok');b.classList.add('ok');sel=null;left--;cheer();if(!left)win()}
+      else{ruShake(b);ruShake(sel.b);sel.b.classList.remove('sel');sel=null;miss()}};box.appendChild(b)});
+}
+function tripEnd(){
+  document.getElementById('tripBody').style.display='none';const nx=document.getElementById('tripNext'),nb=document.getElementById('tripNextBtn');nx.style.display='flex';
+  const D=T().done,k=TR.exam?TR.ii+'-exam':tripKey(TR.ii,TR.wi,TR.si),I=TRIP[TR.ii];
+  if(TR.test&&TR.miss>2){say('tripL',pick(TRIP_FAIL));nb.textContent='Попробовать ещё раз';nb.onclick=()=>startTripStop(TR.ii,TR.exam?'exam':TR.wi,TR.si);return}
+  const first=!D[k];D[k]=today();save();
+  S.diary.unshift({d:today(),q:'Кругосветка Топы',a:TR.exam?'Сдала экзамен острова «'+I.n+'»':TR.si===3?'Сдала тест недели «'+I.weeks[TR.wi].t+'»':'Прошла остановку '+(TR.si+1)+' недели «'+I.weeks[TR.wi].t+'»'});save();
+  gameReward('trip','за остановку');
+  if(TR.exam){if(first)setTimeout(()=>addStars(5,'за экзамен острова'),1500);say('tripL','Ура! Экзамен сдан! Флаг острова твой. Плывём к новому острову!');celebrate('Экзамен острова сдан! Флаг в паспорте.','topa-star')}
+  else if(TR.si===3){if(first)setTimeout(()=>addStars(3,'за тест недели'),1500);say('tripL','Тест сдан! Держи штамп в паспорт! Открылась новая пристань.');celebrate('Штамп в паспорт! Неделя «'+I.weeks[TR.wi].t+'» пройдена.','topa-star')}
+  else say('tripL','Остановка пройдена! Плывём дальше!');
+  nb.textContent='К карте';nb.onclick=openTrip;
+}
+/* все английские слова и фразы курса — для озвучки (make.mjs) */
+function tripEnAll(){const r=new Set(NUMW);TRIP.forEach(I=>(I.weeks||[]).forEach(W=>{(W.w||[]).forEach(x=>r.add(x[0]));W.b.forEach(b=>{r.add(b[0]);b[0].split(' ').forEach(x=>r.add(x.replace(/[.,!?]/g,'')))});W.d.forEach(d=>{r.add(d[0]);r.add(d[1]);d[2].forEach(x=>r.add(x))})}));return [...r]}
+
 /* ---------- гардероб ---------- */
 const ITEMS=[
   {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="img/kolpak.webp" alt="" style="height:44px">',p:50},
@@ -2115,7 +2310,7 @@ function pickWho(w){try{sessionStorage.setItem('who',w)}catch(e){}if(w==='lesha'
 (function(){
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
-  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlSmart',true);mountOwl('owlLessons',true);mountOwl('owlLessonsT',true,'babyTpl');mountOwl('owlMath',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlShop');
+  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlSmart',true);mountOwl('owlLessons',true);mountOwl('owlLessonsT',true,'babyTpl');mountOwl('owlMath',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlTrip',true,'babyTpl');mountOwl('owlTripL',true,'babyTpl');mountOwl('owlShop');
   typoDom(document.body);setStars();renderHome();showPhoto();cloudInit();
 })();
 </script>
