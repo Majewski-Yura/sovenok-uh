@@ -398,6 +398,14 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .tpflag{width:30px;height:22px;background:#e6e0d6;clip-path:polygon(0 0,100% 30%,0 100%)}.tpflag.on{background:var(--f)}
 .tpst{width:34px;height:34px;border-radius:50%;border:3px dashed #cbbfae}.tpst.on{border:3px solid #2f6fb0;background:radial-gradient(circle,#fff 30%,#cfe3ff 31% 45%,#2f6fb0 46% 52%,#cfe3ff 53%);animation:pop .4s}
 @media (prefers-reduced-motion:reduce){.tsea:before,.twave,.tring,.tboat,.tpier.now,.texam.now,.tbig .tpier.now{animation:none}}
+/* предметы кругосветки из Midjourney (06.11.2026) */
+.tboat{width:30%;aspect-ratio:600/546}.tsea.wide .tboat{width:14%}
+.tboatimg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 6px rgba(0,40,80,.3))}
+.tflagimg{position:absolute;right:12%;bottom:40%;height:46%;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));animation:pop .5s}
+.tpflagimg{height:34px;width:auto;filter:grayscale(1);opacity:.35}.tpflagimg.on{filter:none;opacity:1;animation:pop .4s}
+.tbig .tpier.tchest img,.tbig .texam-pin img{object-fit:contain}
+.tbig .tpier.tchest{background:radial-gradient(circle at 35% 30%,#fff7d6,#ffe08a)}
+
 /* сцена на весь экран (06.11.2026): остров во всю высоту, управление и облачко Топы поверх */
 #trip.on{display:block!important}
 #trip>.stage{display:none}
@@ -2220,11 +2228,12 @@ function renderTrip(){
   const D=T().done,box=document.getElementById('tripMap'),bub=document.getElementById('tripSay');if(bub)bub.remove();box.innerHTML='';
   const stamps=Object.keys(D).filter(k=>/-3$/.test(k)).length,flags=Object.keys(D).filter(k=>/-exam$/.test(k)).length;
   const top=document.createElement('div');top.className='ttop';
-  top.innerHTML=(tripView!==null?'<button class="tpill tback">← Карта</button>':'<span></span>')+'<button class="tpill tpass"><img src="img/ic/book.webp" alt="">Паспорт <b>'+stamps+' / 24</b></button>';
+  top.innerHTML=(tripView!==null?'<button class="tpill tback">← Карта</button>':'<span></span>')+'<button class="tpill tpass"><img src="img/trip/passport.webp" alt="">Паспорт <b>'+stamps+' / 24</b></button>';
   box.appendChild(top);top.querySelector('.tpass').onclick=tripPassport;if(tripView!==null)top.querySelector('.tback').onclick=()=>{tripView=null;renderTrip()};
+  if(bub){bub.classList.add('tbub');box.appendChild(bub)}
   if(tripView===null)tripWorld(box,D);else tripIsle(box,D,tripView);
   box.appendChild(tripGoBtn());
-  if(bub){bub.classList.add('tbub');box.appendChild(bub);if(!bub._t){bub._t=1;bub.addEventListener('click',e=>{if(bub.classList.contains('min')){e.stopPropagation();tripBubShow()}},true)}}
+  if(bub){box.appendChild(bub);if(!bub._t){bub._t=1;bub.addEventListener('click',e=>{if(bub.classList.contains('min')){e.stopPropagation();tripBubShow()}},true)}}
   box.classList.toggle('isle',tripView!==null);
   if(tripView===null)say('trip',stamps?'Капитан Алиса, продолжаем кругосветку! Жми «Плыть дальше» или открой остров.':'Капитан Алиса, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
 }
@@ -2239,14 +2248,14 @@ function tripWorld(box,D){
   let boatAt=0;
   TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],open=ii===0||!!D[(ii-1)+'-exam'],ready=open&&!!I.weeks;if(ready)boatAt=ii;
     const P=tripPos(ii),e=document.createElement('button');e.className='tisl'+(ready?'':' locked')+(L.real?' real':'')+(D[ii+'-exam']?' won':'');e.style.left=P.x+'%';e.style.top=P.y+'%';e.style.setProperty('--g1',L.g1);e.style.setProperty('--g2',L.g2);e.style.setProperty('--f',L.f);
-    e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<i class="tflag"></i>':'')+
+    e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<img class="tflagimg" src="img/trip/flag-'+(ii+1)+'.webp" alt="">':'')+
       (ready?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
     e.querySelector('.tname').textContent=I.n;
     e.onclick=()=>{if(ready){tripSnd('go');tripView=ii;renderTrip();return}
       say('trip',!I.weeks&&open?'Этот остров ещё в тумане. Скоро я приплыву туда с новыми словами!':'Этот остров в тумане! Сдай экзамен острова «'+TRIP[ii-1].n+'», и туман разлетится.')};
     sea.appendChild(e)});
   const BP=tripPos(boatAt),bt=document.createElement('div');bt.className='tboat';bt.style.left=(wide?BP.x+9:BP.x+(BP.x<50?26:-26))+'%';bt.style.top=(wide?BP.y+12:BP.y+2)+'%';
-  bt.innerHTML='<i class="mast"></i><i class="sail"></i><img src="img/topa-hello.webp" alt=""><i class="hull"></i>';sea.appendChild(bt);
+  bt.innerHTML='<img class="tboatimg" src="img/trip/boat.webp" alt="Топа на кораблике">';sea.appendChild(bt);
   box.appendChild(sea);
   if(T().reveal!==undefined){const k=T().reveal;delete T().reveal;save();const el=sea.querySelectorAll('.tisl')[k];if(el){el.classList.add('reveal');tripSnd('fan')}}
 }
@@ -2268,11 +2277,11 @@ function tripIsle(box,D,ii){
     const lg=document.createElement('div');lg.style.setProperty('--wc',col);lg.innerHTML='<i></i><small>Неделя '+(wi+1)+'</small><b></b>';lg.querySelector('b').textContent=typo(W.t);leg.appendChild(lg);
     for(let si=0;si<4;si++){const k=tripKey(ii,wi,si),ok=tripOpen(ii,wi,si),b=document.createElement('button'),q=PTS[wi*4+si];
       b.className='tpier'+(si===3?' tchest':'')+(D[k]?' done':ok?'':' off');b.style.left=q[0]+'%';b.style.top=q[1]+'%';b.style.setProperty('--wc',col);
-      b.innerHTML=si===3?'<img src="img/ic/gift.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label','Неделя '+(wi+1)+': '+(si===3?'тест недели':'остановка '+(si+1)));
+      b.innerHTML=si===3?'<img src="img/trip/'+(D[k]?'chest-open':'chest')+'.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label','Неделя '+(wi+1)+': '+(si===3?'тест недели':'остановка '+(si+1)));
       if(ok&&!D[k]&&!cur){cur=true;b.classList.add('now')}
       b.onclick=()=>{if(!ok){say('trip',si===3?'Сначала пройди три остановки этой недели!':'Сначала пройди предыдущую остановку!');return}tripSnd('go');startTripStop(ii,wi,si)};land.appendChild(b)}});
   const eo=tripExamOpen(ii),ex=document.createElement('button'),q=PTS[16];ex.className='tpier texam-pin'+(D[ii+'-exam']?' done':eo?'':' off');ex.style.left=q[0]+'%';ex.style.top=q[1]+'%';
-  ex.innerHTML='<img src="img/ic/gift.webp" alt=""><span>Экзамен</span>';ex.setAttribute('aria-label','Экзамен острова');
+  ex.innerHTML='<img src="img/trip/'+(D[ii+'-exam']?'chest-open':'chest')+'.webp" alt=""><span>Экзамен</span>';ex.setAttribute('aria-label','Экзамен острова');
   if(eo&&!D[ii+'-exam']&&!cur)ex.classList.add('now');
   ex.onclick=()=>{if(!eo){say('trip','Экзамен откроется, когда сдашь тесты всех четырёх недель!');return}tripSnd('go');startTripStop(ii,'exam')};land.appendChild(ex);
   tr.appendChild(land);tr.appendChild(leg);
@@ -2280,9 +2289,9 @@ function tripIsle(box,D,ii){
   say('trip','Это '+I.n+'! Пройди остановки по порядку, а в конце каждой недели — тест. Наклейки собираются наверху!');
 }
 function tripPassport(){const D=T().done,c=document.getElementById('stepCard');
-  document.getElementById('scImg').src='img/ic/book.webp';document.getElementById('scTitle').textContent='Паспорт путешественника';
+  document.getElementById('scImg').src='img/trip/passport.webp';document.getElementById('scTitle').textContent='Паспорт путешественника';
   const p=document.getElementById('scText');p.innerHTML='';const g=document.createElement('div');g.className='tpgrid';
-  TRIP.forEach((I,ii)=>{const r=document.createElement('div');r.className='tprow';r.innerHTML='<i class="tpflag'+(D[ii+'-exam']?' on':'')+'" style="--f:'+TRIP_LOOK[ii].f+'"></i>';
+  TRIP.forEach((I,ii)=>{const r=document.createElement('div');r.className='tprow';r.innerHTML='<img class="tpflagimg'+(D[ii+'-exam']?' on':'')+'" src="img/trip/flag-'+(ii+1)+'.webp" alt="">';
     for(let wi=0;wi<4;wi++){const s=document.createElement('i');s.className='tpst'+(D[tripKey(ii,wi,3)]?' on':'');r.appendChild(s)}g.appendChild(r)});
   p.appendChild(g);document.getElementById('scBtn').style.display='none';document.getElementById('scClose').textContent='Закрыть';c.classList.add('on')}
 /* звуки без файлов: тихие колокольчики */
@@ -2344,8 +2353,8 @@ function tripEnd(){
   const first=!D[k];D[k]=today();save();
   S.diary.unshift({d:today(),q:'Кругосветка Топы',a:TR.exam?'Сдала экзамен острова «'+I.n+'»':TR.si===3?'Сдала тест недели «'+I.weeks[TR.wi].t+'»':'Прошла остановку '+(TR.si+1)+' недели «'+I.weeks[TR.wi].t+'»'});save();
   gameReward('trip','за остановку');
-  if(TR.exam){tripSnd('fan');if(first&&TRIP[TR.ii+1]&&TRIP[TR.ii+1].weeks)T().reveal=TR.ii+1;if(first)setTimeout(()=>addStars(5,'за экзамен острова'),1500);say('tripL','Ура! Экзамен сдан! Флаг острова твой. Плывём к новому острову!');celebrate('Экзамен острова сдан! Флаг в паспорте.','topa-star')}
-  else if(TR.si===3){tripSnd('stamp');if(first)setTimeout(()=>addStars(3,'за тест недели'),1500);say('tripL','Тест сдан! Держи штамп в паспорт! Открылась новая пристань.');celebrate('Штамп в паспорт! Неделя «'+I.weeks[TR.wi].t+'» пройдена.','topa-star')}
+  if(TR.exam){tripSnd('fan');if(first&&TRIP[TR.ii+1]&&TRIP[TR.ii+1].weeks)T().reveal=TR.ii+1;if(first)setTimeout(()=>addStars(5,'за экзамен острова'),1500);say('tripL','Ура! Экзамен сдан! Флаг острова твой. Плывём к новому острову!');celebrate('Экзамен острова сдан! Флаг в паспорте.','trip/flag-'+(TR.ii+1))}
+  else if(TR.si===3){tripSnd('stamp');if(first)setTimeout(()=>addStars(3,'за тест недели'),1500);say('tripL','Тест сдан! Держи штамп в паспорт! Открылась новая пристань.');celebrate('Штамп в паспорт! Неделя «'+I.weeks[TR.wi].t+'» пройдена.','trip/stamp')}
   else say('tripL','Остановка пройдена! Плывём дальше!');
   nb.textContent='К острову';nb.onclick=()=>{tripView=TR.ii;openTrip(true)};
 }
