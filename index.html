@@ -1878,9 +1878,11 @@ function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
 /* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
-const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet'];
-function wordPic(it){if(EN_IMG.includes(it.en))return '<img class="art photo" src="img/en/'+it.en+'.webp" alt="">';if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
-  if(BODY_W.includes(it))return BODY(it.en);return ART(it.en)}
+const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear'];
+/* картинка слова: из Gemini, если есть; сова — наша Ух; иначе векторная */
+const enPic=k=>EN_IMG.includes(k)?'<img class="art photo" src="img/en/'+k+'.webp" alt="">':k==='owl'?'<img class="art photo" src="img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
+function wordPic(it){if(EN_IMG.includes(it.en)||it.en==='owl')return enPic(it.en);if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
+  if(BODY_W.includes(it))return BODY(it.en);return enPic(it.en)}
 /* ошибка в английском: это же задание повторится в конце урока (не больше двух за урок) */
 const E_AGAIN=['Давай повторим, чтобы запомнить!','Это слово мы уже встречали. Помнишь?'];
 function missE(q){if(q.miss||q.again)return;q.miss=1;S.mist=S.mist||{};const k='Английский: '+(q.say||'');S.mist[k]=(S.mist[k]||0)+1;save();
@@ -1896,7 +1898,7 @@ function engRound(){
       ask:'Тут дырка! Что вставить: am, is или are?',r:BE_RULE,say:b[0]+' '+b[1]+' '+b[2],fill:b[1]}};
   const feel=()=>{const it=one(FEEL);return {pic:ART(it.en),ru:'',opts:[it.en].concat(others(FEEL,it,2,'en').map(x=>x.en)),
       ask:'Меня спросили «How are you?», а мне вот так, как на картинке. Что ответить?',r:'«'+it.en+'» — '+it.ru,say:'How are you? '+it.en}};
-  const paint=()=>{const it=one(PAINT);return {pic:ART(it.en),sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
+  const paint=()=>{const it=one(PAINT);return {pic:enPic(it.en),sent:'The '+it.en+' is <span class="gap">?</span>',ru:'',opts:[it.c].concat(shuffle(COLORS.filter(x=>x.en!==it.c)).slice(0,2).map(x=>x.en)),
       ask:'Я хочу рассказать про картинку. Какого она цвета?',r:'The '+it.en+' is '+it.c,say:'The '+it.en+' is '+it.c,fill:it.c}};
   /* послушай и найди картинку */
   const listen=(cat)=>{const it=one(cat),o=[it].concat(others(cat,it,2,'en'));return {listen:1,noGuess:1,opts:o.map(x=>x.en),picOpts:o.map(wordPic),
