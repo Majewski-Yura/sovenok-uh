@@ -216,6 +216,51 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .sh-tile{height:1.2em;width:auto;display:block;margin:0 auto}
 @media (min-width:1100px){.shg{max-width:900px;gap:24px}}
 
+/* игры «Паровозик» и «Ракета» (06.11.2026) */
+.trbox{overflow:hidden;margin:14px -12px 0;padding:0 12px;position:relative}
+.rail{display:flex;align-items:flex-end;justify-content:center;gap:2px;position:relative;z-index:1}
+.rail .loco{height:min(25vw,170px);width:auto;display:block;margin-right:-4px}
+.wagon{position:relative;width:min(21vw,150px);flex:none;padding-top:min(15vw,90px)}
+.wagon svg{display:block;width:100%;height:auto}
+.wagon .seat{position:absolute;left:50%;bottom:44%;height:min(19vw,112px);width:auto;transform:translateX(-50%);animation:seatin .45s cubic-bezier(.3,1.5,.6,1)}
+@keyframes seatin{from{transform:translateX(-50%) translateY(-40px) scale(.4);opacity:0}}
+.wagon.dz-over svg{filter:drop-shadow(0 0 10px var(--gold)) brightness(1.08);transform:translateY(-6px)}
+.wagon.no{animation:wiggle .5s}
+.wagon.yes{animation:shyes .6s}
+.track{height:10px;margin:2px -12px 0;background:repeating-linear-gradient(90deg,#8a6a4a 0 18px,transparent 18px 34px),#c9b38f;border-radius:4px}
+.rail.go{animation:trgo 2.4s ease-in forwards}
+@keyframes trgo{to{transform:translateX(-160vw)}}
+.rail.in{animation:trin 1.6s cubic-bezier(.2,.8,.3,1)}
+@keyframes trin{from{transform:translateX(130vw)}}
+.trwait{display:flex;justify-content:center;min-height:min(30vw,160px);margin-top:14px}
+.trp{background:#fff;border:5px solid var(--gold);border-radius:28px;padding:8px;box-shadow:var(--shadow);animation:shin .5s cubic-bezier(.3,1.4,.6,1) both}
+.trp img{height:min(26vw,140px);width:auto;display:block;pointer-events:none}
+.space{position:relative;height:min(50vh,460px);max-width:700px;margin:12px auto 0;border-radius:30px;border:5px solid var(--line);overflow:hidden;
+  background:linear-gradient(#9fdcff,#e8f7ff);transition:background 1.2s}
+.space.night{background:radial-gradient(circle at 30% 20%,#3b3f8f,#151a45 70%)}
+.space .ground{position:absolute;left:-10%;right:-10%;bottom:-40px;height:90px;border-radius:50%;background:#7fd07a;transition:transform 1.2s}
+.space.night .ground{transform:translateY(120px)}
+#rkt{position:absolute;left:50%;bottom:30px;height:62%;width:auto;transform:translateX(-50%);transition:transform 1.8s cubic-bezier(.55,0,.75,.3)}
+#rkt.shake{animation:rkshake .12s linear infinite}
+@keyframes rkshake{50%{transform:translateX(calc(-50% + 3px))}}
+#rkt.fly{transform:translate(-50%,-180%)}
+#rkt.land{transition:transform 2s cubic-bezier(.2,.7,.3,1)}
+.flame{position:absolute;left:50%;bottom:6px;width:46px;height:46px;margin-left:-23px;border-radius:50% 50% 50% 50%/40% 40% 60% 60%;
+  background:radial-gradient(circle at 50% 30%,#fff6b0,#ffb43d 45%,#ff5a3c 75%,transparent 76%);opacity:0;transition:transform 1.8s cubic-bezier(.55,0,.75,.3),opacity .3s}
+.flame.on{opacity:1;animation:flick .15s infinite alternate}
+.flame.fly{transform:translateY(-1100%)}
+@keyframes flick{to{scale:1.15 1.3}}
+.rstar{position:absolute;width:min(17vw,92px);height:min(17vw,92px);background:none;border:0;padding:0;animation:twink 1.4s ease-in-out infinite alternate,shin .5s both}
+.rstar svg{width:100%;height:100%;filter:drop-shadow(0 0 8px #ffe680)}
+@keyframes twink{to{transform:scale(1.15) rotate(12deg)}}
+.rstar.got{animation:rgot .6s forwards}
+@keyframes rgot{to{transform:scale(2.2);opacity:0}}
+.rbtn{display:block;margin:14px auto 0;width:min(34vw,150px);height:min(34vw,150px);border-radius:50%;border:8px solid #fff;background:radial-gradient(circle at 40% 35%,#ff8a8d,#ff3b47);
+  color:#fff;font-family:inherit;font-weight:900;font-size:min(16vw,76px);line-height:1;box-shadow:0 8px 0 #c21f2b,var(--shadow)}
+.rbtn:active{transform:translateY(6px);box-shadow:0 2px 0 #c21f2b}
+.rbtn:disabled{opacity:.35}
+.rbtn small{font-size:.4em}
+
 /* раскраска на телефоне (06.11.2026): компактный верх, картинка по высоте экрана, ↩️ 🧽 в правом нижнем углу напротив «Домой» */
 @media (max-width:700px){
   #paint,#paintpick{padding-bottom:96px}
@@ -262,6 +307,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
       <button class="tile" onclick="startBalls()"><div class="ic"><img src="img/ic/balloon.webp" alt="" class="tpic"></div><span>Шарики</span></button>
       <button class="tile" onclick="startZoo()"><div class="ic"><img src="img/ic/cow.webp" alt="" class="tpic"></div><span>Кто как говорит</span></button>
       <button class="tile" onclick="startShapes()"><div class="ic"><svg viewBox="0 0 120 100" class="tpic sh-tile" aria-hidden="true"><circle cx="28" cy="66" r="24" fill="#ff5a5f"/><polygon points="60,8 88,58 32,58" fill="#ffd23f"/><rect x="70" y="44" width="44" height="44" rx="6" fill="#4a8cff"/></svg></div><span>Формы</span></button>
+      <button class="tile" onclick="startTrain()"><div class="ic"><img src="img/toys/train.webp" alt="" class="tpic"></div><span>Паровозик</span></button>
+      <button class="tile" onclick="startRocket()"><div class="ic"><img src="img/toys/rocket.webp" alt="" class="tpic"></div><span>Ракета</span></button>
       <button class="tile" onclick="startFeed()"><div class="ic"><img src="img/ic/strawberry.webp" alt="" class="tpic"></div><span>Накорми Топу</span></button>
       <button class="tile" onclick="startBlocks()"><div class="ic"><img src="img/ic/blocks.webp" alt="" class="tpic"></div><span>Построй башню</span></button>
       <button class="tile" onclick="startCars()"><div class="ic"><img src="img/ic/car.webp" alt="" class="tpic"></div><span>Машинки</span></button>
@@ -288,6 +335,20 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     <div class="stage"><div class="bubble" id="shapesSay"></div><img class="spose" src="img/topa-hello.webp" alt="Топа"></div>
     <div class="shg" id="shGrid"></div>
     <div class="counter" id="shCnt"></div>
+  </section>
+
+  <section class="screen" id="train">
+    <div class="stage"><div class="bubble" id="trainSay"></div><img class="spose" src="img/topa-hello.webp" alt="Топа"></div>
+    <div class="trbox"><div class="rail" id="rail"></div><div class="track"></div></div>
+    <div class="trwait" id="trWait"></div>
+    <div class="counter" id="trCnt"></div>
+  </section>
+
+  <section class="screen" id="rocket">
+    <div class="bubble" id="rocketSay" style="margin:6px auto 0"></div>
+    <div class="space" id="space"><div class="ground"></div><img id="rkt" src="img/toys/rocket.webp" alt="Ракета" draggable="false"><div class="flame" id="flame"></div></div>
+    <div class="counter" id="rkCnt"></div>
+    <button class="rbtn" id="rkBtn" onclick="rkTap()">3</button>
   </section>
 
   <section class="screen" id="feed">
@@ -531,7 +592,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','shapes','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
+const GAMES=['balls','zoo','shapes','train','rocket','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
 function goBack(){if(cur()==='paint')startPaint();else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
@@ -655,6 +716,70 @@ function shRound(first){
     g.appendChild(b)});
   setTimeout(()=>say('shapes',SHAPES[shWant].ask),first?300:500);
 }
+
+/* ---------- паровозик (06.11.2026): посади зверька в вагончик нужного цвета ---------- */
+const TR_ANI=[{img:'zoo-cat',ask:'Котик хочет покататься!'},{img:'zoo-dog',ask:'Собачка хочет покататься!'},{img:'zoo-frog',ask:'Лягушка хочет покататься!'},
+  {img:'zoo-pig',ask:'Поросёнок хочет покататься!'},{img:'bear',ask:'Мишка хочет покататься!'},{img:'dino',ask:'Динозаврик хочет покататься!'}];
+const TR_COL=[{c:'#ff5a5f',to:'В красный вагончик!',is:'Это красный вагончик.',need:'Нужен красный!'},{c:'#4a8cff',to:'В синий вагончик!',is:'Это синий вагончик.',need:'Нужен синий!'},
+  {c:'#ffd23f',to:'В жёлтый вагончик!',is:'Это жёлтый вагончик.',need:'Нужен жёлтый!'},{c:'#3ccf6e',to:'В зелёный вагончик!',is:'Это зелёный вагончик.',need:'Нужен зелёный!'}];
+let trOk=0,trCols=[],trQ=[],trI=0;
+function startTrain(){go('train');trOk=0;counter('trCnt',0,6);trRound(true)}
+function trRound(first){
+  const r=document.getElementById('rail');trCols=shuffle(TR_COL).slice(0,3);
+  r.innerHTML='<img class="loco" src="img/toys/train.webp" alt="Паровозик" draggable="false">'+trCols.map((c,i)=>'<div class="wagon" data-i="'+i+'"><svg viewBox="0 0 100 78"><rect x="2" y="44" width="10" height="6" rx="2" fill="#8a6a4a"/><rect x="6" y="18" width="90" height="42" rx="10" fill="'+c.c+'"/><rect x="14" y="26" width="74" height="12" rx="5" fill="rgba(255,255,255,.4)"/><circle cx="28" cy="64" r="12" fill="#3a3a44"/><circle cx="74" cy="64" r="12" fill="#3a3a44"/><circle cx="28" cy="64" r="4" fill="#ddd"/><circle cx="74" cy="64" r="4" fill="#ddd"/></svg></div>').join('');
+  r.classList.remove('go','in');void r.offsetWidth;if(!first)r.classList.add('in');
+  const want=shuffle([0,1,2]);trQ=shuffle(TR_ANI).slice(0,3).map((a,i)=>({...a,w:want[i]}));trI=0;
+  setTimeout(()=>{if(first)say('train','Ту-ту! Паровозик приехал! Посади зверят в вагончики!');setTimeout(trNext,first?2600:200)},first?300:1200);
+}
+function trNext(){
+  if(cur()!=='train')return;
+  const q=trQ[trI],w=document.getElementById('trWait');w.innerHTML='';
+  const b=document.createElement('button');b.className='trp';b.innerHTML='<img src="img/toys/'+q.img+'.webp" alt="" draggable="false">';
+  const ask=()=>say('train',q.ask+' '+trCols[q.w].to);
+  draggable(b,{targets:()=>[...document.querySelectorAll('#rail .wagon:not(.full)')],tap:ask,drop:t=>{
+    const i=+t.dataset.i;
+    if(i!==q.w){t.classList.remove('no');void t.offsetWidth;t.classList.add('no');say('train',trCols[i].is+' '+trCols[q.w].need);return false}
+    t.classList.add('full');t.insertAdjacentHTML('beforeend','<img class="seat" src="img/toys/'+q.img+'.webp" alt="" draggable="false">');
+    t.classList.remove('yes');void t.offsetWidth;t.classList.add('yes');w.innerHTML='';
+    trOk++;counter('trCnt',Math.min(trOk,6),6);trI++;
+    if(trI<3){say('train',pick(['Молодец!','Правильно!','Ура, поехали дальше!']));setTimeout(trNext,1300)}
+    else{say('train','Все сели! Ту-ту! Поехали!');
+      if(trOk>=6){addStar();trOk=0;setTimeout(()=>counter('trCnt',0,6),1500)}
+      setTimeout(()=>{const r=document.getElementById('rail');r.classList.add('go');setTimeout(()=>{if(cur()==='train')trRound()},2500)},1200)}
+  }});
+  w.appendChild(b);ask();
+}
+
+/* ---------- ракета (06.11.2026): считаем «три, два, один, пуск», в космосе ловим звёздочки ---------- */
+const RK_CNT=['Три!','Два!','Один!','Пуск!'];
+const RK_STAR=['Одна звёздочка!','Две звёздочки!','Три звёздочки!','Четыре звёздочки!','Пять звёздочек!','Шесть звёздочек!'];
+let rkStep=0,rkGot=0,rkRun=0;
+function startRocket(){go('rocket');rkReset();say('rocket','Полетим в космос? Давай считать! Нажимай на кнопку!')}
+function rkReset(){rkRun++;rkStep=0;rkGot=0;counter('rkCnt',0,6);
+  const sp=document.getElementById('space'),k=document.getElementById('rkt'),f=document.getElementById('flame'),b=document.getElementById('rkBtn');
+  sp.classList.remove('night');sp.querySelectorAll('.rstar').forEach(x=>x.remove());k.className='';f.className='flame';b.disabled=false;b.textContent='3'}
+function rkTap(){
+  if(rkStep>=4)return;const b=document.getElementById('rkBtn'),k=document.getElementById('rkt');
+  say('rocket',RK_CNT[rkStep]);rkStep++;
+  if(rkStep<3){b.textContent=3-rkStep;k.classList.add('shake');return}
+  if(rkStep===3){b.innerHTML='<small>Пуск</small>';return}
+  b.disabled=true;const run=rkRun;
+  k.classList.remove('shake');k.classList.add('fly');const f=document.getElementById('flame');f.classList.add('on','fly');
+  setTimeout(()=>{if(run!==rkRun)return;document.getElementById('space').classList.add('night');f.className='flame'},1300);
+  setTimeout(()=>{if(run!==rkRun)return;say('rocket','Мы в космосе! Лови звёздочки!');rkStars()},2300);
+}
+function rkStars(){
+  const sp=document.getElementById('space'),pos=shuffle([[8,8],[40,4],[72,10],[14,40],[46,34],[76,44],[26,64],[60,62]]).slice(0,6);
+  pos.forEach((p,i)=>{const s=document.createElement('button');s.className='rstar';s.style.left=p[0]+'%';s.style.top=p[1]+'%';s.style.animationDelay=(i*.2)+'s, '+(i*.12)+'s';s.setAttribute('aria-label','Звёздочка');
+    s.innerHTML='<svg viewBox="0 0 100 100"><polygon points="50,5 61,38 96,38 68,59 79,93 50,72 21,93 32,59 4,38 39,38" fill="#ffd23f" stroke="#fff3a0" stroke-width="4" stroke-linejoin="round"/></svg>';
+    s.onclick=()=>{if(s.classList.contains('got'))return;s.classList.add('got');setTimeout(()=>s.remove(),600);
+      say('rocket',RK_STAR[rkGot]);rkGot++;counter('rkCnt',rkGot,6);if(rkGot===6)rkHome()};
+    sp.appendChild(s)});
+}
+function rkHome(){const run=rkRun;addStar();
+  setTimeout(()=>{if(run!==rkRun)return;say('rocket','Ура! Все звёздочки наши! Летим домой!');document.getElementById('space').classList.remove('night');
+    const k=document.getElementById('rkt');k.classList.add('land');k.classList.remove('fly')},1600);
+  setTimeout(()=>{if(run!==rkRun)return;rkReset();say('rocket','Полетим ещё раз? Нажимай на кнопку!')},4200)}
 
 /* ---------- накорми Топу ---------- */
 const FOODS=[
