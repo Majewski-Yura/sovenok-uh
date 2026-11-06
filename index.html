@@ -2530,7 +2530,7 @@ const TRIP=[
 ];
 const TRIP_ASK={match:'Соедини картинку со словом линией! Веди пальцем от картинки к слову.',catch:'Лови слова этой недели! Нажимай на них, пока они падают.',say:'Скажи это слово вслух по-английски! Нажми на красную кнопку и говори.',pic:'Что это? Как это по-английски?',listen:'Послушай слово и найди картинку!',ru:'Как это будет по-английски?',build:'Помоги собрать фразу! Перетаскивай слова по порядку.',dialog:'Я спрашиваю по-английски. Что мне ответить?',memory:'Найди пары: картинка и слово!',review:'А это мы уже учили! Помнишь?'};
 const TRIP_TEST_HI=['Это тест недели! Сдашь — получишь штамп в паспорт и откроешь новую пристань.','Последняя проверка на этой пристани! Не торопись, я в тебя верю.'];
-const TRIP_EXAM_HI='Это экзамен острова! Сдашь — получишь флаг и откроешь новый остров. Поплыли!';
+const TRIP_EXAM_HI='Это экзамен острова! Сдашь — получишь флаг острова в паспорт. Поплыли!';
 const TRIP_FAIL=['Чуть-чуть не хватило! Давай повторим остановки и попробуем ещё раз. Я подожду!','Почти получилось! Ошибаться не страшно. Попробуем ещё разок?'];
 /* слова недели → карточки {en,ru,pic} */
 function tripItems(W){if(W.num)return NUMW.map((en,i)=>({en,ru:NUMR[i],n:i+1,pic:'<span class="num">'+(i+1)+'</span>'}));
@@ -2555,13 +2555,13 @@ const TRIP_TEST=['pic','listen','ru','build','dialog','review','listen','pic','b
 const TRIP_EXAM=['pic','listen','build','dialog','ru','pic','listen','build','dialog','ru'];
 const T=()=>{if(!S.trip)S.trip={done:{},stamps:0};return S.trip};
 const tripKey=(ii,wi,si)=>ii+'-'+wi+'-'+si;            /* si: 0..2 остановки, 3 — тест недели; экзамен острова — ii+'-exam' */
-/* вход на остров (06.11.2026, решение родителя): после экзамена прошлого острова — таймер до даты острова, потом вход за звёзды: 50, 100, 150… (T().paid) */
+/* вход на остров (06.11.2026, решение родителя): таймер до даты острова, потом вход за звёзды: 50, 100, 150… (T().paid); экзамен прошлого острова для входа не нужен */
 const TRIP_DATE=[null,'2026-11-11','2027-01-11','2027-02-08','2027-03-08','2027-04-05'];
 const tripPrice=ii=>ii*50;
 function tripLeft(ii){const d=TRIP_DATE[ii];return d?Math.max(0,new Date(d+'T00:00:00')-Date.now()):0}
 function tripState(ii){const D=T().done,I=TRIP[ii];
   if(ii===0||(T().paid||{})[ii])return I.weeks?'open':'fill';
-  if(!D[(ii-1)+'-exam'])return 'exam';if(!I.weeks)return 'fill';if(tripLeft(ii)>0)return 'time';return 'pay'}
+  if(!I.weeks)return 'fill';if(tripLeft(ii)>0)return 'time';return 'pay'}
 function tripLeftTxt(ii){const ms=tripLeft(ii),d=Math.ceil(ms/864e5),h=Math.ceil(ms/36e5);
   return d>1?'через '+d+' '+plural(d,['день','дня','дней']):'через '+h+' '+plural(h,['час','часа','часов'])}
 let tripPayAsk=null;
