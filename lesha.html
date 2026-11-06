@@ -441,6 +441,8 @@ async function cloudInit(){if(!famId||fb)return;
   }catch(e){fb=null;syncState='err';console.warn('cloud',e)}}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
+/* 06.11.2026: звёзды терялись при синхронизации — родитель попросил вернуть Лёше 10 звёзд, один раз */
+if(S.starsBack1!==1){S.stars=(S.stars||0)+10;S.starsBack1=1;save()}
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 
 /* ---------- типографика ---------- */
