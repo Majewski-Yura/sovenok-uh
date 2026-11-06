@@ -128,6 +128,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .story{background:var(--bg2);border:3px solid var(--line);border-radius:28px;padding:20px 22px;box-shadow:var(--shadow);max-width:720px;margin:14px auto 0}
 .story-pic{display:flex;justify-content:center;align-items:flex-end;gap:6px;height:170px}
 .story-pic img{height:100%;width:auto;object-fit:contain}
+.story-pic:has(.scene){height:auto}.story-pic img.scene{width:100%;max-width:620px;height:auto;aspect-ratio:1024/765;border-radius:22px;box-shadow:var(--shadow)}
 .story-text{font-size:22px;line-height:1.55;margin-top:14px}
 .story-text h2{margin:0 0 6px;font-size:26px;text-align:center}
 .pin-dots{display:flex;justify-content:center;margin:6px auto 14px;min-width:150px;font-size:34px;font-weight:900;letter-spacing:4px;border-bottom:4px solid var(--gold);width:max-content;padding:0 18px}
@@ -1763,7 +1764,7 @@ const STORIES=[{title:'Ух и Топа: один трудный день',pages
   {pic:['uh-book'],t:'Потом Ух села читать любимую книжку. А Топа подкрался и — хвать! — утащил книжку. Ух хотела рассердиться. Но она подумала: «Топа просто хочет со мной поиграть».'},
   {pic:['topa-book'],t:'«Давай я тебе почитаю», — предложила Ух. Топа сразу притих, сел рядом и слушал так внимательно, что даже перестал махать хвостом.'},
   {pic:['topa-blocks'],t:'После обеда Топа строил башню из кубиков. Башня — бух! — и упала. Топа заплакал. Ух обняла его крылом: «Ничего страшного. Даже у больших сов башни падают. Попробуем ещё раз?» Вторая башня вышла выше первой!'},
-  {pic:['topa-sick'],t:'Вечером стало темно, и Топа испугался. «Там кто-то есть!» — шептал он. Ух включила фонарик: «Смотри, это просто твоя шляпа на стуле». И Топа засмеялся.'},
+  {pic:['stories/st-flashlight'],t:'Вечером стало темно, и Топа испугался. «Там кто-то есть!» — шептал он. Ух включила фонарик: «Смотри, это просто твоя шляпа на стуле». И Топа засмеялся.'},
   {pic:['topa-hello','uh-hello'],t:'Перед сном Топа сказал: «Ух, ты самая лучшая сестра на свете!» А Ух подумала, что быть старшей сестрой немножко трудно, но очень-очень радостно. Конец.'}],
   quiz:[
   {q:'Почему Топа утащил книжку?',a:'Хотел поиграть с Ух',o:['Хотел поиграть с Ух','Хотел её порвать','Сам умел читать']},
@@ -1773,7 +1774,7 @@ const STORIES=[{title:'Ух и Топа: один трудный день',pages
   {pic:['uh-hello','topa-hello'],t:'У мамы-совы скоро праздник. Ух решила испечь ей пирог. «Я тоже хочу печь!» — закричал Топа и побежал за фартуком.'},
   {pic:['uh-book'],t:'Ух открыла книгу с рецептами. «Нам нужно три яйца, два стакана муки и много ягод», — прочитала она. Топа считал вслух: «Раз, два, три!»'},
   {pic:['topa-strawberry'],t:'Топа так старался, что съел почти все ягоды. «Ой! — испугался он. — Что же теперь будет?» Ух улыбнулась: «Ничего, в саду растёт ещё малина. Пойдём соберём вместе».'},
-  {pic:['topa-broom'],t:'Потом Топа уронил пакет с мукой. Мука разлетелась белым облаком, и Топа стал похож на снеговика! Ух не ругалась. Она дала братику веник, и они вместе всё убрали.'},
+  {pic:['stories/st-flour'],t:'Потом Топа уронил пакет с мукой. Мука разлетелась белым облаком, и Топа стал похож на снеговика! Ух не ругалась. Она дала братику веник, и они вместе всё убрали.'},
   {pic:['uh-star'],t:'Наконец пирог испёкся — румяный и пахучий. Когда мама пришла домой, Ух и Топа крикнули: «С праздником!» Мама обняла их обоих. «Это самый вкусный пирог на свете», — сказала она. Конец.'}],
   quiz:[
   {q:'Что Топа съел почти целиком?',a:'Ягоды',o:['Ягоды','Муку','Яйца']},
@@ -1796,7 +1797,7 @@ function readShow(){
   document.getElementById('readProg').innerHTML=Array.from({length:n},(_,k)=>'<i class="'+(k<i?'done':'')+'"></i>').join('');
   const P=document.getElementById('storyPic'),T=document.getElementById('storyText'),O=document.getElementById('storyOpts'),nx=document.getElementById('readNext'),al=document.getElementById('readAloud');
   O.innerHTML='';const hr=O.parentNode.querySelector('.hint-row');if(hr)hr.remove();nx.style.display='';al.style.display='';
-  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="img/'+k+'.webp" alt="">').join('');
+  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="img/'+k+'.webp" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
     T.innerHTML=(i===0?'<h2></h2>':'')+'<p style="margin:0"></p>';if(i===0)T.querySelector('h2').textContent=st.title;T.querySelector('p').textContent=typo(pg.t);
     al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent='Дальше →';nx.onclick=()=>{RD.i++;readShow()};return}
   const qi=i-st.pages.length;
