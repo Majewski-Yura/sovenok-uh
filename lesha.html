@@ -640,12 +640,12 @@ function addStar(n){setTimeout(()=>cele(),400);
 }
 /* ---------- раскраска ---------- */
 let pCol='#ff5a5f',pHist=[],pFills=0,PK='topa',pCur=null;
-const PPICS=['topa','cap','balloon','crown','car','train','repka','repka-mouse','kolobok','kolobok-hare','fox','bear','hen','dedbaba','mouse-egg','topa-book'];
+const PPICS=['topa','cap','balloon','crown','car','train','repka','repka-mouse','kolobok','kolobok-hare','fox','bear','hen','dedbaba','mouse-egg','topa-book','firetruck','bus','tractor','castle','rocket','dinos','kitten','puppy','frog','piglet','cow','topa-ball','topa-bike','uh-topa'];
 /* раскраска: сначала выбор картинки, потом отдельный экран раскрашивания */
 const PCOLORS=[{c:'#ff5a5f',say:'Красный!'},{c:'#ff9a3c',say:'Оранжевый!'},{c:'#ffd23f',say:'Жёлтый!'},{c:'#a6e05a',say:'Салатовый!'},{c:'#3ccf6e',say:'Зелёный!'},{c:'#6fd0ff',say:'Голубой!'},{c:'#4a8cff',say:'Синий!'},
   {c:'#a77bff',say:'Фиолетовый!'},{c:'#ff8fc8',say:'Розовый!'},{c:'#b07a4f',say:'Коричневый!'},{c:'#ffe1c2',say:'Бежевый!'},{c:'#ffffff',say:'Белый!'},{c:'#9aa3ad',say:'Серый!'},{c:'#2b2b33',say:'Чёрный!'}];
 /* папки в раскраске и пазле (06.11.2026, просьба родителя): сначала папка (Топа, машинки, сказка…), внутри картинки */
-const P_FOLD=[{n:'Топа',ks:['topa','cap','balloon','crown','topa-book']},{n:'Машинки',ks:['car','train']},{n:'Репка',ks:['repka','repka-mouse']},
+const P_FOLD=[{n:'Топа',ks:['topa','cap','balloon','crown','topa-book','topa-ball','topa-bike','uh-topa']},{n:'Машинки',ks:['car','train','firetruck','bus','tractor','rocket']},{n:'Зверята',ks:['kitten','puppy','frog','piglet','cow','dinos']},{n:'Игрушки',ks:['castle']},{n:'Репка',ks:['repka','repka-mouse']},
   {n:'Колобок',ks:['kolobok','kolobok-hare','fox','bear']},{n:'Курочка Ряба',ks:['hen','dedbaba','mouse-egg']}];
 const PZ_FOLD=[{n:'Топа и друзья',ks:['topa','uh','ugu','uh-balloon']},{n:'Машинки',ks:['toy-car','toy-train','toy-rocket']},{n:'Игрушки',ks:['toy-bear','toy-castle','toy-dino']},
   {n:'Репка',cover:'img/tales/cover-repka.webp',pre:'repka-'},{n:'Колобок',cover:'img/tales/cover-kolobok.webp',pre:'kolobok-'},{n:'Курочка Ряба',cover:'img/tales/cover-ryaba.webp',pre:'ryaba-'}];
