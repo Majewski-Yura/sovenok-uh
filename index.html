@@ -647,6 +647,26 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .gfr-f i.b::after{background:#4a8cff}.gfr-f i.x::after{background:#ff5a5f;opacity:.35}
 .gfr-f i.x::before{content:'';position:absolute;left:4px;right:4px;top:50%;height:4px;background:#3b2a20;transform:rotate(-45deg);z-index:1}
 @media (max-width:480px){.gfr-f{grid-template-columns:repeat(5,28px)}.gfr-f i{width:28px;height:28px}.gsh{grid-template-columns:repeat(3,1fr)}.gtk-text{font-size:19px}.gco-c{width:58px;height:58px}}
+
+/* список математики главами (06.11.2026) */
+#lessonList.mlist{display:block;max-width:980px;margin-left:auto;margin-right:auto}
+.msecbox{background:var(--bg2);border:3px solid var(--line);border-radius:24px;margin:0 0 14px;box-shadow:var(--shadow);overflow:hidden}
+.msecbox summary{list-style:none;display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}
+.msecbox summary::-webkit-details-marker{display:none}
+.msecbox summary::after{content:'›';font-size:30px;font-weight:900;color:var(--ink2);transition:transform .2s}
+.msecbox[open] summary::after{transform:rotate(90deg)}
+.msec-n{flex:none;width:44px;height:44px;border-radius:14px;background:var(--gold);color:#fff;font-size:24px;font-weight:900;display:grid;place-items:center}
+.msec-t{flex:1;min-width:0}.msec-t b{display:block;font-size:20px;line-height:1.2}
+.msec-bar{display:block;height:8px;border-radius:99px;background:#efe3cf;margin-top:7px;overflow:hidden}.msec-bar em{display:block;height:100%;background:#5cc98a;border-radius:99px}
+.msec-c{flex:none;font-weight:900;color:var(--ink2);font-size:15px}
+.mrows{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;padding:0 14px 14px}
+.mrow{display:flex;align-items:center;gap:12px;text-align:left;background:#fffdf8;border:2px solid var(--line);border-radius:16px;padding:10px 12px;color:inherit;font:inherit}
+.mrow:active{transform:scale(.98)}
+.mrow-n{flex:none;width:38px;height:38px;border-radius:50%;background:var(--gold2);color:var(--brown2,#7a4a2e);font-weight:900;font-size:18px;display:grid;place-items:center}
+.mrow.done .mrow-n{background:#5cc98a;color:#fff}
+.mrow-t{flex:1;min-width:0}.mrow-t b{display:block;font-size:17px;line-height:1.2}.mrow-t small{display:block;color:var(--ink2);font-size:13px;margin-top:2px}
+.mrow-p{flex:none;font-weight:900;font-size:14px;color:#b8860b}
+@media (max-width:480px){.msecbox summary{padding:12px}.msec-t b{font-size:17px}.mrows{grid-template-columns:1fr;padding:0 10px 10px}}
 </style>
 </head>
 <body>
@@ -1854,7 +1874,7 @@ const LESSONS={
 let LESSON={subj:'ru',i:0};
 function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   document.getElementById('owlLessons').style.display=k==='en'?'none':'';document.getElementById('owlLessonsT').style.display=k==='en'?'':'none';say('lessons',L.say);
-  const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math');const done=S.lessonsDone||{};let num=0;
+  const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math');const done=S.lessonsDone||{};let num=0;if(k==='math'){renderMathList(box,done);return}
   (k==='math'?MATH_ORDER():L.list.map((x,i)=>i)).forEach(i=>{if(typeof i==='string'){const h=document.createElement('h3');h.className='shelf-h msec';h.textContent=i;box.appendChild(h);return}
     const x=L.list[i],b=document.createElement('button');b.className='card'+(done[k+i]?' done':'');
     num++;b.innerHTML='<div class="ic"><span class="lesson-n">'+num+'</span></div><h3></h3><p style="display:block"></p>';b.querySelector('h3').textContent=typo(x.n);b.querySelector('p').textContent=typo(x.p);
@@ -2772,6 +2792,18 @@ LESSONS.math.list.push(
   {sec:4,n:'Фигуры',p:'Треугольники, четырёхугольники, ломаные',g:['mShapes','mShapes','mShapes','mShapes']},
   {sec:4,n:'Периметр',p:'Сумма длин всех сторон',g:['mPerim','mPerim','mPerim','mPerim','mPerim','mPerim']});
 
+/* список математики (06.11.2026, по просьбе родителя — не плиткой): разделы-главы с прогрессом, раскрывается глава с первым непройденным уроком; внутри — строки уроков */
+function renderMathList(box,done){const L=LESSONS.math.list;let num=0,opened=false;
+  MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(!ii.length)return;
+    const ok=ii.filter(i=>done['math'+i]).length,d=document.createElement('details');d.className='msecbox';
+    if(!opened&&ok<ii.length){d.open=true;opened=true}
+    d.innerHTML='<summary><span class="msec-n">'+(s+1)+'</span><span class="msec-t"><b></b><i class="msec-bar"><em style="width:'+Math.round(ok/ii.length*100)+'%"></em></i></span><span class="msec-c">'+ok+' из '+ii.length+'</span></summary><div class="mrows"></div>';
+    d.querySelector('b').textContent=typo(n);const R=d.querySelector('.mrows');
+    ii.forEach(i=>{num++;const x=L[i],b=document.createElement('button'),fin=!!done['math'+i],pz=lessonPrize('math'+i);b.className='mrow'+(fin?' done':'');
+      b.innerHTML='<span class="mrow-n">'+(fin?'✓':num)+'</span><span class="mrow-t"><b></b><small></small></span><span class="mrow-p">'+(pz?'⭐ '+pz:'')+'</span>';
+      b.querySelector('b').textContent=typo(x.n);b.querySelector('small').textContent=typo(x.p);b.onclick=()=>startLesson('math',i);R.appendChild(b)});
+    box.appendChild(d)});
+  if(!opened&&box.firstChild)box.firstChild.open=true}
 /* порядок уроков математики по разделам: строки — заголовки разделов */
 function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(ii.length){r.push(n);r.push(...ii)}});return r}
 
