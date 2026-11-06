@@ -133,7 +133,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .clothes button.no{animation:wiggle .5s}
 .books{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-top:16px}
 .books button{background:var(--bg2);border:5px solid var(--line);border-radius:28px;padding:16px 8px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:6px}
-.books .ic{font-size:72px;line-height:1}.books span{font-size:20px}
+.books .ic{font-size:72px;line-height:1}.books .ic img{height:120px;width:auto;max-width:100%;object-fit:contain;display:block}.books span{font-size:20px}
 .page{background:var(--bg2);border:5px solid var(--line);border-radius:32px;padding:16px;margin-top:14px;box-shadow:var(--shadow);text-align:center}
 .pic{font-size:min(24vw,120px);line-height:1.2;min-height:150px}
 .ptext{font-size:24px;line-height:1.4;margin:8px 0 14px}
@@ -783,7 +783,7 @@ function putOn(b,i){
 
 /* ---------- сказки ---------- */
 const TALES=[
-  {ic:'🥕',name:'Репка',pages:[
+  {ic:'🥕',cover:'cover-repka',name:'Репка',pages:[
     {p:'👴🌱',img:'repka-1',t:'Посадил дед репку.'},
     {p:'👴🥕',img:'repka-1b',t:'Выросла репка большая-пребольшая!'},
     {p:'👴🥕',img:'repka-2',t:'Тянет дед репку. Тянет-потянет — вытянуть не может!'},
@@ -793,7 +793,7 @@ const TALES=[
     {p:'🐱🐶👧',img:'repka-6',t:'Позвала Жучка кошку. Тянут-потянут — вытянуть не могут!'},
     {p:'🐭🐱🐶',img:'repka-7',t:'Позвала кошка мышку. Тянут-потянут — и вытянули репку!'},
     {p:'🎉🥕🎉',img:'repka-8',t:'Вот какая репка! Все вместе — и получилось. Конец!'}]},
-  {ic:'🟡',name:'Колобок',pages:[
+  {ic:'🟡',cover:'cover-kolobok',name:'Колобок',pages:[
     {p:'👵🟡',img:'kolobok-1',t:'Испекла бабушка Колобок и положила на окошко остывать.'},
     {p:'🟡🛤️',img:'kolobok-2',t:'А Колобок спрыгнул и покатился по дорожке.'},
     {p:'🐰🟡',img:'kolobok-3',t:'Навстречу ему заяц. А Колобок спел песенку и укатился.'},
@@ -801,7 +801,7 @@ const TALES=[
     {p:'🐻🟡',img:'kolobok-5',t:'Навстречу ему медведь. А Колобок и от медведя укатился.'},
     {p:'🦊🟡',img:'kolobok-6',t:'Навстречу ему лиса. Хитрая лиса Колобка и съела. Ам!'},
     {p:'👵🏠',img:'kolobok-7',t:'Вот и сказке конец. Не убегай далеко от бабушки!'}]},
-  {ic:'🐔',name:'Курочка Ряба',pages:[
+  {ic:'🐔',cover:'cover-ryaba',name:'Курочка Ряба',pages:[
     {p:'👴👵🐔',img:'ryaba-1',t:'Жили-были дед да баба. И была у них курочка Ряба.'},
     {p:'🐔🥚✨',img:'ryaba-2',t:'Снесла курочка яичко. Не простое — золотое!'},
     {p:'👴🥚',img:'ryaba-3',t:'Дед бил-бил — не разбил. Баба била-била — не разбила.'},
@@ -812,7 +812,7 @@ const TALES=[
 let tale=null,pg=0;
 function showBooks(){
   document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';B.innerHTML='';
-  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+t.ic+'</div><span>'+t.name+'</span>';b.onclick=()=>openTale(i);B.appendChild(b)});
+  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';b.onclick=()=>openTale(i);B.appendChild(b)});
   say('tales','Какую сказку почитаем? Выбирай!');
 }
 function openTale(i){tale=TALES[i];pg=0;document.getElementById('books').style.display='none';document.getElementById('page').style.display='block';
