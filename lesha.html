@@ -373,7 +373,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </template>
 
 <div class="gate cele-l" id="celeL" onclick="this.classList.remove('on')"><div class="gate-card" style="max-width:340px">
-  <img src="img/topa-hello.webp" alt="" style="height:200px;animation:hop .6s ease 3"><h2 id="celeLT" style="font-size:34px">Ура!</h2><div style="font-size:42px">⭐⭐⭐</div>
+  <img src="img/topa-star.webp" alt="" style="height:220px;animation:hop .6s ease 3"><h2 id="celeLT" style="font-size:34px">Ура!</h2><div style="font-size:42px">⭐⭐⭐</div>
 </div></div>
 <div class="gate" id="gate" onclick="if(event.target===this)gateClose()"><div class="gate-card">
   <div style="font-size:46px">🔐</div><h2>Вход для мамы и папы</h2><p id="gateQ" style="color:var(--ink2);font-weight:800;margin:4px 0"></p>
@@ -452,7 +452,7 @@ function mountDino(id,small){
   svg.querySelectorAll('[id]').forEach(n=>{const o=n.id,nn=o+'_'+id;n.id=nn;svg.querySelectorAll('[fill="url(#'+o+')"]').forEach(e=>e.setAttribute('fill','url(#'+nn+')'))});
   if(small)svg.classList.add('small');
   /* позы Топы: картинка 672×900 на высоту 200 */
-  const POSE={dinoFeel:['sick',176],dinoDeeds:['check',182],dinoDress:['shirt',158]};
+  const POSE={dinoFeel:['blanket',199],dinoDeeds:['check',182],dinoDress:['shirt',158]};
   if(POSE[id]){const [n,w]=POSE[id],im=svg.querySelector('image.pose');im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.add('noacc')}
   svg.addEventListener('click',()=>{if(id==='dinoFeed')return;hop(svg);if(id==='dinoHome')hello();else say(id.replace('dino','').toLowerCase(),pick(TAP))});
   el.appendChild(svg);dinos[id]=svg;dress();
@@ -520,13 +520,19 @@ function counter(id,n,max){document.getElementById(id).innerHTML=Array.from({len
 
 /* ---------- дом ---------- */
 let greeted=false;
+/* поздно вечером Топа на главной спит с мишкой */
+const sleepy=()=>{const h=new Date().getHours();return h>=20||h<7};
+function homePose(){const svg=dinos.dinoHome;if(!svg)return;const im=svg.querySelector('image.pose'),sl=sleepy(),w=sl?169:155;
+  im.setAttribute('href','img/topa-'+(sl?'sleep':'hello')+'.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.classList.toggle('noacc',sl)}
 function homeTalk(){
-  document.getElementById('tileFeel').classList.toggle('hot',S.feelDate!==today());
+  document.getElementById('tileFeel').classList.toggle('hot',S.feelDate!==today());homePose();
+  if(sleepy()){document.getElementById('homeSay').textContent=typo('Тс-с-с… Топа засыпает. Скоро и Лёше пора в кроватку!');return}
   document.getElementById('homeSay').textContent=typo(greeted?'Во что поиграем? Нажми на картинку!':'Привет, Лёша! Нажми на меня!');
   if(greeted)speak('Во что поиграем? Нажми на картинку!');
 }
 function hello(){
   greeted=true;const h=document.getElementById('hint');if(h)h.remove();
+  if(sleepy()){say('home',pick(['Тс-с-с… Топа спит. Спокойной ночи, Лёша!','Топа обнимает мишку и видит сны. Завтра поиграем!']));return}
   say('home',pick(['Привет, Лёша! Я динозаврик Топа. Давай играть!','Ура, Лёша пришёл! Топ-топ-топ!','Р-р-р! Привет, Лёша! Я так по тебе скучал!']));
 }
 
@@ -911,7 +917,7 @@ function renderParent(){
 }
 
 /* ---------- старт ---------- */
-mountDino('dinoHome');mountDino('dinoFeed',true);mountDino('dinoFeel',true);mountDino('dinoShop',true);mountDino('dinoDress',true);mountDino('dinoDeeds',true);
+mountDino('dinoHome');homePose();mountDino('dinoFeed',true);mountDino('dinoFeel',true);mountDino('dinoShop',true);mountDino('dinoDress',true);mountDino('dinoDeeds',true);
 (function(){const h=document.createElement('div');h.className='hint';h.id='hint';h.textContent='👆 Нажми!';document.getElementById('dinoHome').appendChild(h)})();
 setStars();homeTalk();renderPend();renderAsk();cloudInit();
 </script>
