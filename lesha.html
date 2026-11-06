@@ -186,6 +186,24 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   #paint .palette{max-width:none}
   #paint .palette button{width:64px;height:64px}
 }
+
+/* сказки на телефоне (06.11.2026): при чтении Топа прячется, картинка крупная, кнопки над «Домой» */
+#tales.reading .stage .spose{display:none}
+#tales.reading .stage{min-height:0}
+#tales.reading .bubble{font-size:22px;padding:8px 18px}
+#tales .page{margin-bottom:96px}
+#tales .books{padding-bottom:96px}
+@media (max-width:700px){
+  #tales .books{grid-template-columns:repeat(3,1fr);gap:10px}
+  #tales .books button{padding:10px 4px;border-width:4px;border-radius:22px}
+  #tales .books .ic img{height:86px}
+  #tales .books span{font-size:16px;line-height:1.15}
+  #tales .page{padding:8px;border-width:4px;border-radius:26px;margin-top:8px}
+  #tales .page .pic.ill{margin:0 0 6px}
+  #tales .page .pic.ill img{width:100%;max-height:none;border-radius:20px}
+  #tales .ptext{font-size:22px;line-height:1.35;margin:6px 4px 12px}
+  #tales .pnav button{width:76px;height:76px;font-size:32px}
+}
 @media (prefers-reduced-motion:reduce){.dino,.dino .lid{animation:none}}
 </style>
 </head>
@@ -811,12 +829,16 @@ const TALES=[
 ];
 let tale=null,pg=0;
 function showBooks(){
-  document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';B.innerHTML='';
+  document.getElementById('tales').classList.remove('reading');document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';B.innerHTML='';
   TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';b.onclick=()=>openTale(i);B.appendChild(b)});
   say('tales','Какую сказку почитаем? Выбирай!');
 }
-function openTale(i){tale=TALES[i];pg=0;document.getElementById('books').style.display='none';document.getElementById('page').style.display='block';
+function openTale(i){tale=TALES[i];pg=0;document.getElementById('tales').classList.add('reading');document.getElementById('books').style.display='none';document.getElementById('page').style.display='block';tSwipe();
   document.getElementById('talesSay').textContent=typo(tale.name);readPage()}
+/* листать свайпом по картинке: влево — дальше, вправо — назад */
+function tSwipe(){const pp=document.getElementById('pagePic');if(pp._sw)return;pp._sw=1;let x0=null,y0=0;
+  pp.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  pp.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;x0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))turn(dx<0?1:-1)},{passive:true})}
 /* иллюстрация страницы, если есть (img/tales/<img>.webp), иначе эмодзи */
 function readPage(){const P=tale.pages[pg],pp=document.getElementById('pagePic');if(P.img){pp.innerHTML='<img src="img/tales/'+P.img+'.webp" alt="">';pp.classList.add('ill')}else{pp.textContent=P.p;pp.classList.remove('ill')}document.getElementById('pageText').textContent=typo(P.t);speak(P.t)}
 function turn(d){
