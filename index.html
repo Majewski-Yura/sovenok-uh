@@ -856,6 +856,15 @@ label.f{display:block;margin-top:14px;font-size:16px}
   </section>
 
   <!-- МАГАЗИН -->
+  <!-- РАСКРАСКИ (06.11.2026, решение родителя): только раскраски — мои (за вещи и купленные) и магазин раскрасок; вещей здесь нет -->
+  <section class="screen" id="pbook">
+    <div class="bubble" id="pbookSay" style="margin:6px auto 0"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
+    <h3 class="shelf-h">Мои раскраски</h3>
+    <div class="paints" id="myPaints"></div>
+    <h3 class="shelf-h">Магазин раскрасок</h3>
+    <div class="pshop" id="paintShop"></div>
+  </section>
+
   <section class="screen" id="shop">
     <div class="stage">
       <div id="owlShop"></div>
@@ -865,8 +874,6 @@ label.f{display:block;margin-top:14px;font-size:16px}
     <div class="shelf" id="myShelf"></div>
     <h3 class="shelf-h">🎨 Раскраски за купленные вещи</h3>
     <div class="paints" id="paints"></div>
-    <h3 class="shelf-h">Магазин раскрасок</h3>
-    <div class="pshop" id="paintShop"></div>
     <h3 class="shelf-h">Магазин</h3>
     <div class="shop" id="shopList"></div>
   </section>
@@ -1373,7 +1380,7 @@ function openGift(){
   say('home','Ура! Вся дорожка пройдена! Держи сюрприз от Ух — три звёздочки!');
   celebrate('Весь день пройден! Ух гордится тобой.');
 }
-function openPaints(){go('shop');setTimeout(()=>{const p=document.getElementById('paints');if(p)p.previousElementSibling.scrollIntoView({behavior:'smooth'})},150)}
+function openPaints(){go('pbook');renderPbook();say('pbook','Что будем раскрашивать? Новые раскраски можно купить за звёздочки.')}
 /* ---------- Дневник Алисы — как бумажный (06.11.2026) ---------- */
 /* S.dn = {sched:{1..6:[предметы]}, hw:{'ГГГГ-ММ-ДД':[{id,s,t,done,pend}]}}; задание пишется в день, на который его задали */
 const DN_SUBJ=['Русский язык','Литературное чтение','Математика','Белорусский язык','Человек и мир','Английский язык','Изобразительное искусство','Музыка','Трудовое обучение','Физкультура'];
@@ -1707,14 +1714,25 @@ const PSHOP=[['topa','Топа'],['cap','Топа в кепке'],['balloon','Т
   ['castle','Замок'],['kitten','Котик'],['puppy','Щенок'],['frog','Лягушка'],['piglet','Поросёнок'],['cow','Коровка'],['dinos','Динозаврики']];
 const PSHOP_PRICE=20;
 const pSrc=k=>k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
+function renderPbook(){
+  const M=document.getElementById('myPaints');M.innerHTML='';const bought=S.paintsOwned||[];
+  const add=(src,n,k)=>{const b=document.createElement('button');b.innerHTML='<img src="'+src+'" alt="">';b.title='Раскрасить: '+n;b.onclick=()=>openPaint(k);M.appendChild(b)};
+  ITEMS.filter(it=>S.owned.includes(it.k)).forEach(it=>add('img/color/'+it.k+'.png',it.n,it.k));
+  PSHOP.filter(([k])=>bought.includes('t-'+k)).forEach(([k,n])=>add(pSrc('t-'+k),n,'t-'+k));
+  if(!M.children.length)M.innerHTML='<div class="empty" style="color:var(--ink2)">Пока пусто: купи раскраску ниже или вещь в гардеробе — к ней раскраска в подарок.</div>';
+  const PS=document.getElementById('paintShop');PS.innerHTML='';const left=PSHOP.filter(([k])=>!bought.includes('t-'+k));
+  if(!left.length)PS.innerHTML='<div class="empty" style="color:var(--ink2)">Ты купила все раскраски!</div>';
+  left.forEach(([k,n])=>{const b=document.createElement('button');if(S.stars<PSHOP_PRICE)b.className='lock';
+    b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt=""><b>'+n+'</b><span>⭐ '+PSHOP_PRICE+'</span>';b.onclick=()=>buyPaint(k);PS.appendChild(b)})}
+let pFrom='shop';
 function buyPaint(k){
-  if(S.stars<PSHOP_PRICE){say('shop','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
-  S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('t-'+k);setStars();save();cheer();say('shop','Новая раскраска! Давай раскрасим её вместе!');renderShop();
+  if(S.stars<PSHOP_PRICE){say('pbook','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
+  S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('t-'+k);setStars();save();say('pbook','Новая раскраска! Давай раскрасим её вместе!');renderPbook();
   setTimeout(()=>openPaint('t-'+k),900)}
 function pTool(t){pT=t;document.querySelectorAll('#ptools>button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.getElementById('ptools').classList.toggle('brush',t==='brush');
   document.getElementById('paintCv').style.touchAction=t==='brush'?'none':'manipulation'}
 function pSz(n){pSize=n;document.querySelectorAll('.psizes button').forEach(b=>b.classList.toggle('on',+b.dataset.s===n))}
-function openPaint(k){go('paint');PK=k;const P=document.getElementById('palette');P.innerHTML='';
+function openPaint(k){const c=document.querySelector('.screen.on').id;if(c==='pbook'||c==='shop')pFrom=c;go('paint');PK=k;const P=document.getElementById('palette');P.innerHTML='';
   PCOL.forEach(c=>{const b=document.createElement('button');b.style.background=c;if(c===pCol)b.className='on';b.onclick=()=>{pCol=c;P.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on')};P.appendChild(b)});
   pTool(pT);paintLoad(k);speak('Выбери цвет и нажми на рисунок!','uh')}
 function paintLoad(k){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();
@@ -1814,7 +1832,7 @@ function todayCheck(){const L=dayLesson();if(L.done||LESSON.subj!==L.k||LESSON.i
 /* ---------- Умнее каждый день ---------- */
 const SMART=['game','eng','math','read'];
 function openSmart(){go('smart');say('smart',pick(['Что сегодня узнаем? Русский, чтение, английский или математика?','Каждый день — чуточку умнее! С чего начнём?','Выбирай! Я с тобой.']))}
-function goBack(){const c=document.querySelector('.screen.on').id;if(c==='tripL'){openTrip(true);return}if(c==='trip'){openSmart();return}if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint')go('shop');else go('home')}
+function goBack(){const c=document.querySelector('.screen.on').id;if(c==='tripL'){openTrip(true);return}if(c==='trip'){openSmart();return}if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint'){if(pFrom==='pbook')openPaints();else go('shop')}else go('home')}
 
 /* ---------- математика: Ух считает и сомневается ---------- */
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -2819,12 +2837,7 @@ function draggable(el,o){
     draggable(b,{targets:()=>[document.getElementById('owlShop')],drop:()=>{S.wear[it.slot]=it.k;say('shop',pick(['Красота!','Ух ты, как мне идёт!','Спасибо! Я самая нарядная!']));save();dress();cheer();renderShop();return false},tap:toggle});M.appendChild(b)});
   const PA=document.getElementById('paints');PA.innerHTML=mine.length?'':'<div class="empty" style="color:var(--ink2)">Купи вещь — и появится раскраска с Ух в ней!</div>';
   mine.forEach(it=>{const b=document.createElement('button');b.innerHTML='<img src="img/color/'+it.k+'.png" alt="">';b.title='Раскрасить: '+it.n;b.onclick=()=>openPaint(it.k);PA.appendChild(b)});
-  const bought=S.paintsOwned||[];if(bought.length&&!mine.length)PA.innerHTML='';
-  PSHOP.filter(([k])=>bought.includes('t-'+k)).forEach(([k,n])=>{const b=document.createElement('button');b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt="">';b.title='Раскрасить: '+n;b.onclick=()=>openPaint('t-'+k);PA.appendChild(b)});
-  const PS=document.getElementById('paintShop');PS.innerHTML='';const left=PSHOP.filter(([k])=>!bought.includes('t-'+k));
-  if(!left.length)PS.innerHTML='<div class="empty" style="color:var(--ink2)">Ты купила все раскраски!</div>';
-  left.forEach(([k,n])=>{const b=document.createElement('button');if(S.stars<PSHOP_PRICE)b.className='lock';
-    b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt=""><b>'+n+'</b><span>⭐ '+PSHOP_PRICE+'</span>';b.onclick=()=>buyPaint(k);PS.appendChild(b)});
+
   const L=document.getElementById('shopList');L.innerHTML='';
   const rest=ITEMS.filter(it=>!S.owned.includes(it.k));
   if(!rest.length)L.innerHTML='<div class="item" style="grid-column:1/-1">Ты купила всё! Ух — самая нарядная совушка на свете!</div>';
