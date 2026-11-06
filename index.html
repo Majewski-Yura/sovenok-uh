@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Топоух</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#fdf6ec; --bg2:#fff; --ink:#3b2a20; --ink2:#7a6455; --line:#ecdcc8;
@@ -286,7 +286,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .p-go{margin-top:4px;background:var(--gold);color:#3b2a20;border-radius:14px;padding:6px 14px;font-weight:900;font-size:16px;box-shadow:0 4px 0 #d08f00}
 .p-dots{display:flex;flex-direction:column;gap:5px;padding:5px 0}
 .p-dots i{width:9px;height:9px;border-radius:50%;background:var(--line);display:block}
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:8;display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg2);border-top:3px solid var(--line);padding:6px 6px calc(8px + env(safe-area-inset-bottom))}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:8;display:grid;grid-template-columns:repeat(5,1fr);background:var(--bg2);border-top:3px solid var(--line);padding:6px 6px calc(8px + env(safe-area-inset-bottom))}
 .tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12.5px;color:var(--ink2);font-weight:800}
 .tabs img{width:36px;height:36px;object-fit:contain}
 .tabs button.on{color:var(--ink);font-weight:900}
@@ -441,6 +441,44 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .mc .art.photo{width:84px;height:84px;border:0;border-radius:12px}.mc .num{font-size:48px;font-weight:900;color:#f58a1f}
 .mc.sel{border-color:var(--gold);background:var(--gold2)}.mc.ok{border-color:#2f9a5a;background:#dff6e6;opacity:.7}.mc.shake{animation:shake .35s}
 @media (max-width:480px){.mem{gap:6px}.mc{min-height:72px;font-size:15px;padding:3px;border-width:3px;border-radius:14px}.mc .art.photo{width:62px;height:62px}.mc .num{font-size:34px}.wk{flex-wrap:wrap}.st{width:40px;height:40px}}
+
+/* дневник — как бумажный */
+#dnBox{max-width:1100px;margin:6px auto 0}
+.dn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#2a6f97,#1b4965);color:#fff;border-radius:22px 22px 8px 8px;padding:10px 12px;box-shadow:0 6px 0 rgba(20,50,80,.2)}
+.dn-week{text-align:center}.dn-week b{display:block;font-size:24px;font-weight:900;color:#ffe8a3}.dn-week span{font-size:15px;opacity:.9}
+.dn-arr{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:30px;line-height:1;font-weight:900}
+.dn-tools{display:flex;gap:10px;justify-content:center;margin:12px 0}.dn-tools .btn{padding:8px 16px;font-size:16px}
+.dn-book{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){.dn-book{grid-template-columns:1fr 1fr;gap:0;background:#fffdf6;border-radius:10px;box-shadow:0 10px 0 rgba(120,90,50,.15),0 0 0 3px #e9dcc4}.dn-book .dn-page:first-child{border-right:3px double #e2cfae}}
+.dn-page{background:#fffdf6;border-radius:10px;padding:6px 14px 10px;box-shadow:0 6px 0 rgba(120,90,50,.12),0 0 0 3px #e9dcc4}
+@media (min-width:900px){.dn-page{box-shadow:none}}
+.dn-day{padding:8px 0 10px;border-bottom:2px solid #e9dcc4}.dn-day:last-child{border-bottom:0}
+.dn-day.today .dn-dh b{background:var(--gold2);border-radius:8px;padding:0 6px;box-shadow:0 0 0 2px var(--gold)}
+.dn-dh{display:flex;justify-content:space-between;align-items:baseline;color:#1b4965}.dn-dh b{font-size:19px;font-weight:900}.dn-dh span{font-size:15px;color:#6b7f94}
+.dn-rest{margin:6px 0 2px;background:#e8f6ee;color:#2f7a52;border-radius:10px;padding:4px 10px;font-size:14px;font-weight:800;text-align:center}
+.dn-rows{margin-top:4px;background:repeating-linear-gradient(#fffdf6 0 33px,#cfe1f2 33px 34px);border-left:2px solid #f2a7a7}
+.dn-row{display:grid;grid-template-columns:22px minmax(90px,28%) 1fr auto;align-items:center;min-height:34px;gap:6px;cursor:pointer;padding-right:2px}
+.dn-row i{font-style:normal;color:#9fb3c8;font-size:13px;text-align:center}
+.dn-s{font-size:14px;color:#1b4965;font-weight:800;line-height:1.1}
+.dn-t{font-family:Caveat,cursive;font-size:22px;color:#1d4fb8;line-height:1;word-break:break-word}
+.dn-row.ok .dn-t{color:#2f9a5a}
+.dn-row.empty{cursor:default}
+.dn-act{display:flex;gap:4px}
+.dn-ok{background:var(--gold);color:#4a2d00;border-radius:12px;padding:3px 10px;font-size:13px;font-weight:900;box-shadow:0 3px 0 #d08f00}
+.dn-row.ok .dn-ok{background:#2f9a5a;color:#fff;box-shadow:0 3px 0 #1d6b3e}
+.dn-go{background:#cfe8ff;color:#1b4965;border-radius:12px;width:30px;font-size:13px;font-weight:900;box-shadow:0 3px 0 #9cc4ea}
+.dn-add{display:block;margin:6px 0 0 24px;color:#7a8ea4;font-size:14px;font-weight:800;background:none}
+.dn-tip{text-align:center;color:var(--ink2);margin-top:12px}
+.dn-card{max-width:520px;text-align:left}.dn-card h2{text-align:center;font-size:22px}
+.dn-lbl{margin:10px 0 0!important;font-size:15px!important;font-weight:900;color:var(--ink)!important}
+.dn-chips{justify-content:flex-start}.dn-chips .chip{font-size:14px;padding:6px 12px}.chip.on{background:var(--gold2);border-color:var(--gold);font-weight:900}
+.dn-ta{width:100%;min-height:90px;margin-top:6px;font-family:Caveat,cursive;font-size:26px;color:#1d4fb8;line-height:1.1}
+.dn-wds{display:flex;gap:6px;justify-content:center;margin-top:6px}.dn-wds .chip{min-width:46px}
+.dn-sl{margin:10px 0 0;padding-left:26px}.dn-sl li{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line);font-weight:800}
+.dn-sl li button{width:28px;height:28px;border-radius:50%;background:#ffe3e3;color:#c0392b;font-weight:900}
+.dn-sl .dn-none{color:var(--ink2);font-weight:700;list-style:none;margin-left:-26px;text-align:center;border:0}
+@media (max-width:700px){.dn-row{grid-template-columns:20px 1fr auto;grid-template-areas:'n s a' 'n t t';row-gap:0;padding:4px 0}.dn-row i{grid-area:n}.dn-s{grid-area:s;font-size:14px}.dn-act{grid-area:a}.dn-t{grid-area:t;font-size:24px;padding-bottom:2px}.dn-row.empty{grid-template-areas:'n s a'}}
+@media (max-width:480px){.tabs button span{font-size:11px}.tabs img{width:32px;height:32px}}
 /* новые уроки русского */
 .word.long{font-size:34px;letter-spacing:0}
 .opts.ruw{flex-wrap:wrap;gap:12px}.opts.ruw .opt{font-size:28px;min-width:0;padding:12px 22px}.opts.ruw.small .opt{font-size:20px;width:100%;max-width:420px;text-align:left}
@@ -524,7 +562,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <button onclick="openSmart()"><img src="img/ic/smart.webp" alt=""><span>Уроки</span></button>
   <button onclick="go('shop')"><img src="img/ic/wardrobe.webp" alt=""><span>Гардероб</span></button>
   <button onclick="openPaints()"><img src="img/zapiska.webp" alt=""><span>Раскраски</span></button>
+  <button onclick="openDnev()"><img src="img/words/notebook.webp" alt=""><span>Дневник</span></button>
 </nav>
+<div class="reveal" id="dnModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card dn-card" id="dnCard"></div></div>
 <div class="reveal" id="stepCard" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card"><div class="rv-pic"><img id="scImg" src="" alt=""></div><h2 id="scTitle"></h2><p id="scText"></p><div class="row" style="justify-content:center;gap:10px"><button class="btn" id="scBtn">Сделала!</button><button class="btn soft" id="scClose" onclick="document.getElementById('stepCard').classList.remove('on')">Потом</button></div></div></div>
 <div class="wrap">
   <header>
@@ -628,6 +668,9 @@ label.f{display:block;margin-top:14px;font-size:16px}
       <button class="card" onclick="openSubject('math')"><div class="ic"><img src="img/ic/abacus.webp" alt="Счёты"></div><h3>Математика</h3><p>Помоги Ух посчитать</p></button>
     </div>
   </section>
+
+  <!-- ДНЕВНИК -->
+  <section class="screen" id="dnev"><div id="dnBox"></div></section>
 
   <!-- КРУГОСВЕТКА ТОПЫ: карта -->
   <section class="screen" id="trip">
@@ -1217,6 +1260,7 @@ function pathSteps(){
   const missDone=!S.mission&&diaryToday(/^Задание: /);
   if(S.mission||missDone)st.push({k:'mission',img:'img/ryukzak.webp',t:md==='school'?'В школу':'Задание от Ух',p:missDone?'выполнено':'задание от Ух',done:missDone,star:2,go:()=>stepCard('mission')});
   st.push({k:'lesson',img:'img/ic/smart.webp',t:'Урок дня',p:LESSONS[L.k].name+': '+x.n,done:!!L.done,star:2,go:startToday});
+  {const nk=dnNextSchool(),hw=nk?dnHwFor(nk):[];if(hw.length){const nd=new Date(nk+'T12:00');st.push({k:'hw',img:'img/words/notebook.webp',t:'Домашка',p:'на '+DN_DAYS[nd.getDay()].toLowerCase(),done:hw.every(h=>h.done||h.pend),star:hw.length,go:()=>openDnev(nk)})}}
   const momDoneT=!(S.momAsk&&S.momAsk.t)&&diaryToday(/^Мама просила: /);
   if((S.momAsk&&S.momAsk.t)||momDoneT)st.push({k:'mom',img:'img/ic/mom.webp',t:'Мама просит',p:momDoneT?'сделано':'записка от мамы',done:momDoneT,star:3,go:()=>stepCard('mom')});
   st.push({k:'help',img:'img/ic/dustpan.webp',t:'Помочь маме',p:'уборка, посуда, Лёша',done:!!(S.help&&S.help.d===today()&&S.help.done.length),star:3,go:startHelp});
@@ -1256,6 +1300,85 @@ function openGift(){
   celebrate('Весь день пройден! Ух гордится тобой.');
 }
 function openPaints(){go('shop');setTimeout(()=>{const p=document.getElementById('paints');if(p)p.previousElementSibling.scrollIntoView({behavior:'smooth'})},150)}
+/* ---------- Дневник Алисы — как бумажный (06.11.2026) ---------- */
+/* S.dn = {sched:{1..6:[предметы]}, hw:{'ГГГГ-ММ-ДД':[{id,s,t,done,pend}]}}; задание пишется в день, на который его задали */
+const DN_SUBJ=['Русский язык','Литературное чтение','Математика','Белорусский язык','Человек и мир','Английский язык','Изобразительное искусство','Музыка','Трудовое обучение','Физкультура'];
+/* куда ведёт «Потренироваться»; точные уроки добавим, когда заполним программу (поле go у задания) */
+const DN_GO={'Русский язык':()=>openSubject('ru'),'Литературное чтение':()=>openSubject('read'),'Математика':()=>openSubject('math'),'Английский язык':()=>openTrip()};
+const DN_DAYS=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const DN_MON=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const DN=()=>{if(!S.dn)S.dn={sched:{},hw:{}};S.dn.sched=S.dn.sched||{};S.dn.hw=S.dn.hw||{};return S.dn};
+let dnMon=null;
+const dnYmd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function dnMonday(d){d=new Date(d);d.setHours(12,0,0,0);const w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return d}
+function openDnev(date){dnMon=dnMonday(date?new Date(date+'T12:00'):new Date());go('dnev');renderDnev()}
+/* следующий учебный день после сегодня (для «Домашки на завтра») */
+function dnNextSchool(){const d=new Date();d.setHours(12,0,0,0);for(let i=0;i<14;i++){d.setDate(d.getDate()+1);if(!restName(d))return dnYmd(d)}return null}
+function dnShiftWeek(n){dnMon.setDate(dnMon.getDate()+7*n);renderDnev()}
+function renderDnev(){
+  const box=document.getElementById('dnBox'),D=DN();box.innerHTML='';
+  const sat=new Date(dnMon);sat.setDate(sat.getDate()+5);
+  const head=document.createElement('div');head.className='dn-head';
+  head.innerHTML='<button class="dn-arr" aria-label="Прошлая неделя">‹</button><div class="dn-week"><b>Дневник</b><span></span></div><button class="dn-arr" aria-label="Следующая неделя">›</button>';
+  head.querySelector('span').textContent=dnMon.getDate()+' '+(dnMon.getMonth()===sat.getMonth()?'':DN_MON[dnMon.getMonth()]+' ')+'— '+sat.getDate()+' '+DN_MON[sat.getMonth()]+' '+sat.getFullYear();
+  const [pv,nx]=head.querySelectorAll('.dn-arr');pv.onclick=()=>dnShiftWeek(-1);nx.onclick=()=>dnShiftWeek(1);box.appendChild(head);
+  const tools=document.createElement('div');tools.className='dn-tools';tools.innerHTML='<button class="btn soft">Сегодня</button><button class="btn soft">Расписание уроков</button>';
+  tools.children[0].onclick=()=>openDnev();tools.children[1].onclick=dnSchedEdit;box.appendChild(tools);
+  const book=document.createElement('div');book.className='dn-book';
+  for(let p=0;p<2;p++){const page=document.createElement('div');page.className='dn-page';
+    for(let k=0;k<3;k++){const i=p*3+k,d=new Date(dnMon);d.setDate(d.getDate()+i);page.appendChild(dnDay(d))}book.appendChild(page)}
+  box.appendChild(book);
+  if(!Object.keys(D.sched).some(k=>(D.sched[k]||[]).length))box.insertAdjacentHTML('beforeend','<p class="dn-tip">Сначала заполните «Расписание уроков» — тогда в каждом дне появятся предметы, как в бумажном дневнике.</p>');
+}
+function dnDay(d){
+  const D=DN(),key=dnYmd(d),wd=d.getDay(),rest=restName(d),list=D.hw[key]||[],subs=(D.sched[wd]||[]).slice();
+  list.forEach(h=>{if(!subs.includes(h.s))subs.push(h.s)});
+  const el=document.createElement('div');el.className='dn-day'+(key===today()?' today':'');
+  el.innerHTML='<div class="dn-dh"><b></b><span></span></div>';el.querySelector('b').textContent=DN_DAYS[wd];el.querySelector('span').textContent=d.getDate()+' '+DN_MON[d.getMonth()];
+  if(rest){el.insertAdjacentHTML('beforeend','<div class="dn-rest"></div>');el.querySelector('.dn-rest').textContent=rest[0].toUpperCase()+rest.slice(1)}
+  const tb=document.createElement('div');tb.className='dn-rows';
+  subs.forEach((s,n)=>{const hs=list.filter(h=>h.s===s);(hs.length?hs:[null]).forEach((h,j)=>tb.appendChild(dnRow(key,s,h,j?'':String(n+1))))});
+  if(!subs.length&&!rest)tb.insertAdjacentHTML('beforeend','<div class="dn-row empty"><i></i><span class="dn-s"></span><span class="dn-t"></span></div>');
+  el.appendChild(tb);
+  const add=document.createElement('button');add.className='dn-add';add.textContent='+ записать задание';add.onclick=()=>dnEdit(key,null,'');el.appendChild(add);
+  return el}
+function dnRow(key,s,h,num){
+  const r=document.createElement('div');r.className='dn-row'+(h&&(h.done||h.pend)?' ok':'');
+  r.innerHTML='<i></i><span class="dn-s"></span><span class="dn-t"></span><span class="dn-act"></span>';r.querySelector('i').textContent=num;
+  r.querySelector('.dn-s').textContent=s;r.querySelector('.dn-t').textContent=h?h.t:'';
+  r.onclick=e=>{if(e.target.closest('.dn-act'))return;dnEdit(key,h,s)};
+  const a=r.querySelector('.dn-act');
+  if(h){const ok=document.createElement('button');ok.className='dn-ok';ok.textContent=h.done||h.pend?'✓':'Сделала';ok.title='Отметить, что сделала';
+      ok.onclick=()=>{if(h.done||h.pend){toast(h.pend?'Ждёт подтверждения мамы или папы':'Уже сделано!');return}h.pend=today();addPending('Домашнее задание: '+s+' — '+h.t,1);save();cheer();renderDnev();if(document.getElementById('home').classList.contains('on'))renderPath()};a.appendChild(ok);
+    const go=h.go||DN_GO[s];if(go){const p=document.createElement('button');p.className='dn-go';p.textContent='▶';p.title='Потренироваться';p.setAttribute('aria-label','Потренироваться');p.onclick=()=>{typeof go==='function'?go():startLesson(go.slice(0,-1),+go.slice(-1))};a.appendChild(p)}}
+  return r}
+/* окно записи задания */
+function dnModal(html){const m=document.getElementById('dnModal'),c=document.getElementById('dnCard');c.innerHTML=html;m.classList.add('on');return c}
+function dnEdit(key,h,s){
+  const D=DN(),d=new Date(key+'T12:00'),subs=[...new Set((D.sched[d.getDay()]||[]).concat(DN_SUBJ))];
+  const c=dnModal('<h2>'+DN_DAYS[d.getDay()]+', '+d.getDate()+' '+DN_MON[d.getMonth()]+'</h2><p class="dn-lbl">Предмет</p><div class="chips dn-chips"></div><p class="dn-lbl">Задание</p><textarea class="t dn-ta" placeholder="Например: упр. 45, выучить правило на с. 30"></textarea><div class="row" style="justify-content:center;gap:10px;margin-top:12px"><button class="btn">Записать</button><button class="btn soft">Отмена</button></div>');
+  let cur=s||(h&&h.s)||subs[0];const ch=c.querySelector('.dn-chips');
+  subs.forEach(x=>{const b=document.createElement('button');b.className='chip'+(x===cur?' on':'');b.textContent=x;b.onclick=()=>{cur=x;ch.querySelectorAll('.chip').forEach(y=>y.classList.toggle('on',y===b))};ch.appendChild(b)});
+  const ta=c.querySelector('.dn-ta');ta.value=h?h.t:'';setTimeout(()=>ta.focus(),50);
+  const [ok,no]=c.querySelectorAll('.row .btn');no.onclick=()=>document.getElementById('dnModal').classList.remove('on');
+  if(h){const del=document.createElement('button');del.className='btn soft';del.textContent='Удалить';del.onclick=()=>{D.hw[key]=(D.hw[key]||[]).filter(x=>x!==h);save();document.getElementById('dnModal').classList.remove('on');renderDnev()};ok.parentNode.appendChild(del)}
+  ok.onclick=()=>{const t=ta.value.trim();if(!t){ta.focus();return}
+    if(h){h.s=cur;h.t=t}else{(D.hw[key]=D.hw[key]||[]).push({id:Date.now(),s:cur,t,done:0,pend:0})}
+    save();document.getElementById('dnModal').classList.remove('on');renderDnev()};
+}
+/* расписание уроков по дням недели */
+function dnSchedEdit(){
+  const D=DN();let wd=1;
+  const c=dnModal('<h2>Расписание уроков</h2><div class="dn-wds"></div><ol class="dn-sl"></ol><p class="dn-lbl">Добавить предмет</p><div class="chips dn-chips"></div><div class="row" style="justify-content:center;margin-top:12px"><button class="btn">Готово</button></div>');
+  const wds=c.querySelector('.dn-wds'),sl=c.querySelector('.dn-sl'),ch=c.querySelector('.dn-chips');
+  const draw=()=>{wds.innerHTML='';[1,2,3,4,5,6].forEach(k=>{const b=document.createElement('button');b.className='chip'+(k===wd?' on':'');b.textContent=DN_DAYS[k].slice(0,2);b.onclick=()=>{wd=k;draw()};wds.appendChild(b)});
+    const L=D.sched[wd]=D.sched[wd]||[];sl.innerHTML='';
+    L.forEach((x,i)=>{const li=document.createElement('li');li.innerHTML='<span></span><button aria-label="Убрать">×</button>';li.querySelector('span').textContent=x;li.querySelector('button').onclick=()=>{L.splice(i,1);save();draw()};sl.appendChild(li)});
+    if(!L.length)sl.innerHTML='<li class="dn-none">Пока пусто — нажимайте предметы ниже по порядку уроков</li>'};
+  DN_SUBJ.forEach(x=>{const b=document.createElement('button');b.className='chip';b.textContent=x;b.onclick=()=>{(D.sched[wd]=D.sched[wd]||[]).push(x);save();draw()};ch.appendChild(b)});
+  draw();c.querySelector('.row .btn').onclick=()=>{document.getElementById('dnModal').classList.remove('on');renderDnev()};
+}
+function dnHwFor(key){return (DN().hw[key]||[])}
 /* ---------- помощница: уборка, посуда, игры с Лёшей ---------- */
 const HELP=[
   {k:'room',ic:'🧸',img:'help-room',n:'Уборка в комнате',p:'Наперегонки с Ух!',stars:4},
