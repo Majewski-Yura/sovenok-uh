@@ -585,6 +585,68 @@ label.f{display:block;margin-top:14px;font-size:16px}
   .tabs{max-width:min(1560px,94vw)}.tabs img{width:48px;height:48px}.tabs button{font-size:16px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* математика (06.11.2026): разделы и новые механики */
+.msec{flex:0 0 100%;text-align:left;margin:14px 4px 0}
+#lessonList.mlist .card{padding:12px}#lessonList.mlist .card .ic{height:auto;justify-content:flex-start}#lessonList.mlist .lesson-n{font-size:28px}#lessonList.mlist .card h3{font-size:17px;margin-top:4px}#lessonList.mlist .card p{font-size:13px}
+#lessonList.mlist{gap:10px}@media (max-width:600px){#lessonList.mlist .card{flex:1 1 40%;min-width:0}}
+.gt-area{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:flex-end;min-height:120px;max-width:640px;margin:8px auto 0;padding:12px;background:#fffaf0;border-radius:20px;border:3px dashed #e9d6b3}
+.gt-bs,.gt-ss{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end}
+.gt-b{width:34px;height:96px;border-radius:6px;background:repeating-linear-gradient(90deg,#f4b860 0 3px,#d98b2b 3px 3.4px);position:relative;animation:pop .25s}
+.gt-b::after{content:'';position:absolute;left:-3px;right:-3px;top:44px;height:9px;border-radius:4px;background:#e85a2c}
+.gt-s{width:7px;height:96px;border-radius:4px;background:#f4b860;box-shadow:inset -2px 0 #d98b2b;animation:pop .25s}
+.gt-read{text-align:center;font-size:24px;font-weight:900;margin:8px 0;color:var(--brown2)}
+.gt-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.gt-btns .btn{font-size:18px;padding:10px 14px}
+.gt-ok{display:block;margin:12px auto 0}
+.gtr-row{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;justify-content:center;margin:8px auto 0;max-width:720px}
+.gtr-loco{height:74px;width:auto}
+.gtr-w{min-width:62px;height:56px;padding:0 8px;border-radius:12px 12px 6px 6px;background:#4a8cff;color:#fff;font-size:28px;font-weight:900;display:grid;place-items:center;position:relative;margin-bottom:12px}
+.gtr-w::after{content:'';position:absolute;bottom:-12px;left:8px;right:8px;height:12px;background:radial-gradient(circle 6px at 10px 6px,#3b2a20 98%,transparent) left/50% 100% repeat-x}
+.gtr-w:nth-child(odd){background:#ff7a59}.gtr-w.gap{background:#fff;color:#c9b9a0;border:3px dashed #e0c9a6}.gtr-w.gap.ok{color:#2f9a5a;border-color:#2f9a5a;animation:pop .4s}
+.mg-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+.mg-chip{min-width:64px;font-size:28px;font-weight:900;background:var(--bg2);border:4px solid var(--line);border-radius:18px;padding:8px 14px;box-shadow:var(--shadow);color:var(--ink)}
+.mg-chip.used{opacity:.25}
+.gh-house{width:min(260px,80vw);margin:6px auto 0}
+.gh-roof{height:84px;background:#ff7a59;clip-path:polygon(50% 0,100% 100%,0 100%);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px}
+.gh-roof b{font-size:34px;color:#fff;font-weight:900}
+.gh-fl{display:grid;grid-template-columns:1fr 1fr;background:#ffe7c2;border:3px solid #e0b980;border-top:0}
+.gh-c{font-size:30px;font-weight:900;text-align:center;padding:8px;color:var(--ink)}.gh-c+.gh-c{border-left:3px solid #e0b980}
+.gh-c.gap{color:#c9b9a0}.gh-c.gap.ok{color:#2f9a5a;animation:pop .4s}
+.gsc{position:relative;max-width:520px;margin:8px auto 0;padding-top:10px}
+.gsc-beam{display:flex;justify-content:space-between;align-items:flex-end;height:110px;border-bottom:8px solid #8a6a4a;border-radius:4px;transition:transform .5s cubic-bezier(.3,1.4,.6,1);margin:0 6%}
+.gsc-pan{display:flex;gap:6px;align-items:flex-end;padding:0 4px 4px}
+.gsc-wt{font-style:normal;min-width:56px;height:56px;padding:0 8px;border-radius:12px 12px 6px 6px;background:#5d6b7a;color:#fff;font-size:24px;font-weight:900;display:grid;place-items:center}
+.gsc-wt.big{min-width:70px;height:70px}.gsc-wt.q{background:#fff;color:#c9b9a0;border:3px dashed #9aa3ad}.gsc-wt.q.ok{color:#2f9a5a;border-color:#2f9a5a}
+.gsc-post{width:16px;height:60px;background:#8a6a4a;margin:0 auto;border-radius:0 0 8px 8px}
+.gsc .opts{margin-top:14px}
+.gco-tag{display:inline-block;background:#fff6d6;border:4px solid var(--gold);border-radius:16px;padding:8px 18px;font-size:26px;font-weight:800}
+.gco-tray{min-height:84px;max-width:640px;margin:8px auto 0;padding:10px;border-radius:22px;background:#f3e3c7;border:3px solid #e0c9a6;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.gco-sum{text-align:center;font-size:22px;font-weight:900;margin:8px 0}.gco-sum.ok{color:#2f9a5a}
+.gco-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.gco-c{width:66px;height:66px;border-radius:50%;border:4px solid rgba(0,0,0,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;color:#3b2a20;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.gco-c b{font-size:24px}.gco-c small{font-size:11px;font-weight:800}
+.gco-c.c1{background:radial-gradient(circle at 35% 30%,#ffd9a8,#d98b4a)}.gco-c.c2{background:radial-gradient(circle at 35% 30%,#fff3b0,#e0b23a)}
+.gco-c.c3{background:radial-gradient(circle at 35% 30%,#fff3b0 40%,#c9ced6 42%)}
+.gco-c.note{width:96px;height:56px;border-radius:10px;background:linear-gradient(135deg,#b7e4c7,#7bd389)}
+.gco-tray .gco-c{width:54px;height:54px}.gco-tray .gco-c.note{width:80px;height:46px}
+.gru-svg{width:100%;max-width:640px;display:block;margin:6px auto 0}
+.gru-lab{text-align:center;font-size:22px;font-weight:900;margin:6px 0}
+.gru .btn{display:block;margin:10px auto 0}
+.gtk-text{font-size:22px;line-height:1.35;font-weight:700;max-width:640px;margin:0 auto;text-align:left}
+.gtk-bar{width:100%;max-width:600px;display:block;margin:6px auto 0}
+.gtk-step{text-align:center;font-size:20px;font-weight:900;margin:10px 0 6px;color:var(--brown2)}
+.gtk-sol{text-align:center;font-size:30px;font-weight:900;margin-top:8px}
+.gsh{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:560px;margin:10px auto 0}
+.gsh-it{aspect-ratio:1;background:var(--bg2);border:4px solid var(--line);border-radius:18px;padding:8px;box-shadow:var(--shadow)}
+.gsh-it svg{width:100%;height:100%}.gsh-it.ok{border-color:#2f9a5a;background:#e3f7e9}
+.gpe-svg{width:100%;max-width:420px;display:block;margin:4px auto 0}
+.gfr-two{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:6px auto 0}
+.gfr-f{display:grid;grid-template-columns:repeat(5,40px);gap:4px;padding:6px;background:#fff;border:4px solid #3b2a20;border-radius:10px}
+.gfr-f i{width:40px;height:40px;border-radius:6px;background:#f3ead9;position:relative}
+.gfr-f i.a::after,.gfr-f i.b::after,.gfr-f i.x::after{content:'';position:absolute;inset:5px;border-radius:50%;background:#ff5a5f}
+.gfr-f i.b::after{background:#4a8cff}.gfr-f i.x::after{background:#ff5a5f;opacity:.35}
+.gfr-f i.x::before{content:'';position:absolute;left:4px;right:4px;top:50%;height:4px;background:#3b2a20;transform:rotate(-45deg);z-index:1}
+@media (max-width:480px){.gfr-f{grid-template-columns:repeat(5,28px)}.gfr-f i{width:28px;height:28px}.gsh{grid-template-columns:repeat(3,1fr)}.gtk-text{font-size:19px}.gco-c{width:58px;height:58px}}
 </style>
 </head>
 <body>
@@ -1792,9 +1854,10 @@ const LESSONS={
 let LESSON={subj:'ru',i:0};
 function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   document.getElementById('owlLessons').style.display=k==='en'?'none':'';document.getElementById('owlLessonsT').style.display=k==='en'?'':'none';say('lessons',L.say);
-  const box=document.getElementById('lessonList');box.innerHTML='';const done=S.lessonsDone||{};
-  L.list.forEach((x,i)=>{const b=document.createElement('button');b.className='card'+(done[k+i]?' done':'');
-    b.innerHTML='<div class="ic"><span class="lesson-n">'+(i+1)+'</span></div><h3></h3><p style="display:block"></p>';b.querySelector('h3').textContent=typo(x.n);b.querySelector('p').textContent=typo(x.p);
+  const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math');const done=S.lessonsDone||{};let num=0;
+  (k==='math'?MATH_ORDER():L.list.map((x,i)=>i)).forEach(i=>{if(typeof i==='string'){const h=document.createElement('h3');h.className='shelf-h msec';h.textContent=i;box.appendChild(h);return}
+    const x=L.list[i],b=document.createElement('button');b.className='card'+(done[k+i]?' done':'');
+    num++;b.innerHTML='<div class="ic"><span class="lesson-n">'+num+'</span></div><h3></h3><p style="display:block"></p>';b.querySelector('h3').textContent=typo(x.n);b.querySelector('p').textContent=typo(x.p);
     {const n=lessonPrize(k+i);b.insertAdjacentHTML('beforeend','<div style="margin-top:6px"><b class="starsTag">'+(n?'⭐ '+n:'✓ ⭐ получены')+'</b></div>')}b.onclick=()=>startLesson(k,i);box.appendChild(b)})}
 /* подсказка: одна на вопрос */
 function hintBtn(box,fn){const old=box.parentNode.querySelector('.hint-row');if(old)old.remove();
@@ -2089,7 +2152,7 @@ function ruStep(){
   const win=()=>{if(!q.missed){rl.textContent=typo(q.r);rl.classList.remove('explain')}cheer();flashStar('owlGame','book');
     if(q.missed&&RG.extra<2){RG.list.splice(RG.i+1,0,Object.assign(RU_GEN[q.gen](),{gen:q.gen,again:1}));RG.extra++}
     nx.style.display='flex'};
-  if(G_KIND[q.t]){if(['line','say','clock'].includes(q.t))W.className='eq';G_KIND[q.t](q,{Q:W,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('game',t),snd:tripSnd});return}
+  if(G_KIND[q.t]){if(['line','say','clock','tens','train','house','scale','coins','ruler','task','shapes','perim','frame'].includes(q.t))W.className='eq';G_KIND[q.t](q,{Q:W,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('game',t),snd:tripSnd});return}
   ({choose:ruChoose,fill:ruFill,sort:ruSort,order:ruOrder})[q.t](q,W,box,miss,win);
 }
 function ruChoose(q,W,box,miss,win){
@@ -2454,14 +2517,14 @@ function gFix(q,c){
 }
 /* числовая прямая: лягушка стоит на a и прыгает на b вправо (+) или влево (−); нажми, куда она допрыгнет */
 function gLine(q,c){
-  const box=c.box;box.className='gl';box.innerHTML='';const lo=Math.max(0,Math.min(q.a,q.ans)-2),hi=lo+10;
-  if(c.Q){c.Q.innerHTML='<div class="sent"></div>';c.Q.querySelector('.sent').textContent=q.a+' '+(q.op>0?'+':'−')+' '+q.b+' = ?'}
+  const st=q.step||1,box=c.box;box.className='gl';box.innerHTML='';let lo=Math.min(q.a,q.ans);for(let k=0;k<2&&lo-st>=0;k++)lo-=st;const hi=lo+10*st;
+  if(c.Q){c.Q.innerHTML='<div class="sent"></div>';c.Q.querySelector('.sent').textContent=q.a+' '+(q.op>0?'+':'−')+' '+q.b*st+' = ?'}
   const fr=G_EL('img','gl-frog');fr.src='img/en/frog.webp';fr.alt='Лягушка';box.appendChild(fr);
-  const tk=G_EL('div','gl-ticks');box.appendChild(tk);const pos=n=>((n-lo)+.5)/11*100+'%';fr.style.left=pos(q.a);
+  const tk=G_EL('div','gl-ticks');box.appendChild(tk);const pos=n=>((n-lo)/st+.5)/11*100+'%';fr.style.left=pos(q.a);
   let done=false;
-  for(let n=lo;n<=hi;n++){const b=G_EL('button','gl-t');b.textContent=n;
+  for(let n=lo;n<=hi;n+=st){const b=G_EL('button','gl-t');b.textContent=n;
     b.onclick=()=>{if(done)return;if(n!==q.ans){ruShake(b);c.miss();return}done=true;b.classList.add('ok');
-      let cur=q.a;const iv=setInterval(()=>{cur+=q.op;fr.style.left=pos(cur);fr.classList.remove('hop');void fr.offsetWidth;fr.classList.add('hop');if(cur===q.ans){clearInterval(iv);setTimeout(c.win,350)}},320)};tk.appendChild(b)}
+      let cur=q.a;const iv=setInterval(()=>{cur+=q.op*st;fr.style.left=pos(cur);fr.classList.remove('hop');void fr.offsetWidth;fr.classList.add('hop');if(cur===q.ans){clearInterval(iv);setTimeout(c.win,350)}},320)};tk.appendChild(b)}
 }
 /* часы: «который час?» (выбор) или «поставь стрелки» (нажми на число + «ровно / половина») */
 const G_HOURG=['двенадцатого','первого','второго','третьего','четвёртого','пятого','шестого','седьмого','восьмого','девятого','десятого','одиннадцатого','двенадцатого'];
@@ -2505,6 +2568,213 @@ function gSay(q,c){
     r.onend=()=>mic.classList.remove('on');try{r.start()}catch(_){}};
 }
 const G_KIND={match:gMatch,catch:gCatch,fix:gFix,line:gLine,clock:gClock,say:gSay};
+/* ---------- математика по учебнику Муравьёвой и Урбан, 2 класс, часть 1 (06.11.2026) ----------
+   разделы как в книге: повторение 1 класса → табличное сложение и вычитание → числа от 21 до 100 → сложение и вычитание;
+   новые механики: пучки палочек, паровозик, весы, монетки, линейка, задача со схемой, числовые домики, фигуры, периметр, десяточки */
+const MR=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const mOpts=(ans,d)=>{const s=new Set([ans]);let k=0;while(s.size<3&&k<40){const v=ans+pick(d||[-10,-2,-1,1,2,10]);if(v>=0&&v<=120)s.add(v);k++}return [...s].map(String)};
+const MATH_OK_R={tens:'Десятки — это пучки по десять палочек, единицы — отдельные палочки.',place:'В числе сначала пишут десятки, потом единицы.',
+  cmp:'Сначала сравни десятки. Если они равны — сравни единицы.',ten:'Сначала дополни до десяти, потом прибавь остальное.',tenS:'Сначала отними до десяти, потом остальное.',
+  add1:'Единицы складывают с единицами, десятки остаются.',add10:'Десятки складывают с десятками, единицы остаются.',br:'Сначала выполняют действие в скобках.',
+  len:'1 дм = 10 см, 1 м = 10 дм = 100 см.',money:'1 рубль = 100 копеек.',task:'Больше — прибавляем, меньше или «осталось» — вычитаем.',
+  house:'Число — это сумма двух частей. Часть = число − другая часть.',scale:'Чтобы найти неизвестное слагаемое, из суммы вычитают известное.',per:'Периметр — это сумма длин всех сторон.',
+  shape:'Многоугольник называют по числу углов: три — треугольник, четыре — четырёхугольник.',ruler:'Прикладывай линейку от нуля и смотри, где кончается отрезок.',
+  sum10:'Вспомни состав числа десять: 1 и 9, 2 и 8, 3 и 7, 4 и 6, 5 и 5.',line10:'Прыжок на десятку — меняется число десятков.',train:'Соседние числа отличаются на одинаковое число — найди шаг.'};
+/* пример «a ± b» как строка и ответ */
+const mEx=(a,op,b)=>({s:a+' '+(op>0?'+':'−')+' '+b,v:a+op*b});
+const mFixGen=(make,ask,r)=>()=>{const items=[];for(let i=0;i<6;i++){const e=make(),bad=i<3,w=bad?e.v+pick([-10,-1,1,2,10].filter(d=>e.v+d>=0)):e.v;items.push({w:e.s+' = '+w,bad,fix:e.s+' = '+e.v,r})}
+  return {t:'fix',ask,items:shuffle(items),r}};
+const MATH_GEN={
+  /* повторение и до 20 */
+  m10:()=>{const op=Math.random()<.5?1:-1,a=op>0?MR(1,8):MR(3,10),b=op>0?MR(1,10-a):MR(1,a),e=mEx(a,op,b);return {t:'choose',ask:'Реши пример! Это мы проходили в первом классе.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.sum10}},
+  mCatch10:()=>{const good=[],bad=[];for(let a=1;a<10;a++){good.push(a+' + '+(10-a));bad.push(a+' + '+(9-a>0?9-a:a+2))}return {t:'catch',ask:'Лови примеры, где получается десять!',good,bad,r:MATH_OK_R.sum10}},
+  mFix10:mFixGen(()=>{const a=MR(1,9);return mEx(a,1,MR(1,10-a))},'Ух решала примеры и ошиблась! Нажми на неправильные — я исправлю.',MATH_OK_R.sum10),
+  mHouse10:()=>({t:'house',n:MR(6,10),ask:'Засели числовой домик! На каждом этаже два числа вместе дают число на крыше.',r:MATH_OK_R.house}),
+  mHouse18:()=>({t:'house',n:MR(11,18),ask:'Засели числовой домик! На каждом этаже два числа вместе дают число на крыше.',r:MATH_OK_R.house}),
+  mFrameAdd:()=>{const a=MR(6,9),b=MR(11-a,9);return {t:'frame',a,b,op:1,ask:'Посчитай по десяточкам! Сначала заполни десяточку, потом прибавь остальное.',opts:mOpts(a+b,[-2,-1,1,2]),r:MATH_OK_R.ten}},
+  mFrameSub:()=>{const a=MR(11,17),b=MR(a-9,9);return {t:'frame',a,b,op:-1,ask:'Посчитай по десяточкам! Сначала отними до десяти, потом остальное.',opts:mOpts(a-b,[-2,-1,1,2]),r:MATH_OK_R.tenS}},
+  mAdd20:()=>{const a=MR(5,9),b=MR(11-a,9),e=mEx(a,1,b);return {t:'choose',ask:'Сложи с переходом через десяток!',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.ten}},
+  mSub20:()=>{const a=MR(11,18),b=MR(a-9,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти с переходом через десяток!',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.tenS}},
+  mMatch20:()=>{const used=new Set(),pairs=[];while(pairs.length<4){const op=Math.random()<.5?1:-1,a=op>0?MR(5,9):MR(11,18),b=op>0?MR(11-a,9):MR(a-9,9),e=mEx(a,op,b);if(used.has(e.v))continue;used.add(e.v);pairs.push([e.s,String(e.v)])}
+    return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:MATH_OK_R.ten}},
+  mFix20:mFixGen(()=>{const op=Math.random()<.5?1:-1,a=op>0?MR(5,9):MR(11,18),b=op>0?MR(11-a,9):MR(a-9,9);return mEx(a,op,b)},'Ух решала примеры через десяток и ошиблась! Нажми на неправильные.',MATH_OK_R.ten),
+  mScale20:()=>{const a=MR(3,9),x=MR(3,9);return {t:'scale',a,b:a+x,ans:x,opts:mOpts(x,[-2,-1,1,2]),ask:'Уравновесь весы! Какую гирьку поставить вместо вопроса?',r:MATH_OK_R.scale}},
+  mScale100:()=>{const a=MR(1,6)*10+MR(0,5),x=MR(1,3)*10;return {t:'scale',a,b:a+x,ans:x,opts:mOpts(x,[-10,-1,1,10]),ask:'Уравновесь весы! Какую гирьку поставить вместо вопроса?',r:MATH_OK_R.scale}},
+  /* задачи со схемой, как в учебнике */
+  mTask:()=>mTaskGen(20),mTask100:()=>mTaskGen(60),
+  /* числа от 21 до 100 */
+  mTensBuild:()=>({t:'tens',mode:'build',goal:MR(21,99),ask:'Собери число из пучков и палочек! В одном пучке десять палочек.',r:MATH_OK_R.tens}),
+  mTensRead:()=>{const g=MR(21,99),d=Math.floor(g/10),u=g%10;const o=[g,u*10+d,g+10>99?g-10:g+10].filter((v,i,a)=>v>0&&a.indexOf(v)===i);while(o.length<3)o.push(g+o.length);
+    return {t:'tens',mode:'read',goal:g,opts:o.map(String),ask:'Сколько здесь палочек? Посчитай пучки и отдельные палочки.',r:MATH_OK_R.tens}},
+  mPlace:()=>{let g;do g=MR(21,99);while(g%10===Math.floor(g/10)||g%10===0||(g%10+3)%10===Math.floor(g/10));const d=Math.floor(g/10),u=g%10,f=Math.random()<.5;return f?{t:'choose',ask:'Сколько в числе десятков и единиц?',show:String(g),opts:[d+' дес. '+u+' ед.',u+' дес. '+d+' ед.',d+' дес. '+((u+3)%10)+' ед.'],small:1,r:MATH_OK_R.place}
+    :{t:'choose',ask:'Какое число получится?',show:d+' дес. '+u+' ед.',opts:mOpts(g,[-10,-1,1,10]).concat(u!==d&&u?[]:[]),r:MATH_OK_R.place}},
+  mPlaceMatch:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const g=MR(21,99);if(s.has(g)||g%10===0)continue;s.add(g);pairs.push([Math.floor(g/10)+' дес. '+g%10+' ед.',String(g)])}return {t:'match',ask:'Соедини запись с числом! Веди пальцем слева направо.',pairs,r:MATH_OK_R.place}},
+  mTrain1:()=>{const st=MR(21,92),dir=Math.random()<.3?-1:1,seq=Array.from({length:7},(_,i)=>st+dir*i).filter(v=>v>0&&v<=100);return {t:'train',seq,hide:shuffle(seq.map((_,i)=>i).slice(1)).slice(0,3),ask:'Помоги паровозику! Вставь пропущенные числа в вагончики.',r:MATH_OK_R.train}},
+  mTrain10:()=>{const st=MR(1,9),seq=Array.from({length:7},(_,i)=>st+10*i+(Math.random()<.5?0:0));return {t:'train',seq,hide:shuffle([1,2,3,4,5,6]).slice(0,3),ask:'Помоги паровозику! Вставь пропущенные числа в вагончики.',r:MATH_OK_R.line10}},
+  mOrderNums:()=>{const s=new Set();while(s.size<5)s.add(MR(21,99));const seq=[...s].sort((a,b)=>a-b).map(String);return {t:'order',ask:'Расставь числа от меньшего к большему!',seq,joiner:' ',r:MATH_OK_R.cmp}},
+  mSign:()=>{const a=MR(21,99),b=Math.random()<.2?a:Math.random()<.5?Math.floor(a/10)*10+MR(0,9):MR(21,99),s=a>b?'>':a<b?'<':'=';return {t:'choose',ask:'Какой знак поставить? Больше, меньше или равно?',show:a+' ? '+b,opts:[s].concat(['>','<','='].filter(x=>x!==s)),r:MATH_OK_R.cmp}},
+  mCatchGt:()=>{const good=[],bad=[];for(let i=0;i<14;i++){good.push(String(MR(51,99)));bad.push(String(MR(10,49)))}return {t:'catch',ask:'Лови числа больше пятидесяти!',good,bad,r:MATH_OK_R.cmp}},
+  mCatchTens:()=>({t:'catch',ask:'Лови круглые числа — целые десятки!',good:['10','20','30','40','50','60','70','80','90'],bad:['15','23','37','41','58','64','76','82','99','45'],r:MATH_OK_R.tens}),
+  mSortDigits:()=>{const it=shuffle([MR(1,9),MR(1,9),MR(21,99),MR(21,99),MR(10,20)].map(v=>[String(v),v>9?1:0]));return {t:'sort',ask:'Разложи числа: однозначные и двузначные!',bins:['Однозначные','Двузначные'],items:it,r:MATH_OK_R.place}},
+  mLine10:()=>{const op=Math.random()<.6?1:-1,a=op>0?MR(1,5)*10+MR(0,9)*(Math.random()<.5?1:0):MR(5,9)*10,b=MR(1,4);return {t:'line',step:10,a,b,op,ans:a+op*b*10,ask:'Лягушка прыгает по десяткам! Нажми на число, куда она допрыгнет.',r:MATH_OK_R.line10}},
+  mUnitsMatch:()=>({t:'match',ask:'Соедини одинаковые длины! Веди пальцем слева направо.',pairs:shuffle([['1 дм','10 см'],['2 дм','20 см'],['5 дм','50 см'],['1 м','100 см'],['3 дм','30 см'],['7 дм','70 см']]).slice(0,4),r:MATH_OK_R.len}),
+  mUnitsSign:()=>{const v=pick([['1 дм','8 см','>'],['1 дм','10 см','='],['1 дм','12 см','<'],['3 дм','25 см','>'],['1 м','90 см','>'],['1 м','10 дм','='],['4 дм','45 см','<'],['1 м','100 см','=']]);
+    return {t:'choose',ask:'Сравни длины! Какой знак поставить?',show:v[0]+' ? '+v[1],opts:[v[2]].concat(['>','<','='].filter(x=>x!==v[2])),r:MATH_OK_R.len}},
+  mRulerM:()=>{const L=MR(2,12);return {t:'ruler',mode:'measure',L,opts:mOpts(L,[-2,-1,1,2]),ask:'Измерь отрезок линейкой! Сколько в нём сантиметров?',r:MATH_OK_R.ruler}},
+  mRulerD:()=>({t:'ruler',mode:'draw',L:MR(3,12),ask:'Начерти отрезок нужной длины! Тяни кружок по линейке.',r:MATH_OK_R.ruler}),
+  mShapes:()=>{const want=pick(['tri','quad','broken']);return {t:'shapes',want,ask:want==='tri'?'Найди все треугольники!':want==='quad'?'Найди все четырёхугольники!':'Найди все ломаные линии!',r:MATH_OK_R.shape}},
+  mPerim:()=>{const k=pick(['tri','rect','sq']),s=k==='tri'?[MR(2,6),MR(3,7),MR(3,8)]:k==='rect'?[MR(2,6),MR(3,9)]:[MR(2,7)];
+    const p=k==='tri'?s[0]+s[1]+s[2]:k==='rect'?2*(s[0]+s[1]):4*s[0];return {t:'perim',k,s,ans:p,opts:mOpts(p,[-2,-1,1,2,4]),ask:'Найди периметр фигуры! Сложи длины всех сторон.',r:MATH_OK_R.per}},
+  /* сложение и вычитание до 100 */
+  mCover:()=>{const d=MR(2,9),u=MR(1,9),n=d*10+u,v=pick([[d*10+' + '+u,n],[n+' − '+u,d*10],[n+' − '+d*10,u]]);return {t:'choose',ask:'Число — это десятки и единицы. Реши пример!',show:v[0]+' = ?',opts:mOpts(v[1],[-10,-1,1,10]),r:MATH_OK_R.place}},
+  mCoverMatch:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const d=MR(2,9),u=MR(1,9),n=d*10+u,v=pick([[d*10+' + '+u,n],[n+' − '+u,d*10],[n+' − '+d*10,u]]);if(s.has(v[1]))continue;s.add(v[1]);pairs.push([v[0],String(v[1])])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:MATH_OK_R.place}},
+  mTens:()=>{const op=Math.random()<.5?1:-1,a=op>0?MR(1,7)*10:MR(3,9)*10,b=op>0?MR(1,(100-a)/10)*10:MR(1,a/10-1)*10,e=mEx(a,op,b);return {t:'choose',ask:'Считаем круглыми десятками! Три десятка и два десятка — пять десятков.',show:e.s+' = ?',opts:mOpts(e.v,[-10,10,-20,20]),r:MATH_OK_R.add10}},
+  mTensMatch:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const a=MR(1,6)*10,b=MR(1,3)*10;if(s.has(a+b))continue;s.add(a+b);pairs.push([a+' + '+b,String(a+b)])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:MATH_OK_R.add10}},
+  mCatch50:()=>{const good=[],bad=[];for(let a=1;a<5;a++){good.push(a*10+' + '+(50-a*10));bad.push(a*10+' + '+(40-a*10>0?40-a*10:60))}good.push('70 − 20','90 − 40','60 − 10','80 − 30');bad.push('70 − 30','90 − 20','60 − 30');return {t:'catch',ask:'Лови примеры, где получается пятьдесят!',good,bad,r:MATH_OK_R.add10}},
+  mAdd1:()=>{const a=MR(2,9)*10+MR(1,5),b=MR(1,9-a%10),e=mEx(a,1,b);return {t:'choose',ask:'Прибавь единицы! Единицы — к единицам.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:MATH_OK_R.add1}},
+  mAdd10:()=>{const a=MR(1,6)*10+MR(1,9),b=MR(1,9-Math.floor(a/10))*10,e=mEx(a,1,b);return {t:'choose',ask:'Прибавь десятки! Десятки — к десяткам.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:MATH_OK_R.add10}},
+  mSub1:()=>{const a=MR(2,9)*10+MR(4,9),b=MR(1,a%10),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти единицы! Единицы — из единиц.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:MATH_OK_R.add1}},
+  mSub10:()=>{const a=MR(3,9)*10+MR(1,9),b=MR(1,Math.floor(a/10)-1)*10,e=mEx(a,-1,b);return {t:'choose',ask:'Вычти десятки! Десятки — из десятков.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:MATH_OK_R.add10}},
+  mMatch100:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const g=pick(['mAdd1','mAdd10','mSub1','mSub10']),q=MATH_GEN[g](),v=q.opts[0];if(s.has(v))continue;s.add(v);pairs.push([q.show.replace(' = ?',''),v])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:MATH_OK_R.add1}},
+  mFix100:mFixGen(()=>{const g=pick(['mAdd1','mAdd10','mSub1','mSub10']),q=MATH_GEN[g]();const [x,op,y]=q.show.replace(' = ?','').split(' ');return mEx(+x,op==='+'?1:-1,+y)},'Ух решала примеры и ошиблась! Нажми на неправильные — я исправлю.',MATH_OK_R.add1),
+  mBr:()=>{const v=pick([()=>{const a=MR(3,9),b=MR(1,9),c=MR(1,Math.min(9,a+b));return [a+' + '+b+' − '+c,a+b-c,'']},()=>{const a=MR(12,19),b=MR(2,5),c=MR(1,4);return ['('+a+' − '+b+') + '+c,a-b+c,'']},
+      ()=>{const a=MR(14,20),b=MR(2,5),c=MR(1,4);return [a+' − ('+b+' + '+c+')',a-b-c,'']},()=>{const a=MR(2,6)*10,b=MR(1,3)*10,c=MR(1,4)*10;return ['('+a+' + '+b+') − '+c,a+b-c,'']},()=>{const a=MR(6,9)*10,b=MR(1,2)*10,c=MR(1,2)*10;return [a+' − ('+b+' + '+c+')',a-b-c,'']}])();
+    return {t:'choose',ask:'Сначала действие в скобках! Если скобок нет — по порядку слева направо.',show:v[0]+' = ?',opts:mOpts(v[1],[-2,2,-10,10]),r:MATH_OK_R.br}},
+  /* деньги */
+  mCoinsK:()=>({t:'coins',unit:'к.',price:MR(3,19)*5,coins:[1,2,5,10,20,50],ask:'Заплати ровно столько, сколько стоит! Нажимай на монетки.',r:MATH_OK_R.money}),
+  mCoinsR:()=>({t:'coins',unit:'р.',price:MR(3,30),coins:[1,2,5,10,20],ask:'Заплати ровно столько, сколько стоит! Нажимай на монетки и купюры.',r:MATH_OK_R.money}),
+  mMoney:()=>{const v=pick([['1 р.','100 к.'],['1 р. 20 к.','120 к.'],['2 р.','200 к.'],['1 р. 5 к.','105 к.'],['1 р. 50 к.','150 к.']]);const n=parseInt(v[1]);return {t:'choose',ask:'Сколько это копеек? Помни: в рубле сто копеек.',show:v[0]+' = ? к.',opts:mOpts(n,[-10,10,-50,50]),r:MATH_OK_R.money}}
+};
+/* задача со схемой-отрезками: сначала выбрать действие, потом ответ */
+const M_WHO=[['Ух','Ух',['жёлудь','жёлудя','жёлудей']],['Топа','Топы',['машинка','машинки','машинок']],['Алиса','Алисы',['наклейка','наклейки','наклеек']],['Лёша','Лёши',['кубик','кубика','кубиков']]];
+function mTaskGen(max){
+  const w=pick(M_WHO),o=pick(M_WHO.filter(x=>x!==w)),k=pick(['total','left','more','less','diff']),N=n=>n+' '+plural(n,w[2]);let a,b,text,ok,bad,ans,bar;
+  if(k==='total'){a=MR(3,max/2);b=MR(2,max/2);text='У '+w[1]+' было '+N(a)+'. Подарили ещё '+b+'. Сколько стало?';ok=a+' + '+b;bad=a+' − '+b;ans=a+b;bar={k:'total',a,b}}
+  else if(k==='left'){a=MR(8,max);b=MR(2,a-2);text='У '+w[1]+' было '+N(a)+'. '+b+' '+'отдали'+' друзьям. Сколько осталось?';ok=a+' − '+b;bad=a+' + '+b;ans=a-b;bar={k:'left',a,b}}
+  else if(k==='more'){a=MR(3,max/2);b=MR(2,9);text='У '+w[1]+' '+N(a)+', а у '+o[1]+' на '+b+' больше. Сколько у '+o[1]+'?';ok=a+' + '+b;bad=a+' − '+b;ans=a+b;bar={k:'more',a,b}}
+  else if(k==='less'){a=MR(8,max);b=MR(2,Math.min(9,a-2));text='У '+w[1]+' '+N(a)+', а у '+o[1]+' на '+b+' меньше. Сколько у '+o[1]+'?';ok=a+' − '+b;bad=a+' + '+b;ans=a-b;bar={k:'less',a,b}}
+  else{a=MR(8,max);b=MR(2,a-2);text='У '+w[1]+' '+N(a)+', а у '+o[1]+' — '+b+'. На сколько у '+w[1]+' больше?';ok=a+' − '+b;bad=a+' + '+b;ans=a-b;bar={k:'diff',a,b}}
+  return {t:'task',text,bar,steps:[{ask:'Каким действием решаем?',opts:[ok,bad]},{ask:'Сколько получится?',opts:mOpts(ans,[-2,-1,1,2])}],ask:'Реши задачу! Посмотри на схему: так решать легче.',r:MATH_OK_R.task};
+}
+/* ---- механики ---- */
+function mGapFill(box,vals,gapEls,c,extra){let n=0;const row=G_EL('div','mg-chips');
+  shuffle(vals.concat(extra||[])).forEach(v=>{const b=G_EL('button','mg-chip');b.textContent=v;b.onclick=()=>{if(b.disabled)return;
+    if(String(v)===String(vals[n])){b.disabled=true;b.classList.add('used');const g=gapEls[n];g.textContent=v;g.classList.add('ok');n++;cheer();if(c.snd)c.snd('ok');if(n===vals.length)setTimeout(c.win,300)}
+    else{ruShake(b);c.miss()}};row.appendChild(b)});box.appendChild(row)}
+function gTens(q,c){const box=c.box;box.className='gt';box.innerHTML='';const d=Math.floor(q.goal/10),u=q.goal%10;
+  const area=G_EL('div','gt-area'),rd=G_EL('div','gt-read');box.appendChild(area);box.appendChild(rd);
+  const draw=(D,U)=>{area.innerHTML='<div class="gt-bs">'+'<i class="gt-b"></i>'.repeat(D)+'</div><div class="gt-ss">'+'<i class="gt-s"></i>'.repeat(U)+'</div>';rd.textContent=D+' дес. '+U+' ед.'};
+  if(q.mode==='read'){if(c.Q)c.Q.innerHTML='';draw(d,u);rd.textContent='';const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
+    shuffle(q.opts.map((t,k)=>({t,k}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t;b.onclick=()=>{if(done||b.classList.contains('no'))return;if(!x.k){done=true;b.classList.add('yes');rd.textContent=d+' дес. '+u+' ед. = '+q.goal;c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)});return}
+  if(c.Q)c.Q.innerHTML='<div class="sent">'+q.goal+'</div>';let D=0,U=0;draw(0,0);
+  const row=G_EL('div','gt-btns');[['+ пучок',()=>D<9&&D++],['+ палочка',()=>U<9&&U++],['− пучок',()=>D>0&&D--],['− палочка',()=>U>0&&U--]].forEach(([t,f],i)=>{const b=G_EL('button',i<2?'btn':'btn soft');b.textContent=t;b.onclick=()=>{f();draw(D,U)};row.appendChild(b)});
+  box.appendChild(row);const ok=G_EL('button','btn gt-ok');ok.textContent='Готово';box.appendChild(ok);
+  ok.onclick=()=>{if(D===d&&U===u){ok.disabled=true;rd.textContent=D+' дес. '+U+' ед. = '+q.goal;c.win()}else{ruShake(area);c.miss();if(c.say)c.say(D!==d?'Посчитай пучки: сколько десятков в числе?':'Пучков верно! А сколько отдельных палочек?')}}}
+function gTrain(q,c){const box=c.box;box.className='gtr';box.innerHTML='';if(c.Q)c.Q.innerHTML='';
+  const row=G_EL('div','gtr-row');row.innerHTML='<img class="gtr-loco" src="img/toys/train.webp" alt="">';const gaps=[];
+  q.seq.forEach((v,i)=>{const w=G_EL('div','gtr-w');if(q.hide.includes(i)){w.classList.add('gap');w.textContent='?';gaps.push([i,w])}else w.textContent=v;row.appendChild(w)});box.appendChild(row);
+  gaps.sort((a,b)=>a[0]-b[0]);const vals=gaps.map(g=>q.seq[g[0]]);const ex=[];while(ex.length<2){const v=vals[0]+pick([-11,-2,2,11,5]);if(v>0&&!vals.includes(v)&&!ex.includes(v))ex.push(v)}
+  mGapFill(box,vals,gaps.map(g=>g[1]),c,ex)}
+function gHouse(q,c){const box=c.box;box.className='gh';box.innerHTML='';if(c.Q)c.Q.innerHTML='';
+  const h=G_EL('div','gh-house');h.innerHTML='<div class="gh-roof"><b>'+q.n+'</b></div>';const rows=shuffle(Array.from({length:q.n+1},(_,i)=>i).filter(i=>i>0&&i<q.n&&(q.n<=10||(i<10&&q.n-i<10)))).slice(0,4),gaps=[],vals=[];
+  rows.forEach((a,k)=>{const f=G_EL('div','gh-fl'),L=G_EL('span','gh-c'),R=G_EL('span','gh-c');const left=k%2===0;(left?L:R).textContent=a;const g=left?R:L;g.textContent='?';g.classList.add('gap');gaps.push(g);vals.push(q.n-a);f.appendChild(L);f.appendChild(R);h.appendChild(f)});
+  box.appendChild(h);const ex=[];while(ex.length<2){const v=MR(0,q.n);if(!vals.includes(v)&&!ex.includes(v))ex.push(v)}mGapFill(box,vals,gaps,c,ex)}
+function gScale(q,c){const box=c.box;box.className='gsc';box.innerHTML='';if(c.Q)c.Q.innerHTML='<div class="sent">'+q.a+' + <span class="gap">?</span> = '+q.b+'</div>';
+  box.innerHTML='<div class="gsc-beam"><div class="gsc-pan l"><i class="gsc-wt">'+q.a+'</i><i class="gsc-wt q">?</i></div><div class="gsc-pan r"><i class="gsc-wt big">'+q.b+'</i></div></div><div class="gsc-post"></div>';
+  const beam=box.querySelector('.gsc-beam'),slot=box.querySelector('.gsc-wt.q'),tilt=v=>{beam.style.transform='rotate('+(v===0?0:v<0?8:-8)+'deg)'};tilt(q.a-q.b);
+  const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
+  shuffle(q.opts).forEach(t=>{const b=G_EL('button','opt');b.textContent=t;b.onclick=()=>{if(done||b.classList.contains('no'))return;slot.textContent=t;const d=q.a+(+t)-q.b;tilt(d);
+    if(!d){done=true;b.classList.add('yes');slot.classList.add('ok');const g=c.Q&&c.Q.querySelector('.gap');if(g){g.textContent=t;g.classList.add('ok')}setTimeout(c.win,500)}
+    else{b.classList.add('no');c.miss();if(c.say)c.say(d>0?'Перевесило! Гирька слишком тяжёлая.':'Лёгкая гирька! Нужно тяжелее.');setTimeout(()=>{if(!done){slot.textContent='?';tilt(q.a-q.b)}},900)}};o.appendChild(b)})}
+const M_COIN={1:'c1',2:'c1',5:'c1',10:'c2',20:'c2',50:'c2'};
+function gCoins(q,c){const box=c.box;box.className='gco';box.innerHTML='';if(c.Q)c.Q.innerHTML='<div class="gco-tag">Цена: <b>'+q.price+' '+q.unit+'</b></div>';
+  const tray=G_EL('div','gco-tray'),sum=G_EL('div','gco-sum'),row=G_EL('div','gco-row');box.appendChild(tray);box.appendChild(sum);box.appendChild(row);let s=0,done=false,over=false;
+  const upd=()=>{sum.textContent='В кошельке: '+s+' '+q.unit;if(s===q.price&&!done){done=true;sum.classList.add('ok');cheer();setTimeout(c.win,400)}else if(s>q.price&&!over){over=true;c.miss();if(c.say)c.say('Многовато! Нажми на монетку в кошельке, чтобы убрать.')}};upd();
+  const coin=(v,cls)=>{const b=G_EL('button','gco-c '+(q.unit==='р.'?(v>=5?'note':'c3'):M_COIN[v]||'c2'));b.innerHTML='<b>'+v+'</b><small>'+(q.unit==='р.'?(v>=5?'рублей':v===1?'рубль':'рубля'):'коп.')+'</small>';return b};
+  q.coins.forEach(v=>{const b=coin(v);b.onclick=()=>{if(done)return;s+=v;const t=coin(v);t.onclick=()=>{if(done)return;s-=v;t.remove();if(s<=q.price)over=false;upd()};tray.appendChild(t);upd()};row.appendChild(b)})}
+function gRuler(q,c){const box=c.box;box.className='gru';box.innerHTML='';const X=n=>24+n*46;
+  let svg='<svg viewBox="0 0 600 150" class="gru-svg"><rect x="8" y="78" width="584" height="64" rx="10" fill="#ffe7a8" stroke="#d9b45c" stroke-width="3"/>';
+  for(let i=0;i<=24;i++){const x=24+i*23;svg+='<line x1="'+x+'" y1="78" x2="'+x+'" y2="'+(i%2?92:104)+'" stroke="#7a5a2a" stroke-width="2"/>';if(!(i%2))svg+='<text x="'+x+'" y="128" text-anchor="middle" font-size="18" font-weight="800" fill="#5a4020">'+i/2+'</text>'}
+  svg+='<line class="gru-seg" x1="'+X(0)+'" y1="50" x2="'+X(q.mode==='draw'?1:q.L)+'" y2="50" stroke="#e85a2c" stroke-width="7" stroke-linecap="round"/><circle cx="'+X(0)+'" cy="50" r="7" fill="#e85a2c"/><circle class="gru-h" cx="'+X(q.mode==='draw'?1:q.L)+'" cy="50" r="'+(q.mode==='draw'?16:7)+'" fill="#e85a2c" stroke="#fff" stroke-width="3"/></svg>';
+  box.innerHTML=svg;const sv=box.querySelector('svg'),seg=sv.querySelector('.gru-seg'),hd=sv.querySelector('.gru-h');
+  if(q.mode==='measure'){if(c.Q)c.Q.innerHTML='';const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
+    shuffle(q.opts.map((t,k)=>({t,k:t===String(q.L)}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t+' см';b.onclick=()=>{if(done||b.classList.contains('no'))return;if(x.k){done=true;b.classList.add('yes');c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)});return}
+  if(c.Q)c.Q.innerHTML='<div class="sent">'+q.L+' см</div>';let cur=1;const lab=G_EL('div','gru-lab');box.appendChild(lab);const set=n=>{cur=Math.max(1,Math.min(12,n));seg.setAttribute('x2',X(cur));hd.setAttribute('cx',X(cur));lab.textContent='Сейчас: '+cur+' см'};set(1);
+  sv.style.touchAction='none';sv.addEventListener('pointerdown',e=>{e.preventDefault();try{sv.setPointerCapture(e.pointerId)}catch(_){}const mv=ev=>{const r=sv.getBoundingClientRect();set(Math.round(((ev.clientX-r.left)*600/r.width-24)/46))};mv(e);
+    const up=()=>{sv.removeEventListener('pointermove',mv);sv.removeEventListener('pointerup',up)};sv.addEventListener('pointermove',mv);sv.addEventListener('pointerup',up)});
+  const ok=G_EL('button','btn');ok.textContent='Готово';box.appendChild(ok);ok.onclick=()=>{if(cur===q.L){ok.disabled=true;c.win()}else{ruShake(sv);c.miss();if(c.say)c.say(cur>q.L?'Длинновато! Сделай короче.':'Коротковато! Тяни дальше.')}}}
+function mBarSvg(B){const k=B.k,a=B.a,b=B.b,M=Math.max(a+b,a)*1.05,W=n=>Math.max(30,n/M*480),x0=40;let s='<svg viewBox="0 0 600 '+(k==='total'||k==='left'?130:160)+'" class="gtk-bar">';
+  const seg=(x,w,y,col,lab,top)=>'<line x1="'+x+'" y1="'+y+'" x2="'+(x+w)+'" y2="'+y+'" stroke="'+col+'" stroke-width="7" stroke-linecap="round"/><circle cx="'+x+'" cy="'+y+'" r="6" fill="'+col+'"/><circle cx="'+(x+w)+'" cy="'+y+'" r="6" fill="'+col+'"/>'+
+    '<text x="'+(x+w/2)+'" y="'+(top?y-14:y+30)+'" text-anchor="middle" font-size="34" font-weight="900" fill="#3b2a20">'+lab+'</text>';
+  if(k==='total'){const x1=x0+W(a+b);s+=seg(x0,W(a),60,'#e85a2c',a,1)+seg(x0+W(a),W(b),60,'#4a8cff',b,1)+'<path d="M'+x0+' 72 q0 14 14 14 H'+(x1-14)+' q14 0 14 -14" fill="none" stroke="#2f9a5a" stroke-width="4"/><text x="'+(x0+W(a+b)/2)+'" y="118" text-anchor="middle" font-size="38" font-weight="900" fill="#2f9a5a">?</text>'}
+  else if(k==='left'){s+=seg(x0,W(a),60,'#e85a2c','',1)+'<text x="'+(x0+W(a)/2)+'" y="40" text-anchor="middle" font-size="34" font-weight="900">'+a+'</text>'+seg(x0+W(a-b),W(b),82,'#9aa3ad',b,0)+'<text x="'+(x0+W(a-b)/2)+'" y="100" text-anchor="middle" font-size="38" font-weight="900" fill="#2f9a5a">?</text>'}
+  else{const top=seg(x0,W(a),50,'#e85a2c',a,1);const big=k==='more'?a+b:a-b;s+=top+(k==='diff'?seg(x0,W(b),120,'#4a8cff',b,0)+'<text x="'+(x0+W(b)+(W(a)-W(b))/2)+'" y="110" text-anchor="middle" font-size="38" font-weight="900" fill="#2f9a5a">?</text>'
+    :seg(x0,W(big),120,'#4a8cff','?',0)+'<text x="'+(x0+W(Math.min(a,big))+Math.abs(W(a)-W(big))/2)+'" y="'+(k==='more'?100:85)+'" text-anchor="middle" font-size="28" font-weight="900" fill="#7a5a2a">'+(k==='more'?'на '+b+' больше':'на '+b+' меньше')+'</text>')}
+  return s+'</svg>'}
+function gTask(q,c){const box=c.box;box.className='gtk';box.innerHTML='';if(c.Q){c.Q.innerHTML='<div class="gtk-text"></div>'+mBarSvg(q.bar);c.Q.querySelector('.gtk-text').textContent=typo(q.text)}
+  let st=0;const lab=G_EL('div','gtk-step'),o=G_EL('div','opts ruw');box.appendChild(lab);box.appendChild(o);
+  const show=()=>{const S_=q.steps[st];lab.textContent=S_.ask;o.innerHTML='';let done=false;shuffle(S_.opts.map((t,k)=>({t,k}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t;b.onclick=()=>{if(done||b.classList.contains('no'))return;
+    if(!x.k){done=true;b.classList.add('yes');cheer();if(c.snd)c.snd('ok');st++;if(st<q.steps.length){setTimeout(()=>{lab.textContent='';const sol=G_EL('div','gtk-sol');sol.textContent=x.t+' = ?';box.insertBefore(sol,lab);show()},500)}else{const sol=box.querySelector('.gtk-sol');if(sol)sol.textContent=sol.textContent.replace('?',x.t);c.win()}}
+    else{b.classList.add('no');c.miss()}};o.appendChild(b)})};show()}
+const M_SHAPES={tri:['<polygon points="50,10 92,86 8,86"/>','<polygon points="15,20 90,40 30,90"/>','<polygon points="10,80 90,80 60,15"/>'],
+  quad:['<rect x="12" y="22" width="76" height="56"/>','<polygon points="50,8 92,50 50,92 8,50"/>','<polygon points="25,20 75,20 92,80 8,80"/>','<rect x="20" y="20" width="60" height="60"/>'],
+  pent:['<polygon points="50,8 92,40 76,90 24,90 8,40"/>'],circ:['<circle cx="50" cy="50" r="40"/>'],
+  broken:['<polyline points="8,80 35,25 62,70 92,20" fill="none"/>','<polyline points="10,30 40,80 70,30 92,70" fill="none"/>','<polyline points="10,50 40,20 60,80" fill="none"/>'],
+  seg:['<line x1="10" y1="80" x2="90" y2="20"/>','<line x1="10" y1="50" x2="90" y2="50"/>']};
+function gShapes(q,c){const box=c.box;box.className='gsh';box.innerHTML='';if(c.Q)c.Q.innerHTML='';
+  const kinds=Object.keys(M_SHAPES),items=shuffle([q.want,q.want,q.want].concat(shuffle(kinds.filter(k=>k!==q.want)).slice(0,3).concat([pick(kinds.filter(k=>k!==q.want))])));let left=3;
+  const cols=['#ff5a5f','#4a8cff','#ffb43d','#3ccf6e','#a77bff','#ff8fc0','#4ac6ff'];
+  items.forEach((k,i)=>{const b=G_EL('button','gsh-it');const col=cols[i%cols.length];b.innerHTML='<svg viewBox="0 0 100 100"><g fill="'+(k==='broken'||k==='seg'?'none':col)+'" stroke="'+col+'" stroke-width="'+(k==='broken'||k==='seg'?7:3)+'" stroke-linejoin="round" stroke-linecap="round" fill-opacity=".85">'+pick(M_SHAPES[k])+'</g></svg>';
+    b.onclick=()=>{if(b.classList.contains('ok'))return;if(k===q.want){b.classList.add('ok');left--;cheer();if(c.snd)c.snd('ok');if(!left)setTimeout(c.win,300)}else{ruShake(b);c.miss()}};box.appendChild(b)})}
+function gPerim(q,c){const box=c.box;box.className='gpe';box.innerHTML='';const s=q.s;let svg='<svg viewBox="0 0 300 220" class="gpe-svg"><g fill="#d6f0ff" stroke="#4a8cff" stroke-width="5" stroke-linejoin="round">';
+  const t=(x,y,v)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="22" font-weight="900" fill="#3b2a20" stroke="none">'+v+' см</text>';
+  if(q.k==='tri')svg+='<polygon points="150,25 270,190 30,190"/>'+t(68,100,s[0])+t(236,100,s[1])+t(150,215,s[2]);
+  else if(q.k==='rect')svg+='<rect x="40" y="50" width="220" height="120"/>'+t(150,40,s[1])+t(150,198,s[1])+t(14,116,s[0])+t(286,116,s[0]);
+  else svg+='<rect x="80" y="40" width="140" height="140"/>'+t(150,30,s[0])+t(150,206,s[0])+t(44,116,s[0])+t(256,116,s[0]);
+  box.innerHTML=svg+'</g></svg>';if(c.Q)c.Q.innerHTML='';const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
+  shuffle(q.opts.map(t=>({t,k:t===String(q.ans)}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t+' см';b.onclick=()=>{if(done||b.classList.contains('no'))return;if(x.k){done=true;b.classList.add('yes');c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)})}
+function gFrame(q,c){const box=c.box;box.className='gfr';box.innerHTML='';if(c.Q)c.Q.innerHTML='<div class="sent">'+q.a+' '+(q.op>0?'+':'−')+' '+q.b+' = <span class="gap">?</span></div>';
+  const dots=[];if(q.op>0){for(let i=0;i<q.a;i++)dots.push('a');for(let i=0;i<q.b;i++)dots.push('b')}else{for(let i=0;i<q.a;i++)dots.push(i>=q.a-q.b?'x':'a')}
+  const fr=k=>{let h='<div class="gfr-f">';for(let i=0;i<10;i++){const d=dots[k*10+i];h+='<i class="'+(d||'')+'"></i>'}return h+'</div>'};box.innerHTML='<div class="gfr-two">'+fr(0)+fr(1)+'</div>';
+  const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;const ans=String(q.a+q.op*q.b);
+  shuffle(q.opts).forEach(t=>{const b=G_EL('button','opt');b.textContent=t;b.onclick=()=>{if(done||b.classList.contains('no'))return;if(t===ans){done=true;b.classList.add('yes');const g=c.Q&&c.Q.querySelector('.gap');if(g){g.textContent=t;g.classList.add('ok')}c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)})}
+Object.assign(G_KIND,{tens:gTens,train:gTrain,house:gHouse,scale:gScale,coins:gCoins,ruler:gRuler,task:gTask,shapes:gShapes,perim:gPerim,frame:gFrame});
+Object.assign(RU_GEN,MATH_GEN);
+/* разделы математики (как в учебнике) — уроки в LESSONS.math.list с полем sec; старые уроки остаются на своих местах (номера = ключи прогресса) */
+const MATH_SECS=['Повторяем 1 класс','Табличное сложение и вычитание','Числа от 21 до 100','Сложение и вычитание до 100','Ещё: часы, умножение, фигуры'];
+[[0,1],[1,2],[2,4],[3,0],[4,4]].forEach(([i,s])=>LESSONS.math.list[i].sec=s);
+LESSONS.math.list.push(
+  {sec:0,n:'Сложение и вычитание до 10',p:'Вспоминаем первый класс',g:['m10','mCatch10','m10','mFix10','m10','m10']},
+  {sec:0,n:'Числовые домики',p:'Состав чисел до 10',g:['mHouse10','mHouse10','mHouse10','mCatch10']},
+  {sec:0,n:'Отрезки и линейка',p:'Измеряем в сантиметрах',g:['mRulerM','mRulerD','mRulerM','mRulerD','mRulerM','mRulerD']},
+  {sec:0,n:'Задачи со схемой',p:'Сколько стало? Сколько осталось?',g:['mTask','mTask','mTask','mTask']},
+  {sec:1,n:'Десяточки',p:'Через десяток: 8 + 5, 13 − 6',g:['mFrameAdd','mFrameSub','mFrameAdd','mFrameSub','mFrameAdd','mFrameSub']},
+  {sec:1,n:'Прибавляем через десяток',p:'9 + 4, 7 + 6, 8 + 8',g:['mAdd20','mFrameAdd','mAdd20','mMatch20','mAdd20','mAdd20']},
+  {sec:1,n:'Вычитаем через десяток',p:'12 − 5, 15 − 7, 17 − 9',g:['mSub20','mFrameSub','mSub20','mMatch20','mSub20','mSub20']},
+  {sec:1,n:'Домики до 18',p:'Состав чисел второго десятка',g:['mHouse18','mHouse18','mHouse18','mScale20']},
+  {sec:1,n:'Весы',p:'Найди неизвестное слагаемое',g:['mScale20','mScale20','mScale20','mScale20','mScale20','mScale20']},
+  {sec:1,n:'На сколько больше?',p:'Задачи на сравнение со схемой',g:['mTask','mTask','mTask','mTask','mTask']},
+  {sec:1,n:'Проверь себя',p:'Табличное сложение и вычитание',g:['mAdd20','mSub20','mFix20','mHouse18','mScale20','mTask','mFrameAdd','mMatch20']},
+  {sec:2,n:'Пучки палочек',p:'Десятки и единицы',g:['mTensBuild','mTensRead','mTensBuild','mTensRead','mTensBuild','mTensRead']},
+  {sec:2,n:'Как записать число',p:'5 дес. 6 ед. = 56',g:['mPlace','mPlaceMatch','mPlace','mSortDigits','mPlace','mPlaceMatch']},
+  {sec:2,n:'Числовой паровозик',p:'Соседи числа и счёт десятками',g:['mTrain1','mTrain10','mOrderNums','mTrain1','mTrain10','mOrderNums']},
+  {sec:2,n:'Больше, меньше, равно',p:'Сравниваем числа до 100',g:['mSign','mCatchGt','mSign','mOrderNums','mSign','mCatchTens']},
+  {sec:2,n:'Прыжки по десяткам',p:'Числовая прямая до 100',g:['mLine10','mLine10','mLine10','mLine10','mLine10','mLine10']},
+  {sec:2,n:'Дециметр и метр',p:'1 дм = 10 см',g:['mUnitsMatch','mUnitsSign','mRulerD','mUnitsSign','mUnitsMatch','mUnitsSign']},
+  {sec:3,n:'40 + 7, 47 − 7, 47 − 40',p:'Число из десятков и единиц',g:['mCover','mCover','mCoverMatch','mCover','mTensRead','mCover']},
+  {sec:3,n:'Круглые десятки',p:'30 + 20, 70 − 40',g:['mTens','mTensMatch','mCatch50','mTens','mLine10','mTens']},
+  {sec:3,n:'34 + 2 и 34 + 20',p:'Единицы к единицам, десятки к десяткам',g:['mAdd1','mAdd10','mMatch100','mAdd1','mAdd10','mFix100']},
+  {sec:3,n:'36 − 2 и 36 − 20',p:'Вычитаем единицы и десятки',g:['mSub1','mSub10','mMatch100','mSub1','mSub10','mFix100']},
+  {sec:3,n:'Скобки',p:'Что делаем сначала?',g:['mBr','mBr','mBr','mBr','mBr','mBr']},
+  {sec:3,n:'Задачи до 100',p:'Решаем со схемой',g:['mTask100','mTask100','mTask100','mScale100','mTask100']},
+  {sec:3,n:'Рубли и копейки',p:'Плати монетками без сдачи',g:['mCoinsK','mCoinsR','mMoney','mCoinsK','mCoinsR','mMoney']},
+  {sec:3,n:'Проверь себя',p:'Сложение и вычитание до 100',g:['mCover','mAdd10','mSub1','mFix100','mBr','mTask100','mSign','mCoinsK']},
+  {sec:4,n:'Фигуры',p:'Треугольники, четырёхугольники, ломаные',g:['mShapes','mShapes','mShapes','mShapes']},
+  {sec:4,n:'Периметр',p:'Сумма длин всех сторон',g:['mPerim','mPerim','mPerim','mPerim','mPerim','mPerim']});
+
+/* порядок уроков математики по разделам: строки — заголовки разделов */
+function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(ii.length){r.push(n);r.push(...ii)}});return r}
+
 
 /* ---------- «Кругосветка Топы»: курс английского на полгода (часть 1 — остров «Привет», 06.11.2026) ---------- */
 /* неделя = 3 остановки + тест недели; остров = 4 недели + экзамен острова. Дальше — только после сданного теста (до 2 ошибок на 10). */
