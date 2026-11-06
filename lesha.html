@@ -59,6 +59,12 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pzgal button{position:relative;padding:6px;border-radius:22px}
 .pzgal button.fill{padding:0;overflow:hidden}
 .pzgal button.fill img{width:100%;height:100%;object-fit:cover}
+.pgal.folds{grid-template-columns:repeat(2,1fr)}
+.pgal button.fold{flex-direction:column;aspect-ratio:auto;padding:10px 10px 12px;gap:6px;position:relative}
+.pgal button.fold .fimg{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:18px;background:var(--gold2);overflow:hidden}
+.pgal button.fold .fimg img{max-width:88%;max-height:88%;object-fit:contain}
+.pgal button.fold b{font-size:20px;line-height:1.15;color:var(--ink)}
+.pgal button.fold small{position:absolute;right:14px;top:14px;background:var(--gold);color:#fff;font-weight:900;font-size:16px;border-radius:999px;min-width:30px;padding:2px 8px}
 .pzok{position:absolute;right:4px;top:2px;font-style:normal;font-size:24px;filter:drop-shadow(0 2px 0 #fff)}
 .palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px auto 0;max-width:560px}
 .palette button{width:min(10.5vw,60px);height:min(10.5vw,60px);border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
@@ -192,6 +198,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   .tiles{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
   .pgal{grid-template-columns:repeat(3,1fr);max-width:1100px;gap:22px}
   .pzgal{grid-template-columns:repeat(5,1fr);gap:18px}
+  .pgal.folds{grid-template-columns:repeat(4,1fr)}
   #paint.on{display:grid;grid-template-columns:auto minmax(320px,520px);column-gap:40px;justify-content:center;align-items:start}
   #paint.on > .paint-wrap{grid-column:1;grid-row:1/span 4;max-width:none;margin:0}
   #paint.on > .paint-wrap canvas{max-height:76vh}
@@ -611,8 +618,8 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
 const GAMES=['balls','zoo','shapes','train','rocket','feed','blocks','cars','puzzle','puzzlepick','tidy','dress','paint','paintpick'];
-function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
-function goBack(){if(cur()==='paint')startPaint();else if(cur()==='puzzle')startPuzzle();else if(GAMES.includes(cur()))openGames();else go('home')}
+function openGames(){galFold.paint=galFold.puzzle=null;go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
+function goBack(){if(cur()==='paint')startPaint();else if(cur()==='puzzle')startPuzzle();else if(cur()==='paintpick'&&galFold.paint!==null){galFold.paint=null;startPaint()}else if(cur()==='puzzlepick'&&galFold.puzzle!==null){galFold.puzzle=null;startPuzzle()}else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
@@ -637,9 +644,23 @@ const PPICS=['topa','cap','balloon','crown','car','train','repka','repka-mouse',
 /* раскраска: сначала выбор картинки, потом отдельный экран раскрашивания */
 const PCOLORS=[{c:'#ff5a5f',say:'Красный!'},{c:'#ff9a3c',say:'Оранжевый!'},{c:'#ffd23f',say:'Жёлтый!'},{c:'#a6e05a',say:'Салатовый!'},{c:'#3ccf6e',say:'Зелёный!'},{c:'#6fd0ff',say:'Голубой!'},{c:'#4a8cff',say:'Синий!'},
   {c:'#a77bff',say:'Фиолетовый!'},{c:'#ff8fc8',say:'Розовый!'},{c:'#b07a4f',say:'Коричневый!'},{c:'#ffe1c2',say:'Бежевый!'},{c:'#ffffff',say:'Белый!'},{c:'#9aa3ad',say:'Серый!'},{c:'#2b2b33',say:'Чёрный!'}];
-function startPaint(){go('paintpick');const G=document.getElementById('pgal');G.innerHTML='';
-  PPICS.forEach(k=>{const b=document.createElement('button');b.innerHTML='<img src="img/color-topa/'+k+'.png?v=2" alt="">';b.onclick=()=>openPic(k);G.appendChild(b)});
-  say('paintpick','Выбери картинку, которую будем раскрашивать!')}
+/* папки в раскраске и пазле (06.11.2026, просьба родителя): сначала папка (Топа, машинки, сказка…), внутри картинки */
+const P_FOLD=[{n:'Топа',ks:['topa','cap','balloon','crown','topa-book']},{n:'Машинки',ks:['car','train']},{n:'Репка',ks:['repka','repka-mouse']},
+  {n:'Колобок',ks:['kolobok','kolobok-hare','fox','bear']},{n:'Курочка Ряба',ks:['hen','dedbaba','mouse-egg']}];
+const PZ_FOLD=[{n:'Топа и друзья',ks:['topa','uh','ugu','uh-balloon']},{n:'Машинки',ks:['toy-car','toy-train','toy-rocket']},{n:'Игрушки',ks:['toy-bear','toy-castle','toy-dino']},
+  {n:'Репка',cover:'img/tales/cover-repka.webp',pre:'repka-'},{n:'Колобок',cover:'img/tales/cover-kolobok.webp',pre:'kolobok-'},{n:'Курочка Ряба',cover:'img/tales/cover-ryaba.webp',pre:'ryaba-'}];
+const galFold={paint:null,puzzle:null};
+const GAL_SAY=['Выбери картинку!']; /* для озвучки: фраза после названия папки */
+/* картинки папки; всё, что не попало ни в одну папку, — в папку «Ещё картинки» */
+function galFolders(all,F){const used=new Set();const out=F.map(f=>{const ks=f.pre?all.filter(k=>k.startsWith(f.pre)):f.ks.filter(k=>all.includes(k));ks.forEach(k=>used.add(k));return{...f,ks}}).filter(f=>f.ks.length);
+  const rest=all.filter(k=>!used.has(k));if(rest.length)out.push({n:'Ещё картинки',ks:rest});return out}
+function galDraw(G,folders,fold,pic,open,onFold){G.innerHTML='';G.classList.toggle('folds',fold===null);
+  if(fold===null){folders.forEach((f,i)=>{const b=document.createElement('button');b.className='fold';
+      b.innerHTML='<span class="fimg"><img src="'+(f.cover||pic(f.ks[0]).src)+'" alt="" draggable="false"></span><b>'+f.n+'</b><small>'+f.ks.length+'</small>';b.onclick=()=>onFold(i);G.appendChild(b)});return}
+  folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)})}
+function startPaint(){go('paintpick');const F=galFolders(PPICS,P_FOLD),f=galFold.paint;
+  galDraw(document.getElementById('pgal'),F,f,k=>({src:'img/color-topa/'+k+'.png?v=2'}),openPic,i=>{galFold.paint=i;startPaint()});
+  say('paintpick',f===null?'Что будем раскрашивать? Выбирай!':F[f].n+'! Выбери картинку!')}
 function openPic(k){PK=k;go('paint');const P=document.getElementById('palette');P.innerHTML='';
   PCOLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
     b.onclick=()=>{pCol=x.c;P.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');say('paint',x.say)};P.appendChild(b)});
@@ -954,10 +975,9 @@ function pzPics(){
     .forEach(([t,ns])=>ns.forEach(n=>PICS.push({k:t+'-'+n,src:'img/tales/'+t+'-'+n+'.webp',fill:1,say:'Ура! Получилось! '+PZ_TALE[t]})));
   return PICS}
 function startPuzzle(){
-  pzPics();go('puzzlepick');const G=document.getElementById('pzgal');G.innerHTML='';S.pzSolved=S.pzSolved||[];
-  PICS.forEach((P,i)=>{const b=document.createElement('button');if(P.fill)b.className='fill';
-    b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(S.pzSolved.includes(P.k)?'<i class="pzok">⭐</i>':'');b.onclick=()=>openPuzzle(i);G.appendChild(b)});
-  say('puzzlepick','Выбери картинку, которую будем собирать!');
+  pzPics();go('puzzlepick');S.pzSolved=S.pzSolved||[];const F=galFolders(PICS.map(P=>P.k),PZ_FOLD),f=galFold.puzzle;
+  galDraw(document.getElementById('pzgal'),F,f,k=>{const P=PICS.find(x=>x.k===k);return{...P,ok:S.pzSolved.includes(k)}},k=>openPuzzle(PICS.findIndex(x=>x.k===k)),i=>{galFold.puzzle=i;startPuzzle()});
+  say('puzzlepick',f===null?'Что будем собирать? Выбирай!':F[f].n+'! Выбери картинку!');
 }
 function openPuzzle(i){pzPic=i;go('puzzle');newPuzzle();say('puzzle','Собери картинку! Подвинь кусочек к соседу — они слипнутся!')}
 let pzX=[],pzY=[],pzG=[];
