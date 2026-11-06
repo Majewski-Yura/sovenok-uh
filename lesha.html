@@ -55,6 +55,11 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pgal button{background:#fff;border:5px solid var(--line);border-radius:28px;padding:10px;box-shadow:var(--shadow);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
 .pgal button:active{transform:scale(.95)}
 .pgal img{max-width:100%;max-height:100%;object-fit:contain}
+.pzgal{grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px}
+.pzgal button{position:relative;padding:6px;border-radius:22px}
+.pzgal button.fill{padding:0;overflow:hidden}
+.pzgal button.fill img{width:100%;height:100%;object-fit:cover}
+.pzok{position:absolute;right:4px;top:2px;font-style:normal;font-size:24px;filter:drop-shadow(0 2px 0 #fff)}
 .palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px auto 0;max-width:560px}
 .palette button{width:min(10.5vw,60px);height:min(10.5vw,60px);border-radius:50%;border:5px solid #fff;box-shadow:0 0 0 3px var(--line)}
 .palette button.on{box-shadow:0 0 0 6px var(--ink);transform:scale(1.12)}
@@ -115,10 +120,17 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .garage{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
 .garage button{font-size:62px;line-height:1;background:var(--bg2);border:5px solid var(--line);border-radius:24px;padding:8px 10px;box-shadow:var(--shadow)}
 .garage button.on{border-color:var(--gold);background:var(--gold2)}
-.pz{display:grid;grid-template-columns:repeat(2,min(42vw,210px));gap:8px;justify-content:center;margin-top:16px}
-.pz button{width:min(42vw,210px);height:min(42vw,210px);border-radius:18px;border:5px solid #fff;background-color:#fff;background-size:200% 200%;box-shadow:var(--shadow);transition:transform .15s}
-.pz button.sel{border-color:var(--gold);transform:scale(.93)}
-.pz.done{gap:0}.pz.done button{border-radius:0;border-color:transparent}
+/* пазл с настоящими кусочками (06.11.2026): кусочки лежат врозь, совпавшие защёлкиваются и дальше двигаются вместе */
+.pz{position:relative;--c:min(30vw,190px);--W:calc(var(--c) * 1.44);--g:10px;width:calc(var(--W) * 2 + var(--g));height:calc(var(--W) * 2 + var(--g));margin:16px auto 0;touch-action:none}
+.pz button{position:absolute;left:0;top:0;width:var(--W);height:var(--W);padding:0;border:0;background:none;touch-action:none;
+  filter:drop-shadow(0 6px 0 rgba(40,110,60,.18));transition:filter .15s}
+.pz button.snap{transition:left .35s cubic-bezier(.3,1.3,.6,1),top .35s cubic-bezier(.3,1.3,.6,1),filter .15s}
+.pz button.lift{filter:drop-shadow(0 12px 6px rgba(40,110,60,.3));z-index:5}
+.pz button.click{animation:pzclick .35s}
+@keyframes pzclick{50%{transform:scale(1.05)}}
+.pz button svg{width:100%;height:100%;display:block;overflow:visible;pointer-events:none}
+.pz.done button{filter:none}
+.pz.done button .pe{stroke-opacity:0;transition:stroke-opacity .6s .5s}
 .room{position:relative;height:min(46vh,380px);margin-top:10px;border-radius:32px;background:repeating-linear-gradient(90deg,#f3d9b5 0 60px,#ecceA4 60px 120px);border:5px solid #fff;box-shadow:var(--shadow);overflow:hidden}
 .thing{position:absolute;font-size:64px;line-height:1;transition:transform .7s cubic-bezier(.5,-.3,.7,1),opacity .7s}
 .thing.gone{opacity:0}
@@ -179,6 +191,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   .wrap{max-width:min(1560px,94vw)}
   .tiles{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
   .pgal{grid-template-columns:repeat(3,1fr);max-width:1100px;gap:22px}
+  .pzgal{grid-template-columns:repeat(5,1fr);gap:18px}
   #paint.on{display:grid;grid-template-columns:auto minmax(320px,520px);column-gap:40px;justify-content:center;align-items:start}
   #paint.on > .paint-wrap{grid-column:1;grid-row:1/span 4;max-width:none;margin:0}
   #paint.on > .paint-wrap canvas{max-height:76vh}
@@ -263,7 +276,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 
 /* раскраска на телефоне (06.11.2026): компактный верх, картинка по высоте экрана, ↩️ 🧽 в правом нижнем углу напротив «Домой» */
 @media (max-width:700px){
-  #paint,#paintpick{padding-bottom:96px}
+  #paint,#paintpick,#puzzlepick{padding-bottom:96px}
   #paint .bubble{font-size:17px;padding:6px 14px;margin-top:2px!important}
   #paint .paint-wrap{margin-top:6px;border-width:4px;border-radius:24px}
   #paint .paint-wrap canvas{max-height:calc(100dvh - 330px)}
@@ -387,6 +400,11 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
     </div>
     <div class="garage" id="garage"></div>
     <div class="counter" id="carsCnt"></div>
+  </section>
+
+  <section class="screen" id="puzzlepick">
+    <div class="bubble" id="puzzlepickSay" style="margin:6px auto 0"></div>
+    <div class="pgal pzgal" id="pzgal"></div>
   </section>
 
   <section class="screen" id="puzzle">
@@ -592,9 +610,9 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 
 /* ---------- общее ---------- */
 function cur(){return document.querySelector('.screen.on').id}
-const GAMES=['balls','zoo','shapes','train','rocket','feed','blocks','cars','puzzle','tidy','dress','paint','paintpick'];
+const GAMES=['balls','zoo','shapes','train','rocket','feed','blocks','cars','puzzle','puzzlepick','tidy','dress','paint','paintpick'];
 function openGames(){go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
-function goBack(){if(cur()==='paint')startPaint();else if(GAMES.includes(cur()))openGames();else go('home')}
+function goBack(){if(cur()==='paint')startPaint();else if(cur()==='puzzle')startPuzzle();else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
@@ -924,28 +942,87 @@ function dinoPicture(){
   svg.setAttribute('viewBox','-110 -110 220 220');
   return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg.outerHTML.replace('<svg ','<svg style="background:#eafbe9" '));
 }
+/* выбор пазла, как в раскраске (06.11.2026): герои, игрушки, страницы сказок; собранные отмечены звёздочкой (S.pzSolved) */
+const PZ_TALE={repka:'Это сказка «Репка»!',kolobok:'Это сказка «Колобок»!',ryaba:'Это сказка «Курочка Ряба»!'};
+function pzPics(){
+  if(PICS)return PICS;
+  PICS=[{k:'topa',src:'img/topa-hello.webp',say:'Ура! Получилось! Это я, динозаврик Топа!'},{k:'uh',src:'img/uh-hello.webp',say:'Ура! Получилось! Это совушка Ух!'},
+    {k:'ugu',src:'img/ugu.webp',say:'Ура! Получилось! Это совёнок Угу!'},{k:'uh-balloon',src:'img/reveal/balloon.webp',say:'Ура! Получилось! Это Ух с шариком!'}];
+  [['train','Это паровозик!'],['rocket','Это ракета!'],['bear','Это мишка!'],['car','Это машинка!'],['castle','Это замок!'],['dino','Это динозаврик!']]
+    .forEach(([k,t])=>PICS.push({k:'toy-'+k,src:'img/toys/'+k+'.webp',say:'Ура! Получилось! '+t}));
+  [['repka',['1','1b','2','3','4','5','6','7','8']],['kolobok',['1','2','3','4','5','6','7']],['ryaba',['1','2','3','4','5','6']]]
+    .forEach(([t,ns])=>ns.forEach(n=>PICS.push({k:t+'-'+n,src:'img/tales/'+t+'-'+n+'.webp',fill:1,say:'Ура! Получилось! '+PZ_TALE[t]})));
+  return PICS}
 function startPuzzle(){
-  PICS=PICS||[{src:'img/topa-hello.webp',say:'Ура! Получилось! Это я, динозаврик Топа!'},{src:'img/uh-hello.webp',say:'Ура! Получилось! Это совушка Ух!'},{src:'img/ugu.webp',say:'Ура! Получилось! Это совёнок Угу!'},{src:'img/reveal/balloon.webp',say:'Ура! Получилось! Это Ух с шариком!'}];
-  go('puzzle');newPuzzle();say('puzzle','Собери картинку! Перетащи кусочек на другой, и они поменяются местами.');
+  pzPics();go('puzzlepick');const G=document.getElementById('pzgal');G.innerHTML='';S.pzSolved=S.pzSolved||[];
+  PICS.forEach((P,i)=>{const b=document.createElement('button');if(P.fill)b.className='fill';
+    b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(S.pzSolved.includes(P.k)?'<i class="pzok">⭐</i>':'');b.onclick=()=>openPuzzle(i);G.appendChild(b)});
+  say('puzzlepick','Выбери картинку, которую будем собирать!');
 }
+function openPuzzle(i){pzPic=i;go('puzzle');newPuzzle();say('puzzle','Собери картинку! Подвинь кусочек к другому, и они слипнутся.')}
+let pzX=[],pzY=[],pzG=[];
 function newPuzzle(){
-  pzDone=false;pzSel=null;document.getElementById('pz').classList.remove('done');
+  pzDone=false;document.getElementById('pz').classList.remove('done');
   do{pzOrder=shuffle([0,1,2,3])}while(pzOrder.every((v,i)=>v===i));
   drawPuzzle();
 }
+/* форма кусочка: стороны верх, право, низ, лево; 1 — ушко наружу, -1 — выемка, 0 — ровный край (кусочки 0 1 / 2 3) */
+const PZ_EDGE=[[0,1,-1,0],[0,0,1,-1],[1,-1,0,0],[-1,0,0,1]];
+function pzPath(e){
+  const T=[[35,0],[40,0,42,-4,38,-10],[33,-18,40,-22,50,-22],[60,-22,67,-18,62,-10],[58,-4,60,0,65,0]];
+  const side=(k,x0,y0,ux,uy,vx,vy)=>{const m=(a,b)=>(x0+ux*a+vx*b*k).toFixed(1)+','+(y0+uy*a+vy*b*k).toFixed(1);
+    if(!k)return'L'+m(100,0);return'L'+m(35,0)+T.slice(1).map(c=>'C'+m(c[0],c[1])+' '+m(c[2],c[3])+' '+m(c[4],c[5])).join('')+'L'+m(100,0)};
+  return'M0,0'+side(e[0],0,0,1,0,0,1)+side(e[1],100,0,0,1,-1,0)+side(e[2],100,100,-1,0,0,-1)+side(e[3],0,100,0,-1,1,0)+'Z';
+}
+const pzBtn=k=>document.querySelector('#pz button[data-p="'+k+'"]');
+function pzPlace(k){const b=pzBtn(k);b.style.left=pzX[k]+'px';b.style.top=pzY[k]+'px'}
 function drawPuzzle(){
   const P=PICS[pzPic%PICS.length],g=document.getElementById('pz');g.innerHTML='';
-  pzOrder.forEach((piece,pos)=>{const b=document.createElement('button');
-    b.style.backgroundImage='url("'+P.src+'")';b.style.backgroundPosition=(piece%2?'100%':'0%')+' '+(piece>1?'100%':'0%');
-    if(pzSel===pos)b.className='sel';b.dataset.pos=pos;draggable(b,{targets:()=>[...g.children].filter(x=>x!==b),drop:(t)=>{pzSel=pos;tapPiece(+t.dataset.pos)},tap:()=>tapPiece(pos)});g.appendChild(b)});
+  for(let k=0;k<4;k++){const b=document.createElement('button'),d=pzPath(PZ_EDGE[k]),id='pzc'+k;
+    b.dataset.p=k;b.setAttribute('aria-label','Кусочек пазла');
+    b.innerHTML='<svg viewBox="-22 -22 144 144"><defs><clipPath id="'+id+'"><path d="'+d+'"/></clipPath></defs><g clip-path="url(#'+id+')"><rect x="-22" y="-22" width="144" height="144" fill="#fff"/>'
+      +'<image href="'+P.src+'" x="'+(k%2?-100:0)+'" y="'+(k>1?-100:0)+'" width="200" height="200" preserveAspectRatio="xMidYMid '+(P.fill?'slice':'meet')+'"/></g><path class="pe" d="'+d+'" fill="none" stroke="#cfeccf" stroke-width="2.5" stroke-linejoin="round"/></svg>';
+    g.appendChild(b);b.addEventListener('pointerdown',e=>pzDown(e,k))}
+  const W=g.firstChild.offsetWidth,step=(g.offsetWidth-W);
+  pzOrder.forEach((k,slot)=>{pzX[k]=(slot%2)*step+(Math.random()*8-4);pzY[k]=(slot>1?1:0)*step+(Math.random()*8-4);pzG[k]=k;pzPlace(k)});
 }
-function tapPiece(pos){
-  if(pzDone)return;
-  if(pzSel===null){pzSel=pos;drawPuzzle();return}
-  if(pzSel!==pos){[pzOrder[pzSel],pzOrder[pos]]=[pzOrder[pos],pzOrder[pzSel]];speak('Хоп!')}
-  pzSel=null;drawPuzzle();
-  if(pzOrder.every((v,i)=>v===i)){pzDone=true;document.getElementById('pz').classList.add('done');say('puzzle',PICS[pzPic%PICS.length].say);addStar();
-    setTimeout(()=>{if(cur()==='puzzle'){pzPic++;newPuzzle();speak('А теперь новая картинка!')}},4200)}
+function pzDown(e,k){
+  if(pzDone)return;e.preventDefault();const g=document.getElementById('pz'),b=pzBtn(k);
+  const grp=[0,1,2,3].filter(j=>pzG[j]===pzG[k]),sx=e.clientX,sy=e.clientY,x0=grp.map(j=>pzX[j]),y0=grp.map(j=>pzY[j]);
+  const W=b.offsetWidth,maxX=g.offsetWidth-W,maxY=g.offsetHeight-W;let moved=false;
+  try{b.setPointerCapture(e.pointerId)}catch(_){}
+  grp.forEach(j=>{const x=pzBtn(j);x.classList.remove('snap');x.classList.add('lift')});
+  const mv=ev=>{let dx=ev.clientX-sx,dy=ev.clientY-sy;if(Math.hypot(dx,dy)>6)moved=true;
+    dx=Math.max(...grp.map((j,i)=>-x0[i]),Math.min(dx,...grp.map((j,i)=>maxX-x0[i])));
+    dy=Math.max(...grp.map((j,i)=>-y0[i]),Math.min(dy,...grp.map((j,i)=>maxY-y0[i])));
+    grp.forEach((j,i)=>{pzX[j]=x0[i]+dx;pzY[j]=y0[i]+dy;pzPlace(j)})};
+  const up=()=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);
+    grp.forEach(j=>pzBtn(j).classList.remove('lift'));
+    if(!moved){speak(pick(['Тяни кусочек к другому!','Потяни меня пальчиком!']));return}
+    pzSnap(k)};
+  b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);
+}
+/* защёлкнуть группу кусочка k к соседу, если он поднесён правильной стороной (допуск — треть клетки) */
+function pzSnap(k){
+  const c=pzBtn(k).offsetWidth/1.44,tol=c*.34;let hit=false;
+  for(let pass=0;pass<3;pass++){const grp=[0,1,2,3].filter(j=>pzG[j]===pzG[k]);let best=null;
+    grp.forEach(a=>[0,1,2,3].forEach(o=>{if(pzG[o]===pzG[k])return;const dc=(o%2)-(a%2),dr=(o>1?1:0)-(a>1?1:0);if(Math.abs(dc)+Math.abs(dr)!==1)return;
+      const ex=pzX[o]-pzX[a]-dc*c,ey=pzY[o]-pzY[a]-dr*c,d=Math.hypot(ex,ey);if(d<tol&&(!best||d<best.d))best={d,ex,ey,g:pzG[o]}}));
+    if(!best)break;hit=true;
+    grp.forEach(j=>{pzX[j]+=best.ex;pzY[j]+=best.ey;const x=pzBtn(j);x.classList.add('snap');pzPlace(j)});
+    const old=best.g;[0,1,2,3].forEach(j=>{if(pzG[j]===old)pzG[j]=pzG[k]});}
+  if(!hit)return;
+  [0,1,2,3].filter(j=>pzG[j]===pzG[k]).forEach(j=>{const x=pzBtn(j);x.classList.remove('click');void x.offsetWidth;x.classList.add('click')});
+  if([0,1,2,3].every(j=>pzG[j]===pzG[0]))pzWin();else speak(pick(['Щёлк! Подошло!','Щёлк! Молодец!','Подошло!']));
+}
+function pzWin(){
+  pzDone=true;const g=document.getElementById('pz'),W=pzBtn(0).offsetWidth,c=W/1.44,t=(W-c)/2;
+  const L=Math.min(...[0,1,2,3].map(j=>pzX[j])),Tp=Math.min(...[0,1,2,3].map(j=>pzY[j]));
+  const dx=(g.offsetWidth-(c+W))/2-L,dy=(g.offsetHeight-(c+W))/2-Tp;
+  [0,1,2,3].forEach(j=>{pzX[j]+=dx;pzY[j]+=dy;pzBtn(j).classList.add('snap');pzPlace(j)});
+  const P=PICS[pzPic%PICS.length];g.classList.add('done');say('puzzle',P.say);addStar();
+  S.pzSolved=S.pzSolved||[];if(!S.pzSolved.includes(P.k)){S.pzSolved.push(P.k);save()}
+  setTimeout(()=>{if(cur()==='puzzle'){startPuzzle();say('puzzlepick','Какую картинку соберём теперь?')}},4200);
 }
 
 /* ---------- наведём порядок ---------- */
