@@ -666,7 +666,7 @@ function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
   document.getElementById('homeBtn').style.display=id==='home'?'none':'block';
-  if(id==='games')swipeify(document.querySelector('#games .tiles'),swName);if(id==='home')homeTalk();if(id==='shop')renderShop();if(id==='feel')say('feel','Лёша, как ты себя чувствуешь? Покажи мне!');if(id==='parent')renderParent();if(id==='toyshop')renderToyshop();if(id==='tales')showBooks();if(id==='deeds'){renderDeeds();say('deeds','Что ты сегодня сделал сам? Нажми!')}
+  if(id==='games')swipeify(document.querySelector('#games .tiles'),swName);if(id==='home')homeTalk();if(id==='shop')renderShop();if(id==='feel')say('feel','Лёша, как ты себя чувствуешь? Покажи мне!');if(id==='parent')renderParent();if(id==='toyshop')renderToyshop();if(id==='tales')showBooks();if(id==='deeds'){renderDeeds();say('deeds','Что ты сегодня сделал сам? Позови маму или папу — они отметят!')}
   scrollTo(0,0);
 }
 function toPicker(){try{sessionStorage.removeItem('who')}catch(e){}location.href='index.html'}
@@ -1442,9 +1442,11 @@ function renderDeeds(){
     b.onclick=()=>{
       S.deeds=S.deeds||{};const t=S.deeds[today()]=S.deeds[today()]||[];hop(dinos.dinoDeeds);
       if(t.includes(d.k)){say('deeds','Ты уже это сделал сегодня. Молодец!');return}
-      t.push(d.k);S.diary.unshift({d:today(),t:new Date().toTimeString().slice(0,5),a:d.n});
-      S.pending=S.pending||[];S.pending.push({id:Date.now()+Math.random(),d:today(),what:d.n,stars:1});save();
-      say('deeds',d.say.replace(/ ?Держи звёздочку!/,'')+' Покажи маме — она даст звёздочку!');renderDeeds();renderPend()};
+      /* отмечает только взрослый (07.11.2026, просьба родителя): Топа просит позвать маму или папу, дальше — вход для взрослых */
+      say('deeds','Это отмечает мама или папа. Позови их, пусть посмотрят!');
+      askGate(()=>{const t2=S.deeds[today()]=S.deeds[today()]||[];if(t2.includes(d.k))return;
+        t2.push(d.k);S.diary.unshift({d:today(),t:new Date().toTimeString().slice(0,5),a:d.n});save();
+        say('deeds',d.say);renderDeeds();addStar(1)})};
     L.appendChild(b)});
 }
 
