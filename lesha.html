@@ -935,6 +935,7 @@ const COUNT=['Один!','Два!','Три!','Четыре!','Пять!','Шес
 const BLOCK_COLORS=['#ff5a5f','#4a8cff','#ffd23f','#3ccf6e','#ff9a3c','#a77bff','#ff7eb6','#2ec4c4'];
 const BL_SHAPES=['cube','brick','plank','col','tri','arch','ball'];
 const BL_MAX=24;
+const BL_PRAISE=['Ты настоящий строитель!','Вот это да!','Вот у папы какой помощник!','Молодец, Лёша!','Ух ты, как ровно!','Здорово получается!','Какой ты молодец!','Вот это башня!','Ловко! Как настоящий строитель!','Мама будет рада!'];
 let BW=null;
 function blLoad(cb){
   if(window.Matter)return cb(true);
@@ -981,7 +982,7 @@ function blInit(){
   if(!BW){
     const cv=document.createElement('canvas');cv.className='blcv';host.innerHTML='';host.appendChild(cv);
     const eng=Matter.Engine.create({positionIterations:12,velocityIterations:10});eng.gravity.y=1;
-    BW={cv,ctx:cv.getContext('2d'),eng,walls:[],drag:null,raf:0,star:false,fallT:0,n:0,tick:0};
+    BW={cv,ctx:cv.getContext('2d'),eng,walls:[],drag:null,raf:0,star:false,fallT:0,praiseT:0,n:0,tick:0};
     cv.addEventListener('pointerdown',blDown);
     window.addEventListener('resize',()=>{if(BW&&document.getElementById('blocks').classList.contains('on'))blSizeUp()});
   }
@@ -1039,7 +1040,9 @@ function blCheck(){
     if(b.position.y>BW.H+200||b.position.x<-200||b.position.x>BW.W+200){Matter.Composite.remove(BW.eng.world,b);return}
     if(b.plugin.up&&b.speed>4.5&&(!BW.drag||BW.drag.b!==b)){b.plugin.up=false;if(now-BW.fallT>2500&&!BW.boom){BW.fallT=now;say('blocks',pick(['Ой! Упало!','Бух! Упало!','Ой-ой! Падает!']))}}
     b.plugin.age=(b.plugin.age||0)+1;
-    if(b.speed<1.2&&b.plugin.age>25&&b.bounds.max.y<BW.floor-u*.9)b.plugin.up=true;else if(b.bounds.max.y>=BW.floor-4&&b.speed<.3)b.plugin.up=false;
+    if(b.speed<1.2&&b.plugin.age>25&&b.bounds.max.y<BW.floor-u*.9){b.plugin.up=true;
+      /* фигура устояла на другой — похвалить (07.11.2026, просьба родителя), не чаще раза в 4 с */
+      if(!b.plugin.ok&&b.plugin.age>60&&b.speed<.2&&(!BW.drag||BW.drag.b!==b)&&now-BW.praiseT>4000&&now-BW.fallT>2500&&!BW.boom){b.plugin.ok=true;BW.praiseT=now;say('blocks',pick(BL_PRAISE))}}else if(b.bounds.max.y>=BW.floor-4&&b.speed<.3)b.plugin.up=false;
   });
   if(++BW.tick%20)return;
   if(BW.star||BW.drag||L.length<3||L.some(b=>b.speed>.25))return;
