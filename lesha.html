@@ -98,7 +98,20 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .dragging{position:relative;z-index:60;transition:none!important;cursor:grabbing;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25))}
 .dz-over{outline:6px dashed var(--gold);outline-offset:4px;border-radius:28px}
 .tray{display:flex;gap:14px;justify-content:center;margin-top:12px}
-.tray .src{width:96px;height:46px;border-radius:12px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),inset 0 6px 0 rgba(255,255,255,.35);touch-action:none;cursor:grab}
+.tray .src{width:min(13vw,78px);height:min(13vw,78px);border-radius:18px;background:#fff;border:4px solid var(--line);box-shadow:var(--shadow);touch-action:none;cursor:grab;padding:4px}
+.tray .src svg{width:100%;height:100%;display:block;pointer-events:none}
+.tray{flex-wrap:wrap;gap:8px}
+.bwrap{position:relative}
+.bwrap #boom{position:absolute;right:12px;top:12px;font-size:22px;padding:8px 18px;box-shadow:0 5px 0 #c93a3f}
+#blocks .build{height:clamp(340px,calc(100dvh - 330px),560px)}
+@media (max-width:600px){
+  #blocks .stage .spose{display:none}
+  #blocks .bubble{font-size:20px;padding:10px 14px}
+  .tray{flex-wrap:nowrap;gap:5px}
+  .tray .src{width:calc((100vw - 64px)/7);height:calc((100vw - 64px)/7);border-radius:12px;border-width:3px;padding:2px}
+  #blocks .build{height:calc(100dvh - 330px);min-height:280px}
+}
+.blcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
 .big-num{font-size:84px;font-weight:900;color:var(--green2);text-align:center;height:96px}
 /* самочувствие */
 .faces{display:flex;justify-content:center;gap:18px;margin-top:22px}
@@ -110,7 +123,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .item span{font-size:20px}
 .item.on{border-color:var(--green);background:#e2f8e5}
 .item.lock{opacity:.5}
-.build{position:relative;height:min(56vh,470px);margin-top:10px;border-radius:32px;background:linear-gradient(#e9f7ff,#fff7e6);border:5px solid #fff;box-shadow:var(--shadow);display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:10px;overflow:hidden;cursor:pointer}
+.build{position:relative;touch-action:none;height:min(56vh,470px);margin-top:10px;border-radius:32px;background:linear-gradient(#e9f7ff,#fff7e6);border:5px solid #fff;box-shadow:var(--shadow);display:flex;flex-direction:column-reverse;align-items:center;padding-bottom:10px;overflow:hidden;cursor:pointer}
 .block{width:150px;height:58px;border-radius:12px;margin-top:2px;box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),inset 0 6px 0 rgba(255,255,255,.35);animation:drop .45s cubic-bezier(.4,1.6,.6,1)}
 .block.fall{transition:transform 1s ease-in,opacity 1s;opacity:0}
 @keyframes drop{from{transform:translateY(-320px)}}
@@ -396,9 +409,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 
   <section class="screen" id="blocks">
     <div class="stage"><div class="bubble" id="blocksSay"></div><img class="spose" src="img/topa-blocks.webp" alt="Топа"></div>
-    <div class="build" id="build"></div>
     <div class="tray" id="tray"></div>
-    <div style="text-align:center;margin-top:12px"><button class="bigbtn" id="boom" onclick="boom()" style="visibility:hidden">💥 Бух!</button></div>
+    <div class="bwrap"><div class="build" id="build"></div><button class="bigbtn" id="boom" onclick="boom()" style="visibility:hidden">💥 Бух!</button></div>
   </section>
 
   <section class="screen" id="cars">
@@ -916,29 +928,139 @@ function renderShop(quiet){
   if(!L.children.length)L.innerHTML='<span class="empty" style="color:var(--ink2)">Ты купил все наряды!</span>';
 }
 
-/* ---------- построй башню ---------- */
-const COUNT=['Один!','Два!','Три!','Четыре!','Пять!','Шесть!'];
-const BLOCK_COLORS=['#ff5a5f','#4a8cff','#ffd23f','#3ccf6e','#ff9a3c','#a77bff'];
-let tower=0,towerDone=false;
-function startBlocks(){go('blocks');resetTower();say('blocks','Давай построим башню! Тащи кубики наверх.');
-  const tr=document.getElementById('tray');tr.innerHTML='';
-  BLOCK_COLORS.slice(0,3).forEach(c=>{const b=document.createElement('div');b.className='src';b.style.background=c;
-    draggable(b,{targets:()=>[document.getElementById('build')],drop:()=>{addBlock(c);return false}});tr.appendChild(b)});
+/* ---------- построй башню (07.11.2026, просьба родителя): настоящая физика (Matter.js), 7 форм, ставить куда угодно, криво — падает ---------- */
+const COUNT=['Один!','Два!','Три!','Четыре!','Пять!','Шесть!','Семь!','Восемь!','Девять!','Десять!'];
+const BLOCK_COLORS=['#ff5a5f','#4a8cff','#ffd23f','#3ccf6e','#ff9a3c','#a77bff','#ff7eb6','#2ec4c4'];
+const BL_SHAPES=['cube','brick','plank','col','tri','arch','ball'];
+const BL_MAX=24;
+let BW=null;
+function blLoad(cb){
+  if(window.Matter)return cb(true);
+  let s=document.getElementById('mjs');
+  if(!s){s=document.createElement('script');s.id='mjs';s.src='https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js';document.head.appendChild(s)}
+  s.addEventListener('load',()=>cb(true));s.addEventListener('error',()=>{s.remove();cb(false)});
 }
-function resetTower(){tower=0;towerDone=false;document.getElementById('build').innerHTML='';document.getElementById('boom').style.visibility='hidden'}
-function addBlock(col){
-  if(towerDone)return;
-  const b=document.createElement('div');b.className='block';b.style.background=col||BLOCK_COLORS[tower%BLOCK_COLORS.length];
-  b.style.marginLeft=(Math.random()*24-12)+'px';document.getElementById('build').appendChild(b);
-  speak(COUNT[tower]);tower++;
-  if(tower===6){towerDone=true;
-    setTimeout(()=>{const f=document.createElement('div');f.className='flag';f.textContent='🚩';document.getElementById('build').appendChild(f);
-      say('blocks','Ура! Какая высокая башня! Теперь можно сделать бух!');addStar();document.getElementById('boom').style.visibility='visible'},700)}
+/* контур формы в единицах u (для значка в лотке и для тела) */
+function blVerts(k,u){
+  if(k==='tri')return[{x:-u*.8,y:u*.6},{x:u*.8,y:u*.6},{x:0,y:-u*.65}];
+  if(k==='arch'){const r=u*.85,v=[];for(let i=0;i<=14;i++){const a=Math.PI+Math.PI*i/14;v.push({x:r*Math.cos(a),y:r*Math.sin(a)+r*.42})}return v}
+  return null;
+}
+function blSize(k,u){return{cube:[u,u],brick:[u*2,u],plank:[u*3,u*.5],col:[u*.7,u*2]}[k]}
+function blBody(k,x,y,u,col){
+  const M=Matter.Bodies,o={friction:.9,frictionStatic:1.2,restitution:.02,density:.0015,frictionAir:.012};let b;
+  if(k==='ball')b=M.circle(x,y,u*.5,{...o,friction:.5,restitution:.25});
+  else if(blVerts(k,u))b=M.fromVertices(x,y,[blVerts(k,u)],o);
+  else{const [w,h]=blSize(k,u);b=M.rectangle(x,y,w,h,{...o,chamfer:{radius:Math.min(w,h)*.16}})}
+  b.plugin={col,k};return b;
+}
+function blIcon(k,col){
+  const R=(w,h)=>'<rect x="'+(50-w/2)+'" y="'+(50-h/2)+'" width="'+w+'" height="'+h+'" rx="'+Math.min(w,h)*.16+'" fill="'+col+'"/>';
+  const inner={cube:R(70,70),brick:R(88,44),plank:R(94,28),col:R(36,84),ball:'<circle cx="50" cy="50" r="38" fill="'+col+'"/><circle cx="38" cy="38" r="8" fill="rgba(255,255,255,.55)" stroke="none"/>',
+    tri:'<polygon points="6,84 94,84 50,14" fill="'+col+'"/>',
+    arch:'<path d="M6,74 A44,44 0 0 1 94,74 Z" fill="'+col+'"/>'}[k];
+  return'<svg viewBox="0 0 100 100"><g stroke="rgba(0,0,0,.18)" stroke-width="5" stroke-linejoin="round">'+inner+'</g></svg>';
+}
+function startBlocks(){
+  go('blocks');say('blocks','Строим башню! Тащи кубики!');
+  const tr=document.getElementById('tray');tr.innerHTML='';
+  blLoad(ok=>{
+    if(!ok){say('blocks','Нет интернета. Попробуй потом!');return}
+    blInit();
+    BL_SHAPES.forEach((k,i)=>{const b=document.createElement('div');b.className='src';b.dataset.c=i;b.innerHTML=blIcon(k,BLOCK_COLORS[i%BLOCK_COLORS.length]);
+      draggable(b,{targets:()=>[document.getElementById('build')],
+        drop:(t,el)=>{const r=el.getBoundingClientRect(),R=BW.cv.getBoundingClientRect();blAdd(k,r.left+r.width/2-R.left,r.top+r.height/2-R.top,b);return false},
+        tap:()=>blAdd(k,BW.W/2+(Math.random()*2-1)*BW.u,BW.u*1.2,b)});
+      tr.appendChild(b)});
+  });
+}
+function blInit(){
+  const host=document.getElementById('build');
+  if(!BW){
+    const cv=document.createElement('canvas');cv.className='blcv';host.innerHTML='';host.appendChild(cv);
+    const eng=Matter.Engine.create({positionIterations:12,velocityIterations:10});eng.gravity.y=1;
+    BW={cv,ctx:cv.getContext('2d'),eng,walls:[],drag:null,raf:0,star:false,fallT:0,n:0,tick:0};
+    cv.addEventListener('pointerdown',blDown);
+    window.addEventListener('resize',()=>{if(BW&&document.getElementById('blocks').classList.contains('on'))blSizeUp()});
+  }
+  blSizeUp();blClear();
+  if(!BW.raf)BW.raf=requestAnimationFrame(blTick);
+}
+function blSizeUp(){
+  const W=BW.cv.clientWidth,H=BW.cv.clientHeight,dpr=Math.min(window.devicePixelRatio||1,2);if(!W||!H)return;
+  BW.cv.width=W*dpr;BW.cv.height=H*dpr;BW.ctx.setTransform(dpr,0,0,dpr,0,0);
+  BW.W=W;BW.H=H;BW.u=Math.max(34,Math.min(60,W/7));BW.floor=H-16;
+  const M=Matter;M.Composite.remove(BW.eng.world,BW.walls);
+  BW.walls=[M.Bodies.rectangle(W/2,BW.floor+50,W*3,100,{isStatic:true,friction:1}),
+    M.Bodies.rectangle(-50,-H,100,H*4,{isStatic:true}),M.Bodies.rectangle(W+50,-H,100,H*4,{isStatic:true})];
+  M.Composite.add(BW.eng.world,BW.walls);
+}
+function blBodies(){return Matter.Composite.allBodies(BW.eng.world).filter(b=>!b.isStatic)}
+function blClear(){Matter.Composite.remove(BW.eng.world,blBodies());BW.star=false;BW.n=0;BW.drag=null;blBoomBtn()}
+function blBoomBtn(){document.getElementById('boom').style.visibility=BW&&blBodies().length>=2?'visible':'hidden'}
+function blAdd(k,x,y,src){
+  if(!BW)return;
+  if(blBodies().length>=BL_MAX){say('blocks','Места больше нет! Сделай бух!');return}
+  const u=BW.u;x=Math.max(u*1.5,Math.min(BW.W-u*1.5,x));y=Math.max(u,Math.min(BW.floor-u,y));
+  const i=+src.dataset.c,col=BLOCK_COLORS[i%BLOCK_COLORS.length];
+  Matter.Composite.add(BW.eng.world,blBody(k,x,y,u,col));
+  src.dataset.c=i+1;src.innerHTML=blIcon(k,BLOCK_COLORS[(i+1)%BLOCK_COLORS.length]);
+  BW.n++;if(BW.n<=COUNT.length)speak(COUNT[BW.n-1]);blBoomBtn();
+}
+function blPt(e){const R=BW.cv.getBoundingClientRect();return{x:Math.max(0,Math.min(BW.W,e.clientX-R.left)),y:Math.max(0,Math.min(BW.floor,e.clientY-R.top))}}
+function blDown(e){
+  if(!BW||BW.drag)return;e.preventDefault();
+  const p=blPt(e),b=Matter.Query.point(blBodies(),p)[0];if(!b)return;
+  try{BW.cv.setPointerCapture(e.pointerId)}catch(_){}
+  const c=Matter.Constraint.create({pointA:{x:b.position.x,y:b.position.y},bodyB:b,pointB:{x:0,y:0},stiffness:.2,damping:.15,length:0});
+  Matter.Composite.add(BW.eng.world,c);
+  const d=BW.drag={b,c,p0:p,t0:performance.now(),moved:false};
+  const off={x:b.position.x-p.x,y:b.position.y-p.y};
+  const mv=ev=>{const q=blPt(ev);c.pointA={x:q.x+off.x,y:q.y+off.y};if(Math.hypot(q.x-d.p0.x,q.y-d.p0.y)>8)d.moved=true};
+  const up=()=>{BW.cv.removeEventListener('pointermove',mv);BW.cv.removeEventListener('pointerup',up);BW.cv.removeEventListener('pointercancel',up);
+    Matter.Composite.remove(BW.eng.world,c);BW.drag=null;
+    /* нажал и отпустил — повернуть фигуру */
+    if(!d.moved&&performance.now()-d.t0<350){Matter.Body.setPosition(b,{x:b.position.x,y:b.position.y-4});Matter.Body.setAngle(b,b.angle+Math.PI/2);Matter.Body.setAngularVelocity(b,0)}};
+  BW.cv.addEventListener('pointermove',mv);BW.cv.addEventListener('pointerup',up);BW.cv.addEventListener('pointercancel',up);
+}
+function blTick(){
+  if(!BW)return;
+  if(!document.getElementById('blocks').classList.contains('on')){BW.raf=0;return}
+  /* в руке фигура держится ровно: плавно доворачиваем к ближайшему прямому углу */
+  if(BW.drag){const b=BW.drag.b,q=Math.PI/2,t=Math.round(b.angle/q)*q;Matter.Body.setAngularVelocity(b,0);Matter.Body.setAngle(b,b.angle+(t-b.angle)*.2)}
+  Matter.Engine.update(BW.eng,1000/60);
+  blCheck();blDraw();BW.raf=requestAnimationFrame(blTick);
+}
+function blCheck(){
+  const L=blBodies(),now=performance.now(),u=BW.u;
+  L.forEach(b=>{
+    if(b.position.y>BW.H+200||b.position.x<-200||b.position.x>BW.W+200){Matter.Composite.remove(BW.eng.world,b);return}
+    if(b.plugin.up&&b.speed>4.5&&(!BW.drag||BW.drag.b!==b)){b.plugin.up=false;if(now-BW.fallT>2500&&!BW.boom){BW.fallT=now;say('blocks',pick(['Ой! Упало!','Бух! Упало!','Ой-ой! Падает!']))}}
+    b.plugin.age=(b.plugin.age||0)+1;
+    if(b.speed<1.2&&b.plugin.age>25&&b.bounds.max.y<BW.floor-u*.9)b.plugin.up=true;else if(b.bounds.max.y>=BW.floor-4&&b.speed<.3)b.plugin.up=false;
+  });
+  if(++BW.tick%20)return;
+  if(BW.star||BW.drag||L.length<3||L.some(b=>b.speed>.25))return;
+  const top=Math.min(...L.map(b=>b.bounds.min.y)),h=BW.floor-top;
+  if(h>=Math.min(BW.H*.6,u*5.5)){BW.star=true;say('blocks','Ура! Какая высокая башня! Теперь можно сделать бух!');addStar()}
+}
+function blShade(c,f){const n=parseInt(c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255,m=v=>Math.round(f<0?v*(1+f):v+(255-v)*f);return'rgb('+m(r)+','+m(g)+','+m(b)+')'}
+function blDraw(){
+  const x=BW.ctx,W=BW.W,H=BW.H;x.clearRect(0,0,W,H);
+  x.fillStyle='#8fd16a';x.fillRect(0,BW.floor,W,H-BW.floor);x.fillStyle='#78bf55';x.fillRect(0,BW.floor,W,4);
+  blBodies().forEach(b=>{
+    const v=b.vertices,col=b.plugin.col;x.beginPath();x.moveTo(v[0].x,v[0].y);for(let i=1;i<v.length;i++)x.lineTo(v[i].x,v[i].y);x.closePath();
+    const g=x.createLinearGradient(b.bounds.min.x,b.bounds.min.y,b.bounds.max.x,b.bounds.max.y);g.addColorStop(0,blShade(col,.25));g.addColorStop(1,blShade(col,-.12));
+    x.fillStyle=g;x.fill();x.lineJoin='round';x.lineWidth=3;x.strokeStyle='rgba(0,0,0,.16)';x.stroke();
+    if(b.plugin.k==='ball'){x.beginPath();x.fillStyle='rgba(255,255,255,.55)';const r=BW.u*.12,a=b.angle;x.arc(b.position.x-BW.u*.16,b.position.y-BW.u*.16,r,0,7);x.fill()}
+  });
 }
 function boom(){
-  document.querySelectorAll('#build .block,#build .flag').forEach((b,i)=>{b.classList.add('fall');b.style.transform='translate('+(Math.random()*400-200)+'px,'+(200+Math.random()*200)+'px) rotate('+(Math.random()*360-180)+'deg)'});
+  if(!BW)return;
+  BW.boom=true;
+  blBodies().forEach(b=>{Matter.Body.setVelocity(b,{x:Math.random()*24-12,y:-8-Math.random()*12});Matter.Body.setAngularVelocity(b,Math.random()*.6-.3)});
   say('blocks','Бух! Ха-ха! Давай построим снова!');document.getElementById('boom').style.visibility='hidden';
-  setTimeout(resetTower,1100);
+  setTimeout(()=>{if(BW){blClear();BW.boom=false}},1800);
 }
 
 /* ---------- машинки ---------- */
