@@ -575,8 +575,8 @@ function cloudData(){const o=JSON.parse(JSON.stringify(S));if(o.diary&&o.diary.l
 let pushSeq=0;
 function cloudPush(){if(!fb||applyingRemote)return;clearTimeout(pushT);pushing=true;const seq=++pushSeq;
   pushT=setTimeout(()=>{fb.setDoc(fb.ref,{lesha:cloudData(),updated:fb.ts()},{merge:true}).then(()=>{if(seq===pushSeq)pushing=false;syncState='ok'}).catch(()=>{if(seq===pushSeq)pushing=false;syncState='err'})},700)}
-function applyRemote(r){if(JSON.stringify(r)===JSON.stringify(cloudData()))return;applyingRemote=true;S=Object.assign({},r);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
-  setStars();dress();renderPend();renderAsk();if(cur()==='parent')renderParent();applyingRemote=false}
+function applyRemote(r){if(JSON.stringify(r)===JSON.stringify(cloudData()))return;applyingRemote=true;S=Object.assign({},r);const co=capOff();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+  setStars();dress();if(co)setTimeout(save,0);renderPend();renderAsk();if(cur()==='parent')renderParent();applyingRemote=false}
 function mergeTopa(r){const L=cloudData(),uq=(a,k)=>{const m=new Map();a.forEach(x=>{const key=k(x);if(!m.has(key))m.set(key,x)});return[...m.values()]};
   const o=Object.assign({},L,r);o.stars=Math.max(L.stars||0,r.stars||0);o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];o.toys=[...new Set([...(r.toys||[]),...(L.toys||[])])];
   o.diary=uq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.t+'|'+x.a).sort((a,b)=>(a.d+a.t)<(b.d+b.t)?1:-1).slice(0,300);
@@ -595,6 +595,9 @@ async function cloudInit(){if(!famId||fb)return;
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 /* 06.11.2026: звёзды терялись при синхронизации — родитель попросил вернуть Лёше 10 звёзд, один раз */
+/* кепку с Топы сняли по просьбе родителя (07.11.2026): разово, купленная остаётся */
+function capOff(){if(S.capOff1===1)return false;if(S.wear)Object.keys(S.wear).forEach(k=>{if(S.wear[k]==='cap')S.wear[k]=null});S.capOff1=1;return true}
+if(capOff())save();
 if(S.starsBack1!==1){S.stars=(S.stars||0)+10;S.starsBack1=1;save()}
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 
