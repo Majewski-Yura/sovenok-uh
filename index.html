@@ -677,6 +677,16 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .th{text-align:left}.th-owl{display:block;height:110px;margin:0 auto}.th h2{text-align:center;margin:6px 0 10px}
 .th ul{margin:0;padding-left:22px;font-size:18px;line-height:1.45}.th li{margin-bottom:6px}
 .th-ex{margin-top:12px;background:#fff6d6;border:3px dashed var(--gold);border-radius:16px;padding:10px 14px;font-size:22px;font-weight:900;line-height:1.5}.th-ex b{display:block;font-size:14px;color:var(--ink2)}
+
+/* столбик и умножение (07.11.2026) */
+.gcl-grid{display:grid;grid-template-columns:repeat(4,52px);justify-content:center;gap:2px 0;font-size:40px;font-weight:900;margin:6px auto 0}
+.gcl-grid i{font-style:normal;height:54px;display:grid;place-items:center}.gcl-grid i.sg{color:var(--ink2)}
+.gcl-line{grid-column:1/-1;height:5px;background:#3b2a20;border-radius:3px;margin:2px 0}
+.gcl-mark{color:#e85a2c;font-size:30px;height:24px!important}
+.gcl-r{border:3px dashed #e0c9a6;border-radius:10px;margin:2px;color:#2f9a5a}.gcl-r.now{border-color:var(--gold);background:#fff6d6}.gcl-r.ok{border-style:solid;border-color:#5cc98a}
+.gcl-pad{display:grid;grid-template-columns:repeat(5,minmax(0,64px));gap:8px;justify-content:center;margin:14px auto 0}
+.gcl-key{font-size:28px;font-weight:900;height:56px;border-radius:16px;background:var(--bg2);border:3px solid var(--line);box-shadow:var(--shadow);color:var(--ink)}
+.gdots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px;margin:6px auto 0}.gdots i{width:18px;height:18px;border-radius:50%;background:#ff5a5f}
 </style>
 </head>
 <body>
@@ -1480,15 +1490,12 @@ const DN_SUBJ=['Русский язык','Литературное чтение'
 const DN_GO={'Русский язык':()=>openSubject('ru'),'Литературное чтение':()=>openSubject('read'),'Математика':()=>openSubject('math'),'Английский язык':()=>openTrip()};
 /* страница учебника математики → урок (06.11.2026). Учебник: Муравьёва, Урбан «Математика 2», ч. 1. Главы — по оглавлению, уроки внутри глав пока примерно по порядку тем;
    когда родитель присылает фото страницы — уточнять диапазоны здесь. [с, по, раздел (MATH_SECS), название урока] */
-const MATH_PAGES=[[6,9,0,'Сложение и вычитание до 10'],[10,13,0,'Числовые домики'],[14,17,0,'Числовая прямая'],[18,21,0,'Отрезки и линейка'],[22,25,0,'Задачи со схемой'],
-  [26,31,1,'Десяточки'],[32,39,1,'Прибавляем через десяток'],[40,47,1,'Вычитаем через десяток'],[48,53,1,'Домики до 18'],[54,59,1,'Весы'],[60,69,1,'На сколько больше?'],[70,75,1,'Проверь себя'],
-  [76,80,2,'Пучки палочек'],[81,86,2,'Как записать число'],[87,91,2,'Числовой паровозик'],[92,96,2,'Больше, меньше, равно'],[97,101,2,'Дециметр и метр'],
-  [102,107,3,'40 + 7, 47 − 7, 47 − 40'],[108,113,3,'Круглые десятки'],[114,121,3,'34 + 2 и 34 + 20'],[122,127,3,'36 − 2 и 36 − 20'],[128,131,3,'Скобки'],[132,135,3,'Задачи до 100'],[136,140,3,'Проверь себя']];
-function mathByPage(pg){const m=MATH_PAGES.find(x=>pg>=x[0]&&pg<=x[1]);if(!m)return -1;return LESSONS.math.list.findIndex(x=>(x.sec||0)===m[2]&&x.n===m[3])}
+function mathByPage(pg,part){const m=(part==2?MATH_PAGES2:MATH_PAGES1).find(x=>pg>=x[0]&&pg<=x[1]);if(!m)return -1;return LESSONS.math.list.findIndex(x=>(x.sec||0)===m[2]&&x.n===m[3])}
+function dnPart(h){if(h.part)return +h.part;return /ч(асть|\.)?\s*2/i.test(h.t||'')?2:1}
 /* номер страницы и задачи: из полей или из текста «с. 34 № 5» */
 function dnPage(h){if(h.pg)return +h.pg;const m=(h.t||'').match(/(?:с|стр)\.?\s*(\d{1,3})/i);return m?+m[1]:0}
 function dnGoHw(s,h){const pg=s==='Математика'?dnPage(h):0;
-  if(pg){const i=mathByPage(pg);if(i>=0){toast('С. '+pg+': урок «'+LESSONS.math.list[i].n+'»');startLesson('math',i);return}}
+  if(pg){const i=mathByPage(pg,dnPart(h));if(i>=0){toast('С. '+pg+': урок «'+LESSONS.math.list[i].n+'»');startLesson('math',i);return}}
   if(h.go&&typeof h.go==='string'){const m=h.go.match(/^([a-z]+)(\d+)$/);if(m){startLesson(m[1],+m[2]);return}}
   const f=DN_GO[s];if(f)f()}
 const DN_DAYS=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
@@ -1542,18 +1549,20 @@ function dnRow(key,s,h,num){
 function dnModal(html){const m=document.getElementById('dnModal'),c=document.getElementById('dnCard');c.innerHTML=html;m.classList.add('on');return c}
 function dnEdit(key,h,s){
   const D=DN(),d=new Date(key+'T12:00'),subs=[...new Set((D.sched[d.getDay()]||[]).concat(DN_SUBJ))];
-  const c=dnModal('<h2>'+DN_DAYS[d.getDay()]+', '+d.getDate()+' '+DN_MON[d.getMonth()]+'</h2><p class="dn-lbl">Предмет</p><div class="chips dn-chips"></div><p class="dn-lbl">Задание</p><textarea class="t dn-ta" placeholder="Например: упр. 45, выучить правило на с. 30"></textarea><div class="dn-pg"><label>Страница<input class="t" inputmode="numeric" maxlength="3" data-f="pg"></label><label>Задача №<input class="t" inputmode="numeric" maxlength="3" data-f="no"></label></div><p class="dn-pghint"></p><div class="row" style="justify-content:center;gap:10px;margin-top:12px"><button class="btn">Записать</button><button class="btn soft">Отмена</button></div>');
+  const c=dnModal('<h2>'+DN_DAYS[d.getDay()]+', '+d.getDate()+' '+DN_MON[d.getMonth()]+'</h2><p class="dn-lbl">Предмет</p><div class="chips dn-chips"></div><p class="dn-lbl">Задание</p><textarea class="t dn-ta" placeholder="Например: упр. 45, выучить правило на с. 30"></textarea><div class="chips dn-chips dn-part"></div><div class="dn-pg"><label>Страница<input class="t" inputmode="numeric" maxlength="3" data-f="pg"></label><label>Задача №<input class="t" inputmode="numeric" maxlength="3" data-f="no"></label></div><p class="dn-pghint"></p><div class="row" style="justify-content:center;gap:10px;margin-top:12px"><button class="btn">Записать</button><button class="btn soft">Отмена</button></div>');
   let cur=s||(h&&h.s)||subs[0];const ch=c.querySelector('.dn-chips');
   subs.forEach(x=>{const b=document.createElement('button');b.className='chip'+(x===cur?' on':'');b.textContent=x;b.onclick=()=>{cur=x;ch.querySelectorAll('.chip').forEach(y=>y.classList.toggle('on',y===b))};ch.appendChild(b)});
   const ta=c.querySelector('.dn-ta');ta.value=h?h.t:'';setTimeout(()=>ta.focus(),50);
   const fPg=c.querySelector('[data-f=pg]'),fNo=c.querySelector('[data-f=no]'),hint=c.querySelector('.dn-pghint');fPg.value=h&&h.pg||'';fNo.value=h&&h.no||'';
-  const upd=()=>{const pg=+fPg.value||dnPage({t:ta.value});const i=cur==='Математика'&&pg?mathByPage(pg):-1;hint.textContent=i>=0?'▶ откроет урок «'+LESSONS.math.list[i].n+'»':''};
+  let part=h&&h.part?+h.part:(D.mpart||1);const pt=c.querySelector('.dn-part');[1,2].forEach(n=>{const b=document.createElement('button');b.className='chip'+(n===part?' on':'');b.textContent='Учебник, часть '+n;b.onclick=()=>{part=n;pt.querySelectorAll('.chip').forEach(y=>y.classList.toggle('on',y===b));upd()};pt.appendChild(b)});
+  const upd=()=>{pt.style.display=cur==='Математика'?'':'none';const pg=+fPg.value||dnPage({t:ta.value});const i=cur==='Математика'&&pg?mathByPage(pg,part):-1;hint.textContent=i>=0?'▶ откроет урок «'+LESSONS.math.list[i].n+'»':''};
   [fPg,ta].forEach(x=>x.addEventListener('input',upd));ch.addEventListener('click',()=>setTimeout(upd));upd();
   const [ok,no]=c.querySelectorAll('.row .btn');no.onclick=()=>document.getElementById('dnModal').classList.remove('on');
   if(h){const del=document.createElement('button');del.className='btn soft';del.textContent='Удалить';del.onclick=()=>{D.hw[key]=(D.hw[key]||[]).filter(x=>x!==h);save();document.getElementById('dnModal').classList.remove('on');renderDnev()};ok.parentNode.appendChild(del)}
   ok.onclick=()=>{const t=ta.value.trim();if(!t){ta.focus();return}
     const pg=(fPg.value.match(/\d+/)||[''])[0],no=(fNo.value.match(/\d+/)||[''])[0];
-    if(h){h.s=cur;h.t=t;h.pg=pg;h.no=no}else{(D.hw[key]=D.hw[key]||[]).push({id:Date.now(),s:cur,t,pg,no,done:0,pend:0})}
+    const pt2=cur==='Математика'?part:0;if(pt2)D.mpart=pt2;
+    if(h){h.s=cur;h.t=t;h.pg=pg;h.no=no;h.part=pt2}else{(D.hw[key]=D.hw[key]||[]).push({id:Date.now(),s:cur,t,pg,no,part:pt2,done:0,pend:0})}
     save();document.getElementById('dnModal').classList.remove('on');renderDnev()};
 }
 /* расписание уроков по дням недели */
@@ -2199,7 +2208,7 @@ function ruStep(){
   const win=()=>{if(!q.missed){rl.textContent=typo(q.r);rl.classList.remove('explain')}cheer();flashStar('owlGame','book');
     if(q.missed&&RG.extra<2){RG.list.splice(RG.i+1,0,Object.assign(RU_GEN[q.gen](),{gen:q.gen,again:1}));RG.extra++}
     nx.style.display='flex'};
-  if(G_KIND[q.t]){if(['line','say','clock','tens','train','house','scale','coins','ruler','task','shapes','perim','frame'].includes(q.t))W.className='eq';G_KIND[q.t](q,{Q:W,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('game',t),snd:tripSnd});return}
+  if(G_KIND[q.t]){if(['line','say','clock','tens','train','house','scale','coins','ruler','task','shapes','perim','frame','column','angles'].includes(q.t))W.className='eq';G_KIND[q.t](q,{Q:W,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('game',t),snd:tripSnd});return}
   ({choose:ruChoose,fill:ruFill,sort:ruSort,order:ruOrder})[q.t](q,W,box,miss,win);
 }
 function ruChoose(q,W,box,miss,win){
@@ -2575,8 +2584,8 @@ function gLine(q,c){
 }
 /* часы: «который час?» (выбор) или «поставь стрелки» (нажми на число + «ровно / половина») */
 const G_HOURG=['двенадцатого','первого','второго','третьего','четвёртого','пятого','шестого','седьмого','восьмого','девятого','десятого','одиннадцатого','двенадцатого'];
-const gTimeTxt=(h,m)=>h+':'+(m?'30':'00');
-const gTimeWords=(h,m)=>m?'половина '+G_HOURG[h%12+1===13?1:h%12+1]:(h+' '+(h===1?'час':h<5?'часа':'часов')+' ровно');
+const gTimeTxt=(h,m)=>h+':'+String(m).padStart(2,'0');
+const gTimeWords=(h,m)=>m&&m!==30?h+' ч '+m+' мин':m?'половина '+G_HOURG[h%12+1===13?1:h%12+1]:(h+' '+(h===1?'час':h<5?'часа':'часов')+' ровно');
 function gClockSvg(h,m,pick){
   let s='<svg viewBox="-110 -110 220 220" class="gk-face"><circle r="104" fill="#fff" stroke="#3b2a20" stroke-width="6"/>';
   for(let i=1;i<=12;i++){const a=i*Math.PI/6,x=Math.sin(a)*80,y=-Math.cos(a)*80;s+='<text x="'+x.toFixed(1)+'" y="'+(y+9).toFixed(1)+'" text-anchor="middle" font-size="26" font-weight="900" fill="#3b2a20" class="'+(pick?'gk-n':'')+'" data-h="'+i+'">'+i+'</text>'}
@@ -2758,7 +2767,7 @@ function mBarSvg(B){const k=B.k,a=B.a,b=B.b,M=Math.max(a+b,a)*1.05,W=n=>Math.max
   else{const top=seg(x0,W(a),50,'#e85a2c',a,1);const big=k==='more'?a+b:a-b;s+=top+(k==='diff'?seg(x0,W(b),120,'#4a8cff',b,0)+'<text x="'+(x0+W(b)+(W(a)-W(b))/2)+'" y="110" text-anchor="middle" font-size="38" font-weight="900" fill="#2f9a5a">?</text>'
     :seg(x0,W(big),120,'#4a8cff','?',0)+'<text x="'+(x0+W(Math.min(a,big))+Math.abs(W(a)-W(big))/2)+'" y="'+(k==='more'?100:85)+'" text-anchor="middle" font-size="28" font-weight="900" fill="#7a5a2a">'+(k==='more'?'на '+b+' больше':'на '+b+' меньше')+'</text>')}
   return s+'</svg>'}
-function gTask(q,c){const box=c.box;box.className='gtk';box.innerHTML='';if(c.Q){c.Q.innerHTML='<div class="gtk-text"></div>'+(q.bar?mBarSvg(q.bar):'');c.Q.querySelector('.gtk-text').textContent=typo(q.text)}
+function gTask(q,c){const box=c.box;box.className='gtk';box.innerHTML='';if(c.Q){c.Q.innerHTML='<div class="gtk-text"></div>'+(q.bar?mBarSvg(q.bar):'')+(q.pic||'');c.Q.querySelector('.gtk-text').textContent=typo(q.text)}
   let st=0;const lab=G_EL('div','gtk-step'),o=G_EL('div','opts ruw');box.appendChild(lab);box.appendChild(o);
   const show=()=>{const S_=q.steps[st];lab.textContent=S_.ask;o.innerHTML='';let done=false;shuffle(S_.opts.map((t,k)=>({t,k}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t;b.onclick=()=>{if(done||b.classList.contains('no'))return;
     if(!x.k){done=true;b.classList.add('yes');cheer();if(c.snd)c.snd('ok');st++;if(st<q.steps.length){setTimeout(()=>{lab.textContent='';const sol=G_EL('div','gtk-sol');sol.textContent=x.t+' = ?';box.insertBefore(sol,lab);show()},500)}else{const sol=box.querySelector('.gtk-sol');if(sol)sol.textContent=sol.textContent.replace('?',x.t);c.win()}}
@@ -2822,10 +2831,10 @@ LESSONS.math.list.push(
 
 /* список математики (06.11.2026, по просьбе родителя — не плиткой): разделы-главы с прогрессом, раскрывается глава с первым непройденным уроком; внутри — строки уроков */
 function renderMathList(box,done){const L=LESSONS.math.list;let num=0,opened=false;
-  MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(!ii.length)return;
+  let pos=0;MATH_SEC_ORDER.forEach(s=>{const n=MATH_SECS[s],ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(!ii.length)return;pos++;
     const ok=ii.filter(i=>done['math'+i]).length,d=document.createElement('details');d.className='msecbox';
     if(!opened&&ok<ii.length){d.open=true;opened=true}
-    d.innerHTML='<summary><span class="msec-n">'+(s+1)+'</span><span class="msec-t"><b></b><i class="msec-bar"><em style="width:'+Math.round(ok/ii.length*100)+'%"></em></i></span><span class="msec-c">'+ok+' из '+ii.length+'</span></summary><div class="mrows"></div>';
+    d.innerHTML='<summary><span class="msec-n">'+pos+'</span><span class="msec-t"><b></b><i class="msec-bar"><em style="width:'+Math.round(ok/ii.length*100)+'%"></em></i></span><span class="msec-c">'+ok+' из '+ii.length+'</span></summary><div class="mrows"></div>';
     d.querySelector('b').textContent=typo(n);const R=d.querySelector('.mrows');
     ii.forEach(i=>{num++;const x=L[i],b=document.createElement('button'),fin=!!done['math'+i],pz=lessonPrize('math'+i);b.className='mrow'+(fin?' done':'');
       b.innerHTML='<span class="mrow-n">'+(fin?'✓':num)+'</span><span class="mrow-t"><b></b><small></small></span><span class="mrow-p">'+(pz?'⭐ '+pz:'')+'</span>';
@@ -2941,8 +2950,189 @@ Object.assign(MATH_TH,{
  'Сравниваем выражения до 100':{t:['Сначала посчитай пример.','Потом сравни: сначала десятки, потом единицы.'],ex:['34 + 20 ? 55','54 < 55']},
  'Задачи в два действия до 100':{t:['Решай по шагам, по порядку.','Можно записать одним выражением.'],ex:['Было 40, подарили 5, отдали 3','40 + 5 − 3 = 42']}
 });
+
+/* ---------- учебник целиком (07.11.2026): недостающие темы части 1 и вся часть 2 (Муравьёва, Урбан) ---------- */
+const MUL='·';
+/* столбик: цифры результата вводятся с единиц; при переходе — точка-подсказка над десятками */
+function gColumn(q,c){const box=c.box;box.className='gcl';box.innerHTML='';const r=q.op>0?q.a+q.b:q.a-q.b,rd=String(r).split('').reverse(),W=3;
+  const cell=(t,cls)=>'<i class="'+(cls||'')+'">'+(t===undefined?'':t)+'</i>';const row=(n,sign)=>{const d=String(n).padStart(W,' ').split('');return cell(sign||'','sg')+d.map(x=>cell(x===' '?'':x)).join('')};
+  const carry=q.op>0?(q.a%10+q.b%10>=10):(q.a%10<q.b%10);
+  let h='<div class="gcl-grid"><i class="sg"></i><i></i><i class="gcl-mark"></i><i></i>'+row(q.a,'')+row(q.b,q.op>0?'+':'−')+'<b class="gcl-line"></b>'+cell('','sg');
+  for(let k=W-1;k>=0;k--)h+=k<rd.length?'<i class="gcl-r" data-k="'+k+'"></i>':'<i></i>';box.innerHTML=h+'</div>';if(c.Q)c.Q.innerHTML='';
+  const mark=box.querySelector('.gcl-mark');let k=0;const cur=()=>{box.querySelectorAll('.gcl-r').forEach(e=>e.classList.toggle('now',+e.dataset.k===k))};cur();
+  const pad=G_EL('div','gcl-pad');for(let d=0;d<10;d++){const b=G_EL('button','gcl-key');b.textContent=d;b.onclick=()=>{if(k>=rd.length)return;
+    if(String(d)===rd[k]){const e=box.querySelector('.gcl-r[data-k="'+k+'"]');e.textContent=d;e.classList.add('ok');if(k===0&&carry){mark.textContent='•';if(c.say)c.say(q.op>0?'Единиц больше десяти! Один десяток запомни и прибавь к десяткам.':'Единиц не хватает! Займи один десяток.')}k++;cur();cheer();if(k===rd.length)setTimeout(c.win,300)}
+    else{ruShake(b);c.miss()}};pad.appendChild(b)}box.appendChild(pad)}
+/* углы: найди прямые / острые / тупые */
+const M_ANG={right:[90],acute:[35,50,65],obtuse:[120,140,155]};
+function gAngles(q,c){const box=c.box;box.className='gsh';box.innerHTML='';if(c.Q)c.Q.innerHTML='';
+  const items=shuffle([q.want,q.want,q.want].concat(shuffle(Object.keys(M_ANG).filter(k=>k!==q.want).flatMap(k=>[k,k])).slice(0,4)));let left=3;
+  items.forEach((k,i)=>{const a=pick(M_ANG[k]),rot=MR(-20,20),r=a*Math.PI/180,x2=20+70*Math.cos(-r),y2=80+70*Math.sin(-r);const b=G_EL('button','gsh-it');
+    b.innerHTML='<svg viewBox="0 0 100 100"><g transform="rotate('+rot+' 20 80)" stroke="#4a8cff" stroke-width="6" stroke-linecap="round" fill="none"><line x1="20" y1="80" x2="92" y2="80"/><line x1="20" y1="80" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'"/><circle cx="20" cy="80" r="5" fill="#ff5a5f" stroke="none"/></g></svg>';
+    b.onclick=()=>{if(b.classList.contains('ok'))return;if(k===q.want){b.classList.add('ok');left--;cheer();if(c.snd)c.snd('ok');if(!left)setTimeout(c.win,300)}else{ruShake(b);c.miss()}};box.appendChild(b)})}
+/* группы предметов для умножения и деления */
+function mGroupsSvg(g,n,mode){const W=Math.min(600,g*110),cw=W/g;let s='<svg viewBox="0 0 '+W+' 120" class="gtk-bar" style="max-width:'+Math.round(W*.8)+'px">';
+  for(let i=0;i<g;i++){const cx=cw*i+cw/2;s+='<ellipse cx="'+cx+'" cy="62" rx="'+(cw/2-8)+'" ry="50" fill="#fff6d6" stroke="#e0b980" stroke-width="4"/>';
+    if(mode!=='div')for(let j=0;j<n;j++){const cols=Math.min(3,n),rr=Math.ceil(n/cols),x=cx+((j%cols)-(cols-1)/2)*24,y=62+(Math.floor(j/cols)-(rr-1)/2)*24;s+='<circle cx="'+x+'" cy="'+y+'" r="9" fill="#ff5a5f"/>'}}
+  return s+'</svg>'+(mode==='div'?'<div class="gdots">'+'<i></i>'.repeat(g*n)+'</div>':'')}
+Object.assign(G_KIND,{column:gColumn,angles:gAngles});
+/* [предмет: 1, 2–4, 5+; ёмкость: в … (мн.), 2–4, 5+, в … (вин. мн.)] */
+const M_OBJ=[['яблоко','яблока','яблок','тарелках','тарелки','тарелок','тарелки'],['конфета','конфеты','конфет','коробках','коробки','коробок','коробки'],['карандаш','карандаша','карандашей','стаканах','стакана','стаканов','стаканы'],['жёлудь','жёлудя','жёлудей','корзинках','корзинки','корзинок','корзинки']];
+const mN=(n,o)=>n+' '+plural(n,[o[0],o[1],o[2]]);
+const mPick2=(gen)=>{for(let k=0;k<50;k++){const r=gen();if(r)return r}return gen(true)};
+Object.assign(MATH_GEN,{
+  /* часть 1: масса и объём, время, углы, удобный способ */
+  mKgL:()=>{const v=pick([['9 кг','13 кг − 5 кг','>'],['8 л','12 л − 3 л','<'],['10 кг','6 кг + 4 кг','='],['7 л','15 л − 9 л','>'],['5 кг','14 кг − 8 кг','<'],['20 л','11 л + 9 л','=']]);return {t:'choose',ask:'Сравни величины! Сначала посчитай.',show:v[0]+' ? '+v[1],opts:[v[2]].concat(['>','<','='].filter(x=>x!==v[2])),r:'Килограмм — единица массы, литр — единица объёма. Сравнивают одинаковые единицы.'}},
+  mKgTask:()=>{const k=Math.random()<.5;if(k){const a=MR(8,15),b=MR(2,6);return {t:'task',text:'Масса тыквы — '+a+' кг. Арбуз на '+b+' кг легче тыквы. Какова масса арбуза?',bar:{k:'less',a,b},steps:[{ask:'Каким действием решаем?',opts:[a+' − '+b,a+' + '+b]},{ask:'Сколько килограммов?',opts:mOpts(a-b,[-2,-1,1,2])}],ask:'Задача про массу! Легче — значит меньше.',r:'Легче — вычитаем, тяжелее — прибавляем.'}}
+    const a=MR(12,20),b=MR(3,9);return {t:'task',text:'Купили '+a+' л краски. Израсходовали '+b+' л. Сколько литров краски осталось?',bar:{k:'left',a,b},steps:[{ask:'Каким действием решаем?',opts:[a+' − '+b,a+' + '+b]},{ask:'Сколько литров?',opts:mOpts(a-b,[-2,-1,1,2])}],ask:'Задача про литры! Осталось — значит вычитаем.',r:'Израсходовали, осталось — вычитаем.'}},
+  mTimeConv:()=>{const v=pick([['1 ч = ? мин','60',['30','100']],['1 сутки = ? ч','24',['12','60']],['90 мин = 1 ч ? мин','30',['90','10']],['80 мин = 1 ч ? мин','20',['80','40']],['1 ч 10 мин = ? мин','70',['110','61']],['3 ч дня — это ? ч','15',['3','13']],['6 ч вечера — это ? ч','18',['6','16']],['23 ч — это ? ч вечера','11',['23','10']]]);
+    return {t:'choose',ask:'Сколько это? Помни: в часе шестьдесят минут, в сутках двадцать четыре часа.',show:v[0],opts:[v[1]].concat(v[2]),r:'1 ч = 60 мин, 1 сутки = 24 ч. После полудня часы считают дальше: 3 ч дня — это 15 ч.'}},
+  mClockMin:()=>{const h=MR(1,12),m=MR(1,11)*5,f=(H,M)=>H+':'+String(M).padStart(2,'0'),o=[f(h,m),f(h,(m+30)%60||5),f(h%12+1,m)];return {t:'clock',mode:'read',ask:'Который час? Длинная стрелка показывает минуты: каждое число — пять минут.',h,m,opts:o,r:'Короткая стрелка — часы, длинная — минуты. От числа к числу длинная стрелка проходит пять минут.'}},
+  mAngle:()=>{const want=pick(['right','acute','obtuse']);return {t:'angles',want,ask:want==='right'?'Найди все прямые углы! Прямой угол — как уголок тетради.':want==='acute'?'Найди все острые углы! Они меньше прямого.':'Найди все тупые углы! Они больше прямого.',r:'Прямой угол — как уголок листа. Острый — меньше прямого, тупой — больше прямого.'}},
+  mGroup10:()=>{const a=MR(1,9),b=10-a,cc=MR(2,9),l=shuffle([a,b,cc]);return {t:'choose',ask:'Сложи удобным способом! Найди два числа, которые дают десять.',show:l.join(' + ')+' = ?',opts:mOpts(20+cc-10,[-2,-1,1,2]),r:'Слагаемые можно складывать в любом порядке. Сначала сложи те, что дают десять.'}},
+  mGroupPick:()=>{const a=pick([1,2,3,4,6,7,8,9]),b=10-a,cc=MR(2,9);if(cc===a||cc===b)return MATH_GEN.mGroup10();const l=shuffle([a,b,cc]);return {t:'choose',ask:'Какие два числа удобно сложить сначала?',show:l.join(' + '),opts:[a+' + '+b,a+' + '+cc,b+' + '+cc],r:'Сначала складывай числа, которые вместе дают десять.'}},
+  /* часть 2: двузначные числа */
+  mAddX:()=>{const u=MR(2,9),a=MR(1,8)*10+u,b=MR(11-u,9),e=mEx(a,1,b);return {t:'choose',ask:'Прибавь через десяток! Сначала до круглого числа, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'28 + 6 = 28 + 2 + 4 = 34.'}},
+  mSubX:()=>{const u=MR(1,8),a=MR(2,9)*10+u,b=MR(u+1,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти через десяток! Сначала до круглого числа, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'32 − 5 = 32 − 2 − 3 = 27.'}},
+  mAdd22:()=>mPick2(()=>{const ta=MR(1,7),ua=MR(0,8),tb=MR(1,8-ta),ub=MR(0,9-ua);if(ta+tb>9)return null;const a=ta*10+ua,b=tb*10+ub,e=mEx(a,1,b);return {t:'choose',ask:'Сложи двузначные числа! Десятки с десятками, единицы с единицами.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'34 + 21 = (30 + 20) + (4 + 1) = 55.'}}),
+  mSub22:()=>{const ta=MR(3,9),ua=MR(2,9),tb=MR(1,ta-1),ub=MR(0,ua),a=ta*10+ua,b=tb*10+ub,e=mEx(a,-1,b);return {t:'choose',ask:'Вычти двузначное число! Десятки из десятков, единицы из единиц.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'65 − 32 = (60 − 30) + (5 − 2) = 33.'}},
+  mAddR:()=>{const ua=MR(1,9),ta=MR(1,6),tb=MR(1,8-ta),a=ta*10+ua,b=tb*10+(10-ua),e=mEx(a,1,b);return {t:'choose',ask:'Сложи! Единицы вместе дадут целый десяток.',show:e.s+' = ?',opts:mOpts(e.v,[-10,10,-1,1]),r:'36 + 24 = (30 + 20) + (6 + 4) = 50 + 10 = 60.'}},
+  mAdd100:()=>{const a=MR(11,89);if(a%10===0)return MATH_GEN.mAdd100();const b=100-a;return {t:'choose',ask:'Дополни до ста! Единицы дают десяток, а десятки — сто.',show:a+' + ? = 100',opts:mOpts(b,[-10,10,-1,1]),r:'36 + 64 = (30 + 60) + (6 + 4) = 90 + 10 = 100.'}},
+  mSubR2:()=>{const a=MR(3,9)*10,b=MR(1,a/10-1)*10+MR(1,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти из круглого числа! Сначала десятки, потом единицы.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'50 − 23 = (50 − 20) − 3 = 27.'}},
+  mSub100:()=>{const b=MR(11,89),e=mEx(100,-1,b);return {t:'choose',ask:'Вычти из ста! Сначала десятки, потом единицы.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'100 − 23 = (100 − 20) − 3 = 77.'}},
+  mAddC:()=>{const ua=MR(2,9),ub=MR(11-ua,9),ta=MR(1,6),tb=MR(1,8-ta),a=ta*10+ua,b=tb*10+ub,e=mEx(a,1,b);return {t:'choose',ask:'Сложи с переходом через десяток! Сначала десятки, потом единицы.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'45 + 26 = 45 + 20 + 6 = 65 + 6 = 71.'}},
+  mSubB:()=>{const ua=MR(0,8),ub=MR(ua+1,9),ta=MR(3,9),tb=MR(1,ta-2),a=ta*10+ua,b=tb*10+ub,e=mEx(a,-1,b);return {t:'choose',ask:'Вычти с переходом через десяток! Сначала десятки, потом единицы.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'53 − 25 = 53 − 20 − 5 = 33 − 5 = 28.'}},
+  mMatch2:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const q=MATH_GEN[pick(['mAddX','mSubX','mAdd22','mSub22','mAddC','mSubB'])](),v=q.opts[0];if(s.has(v))continue;s.add(v);pairs.push([q.show.replace(' = ?',''),v])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:'Сначала десятки, потом единицы.'}},
+  mFix2:mFixGen(()=>{const q=MATH_GEN[pick(['mAddX','mSubX','mAdd22','mSub22','mAddC','mSubB'])]();const [x,op,y]=q.show.replace(' = ?','').split(' ');return mEx(+x,op==='+'?1:-1,+y)},'Ух решала примеры с двузначными числами и ошиблась! Нажми на неправильные.','Сначала десятки, потом единицы.'),
+  mCheck100:()=>{const a=MR(21,59),b=MR(11,39),c=a+b;return {t:'choose',ask:'Как проверить сложение? Выбери верную проверку.',show:a+' + '+b+' = '+c,opts:[c+' − '+b+' = '+a,c+' + '+b+' = '+(c+b),b+' − '+Math.min(a,b)+' = '+(b-Math.min(a,b))],small:1,r:'Сложение проверяют вычитанием: из суммы вычитают одно слагаемое — получается другое.'}},
+  mCheckSub:()=>{const a=MR(41,99),b=MR(11,a-11),c=a-b;return {t:'choose',ask:'Как проверить вычитание? Выбери верную проверку.',show:a+' − '+b+' = '+c,opts:[c+' + '+b+' = '+a,a+' + '+b+' = '+(a+b),c+' − '+Math.min(b,c)+' = '+(c-Math.min(b,c))],small:1,r:'Вычитание проверяют сложением: к разности прибавляют вычитаемое — получается уменьшаемое.'}},
+  mRectFact:()=>{const v=pick([['У прямоугольника все углы…','прямые',['острые','тупые']],['У прямоугольника противоположные стороны…','равны',['разные','короче']],['Квадрат — это прямоугольник, у которого все стороны…','равны',['разные','длиннее']],['Сколько углов у четырёхугольника?','4',['3','5']],['Сколько сторон у пятиугольника?','5',['4','6']]]);
+    return {t:'choose',ask:'Вспомни свойства фигур!',show:v[0],opts:[v[1]].concat(v[2]),small:1,r:'У прямоугольника все углы прямые, а противоположные стороны равны. Квадрат — прямоугольник с равными сторонами.'}},
+  mPerimRS:()=>{const q=MATH_GEN.mPerim();if(q.k==='tri')return MATH_GEN.mPerimRS();return q},
+  /* столбик */
+  mColPrep:()=>{const n=MR(21,99),d=Math.floor(n/10),u=n%10,t=Math.random()<.5;if(d===u)return MATH_GEN.mColPrep();return {t:'choose',ask:t?'Сколько десятков в этом числе? В столбике десятки пишут под десятками.':'Сколько единиц в этом числе? В столбике единицы пишут под единицами.',show:String(n),opts:t?[String(d),String(u),String(n)]:[String(u),String(d),String(n)],r:'В столбике единицы пишут под единицами, десятки — под десятками.'}},
+  mColAdd:()=>mPick2(()=>{const a=MR(11,78),b=MR(11,88-a);if(a%10+b%10>9||a+b>99)return null;return {t:'column',a,b,op:1,ask:'Сложи в столбик! Начинай с единиц — нажимай цифры ответа.',r:'В столбике считают с единиц: единицы с единицами, потом десятки с десятками.'}}),
+  mColSub:()=>mPick2(()=>{const a=MR(35,99),b=MR(11,a-11);if(b%10>a%10)return null;return {t:'column',a,b,op:-1,ask:'Вычти в столбик! Начинай с единиц — нажимай цифры ответа.',r:'В столбике считают с единиц: единицы из единиц, потом десятки из десятков.'}}),
+  mColAddC:()=>mPick2(()=>{const a=MR(15,79),b=MR(12,99-a);if(a%10+b%10<10||a+b>100)return null;return {t:'column',a,b,op:1,ask:'Сложи в столбик с переходом! Десяток из единиц запомни и прибавь к десяткам.',r:'Если единиц получилось десять и больше, десяток запоминают и прибавляют к десяткам.'}}),
+  mColSubB:()=>mPick2(()=>{const a=MR(31,99),b=MR(12,a-10);if(b%10<=a%10)return null;return {t:'column',a,b,op:-1,ask:'Вычти в столбик с переходом! Если единиц не хватает, займи десяток.',r:'Если единиц не хватает, занимают один десяток: в нём десять единиц.'}}),
+  /* умножение и деление */
+  mMulPic:()=>{const o=pick(M_OBJ),g=MR(2,4),n=MR(2,5);return {t:'task',text:'В '+g+' '+o[3]+' по '+mN(n,o)+'. Сколько всего '+o[2]+'?',bar:null,pic:mGroupsSvg(g,n,'mul'),
+    steps:[{ask:'Каким действием решаем?',opts:[n+' '+MUL+' '+g,n+' + '+g]},{ask:'Сколько всего?',opts:mOpts(n*g,[-2,-1,1,2])}],ask:'Одинаковые группы — значит умножение! Посчитай по группам.',r:'Умножение — это сложение одинаковых слагаемых: 4 · 3 = 4 + 4 + 4.'}},
+  mMulSum:()=>{const n=MR(2,6);let g=MR(2,5);if(g===n)g=n===2?3:2;return {t:'choose',ask:'Замени сложение умножением!',show:Array(g).fill(n).join(' + '),opts:[n+' '+MUL+' '+g,g+' + '+n,n+' '+MUL+' '+n],small:1,r:'Если слагаемые одинаковые, сложение можно заменить умножением: 5 + 5 + 5 = 5 · 3.'}},
+  mMulTask:()=>{const o=pick(M_OBJ),g=MR(2,5),n=MR(2,5);return {t:'task',text:'В '+g+' '+o[3]+' по '+mN(n,o)+'. Сколько всего '+o[2]+'?',bar:null,steps:[{ask:'Каким действием решаем?',opts:[n+' '+MUL+' '+g,n+' + '+g]},{ask:'Сколько всего?',opts:mOpts(n*g,[-2,-1,1,2])}],ask:'Задача на умножение! По сколько и сколько раз?',r:'«По … в каждой» и «сколько всего» — умножаем.'}},
+  mMulTerms:()=>{const a=MR(2,5),b=MR(2,5),p=a*b,[n,name]=pick([[a,'множитель'],[p,'произведение']]);return {t:'choose',ask:'Как называется это число в примере?',show:a+' '+MUL+' '+b+' = '+p+' → '+n,opts:[name].concat(shuffle(['множитель','произведение','слагаемое','сумма'].filter(x=>x!==name)).slice(0,2)),small:1,r:'Числа, которые умножают, — множители. Результат — произведение.'}},
+  mDivPic:()=>{const o=pick(M_OBJ),g=MR(2,4),n=MR(2,4),t=g*n;return {t:'task',text:mN(t,o)+' разложили поровну в '+g+' '+(g<5?o[4]:o[5])+'. Сколько получилось в каждой части?',bar:null,pic:mGroupsSvg(g,n,'div'),
+    steps:[{ask:'Каким действием решаем?',opts:[t+' : '+g,t+' − '+g]},{ask:'Сколько в каждой?',opts:mOpts(n,[-1,1,2])}],ask:'Разложить поровну — значит разделить!',r:'Деление — это раздел поровну: 12 : 3 = 4, потому что 4 · 3 = 12.'}},
+  mDivTask:()=>{const o=pick(M_OBJ),n=MR(2,5),g=MR(2,4),t=n*g;return {t:'task',text:'Было '+mN(t,o)+'. Их разложили в '+o[6]+' по '+n+'. Сколько понадобилось '+o[5]+'?',bar:null,steps:[{ask:'Каким действием решаем?',opts:[t+' : '+n,t+' '+MUL+' '+n]},{ask:'Сколько получилось?',opts:mOpts(g,[-1,1,2])}],ask:'Задача на деление! Сколько раз по столько?',r:'Чтобы узнать, сколько групп по столько-то, делят.'}},
+  mDivTerms:()=>{const b=MR(2,5),q=MR(2,5),a=b*q,[n,name]=pick([[a,'делимое'],[b,'делитель'],[q,'частное']]);return {t:'choose',ask:'Как называется это число в примере?',show:a+' : '+b+' = '+q+' → '+n,opts:[name].concat(shuffle(['делимое','делитель','частное','множитель'].filter(x=>x!==name)).slice(0,2)),small:1,r:'Делимое : делитель = частное.'}},
+  mMul2a:()=>{const n=MR(2,9);return {t:'choose',ask:'Умножь число два! Два взять столько раз.',show:'2 '+MUL+' '+n+' = ?',opts:mOpts(2*n,[-2,2,-1,1]),r:'2 · 4 = 2 + 2 + 2 + 2 = 8.'}},
+  mMul2b:()=>{const n=MR(2,9);return {t:'choose',ask:'Умножь на два! Число взять два раза.',show:n+' '+MUL+' 2 = ?',opts:mOpts(2*n,[-2,2,-1,1]),r:'Умножить на два — сложить число само с собой: 7 · 2 = 7 + 7 = 14.'}},
+  mMulComm:()=>{const b=MR(2,5);let a=MR(2,9);if(a===b)a=b+1;return {t:'choose',ask:'От перестановки множителей произведение не меняется. Какое число спряталось?',show:a+' '+MUL+' '+b+' = '+b+' '+MUL+' ?',opts:[String(a),String(b),String(a*b)],r:'От перестановки множителей произведение не изменяется: 3 · 4 = 4 · 3.'}},
+  mMulLink:()=>{const a=MR(2,3),b=MR(2,9),p=a*b;return {t:'choose',ask:'Найди неизвестный множитель! Раздели произведение на известный множитель.',show:a+' '+MUL+' ? = '+p,opts:mOpts(b,[-1,1,2]),r:'Если произведение разделить на один множитель, получится другой.'}},
+  mDiv2:()=>{const q=MR(2,9);return {t:'choose',ask:'Раздели на два! Вспомни: на сколько умножить два?',show:(2*q)+' : 2 = ?',opts:mOpts(q,[-1,1,2]),r:'Деление проверяют умножением: 14 : 2 = 7, потому что 7 · 2 = 14.'}},
+  mMul3:()=>{const n=MR(2,9),f=Math.random()<.5;return {t:'choose',ask:'Умножь на три! Можно сложить три одинаковых числа.',show:(f?'3 '+MUL+' '+n:n+' '+MUL+' 3')+' = ?',opts:mOpts(3*n,[-3,3,-1,1]),r:'3 · 5 = 5 + 5 + 5 = 15.'}},
+  mDiv3:()=>{const q=MR(2,9);return {t:'choose',ask:'Раздели на три! Вспомни: на сколько умножить три?',show:(3*q)+' : 3 = ?',opts:mOpts(q,[-1,1,2]),r:'18 : 3 = 6, потому что 6 · 3 = 18.'}},
+  mMulMatch:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const m=pick([2,3]),n=MR(2,9),div=Math.random()<.4,v=div?n:m*n,ex=div?(m*n)+' : '+m:(Math.random()<.5?m+' '+MUL+' '+n:n+' '+MUL+' '+m);if(s.has(v))continue;s.add(v);pairs.push([ex,String(v)])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:'Таблицу умножения на два и на три полезно выучить наизусть.'}},
+  mMulFix:mFixGen(()=>{const m=pick([2,3]),n=MR(2,9);return {s:m+' '+MUL+' '+n,v:m*n}},'Ух решала примеры на умножение и ошиблась! Нажми на неправильные.','Умножение — это сложение одинаковых слагаемых.')
+});
+Object.assign(G_KIND,{column:gColumn,angles:gAngles});
+Object.assign(RU_GEN,MATH_GEN);
+MATH_SECS.push('Часть 2 · Сложение и вычитание','Часть 2 · Столбиком','Часть 2 · Умножение и деление');
+const MATH_SEC_ORDER=[0,1,2,3,5,6,7,4];
+LESSONS.math.list.push(
+  {sec:0,n:'Килограмм и литр',p:'Масса и объём',g:['mKgL','mKgTask','mKgL','mKgTask','mKgL','mKgTask']},
+  {sec:3,n:'Час и минута',p:'Сколько минут в часе, часов в сутках',g:['mClockMin','mTimeConv','mClockMin','mTimeConv','mClockMin','mTimeConv']},
+  {sec:3,n:'Луч и угол',p:'Прямой, острый и тупой угол',g:['mAngle','mAngle','mAngle','mAngle']},
+  {sec:3,n:'Удобный способ',p:'2 + 6 + 8: сначала десяток',g:['mGroupPick','mGroup10','mGroupPick','mGroup10','mGroup10','mGroup10']},
+  {sec:5,n:'28 + 6',p:'Двузначное и однозначное через десяток',g:['mAddX','mAddX','mFrameAdd','mAddX','mAddX','mAddX']},
+  {sec:5,n:'32 − 5',p:'Вычитаем однозначное через десяток',g:['mSubX','mSubX','mSubX','mSubX','mSubX','mSubX']},
+  {sec:5,n:'34 + 21',p:'Двузначное и двузначное',g:['mAdd22','mAdd22','mAdd22','mAdd22','mAdd22','mAdd22']},
+  {sec:5,n:'65 − 32',p:'Вычитаем двузначное',g:['mSub22','mSub22','mSub22','mSub22','mSub22','mSub22']},
+  {sec:5,n:'36 + 24',p:'Единицы дают десяток',g:['mAddR','mAddR','mAddR','mAddR','mAddR','mAddR']},
+  {sec:5,n:'36 + 64 = 100',p:'Дополняем до ста',g:['mAdd100','mAdd100','mAdd100','mAdd100','mAdd100','mAdd100']},
+  {sec:5,n:'50 − 23',p:'Из круглого — двузначное',g:['mSubR2','mSubR2','mSubR2','mSubR2','mSubR2','mSubR2']},
+  {sec:5,n:'100 − 23',p:'Вычитаем из ста',g:['mSub100','mSub100','mSub100','mSub100','mSub100','mSub100']},
+  {sec:5,n:'45 + 26',p:'Сложение с переходом',g:['mAddC','mAddC','mAddC','mAddC','mAddC','mAddC']},
+  {sec:5,n:'53 − 25',p:'Вычитание с переходом',g:['mSubB','mSubB','mSubB','mSubB','mSubB','mSubB']},
+  {sec:5,n:'Проверка сложения до 100',p:'Проверяем вычитанием',g:['mCheck100','mCheck100','mCheck100','mCheck100','mCheck100','mCheck100']},
+  {sec:5,n:'Проверка вычитания',p:'Проверяем сложением',g:['mCheckSub','mCheckSub','mCheckSub','mCheckSub','mCheckSub','mCheckSub']},
+  {sec:5,n:'Прямоугольник и квадрат',p:'Углы, стороны, периметр',g:['mRectFact','mPerimRS','mRectFact','mShapes','mPerimRS','mRectFact']},
+  {sec:5,n:'Закрепляем двузначные',p:'Всё вперемешку',g:['mAddX','mSubX','mAdd22','mSub22','mMatch2','mAddC','mSubB','mFix2']},
+  {sec:5,n:'Проверь себя: часть 2',p:'Сложение и вычитание',g:['mAddC','mSubB','mCheckSub','mTask2b','mPerimRS','mBroken','mFix2','mAdd100']},
+  {sec:6,n:'Готовимся к столбику',p:'Десятки под десятками',g:['mColPrep','mColPrep','mPlace','mColPrep','mColPrep','mPlaceMatch']},
+  {sec:6,n:'Сложение в столбик',p:'Начинаем с единиц',g:['mColAdd','mColAdd','mColAdd','mColAdd','mColAdd','mColAdd']},
+  {sec:6,n:'Вычитание в столбик',p:'Начинаем с единиц',g:['mColSub','mColSub','mColSub','mColSub','mColSub','mColSub']},
+  {sec:6,n:'Сложение в столбик с переходом',p:'Десяток запоминаем',g:['mColAddC','mColAddC','mColAddC','mColAddC','mColAddC','mColAddC']},
+  {sec:6,n:'Вычитание в столбик с переходом',p:'Занимаем десяток',g:['mColSubB','mColSubB','mColSubB','mColSubB','mColSubB','mColSubB']},
+  {sec:6,n:'Столбик: закрепление',p:'Всё вперемешку',g:['mColAdd','mColSub','mColAddC','mColSubB','mColAddC','mColSubB']},
+  {sec:7,n:'Что такое умножение',p:'Одинаковые группы',g:['mMulPic','mMulSum','mMulPic','mMulSum','mMulPic','mMulSum']},
+  {sec:7,n:'Задачи на умножение',p:'По сколько и сколько раз',g:['mMulTask','mMulPic','mMulTask','mMulTask','mMulPic','mMulTask']},
+  {sec:7,n:'Множители и произведение',p:'Названия чисел',g:['mMulTerms','mMulSum','mMulTerms','mMulTerms','mMulSum','mMulTerms']},
+  {sec:7,n:'Что такое деление',p:'Раскладываем поровну',g:['mDivPic','mDivPic','mDivPic','mDivPic','mDivPic','mDivPic']},
+  {sec:7,n:'Задачи на деление',p:'Поровну и по сколько',g:['mDivTask','mDivPic','mDivTask','mDivTask','mDivPic','mDivTask']},
+  {sec:7,n:'Делимое, делитель, частное',p:'Названия чисел',g:['mDivTerms','mDivTerms','mDivTerms','mDivTerms','mDivTerms','mDivTerms']},
+  {sec:7,n:'Умножение числа 2',p:'2 · 4 = 8',g:['mMul2a','mMul2a','mMulSum','mMul2a','mMul2a','mMul2a']},
+  {sec:7,n:'Переставляем множители',p:'3 · 4 = 4 · 3',g:['mMulComm','mMulComm','mMulComm','mMulComm','mMulComm','mMulComm']},
+  {sec:7,n:'Умножаем на 2',p:'7 · 2 = 14',g:['mMul2b','mMul2b','mMul2b','mMulMatch','mMul2b','mMul2b']},
+  {sec:7,n:'Произведение и множители',p:'Найди неизвестный множитель',g:['mMulLink','mMulLink','mMulLink','mMulLink','mMulLink','mMulLink']},
+  {sec:7,n:'Деление на 2',p:'14 : 2 = 7',g:['mDiv2','mDiv2','mDiv2','mDiv2','mDiv2','mDiv2']},
+  {sec:7,n:'Умножение на 3',p:'3 · 5 = 15',g:['mMul3','mMul3','mMul3','mMulMatch','mMul3','mMul3']},
+  {sec:7,n:'Деление на 3',p:'18 : 3 = 6',g:['mDiv3','mDiv3','mDiv3','mDiv3','mDiv3','mDiv3']},
+  {sec:7,n:'Умножение и деление: закрепление',p:'Всё вперемешку',g:['mMul2b','mMul3','mDiv2','mDiv3','mMulMatch','mMulFix','mMulTask','mDivTask']},
+  {sec:7,n:'Повторяем весь 2 класс',p:'Большое повторение',g:['mAdd20','mSub1318','mAddC','mSubB','mColAddC','mMul3','mDiv2','mTask2b','mPerimRS','mClockMin']});
+Object.assign(MATH_TH,{
+ 'Килограмм и литр':{t:['Массу измеряют в килограммах: 1 кг.','Сколько помещается воды или сока, измеряют в литрах: 1 л.','Легче — меньше, тяжелее — больше.'],ex:['Тыква 10 кг, арбуз на 4 кг легче: 10 − 4 = 6 кг']},
+ 'Час и минута':{t:['В одном часе шестьдесят минут.','В сутках двадцать четыре часа.','Длинная стрелка от числа к числу проходит пять минут.'],ex:['1 ч = 60 мин','90 мин = 1 ч 30 мин','3 ч дня — это 15 ч']},
+ 'Луч и угол':{t:['Луч начинается в точке и идёт бесконечно в одну сторону.','Угол — два луча из одной точки, она называется вершиной.','Прямой угол — как уголок листа. Острый меньше прямого, тупой больше.'],ex:['Уголок тетради — прямой угол.']},
+ 'Удобный способ':{t:['Слагаемые можно складывать в любом порядке.','Сначала сложи числа, которые дают десять, потом остальное.'],ex:['2 + 6 + 8 = (2 + 8) + 6 = 16']},
+ '28 + 6':{t:['Сначала дополни число до круглого.','Потом прибавь остаток.'],ex:['28 + 6 = 28 + 2 + 4 = 34']},
+ '32 − 5':{t:['Сначала вычти единицы, чтобы получилось круглое число.','Потом вычти остаток.'],ex:['32 − 5 = 32 − 2 − 3 = 27']},
+ '34 + 21':{t:['Десятки складывают с десятками.','Единицы складывают с единицами.'],ex:['34 + 21 = (30 + 20) + (4 + 1) = 55']},
+ '65 − 32':{t:['Десятки вычитают из десятков.','Единицы вычитают из единиц.'],ex:['65 − 32 = (60 − 30) + (5 − 2) = 33']},
+ '36 + 24':{t:['Сложи десятки и единицы отдельно.','Если единицы вместе дают десять, получится ещё один десяток.'],ex:['36 + 24 = 50 + 10 = 60']},
+ '36 + 64 = 100':{t:['Единицы дополняют до десяти, десятки — до девяноста.','Девяносто и десять — это сто.'],ex:['36 + 64 = 90 + 10 = 100']},
+ '50 − 23':{t:['Сначала вычти десятки.','Потом вычти единицы из круглого числа.'],ex:['50 − 23 = 50 − 20 − 3 = 27']},
+ '100 − 23':{t:['Сначала вычти десятки из ста.','Потом вычти единицы.'],ex:['100 − 23 = 100 − 20 − 3 = 77']},
+ '45 + 26':{t:['Сначала прибавь десятки.','Потом прибавь единицы через десяток.'],ex:['45 + 26 = 45 + 20 + 6 = 71']},
+ '53 − 25':{t:['Сначала вычти десятки.','Потом вычти единицы через десяток.'],ex:['53 − 25 = 53 − 20 − 5 = 28']},
+ 'Проверка сложения до 100':{t:['Сложение проверяют вычитанием.','Из суммы вычти одно слагаемое — получится другое.'],ex:['25 + 34 = 59','Проверка: 59 − 34 = 25']},
+ 'Проверка вычитания':{t:['Вычитание проверяют сложением.','К разности прибавь вычитаемое — получится уменьшаемое.'],ex:['59 − 34 = 25','Проверка: 25 + 34 = 59']},
+ 'Прямоугольник и квадрат':{t:['У прямоугольника все углы прямые, противоположные стороны равны.','Квадрат — это прямоугольник, у которого все стороны равны.','Периметр — сумма длин всех сторон.'],ex:['Прямоугольник 2 см и 5 см: 2 + 5 + 2 + 5 = 14 см']},
+ 'Закрепляем двузначные':{t:['Сначала десятки, потом единицы.','Через десяток — по шагам, через круглое число.'],ex:['45 + 26 = 71','53 − 25 = 28']},
+ 'Проверь себя: часть 2':{t:['Сложение проверяют вычитанием, вычитание — сложением.','Периметр — сумма длин сторон.'],ex:['53 − 25 = 28, проверка: 28 + 25 = 53']},
+ 'Готовимся к столбику':{t:['В столбике единицы пишут под единицами, десятки — под десятками.','Знак действия ставят слева, под числами проводят черту.'],ex:['47 + 21: 7 пишем под 1, 4 — под 2']},
+ 'Сложение в столбик':{t:['Считают с единиц.','Единицы складывают с единицами и пишут под единицами.','Потом складывают десятки.'],ex:['34 + 25: 4 + 5 = 9, 3 + 2 = 5 → 59']},
+ 'Вычитание в столбик':{t:['Считают с единиц.','Из единиц вычитают единицы, из десятков — десятки.'],ex:['68 − 25: 8 − 5 = 3, 6 − 2 = 4 → 43']},
+ 'Сложение в столбик с переходом':{t:['Если единиц получилось десять и больше, один десяток запоминают.','Его прибавляют к десяткам — над десятками ставят точку.'],ex:['38 + 45: 8 + 5 = 13, пишу 3, десяток запомнила; 3 + 4 + 1 = 8 → 83']},
+ 'Вычитание в столбик с переходом':{t:['Если единиц не хватает, занимают один десяток.','Над десятками ставят точку: там стало на один десяток меньше.'],ex:['52 − 27: 12 − 7 = 5; 4 − 2 = 2 → 25']},
+ 'Столбик: закрепление':{t:['Всегда начинай с единиц.','Десяток запоминай при сложении и занимай при вычитании.'],ex:['47 + 36 = 83','82 − 47 = 35']},
+ 'Что такое умножение':{t:['Умножение — это сложение одинаковых слагаемых.','Первое число — сколько в группе, второе — сколько групп.'],ex:['4 + 4 + 4 = 4 · 3 = 12']},
+ 'Задачи на умножение':{t:['«По столько-то в каждой» и «сколько всего» — умножаем.','Пиши: сколько в одной группе умножить на число групп.'],ex:['В 3 коробках по 5 конфет: 5 · 3 = 15']},
+ 'Множители и произведение':{t:['Числа, которые умножают, называются множителями.','Результат умножения — произведение.'],ex:['3 · 4 = 12: 3 и 4 — множители, 12 — произведение']},
+ 'Что такое деление':{t:['Деление — это раздел поровну.','Делят, когда раскладывают поровну или по сколько-то.'],ex:['12 конфет на 3 тарелки: 12 : 3 = 4']},
+ 'Задачи на деление':{t:['Разложили поровну — делим на число частей.','Раскладывали по сколько-то — делим на это число.'],ex:['8 яблок по 2 в пакет: 8 : 2 = 4 пакета']},
+ 'Делимое, делитель, частное':{t:['Число, которое делят, — делимое.','Число, на которое делят, — делитель.','Результат — частное.'],ex:['12 : 3 = 4: 12 — делимое, 3 — делитель, 4 — частное']},
+ 'Умножение числа 2':{t:['Умножить два на число — взять двойку столько раз.'],ex:['2 · 3 = 2 + 2 + 2 = 6','2 · 5 = 10']},
+ 'Переставляем множители':{t:['От перестановки множителей произведение не изменяется.'],ex:['3 · 4 = 4 · 3 = 12']},
+ 'Умножаем на 2':{t:['Умножить на два — сложить число само с собой.'],ex:['7 · 2 = 7 + 7 = 14','9 · 2 = 18']},
+ 'Произведение и множители':{t:['Если произведение разделить на один множитель, получится другой.'],ex:['3 · ? = 12','12 : 3 = 4']},
+ 'Деление на 2':{t:['Разделить на два — найти число, которое при умножении на два даёт делимое.'],ex:['14 : 2 = 7, потому что 7 · 2 = 14']},
+ 'Умножение на 3':{t:['Умножить на три — сложить три одинаковых числа.','Можно переставить множители: 3 · 6 = 6 · 3.'],ex:['5 · 3 = 5 + 5 + 5 = 15']},
+ 'Деление на 3':{t:['Разделить на три — найти число, которое при умножении на три даёт делимое.'],ex:['18 : 3 = 6, потому что 6 · 3 = 18']},
+ 'Умножение и деление: закрепление':{t:['Умножение — сложение одинаковых слагаемых.','Деление проверяют умножением.'],ex:['4 · 3 = 12','12 : 3 = 4']},
+ 'Повторяем весь 2 класс':{t:['Через десяток — по шагам.','Сначала десятки, потом единицы. В столбике — с единиц.','Деление проверяют умножением.'],ex:['45 + 26 = 71','18 : 3 = 6']}
+});
+/* точные страницы учебника (по PDF, 07.11.2026): [с, по, раздел, урок]; часть 1 и часть 2 */
+const MATH_PAGES1=[[6,7,0,'Сложение и вычитание до 10'],[8,9,0,'Сумма и разность'],[10,11,0,'Сложение и вычитание до 10'],[12,13,0,'Сумма и разность'],[14,15,0,'Задачи со схемой'],[16,17,0,'Числовые домики'],[18,19,0,'Числовая прямая'],[20,21,0,'Отрезки и линейка'],[22,23,2,'Дециметр и метр'],[24,25,0,'Килограмм и литр'],
+  [26,27,1,'Прибавляем 6, 5, 4, 3, 2'],[28,31,1,'Вычитаем из 11 и 12'],[32,33,1,'На сколько больше?'],[34,35,1,'Десяточки'],[36,37,1,'Прибавляем 6, 5, 4, 3, 2'],[38,39,1,'Вычитаем через десяток'],[40,41,1,'На сколько больше?'],[42,43,1,'Прибавляем 6, 5, 4, 3, 2'],[44,45,1,'Сравниваем выражения'],[46,47,1,'Вычитаем через десяток'],[48,49,1,'Весы'],[50,51,1,'Вычитаем из 13–18'],[52,53,1,'На сколько больше?'],[54,55,1,'Прибавляем 8 и 7'],[56,57,1,'Вычитаем из 13–18'],[58,59,1,'Вычитаем через десяток'],[60,61,1,'Прибавляем девять'],[62,63,1,'Вычитаем из 13–18'],[64,65,0,'Длина ломаной'],[66,69,1,'Повторяем перед контрольной'],[70,71,1,'Проверь себя'],[72,73,1,'Весы'],[74,75,0,'Задачи со схемой'],
+  [76,77,2,'Пучки палочек'],[78,79,3,'Круглые десятки'],[80,81,2,'Числовой паровозик'],[82,83,2,'Как записать число'],[84,85,3,'40 + 7, 47 − 7, 47 − 40'],[86,87,2,'Больше, меньше, равно'],[88,89,2,'Соседи числа'],[90,91,2,'Дециметр и метр'],[92,93,3,'Задачи до 100'],[94,97,3,'Неизвестное число до 100'],[98,99,1,'Задачи в два действия'],[100,101,2,'Повторяем числа до 100'],
+  [102,103,3,'Задачи в два действия до 100'],[104,105,3,'40 + 7, 47 − 7, 47 − 40'],[106,107,3,'Задачи в два действия до 100'],[108,113,3,'Час и минута'],[114,117,3,'Скобки'],[118,121,3,'Сравниваем выражения до 100'],[122,123,3,'Скобки'],[124,129,3,'Луч и угол'],[130,135,3,'Повторяем перед контрольной'],[136,137,3,'Проверь себя'],[138,141,3,'Удобный способ'],[142,144,3,'34 + 2 и 34 + 20']];
+const MATH_PAGES2=[[6,7,3,'36 − 2 и 36 − 20'],[8,11,3,'Задачи в два действия до 100'],[12,13,5,'Закрепляем двузначные'],[14,15,3,'До круглого числа'],[16,17,3,'Из круглого числа'],[18,19,5,'28 + 6'],[20,21,5,'32 − 5'],[22,23,5,'34 + 21'],[24,25,5,'65 − 32'],[26,27,5,'Закрепляем двузначные'],[28,29,5,'36 + 24'],[30,31,5,'36 + 64 = 100'],[32,33,5,'50 − 23'],[34,35,5,'100 − 23'],[36,39,5,'45 + 26'],[40,41,5,'53 − 25'],[42,43,5,'Закрепляем двузначные'],[44,45,5,'Проверка сложения до 100'],[46,49,5,'Проверка вычитания'],[50,51,4,'Фигуры'],[52,55,5,'Прямоугольник и квадрат'],[56,57,4,'Периметр'],[58,59,5,'Закрепляем двузначные'],
+  [60,61,6,'Готовимся к столбику'],[62,63,6,'Сложение в столбик'],[64,65,6,'Вычитание в столбик'],[66,69,5,'Закрепляем двузначные'],[70,71,5,'Проверь себя: часть 2'],[72,79,6,'Сложение в столбик с переходом'],[80,81,6,'Столбик: закрепление'],[82,87,6,'Вычитание в столбик с переходом'],[88,89,6,'Столбик: закрепление'],
+  [90,91,7,'Что такое умножение'],[92,93,7,'Задачи на умножение'],[94,95,7,'Множители и произведение'],[96,97,7,'Что такое деление'],[98,101,7,'Задачи на деление'],[102,103,7,'Делимое, делитель, частное'],[104,105,7,'Умножение и деление: закрепление'],[106,107,7,'Умножение числа 2'],[108,109,7,'Переставляем множители'],[110,111,7,'Умножаем на 2'],[112,113,7,'Произведение и множители'],[114,115,7,'Деление на 2'],[116,117,7,'Умножение на 3'],[118,119,7,'Деление на 3'],[120,121,7,'Умножение и деление: закрепление'],[122,143,7,'Повторяем весь 2 класс']];
+
 /* порядок уроков математики по разделам: строки — заголовки разделов */
-function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(ii.length){r.push(n);r.push(...ii)}});return r}
+function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SEC_ORDER.forEach(s=>{const n=MATH_SECS[s];const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(ii.length){r.push(n);r.push(...ii)}});return r}
 
 
 /* ---------- «Кругосветка Топы»: курс английского на полгода (часть 1 — остров «Привет», 06.11.2026) ---------- */
