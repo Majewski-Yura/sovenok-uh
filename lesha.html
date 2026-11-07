@@ -58,7 +58,8 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .pgal button{background:#fff;border:5px solid var(--line);border-radius:28px;padding:10px;box-shadow:var(--shadow);aspect-ratio:1;display:flex;align-items:center;justify-content:center}
 .pgal button:active{transform:scale(.95)}
 .pgal img{max-width:100%;max-height:100%;object-fit:contain}
-.pzgal{grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px}
+.pzgal{grid-template-columns:repeat(2,1fr);gap:14px;max-width:760px}
+.pgal:not(.folds):not(.swipe){padding-bottom:110px}
 .pzgal button{position:relative;padding:6px;border-radius:22px}
 .pzgal button.fill{padding:0;overflow:hidden}
 .pzgal button.fill img{width:100%;height:100%;object-fit:cover}
@@ -235,7 +236,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   .wrap{max-width:min(1560px,94vw)}
   .tiles{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
   .pgal{grid-template-columns:repeat(3,1fr);max-width:1100px;gap:22px}
-  .pzgal{grid-template-columns:repeat(5,1fr);gap:18px}
+  .pzgal{grid-template-columns:repeat(4,1fr);gap:18px}
   .pgal.folds{grid-template-columns:repeat(4,1fr)}
   #paint.on{display:grid;grid-template-columns:auto minmax(320px,520px);column-gap:40px;justify-content:center;align-items:start}
   #paint.on > .paint-wrap{grid-column:1;grid-row:1/span 4;max-width:none;margin:0}
@@ -705,7 +706,9 @@ function galFolders(all,F){const used=new Set();const out=F.map(f=>{const ks=f.p
 function galDraw(G,folders,fold,pic,open,onFold){G.innerHTML='';G.classList.toggle('folds',fold===null);
   if(fold===null){folders.forEach((f,i)=>{const b=document.createElement('button');b.className='fold';
       b.innerHTML='<span class="fimg"><img src="'+(f.cover||pic(f.ks[0]).src)+'" alt="" draggable="false"></span><b>'+f.n+'</b><small>'+f.ks.length+'</small>';b.onclick=()=>onFold(i);G.appendChild(b)});swipeify(G,swName);return}
-  folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)});swipeify(G,null)}
+  folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)});unswipe(G)}
+/* внутри папки — все картинки сеткой, без карусели (07.11.2026, просьба родителя): стрелки карусели прячутся */
+function unswipe(C){C.classList.remove('swipe');C._name=null;C._cur=-1;const w=C.parentNode;if(w&&w.classList.contains('swwrap'))w.querySelectorAll('.swarr').forEach(a=>a.style.display='none')}
 function startPaint(){go('paintpick');const F=galFolders(PPICS,P_FOLD),f=galFold.paint;
   galDraw(document.getElementById('pgal'),F,f,k=>({src:'img/color-topa/'+k+'.png?v=2'}),openPic,i=>{galFold.paint=i;startPaint()});
   say('paintpick',f===null?'Что будем раскрашивать? Выбирай!':'Выбери картинку!')}
@@ -976,7 +979,7 @@ function swipeify(C,nameOf){
       b.onclick=()=>swGo(C,d);w.appendChild(b)};
     mk('l',-1,'Назад');mk('r',1,'Дальше');
     C.addEventListener('scroll',()=>{clearTimeout(C._t);C._t=setTimeout(()=>swCur(C),120)},{passive:true})}
-  C.classList.add('swipe');C._name=nameOf;C._cur=-1;C.scrollLeft=0;setTimeout(()=>swCur(C,true),60);
+  C.parentNode.querySelectorAll('.swarr').forEach(a=>a.style.display='');C.classList.add('swipe');C._name=nameOf;C._cur=-1;C.scrollLeft=0;setTimeout(()=>swCur(C,true),60);
 }
 function swIdx(C){const r=C.getBoundingClientRect(),mid=r.left+r.width/2;let best=0,bd=1e9;[...C.children].forEach((el,i)=>{const q=el.getBoundingClientRect(),d=Math.abs(q.left+q.width/2-mid);if(d<bd){bd=d;best=i}});return best}
 function swGo(C,d){const i=Math.max(0,Math.min(C.children.length-1,swIdx(C)+d)),el=C.children[i];if(el)C.scrollTo({left:el.offsetLeft-(C.clientWidth-el.offsetWidth)/2,behavior:'smooth'})}
