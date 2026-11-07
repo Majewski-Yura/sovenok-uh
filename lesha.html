@@ -1191,7 +1191,7 @@ function pzDown(e,k){
     dx=Math.max(...grp.map((j,i)=>-x0[i]),Math.min(dx,...grp.map((j,i)=>maxX-x0[i])));
     dy=Math.max(...grp.map((j,i)=>-y0[i]),Math.min(dy,...grp.map((j,i)=>maxY-y0[i])));
     grp.forEach((j,i)=>{pzX[j]=x0[i]+dx;pzY[j]=y0[i]+dy;pzPlace(j)});pzPush(grp,maxX,maxY)};
-  pzGood=[pzX.slice(),pzY.slice()];
+  pzGood=[pzX.slice(),pzY.slice(),pzOv()];
   const up=()=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);
     grp.forEach(j=>pzBtn(j).classList.remove('lift'));
     if(!moved){speak(pick(['Тяни кусочек к другому!','Потяни меня пальчиком!']));return}
@@ -1200,6 +1200,9 @@ function pzDown(e,k){
 }
 /* кусочки не ложатся друг на друга (07.11.2026, просьба родителя): чужие группы, задетые перетаскиваемыми, отодвигаются в сторону */
 let pzGood=null;
+/* сколько кусочки разных групп налезают друг на друга (площадь) */
+function pzOv(){const c=pzBtn(0).offsetWidth/1.44,m=3;let a=0;
+  for(let i=0;i<4;i++)for(let j=i+1;j<4;j++){if(pzG[i]===pzG[j])continue;a+=Math.max(0,c-m-Math.abs(pzX[i]-pzX[j]))*Math.max(0,c-m-Math.abs(pzY[i]-pzY[j]))}return a}
 function pzPush(moving,maxX,maxY){
   const c=pzBtn(0).offsetWidth/1.44,m=3,mg=pzG[moving[0]],done=new Set([mg]);let act=moving.slice();
   const hit=(A,B)=>{const r={R:0,L:0,D:0,U:0};let any=false;A.forEach(a=>B.forEach(o=>{if(Math.abs(pzX[o]-pzX[a])>=c-m||Math.abs(pzY[o]-pzY[a])>=c-m)return;any=true;
@@ -1215,9 +1218,10 @@ function pzPush(moving,maxX,maxY){
       if(pass===0){const mv=[0,1,2,3].filter(j=>pzG[j]===mg),w=best(mv,{R:r.L,L:r.R,D:r.U,U:r.D},1);if(w)shift(mv,w.dx,w.dy)}});
     act=next}
   /* если кусочки всё равно легли друг на друга — откатить к последнему хорошему положению */
-  const gs=[...new Set([0,1,2,3].map(j=>pzG[j]))],bad=gs.some((g1,i)=>gs.slice(i+1).some(g2=>hit([0,1,2,3].filter(j=>pzG[j]===g1),[0,1,2,3].filter(j=>pzG[j]===g2))));
-  if(bad&&pzGood){[0,1,2,3].forEach(j=>{pzX[j]=pzGood[0][j];pzY[j]=pzGood[1][j];pzPlace(j)});return false}
-  pzGood=[pzX.slice(),pzY.slice()];return true
+  /* откат, только если наложение стало больше, чем было (иначе при любом уже имеющемся наложении кусочки не двигались совсем) */
+  const ov=pzOv();
+  if(pzGood&&ov>pzGood[2]+1){[0,1,2,3].forEach(j=>{pzX[j]=pzGood[0][j];pzY[j]=pzGood[1][j];pzPlace(j)});return false}
+  pzGood=[pzX.slice(),pzY.slice(),ov];return true
 }
 /* защёлкнуть группу кусочка k к соседу, если он поднесён правильной стороной (допуск — треть клетки) */
 function pzSnap(k){
