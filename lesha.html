@@ -127,6 +127,12 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .swarr{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;background:var(--green);box-shadow:0 5px 0 var(--green2);z-index:3;display:flex;align-items:center;justify-content:center}
 .swarr.l{left:4px}.swarr.r{right:4px}.swarr.off{opacity:0;pointer-events:none}
 @media (max-width:600px){.swarr{width:46px;height:46px}.swarr svg{width:26px;height:26px}}
+/* таймер: перерыв (07.11.2026) */
+.rest{position:fixed;inset:0;z-index:35;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px;background:linear-gradient(#26305e,#3d4a8c);color:#e9ecff;text-align:center}
+.rest.on{display:flex}
+.rest img{width:min(78vw,420px);height:auto;animation:bob 4s ease-in-out infinite}
+.rest-t{font-size:18px;font-weight:700;opacity:.8;margin:0}
+.rest-p{background:rgba(255,255,255,.14);color:#e9ecff;border:2px solid rgba(255,255,255,.35);border-radius:999px;padding:10px 20px;font-size:16px;font-weight:700}
 .blcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
 .big-num{font-size:84px;font-weight:900;color:var(--green2);text-align:center;height:96px}
 /* самочувствие */
@@ -543,6 +549,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 <div class="gate cele-l" id="celeL" onclick="this.classList.remove('on')"><div class="gate-card" style="max-width:340px">
   <img src="img/topa-star.webp" alt="" style="height:220px;animation:hop .6s ease 3"><h2 id="celeLT" style="font-size:34px">Ура!</h2><div style="font-size:42px">⭐⭐⭐</div>
 </div></div>
+<div class="rest" id="rest"><img src="img/topa-sleep.webp" alt="Топа спит"><p class="rest-t" id="restT"></p><button class="rest-p" onclick="tmParent()">Для родителей</button></div>
 <div class="gate" id="gate" onclick="if(event.target===this)gateClose()"><div class="gate-card">
   <div style="font-size:46px">🔐</div><h2>Вход для мамы и папы</h2><p id="gateQ" style="color:var(--ink2);font-weight:800;margin:4px 0"></p>
   <div class="gate-ans" id="gateAns">…</div><div class="gate-pad" id="gatePad"></div>
@@ -1509,10 +1516,39 @@ function renderParent(){
   S.diary.slice(0,40).forEach(e=>{const d=document.createElement('div');d.className='entry';d.textContent=e.d.split('-').reverse().join('.')+' '+e.t+' — '+e.a;L.appendChild(d)});
 }
 
+/* ---------- таймер (07.11.2026, просьба родителя): не больше 20 минут подряд, потом Топа спит 30 минут ---------- */
+const PLAY_MAX=20*60e3,PLAY_REST=30*60e3,PLAY_WARN=18*60e3;
+let tmSpoke=false;
+function tmLoad(){try{return JSON.parse(localStorage.getItem('topa-timer'))||{}}catch(e){return{}}}
+function tmSave(T){try{localStorage.setItem('topa-timer',JSON.stringify(T))}catch(e){}}
+function tmTick(){
+  const T=tmLoad(),now=Date.now();
+  if(T.lock&&now<T.lock){tmShow(T);setTimeout(tmTick,15000);return}
+  if(T.lock){T.lock=0;T.used=0;T.warned=0;T.last=now;tmHide()}
+  if(document.visibilityState==='visible'){
+    if(!T.last||now-T.last>PLAY_REST){T.used=0;T.warned=0}
+    else T.used=(T.used||0)+Math.min(now-T.last,15000);
+    T.last=now;
+    if(T.used>=PLAY_WARN&&!T.warned){T.warned=1;speak('Скоро Топа пойдёт отдыхать.')}
+    if(T.used>=PLAY_MAX){T.lock=now+PLAY_REST;tmSave(T);tmShow(T);setTimeout(tmTick,15000);return}
+  }
+  tmSave(T);setTimeout(tmTick,10000);
+}
+function tmShow(T){
+  const R=document.getElementById('rest'),was=R.classList.contains('on');
+  const d=new Date(T.lock);document.getElementById('restT').textContent='Перерыв до '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  if(was)return;
+  R.classList.add('on');stopBalls();go('home');
+  if(!tmSpoke){tmSpoke=true;speak('Топа устал и хочет поспать. Давай отдохнём! Поиграем потом.')}
+}
+function tmHide(){const R=document.getElementById('rest');if(R.classList.contains('on')){R.classList.remove('on');tmSpoke=false;speak('Ура! Топа проснулся! Давай играть!')}}
+function tmParent(){askGate(()=>{const T=tmLoad();T.lock=0;T.used=0;T.warned=0;T.last=Date.now();tmSave(T);tmHide()})}
+
 /* ---------- старт ---------- */
 mountDino('dinoHome');homePose();mountDino('dinoFeed',true);mountDino('dinoFeel',true);mountDino('dinoShop',true);mountDino('dinoDress',true);mountDino('dinoDeeds',true);
 (function(){const h=document.createElement('div');h.className='hint';h.id='hint';h.textContent='👆 Нажми!';document.getElementById('dinoHome').appendChild(h)})();
 setStars();homeTalk();renderPend();renderAsk();cloudInit();
+try{tmTick()}catch(e){}
 </script>
 </body>
 </html>
