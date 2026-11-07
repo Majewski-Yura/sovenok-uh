@@ -1124,6 +1124,7 @@ function mergeJoin(r){
   o.stars=Math.max(L.stars||0,r.stars||0);
   o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];
   o.paintsOwned=[...new Set([...(r.paintsOwned||[]),...(L.paintsOwned||[])])];
+  o.paintsGift=[...new Set([...(r.paintsGift||[]),...(L.paintsGift||[])])];
   o.wear=Object.assign({},L.wear||{},r.wear||{});
   o.diary=uniq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.q+'|'+x.a).sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0).slice(0,300);
   o.pending=uniq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));
@@ -1842,22 +1843,36 @@ const PSHOP=[['topa','Топа'],['cap','Топа в кепке'],['balloon','Т
   ['topa-ball','Топа с мячом'],['topa-bike','Топа на велосипеде'],['uh-topa','Ух и Топа'],['firetruck','Пожарная машина'],['bus','Автобус'],['tractor','Трактор'],['rocket','Ракета'],
   ['castle','Замок'],['kitten','Котик'],['puppy','Щенок'],['frog','Лягушка'],['piglet','Поросёнок'],['cow','Коровка'],['dinos','Динозаврики']];
 const PSHOP_PRICE=20;
-const pSrc=k=>k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
+/* сложные раскраски Алисы (07.11.2026, просьба родителя): магазин — только они, ключ 'a-…' (img/color-alisa); подарочные за вещи и за острова — эксклюзив, в магазине не повторяются.
+   Простые контуры Лёши ('t-…', PSHOP) больше не продаются, но купленные остаются в «Моих раскрасках». */
+const PSHOP_A=[['uh-pie','Ух и Топа пекут пирог'],['uh-skates','Ух на коньках'],['uh-night','Ух с фонариком ночью'],['uh-ship','Ух и Топа на кораблике'],['topa-flowers','Топа на велосипеде с цветами'],['topa-sand','Топа строит замок из песка'],
+  ['winter-house','Зимний домик со снеговиком'],['autumn-forest','Осенний лес с ёжиком'],['kitten-basket','Котёнок в корзинке'],['fox-flowers','Лисичка в цветах'],['squirrel','Белочка с орешками'],['pony','Пони с бантиками'],['butterflies','Бабочки и цветы'],
+  ['sea','Подводный мир'],['castle','Сказочный замок'],['dollhouse','Кукольный домик'],['cake','Торт ко дню рождения'],['vase','Ваза с цветами'],['gingerbread','Пряничный домик'],['space','Космос и ракета']];
+/* раскраски островов кругосветки — подарок за вход (остров 1 — за первый заход); заполняется, когда готовы картинки img/color-alisa/isl-N.png */
+const ISL_PAINT=[];
+const ISL_NAMES=['Остров Привет','Снежный остров','Вкусный остров','Остров Домик','Остров Зверей','Остров Школа'];
+const pSrc=k=>k.startsWith('a-')?'img/color-alisa/'+k.slice(2)+'.png':k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
 function renderPbook(){
   const M=document.getElementById('myPaints');M.innerHTML='';const bought=S.paintsOwned||[];
   const add=(src,n,k)=>{const b=document.createElement('button');b.innerHTML='<img src="'+src+'" alt="">';b.title='Раскрасить: '+n;b.onclick=()=>openPaint(k);M.appendChild(b)};
   ITEMS.filter(it=>S.owned.includes(it.k)).forEach(it=>add('img/color/'+it.k+'.png',it.n,it.k));
   PSHOP.filter(([k])=>bought.includes('t-'+k)).forEach(([k,n])=>add(pSrc('t-'+k),n,'t-'+k));
+  PSHOP_A.filter(([k])=>bought.includes('a-'+k)).forEach(([k,n])=>add(pSrc('a-'+k),n,'a-'+k));
+  (S.paintsGift||[]).forEach(k=>{const ii=+k.replace(/\D/g,'')-1;add(pSrc('a-'+k),'Подарок: '+(ISL_NAMES[ii]||'остров'),'a-'+k);M.lastChild.classList.add('gift')});
   if(!M.children.length)M.innerHTML='<div class="empty" style="color:var(--ink2)">Пока пусто: купи раскраску ниже или вещь в гардеробе — к ней раскраска в подарок.</div>';
-  const PS=document.getElementById('paintShop');PS.innerHTML='';const left=PSHOP.filter(([k])=>!bought.includes('t-'+k));
+  const PS=document.getElementById('paintShop');PS.innerHTML='';const left=PSHOP_A.filter(([k])=>!bought.includes('a-'+k));
   if(!left.length)PS.innerHTML='<div class="empty" style="color:var(--ink2)">Ты купила все раскраски!</div>';
   left.forEach(([k,n])=>{const b=document.createElement('button');if(S.stars<PSHOP_PRICE)b.className='lock';
-    b.innerHTML='<img src="'+pSrc('t-'+k)+'" alt=""><b>'+n+'</b><span>⭐ '+PSHOP_PRICE+'</span>';b.onclick=()=>buyPaint(k);PS.appendChild(b)})}
+    b.innerHTML='<img src="'+pSrc('a-'+k)+'" alt="" loading="lazy"><b>'+n+'</b><span>⭐ '+PSHOP_PRICE+'</span>';b.onclick=()=>buyPaint(k);PS.appendChild(b)})}
+/* подарок-раскраска за остров: выдаётся один раз, и задним числом, если остров уже открыт */
+function tripPaintGifts(){const D=T(),g=S.paintsGift=S.paintsGift||[];let fresh=null;
+  ISL_PAINT.forEach((k,ii)=>{if(!k||g.includes(k))return;if(ii===0||(D.paid||{})[ii]){g.push(k);fresh=fresh===null?ii:fresh}});
+  if(fresh!==null){save();setTimeout(()=>celebrate('Подарок за '+(fresh?'вход на остров':'начало кругосветки')+': раскраска «'+ISL_NAMES[fresh]+'»! Она уже в «Раскрасках».','uh-star'),600)}}
 let pFrom='shop';
 function buyPaint(k){
   if(S.stars<PSHOP_PRICE){say('pbook','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
-  S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('t-'+k);setStars();save();say('pbook','Новая раскраска! Давай раскрасим её вместе!');renderPbook();
-  setTimeout(()=>openPaint('t-'+k),900)}
+  S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('a-'+k);setStars();save();say('pbook','Новая раскраска! Давай раскрасим её вместе!');renderPbook();
+  setTimeout(()=>openPaint('a-'+k),900)}
 function pTool(t){pT=t;document.querySelectorAll('#ptools>button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.getElementById('ptools').classList.toggle('brush',t==='brush');
   document.getElementById('paintCv').style.touchAction=t==='brush'?'none':'manipulation'}
 function pSz(n){pSize=n;document.querySelectorAll('.psizes button').forEach(b=>b.classList.toggle('on',+b.dataset.s===n))}
@@ -3491,7 +3506,7 @@ function openTrip(keep){if(keep!==true)tripView=null;go('trip');renderTrip()}
 /* облачко Топы живёт поверх сцены и само сворачивается в кружок с Топой */
 let tripBubT=null;
 function tripBubShow(){const b=document.getElementById('tripSay');if(!b)return;b.classList.remove('min');clearTimeout(tripBubT);tripBubT=setTimeout(()=>b.classList.add('min'),8000)}
-function renderTrip(){
+function renderTrip(){tripPaintGifts();
   const D=T().done,box=document.getElementById('tripMap'),bub=document.getElementById('tripSay');if(bub)bub.remove();box.innerHTML='';
   const stamps=Object.keys(D).filter(k=>/-3$/.test(k)).length,flags=Object.keys(D).filter(k=>/-exam$/.test(k)).length;
   const top=document.createElement('div');top.className='ttop';
