@@ -1248,7 +1248,9 @@ function speak(t,who){
   let i=0;
   const next=()=>{
     if(tok!==playTok||i>=parts.length)return;const p=parts[i++];
-    if(p.src&&player){player.onended=next;player.onerror=()=>robot(p.s,who,next);player.src=p.src;player.play().catch(()=>robot(p.s,who,next))}
+    /* 07.11.2026: двойной голос — прерванный запуск (AbortError) раньше дочитывался запасным голосом поверх новой фразы */
+    const fb=e=>{if(tok!==playTok||(e&&e.name==='AbortError'))return;robot(p.s,who,next)};
+    if(p.src&&player){player.onended=next;player.onerror=()=>fb();player.src=p.src;player.play().catch(fb)}
     else robot(p.s,who,next);
   };
   next();
