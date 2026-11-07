@@ -86,6 +86,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .zoo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
 .animal{background:var(--bg2);border:5px solid var(--line);border-radius:30px;font-size:min(20vw,96px);line-height:1;padding:14px 0;box-shadow:var(--shadow)}
 .animal.go{animation:wiggle .6s ease}
+.animal{animation:shin .5s cubic-bezier(.3,1.4,.6,1) both}.animal.yes{border-color:var(--gold);background:var(--gold2);animation:shyes .7s}.animal.no{animation:wiggle .5s}
 @keyframes wiggle{25%{transform:rotate(-10deg) scale(1.1)}75%{transform:rotate(10deg) scale(1.1)}}
 /* еда */
 .plate{display:flex;justify-content:center;gap:18px;margin-top:16px;min-height:120px;flex-wrap:wrap}
@@ -346,7 +347,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   </section>
 
   <section class="screen" id="zoo">
-    <div class="stage"><div class="bubble" id="zooSay"></div><img class="spose" src="img/topa-cow.webp" alt="Топа и коровка"></div>
+    <div class="stage"><div class="bubble" id="zooSay" onclick="zooAgain()" style="cursor:pointer"></div><img class="spose" src="img/topa-cow.webp" alt="Топа и коровка"></div>
     <div class="zoo" id="zooGrid"></div>
     <div class="counter" id="zooCnt"></div>
   </section>
@@ -723,17 +724,23 @@ function startBalls(){
 }
 function stopBalls(){clearInterval(ballT);ballT=null}
 
-/* ---------- кто как говорит ---------- */
-const ANIMALS=[{e:'🐮',say:'Корова говорит: му-у!'},{e:'🐶',say:'Собачка говорит: гав-гав!'},{e:'🐱',say:'Кошечка говорит: мяу!'},{e:'🦆',say:'Уточка говорит: кря-кря!'},{e:'🐷',say:'Поросёнок говорит: хрю-хрю!'},{e:'🐸',say:'Лягушка говорит: ква-ква!'},{e:'🐑',say:'Овечка говорит: бе-е!'},{e:'🐓',say:'Петушок говорит: кукареку!'},{e:'🐴',say:'Лошадка говорит: иго-го!'}];
-let zooTaps=0;
-function startZoo(){
-  go('zoo');zooTaps=0;counter('zooCnt',0,6);say('zoo','Кто как говорит? Нажимай на зверят!');
-  const g=document.getElementById('zooGrid');g.innerHTML='';
-  shuffle(ANIMALS).forEach(a=>{const b=document.createElement('button');b.className='animal';b.innerHTML=emo(a.e);
-    b.onclick=()=>{b.classList.remove('go');void b.offsetWidth;b.classList.add('go');say('zoo',a.say);zooTaps++;counter('zooCnt',Math.min(zooTaps,6),6);
-      if(zooTaps===6){addStar();zooTaps=0;setTimeout(()=>{counter('zooCnt',0,6)},1500)}};
+/* ---------- кто как говорит (07.11.2026, просьба родителя): Топа говорит только звук «Мяу!», ребёнок выбирает зверька из трёх ---------- */
+const ANIMALS=[{e:'🐮',s:'Му-у!',ok:'Да! Это коровка!'},{e:'🐶',s:'Гав-гав!',ok:'Да! Это собачка!'},{e:'🐱',s:'Мяу!',ok:'Да! Это кошечка!'},{e:'🦆',s:'Кря-кря!',ok:'Да! Это уточка!'},{e:'🐷',s:'Хрю-хрю!',ok:'Да! Это поросёнок!'},{e:'🐸',s:'Ква-ква!',ok:'Да! Это лягушка!'},{e:'🐑',s:'Бе-е!',ok:'Да! Это овечка!'},{e:'🐓',s:'Кукареку!',ok:'Да! Это петушок!'},{e:'🐴',s:'Иго-го!',ok:'Да! Это лошадка!'}];
+let zooOk=0,zooWant=null,zooBusy=false,zooLast=null;
+function startZoo(){go('zoo');zooOk=0;counter('zooCnt',0,6);zooRound(true)}
+function zooRound(first){
+  const g=document.getElementById('zooGrid');g.innerHTML='';zooBusy=false;
+  const three=shuffle(ANIMALS).slice(0,3);
+  zooWant=pick(three.filter(a=>a!==zooLast));zooLast=zooWant;
+  three.forEach((a,i)=>{const b=document.createElement('button');b.className='animal';b.style.animationDelay=(i*.12)+'s';b.innerHTML=emo(a.e);
+    b.onclick=()=>{if(zooBusy)return;
+      if(a===zooWant){zooBusy=true;b.classList.add('yes');say('zoo',a.ok);zooOk++;counter('zooCnt',Math.min(zooOk,6),6);
+        if(zooOk===6){addStar();zooOk=0;setTimeout(()=>counter('zooCnt',0,6),1500)}setTimeout(()=>zooRound(),1900)}
+      else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');say('zoo',a.s);setTimeout(()=>{if(!zooBusy)say('zoo',zooWant.s)},1300)}};
     g.appendChild(b)});
+  if(first){say('zoo','Кто так говорит?');setTimeout(()=>say('zoo',zooWant.s),1400)}else setTimeout(()=>say('zoo',zooWant.s),400);
 }
+function zooAgain(){if(zooWant&&!zooBusy)say('zoo',zooWant.s)}
 
 /* ---------- формы (06.11.2026, идея родителя): круг, треугольник, квадрат — Топа говорит, на какую нажать ---------- */
 const SHAPES={
