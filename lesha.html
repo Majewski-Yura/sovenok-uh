@@ -661,7 +661,7 @@ const TAP=['Р-р-р! Я динозаврик Топа!','Хи-хи, щекот�
 function cur(){return document.querySelector('.screen.on').id}
 const GAMES=['balls','zoo','shapes','train','rocket','feed','blocks','cars','puzzle','puzzlepick','tidy','dress','paint','paintpick'];
 function openGames(){galFold.paint=galFold.puzzle=null;go('games');say('games',pick(['Во что поиграем? Выбирай!','Ура, играем! Что выберешь?']))}
-function goBack(){if(cur()==='paint')startPaint();else if(cur()==='puzzle')startPuzzle();else if(cur()==='paintpick'&&galFold.paint!==null){galFold.paint=null;startPaint()}else if(cur()==='puzzlepick'&&galFold.puzzle!==null){galFold.puzzle=null;startPuzzle()}else if(GAMES.includes(cur()))openGames();else go('home')}
+function goBack(){if(cur()==='tales'&&document.getElementById('tales').classList.contains('reading'))showBooks();else if(cur()==='paint')startPaint();else if(cur()==='puzzle')startPuzzle();else if(cur()==='paintpick'&&galFold.paint!==null){galFold.paint=null;startPaint()}else if(cur()==='puzzlepick'&&galFold.puzzle!==null){galFold.puzzle=null;startPuzzle()}else if(GAMES.includes(cur()))openGames();else go('home')}
 function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
@@ -1405,11 +1405,11 @@ const TALES=[
 ];
 let tale=null,pg=0;
 function showBooks(){
-  document.getElementById('tales').classList.remove('reading');document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';B.innerHTML='';
+  document.getElementById('tales').classList.remove('reading');document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';{const w=B.closest('.swwrap');if(w)w.style.display=''}B.innerHTML='';
   TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';const ci=b.querySelector('.ic img');if(ci)ci.onerror=()=>{ci.parentNode.textContent=t.ic};b.onclick=()=>openTale(i);B.appendChild(b)});swipeify(B,swName);
   say('tales','Какую сказку почитаем? Выбирай!');
 }
-function openTale(i){tale=TALES[i];pg=0;document.getElementById('tales').classList.add('reading');document.getElementById('books').style.display='none';document.getElementById('page').style.display='block';tSwipe();
+function openTale(i){tale=TALES[i];pg=0;document.getElementById('tales').classList.add('reading');{const B=document.getElementById('books');B.style.display='none';const w=B.closest('.swwrap');if(w)w.style.display='none'}document.getElementById('page').style.display='block';tSwipe();
   document.getElementById('talesSay').textContent=typo(tale.name);readPage()}
 /* листать свайпом по картинке: влево — дальше, вправо — назад */
 function tSwipe(){const pp=document.getElementById('pagePic');if(pp._sw)return;pp._sw=1;let x0=null,y0=0;
