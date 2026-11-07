@@ -113,6 +113,20 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
   .tray .src{width:calc((100vw - 64px)/7);height:calc((100vw - 64px)/7);border-radius:12px;border-width:3px;padding:2px}
   #blocks .build{height:calc(100dvh - 250px);min-height:280px}
 }
+/* выбор свайпом (07.11.2026) */
+.swwrap{position:relative}
+.swipe{display:flex!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;gap:16px;padding:14px calc(50% - min(36vw,170px)) 22px!important;margin:10px 0 0!important;max-width:none!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.swipe::-webkit-scrollbar{display:none}
+.swipe>*{flex:0 0 min(72vw,340px)!important;scroll-snap-align:center;min-height:min(56vh,420px);aspect-ratio:auto!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:12px;transform:scale(.86);opacity:.55;transition:transform .25s,opacity .25s}
+.swipe>.cur{transform:none;opacity:1}
+.swipe>* img,.swipe .tpic{max-height:min(38vh,280px)!important;height:min(38vh,280px)!important;width:auto!important;max-width:100%!important;object-fit:contain}
+.swipe .ic{font-size:min(36vw,170px)!important;line-height:1}
+.swipe span,.swipe b{font-size:26px!important;line-height:1.15}
+.swipe .fimg{width:100%!important;aspect-ratio:auto!important;flex:1;min-height:min(38vh,280px)}
+.swipe button.fill{padding:0;overflow:hidden}.swipe button.fill img{width:100%!important;height:100%!important;max-height:none!important;object-fit:cover}
+.swarr{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;background:var(--green);box-shadow:0 5px 0 var(--green2);z-index:3;display:flex;align-items:center;justify-content:center}
+.swarr.l{left:4px}.swarr.r{right:4px}.swarr.off{opacity:0;pointer-events:none}
+@media (max-width:600px){.swarr{width:46px;height:46px}.swarr svg{width:26px;height:26px}}
 .blcv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
 .big-num{font-size:84px;font-weight:900;color:var(--green2);text-align:center;height:96px}
 /* самочувствие */
@@ -642,7 +656,7 @@ function go(id){
   stopBalls();
   document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
   document.getElementById('homeBtn').style.display=id==='home'?'none':'block';
-  if(id==='home')homeTalk();if(id==='shop')renderShop();if(id==='feel')say('feel','Лёша, как ты себя чувствуешь? Покажи мне!');if(id==='parent')renderParent();if(id==='toyshop')renderToyshop();if(id==='tales')showBooks();if(id==='deeds'){renderDeeds();say('deeds','Что ты сегодня сделал сам? Нажми!')}
+  if(id==='games')swipeify(document.querySelector('#games .tiles'),swName);if(id==='home')homeTalk();if(id==='shop')renderShop();if(id==='feel')say('feel','Лёша, как ты себя чувствуешь? Покажи мне!');if(id==='parent')renderParent();if(id==='toyshop')renderToyshop();if(id==='tales')showBooks();if(id==='deeds'){renderDeeds();say('deeds','Что ты сегодня сделал сам? Нажми!')}
   scrollTo(0,0);
 }
 function toPicker(){try{sessionStorage.removeItem('who')}catch(e){}location.href='index.html'}
@@ -674,8 +688,8 @@ function galFolders(all,F){const used=new Set();const out=F.map(f=>{const ks=f.p
   const rest=all.filter(k=>!used.has(k));if(rest.length)out.push({n:'Ещё картинки',ks:rest});return out}
 function galDraw(G,folders,fold,pic,open,onFold){G.innerHTML='';G.classList.toggle('folds',fold===null);
   if(fold===null){folders.forEach((f,i)=>{const b=document.createElement('button');b.className='fold';
-      b.innerHTML='<span class="fimg"><img src="'+(f.cover||pic(f.ks[0]).src)+'" alt="" draggable="false"></span><b>'+f.n+'</b><small>'+f.ks.length+'</small>';b.onclick=()=>onFold(i);G.appendChild(b)});return}
-  folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)})}
+      b.innerHTML='<span class="fimg"><img src="'+(f.cover||pic(f.ks[0]).src)+'" alt="" draggable="false"></span><b>'+f.n+'</b><small>'+f.ks.length+'</small>';b.onclick=()=>onFold(i);G.appendChild(b)});swipeify(G,swName);return}
+  folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)});swipeify(G,null)}
 function startPaint(){go('paintpick');const F=galFolders(PPICS,P_FOLD),f=galFold.paint;
   galDraw(document.getElementById('pgal'),F,f,k=>({src:'img/color-topa/'+k+'.png?v=2'}),openPic,i=>{galFold.paint=i;startPaint()});
   say('paintpick',f===null?'Что будем раскрашивать? Выбирай!':'Выбери картинку!')}
@@ -931,6 +945,23 @@ function renderShop(quiet){
     L.appendChild(b)});
   if(!L.children.length)L.innerHTML='<span class="empty" style="color:var(--ink2)">Ты купил все наряды!</span>';
 }
+
+/* ---------- выбор свайпом (07.11.2026, просьба родителя): одна большая карточка, листать пальцем, Топа называет карточку ---------- */
+const SW_NAMES=['Репка!','Колобок!','Курочка Ряба!','Теремок!','Рукавичка!','Три медведя!','Маша и медведь!','Волк и семеро козлят!','Заюшкина избушка!','Кот, петух и лиса!','Лиса и журавль!','Петушок и бобовое зёрнышко!','Пых!','Шарики!','Кто как говорит!','Формы!','Паровозик!','Ракета!','Накорми Топу!','Построй башню!','Машинки!','Пазл!','Наведём порядок!','Одень Топу!','Раскраска!','Топа!','Зверята!','Игрушки!','Топа и друзья!','Ещё картинки!'];
+function swipeify(C,nameOf){
+  if(!C.parentNode.classList.contains('swwrap')){const w=document.createElement('div');w.className='swwrap';C.parentNode.insertBefore(w,C);w.appendChild(C);
+    const mk=(cls,d,lab)=>{const b=document.createElement('button');b.className='swarr '+cls;b.setAttribute('aria-label',lab);b.innerHTML='<svg viewBox="0 0 48 48" width="34" height="34"><path d="'+(d<0?'M28 10 L14 24 L28 38':'M20 10 L34 24 L20 38')+'" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      b.onclick=()=>swGo(C,d);w.appendChild(b)};
+    mk('l',-1,'Назад');mk('r',1,'Дальше');
+    C.addEventListener('scroll',()=>{clearTimeout(C._t);C._t=setTimeout(()=>swCur(C),120)},{passive:true})}
+  C.classList.add('swipe');C._name=nameOf;C._cur=-1;C.scrollLeft=0;setTimeout(()=>swCur(C,true),60);
+}
+function swIdx(C){const r=C.getBoundingClientRect(),mid=r.left+r.width/2;let best=0,bd=1e9;[...C.children].forEach((el,i)=>{const q=el.getBoundingClientRect(),d=Math.abs(q.left+q.width/2-mid);if(d<bd){bd=d;best=i}});return best}
+function swGo(C,d){const i=Math.max(0,Math.min(C.children.length-1,swIdx(C)+d)),el=C.children[i];if(el)C.scrollTo({left:el.offsetLeft-(C.clientWidth-el.offsetWidth)/2,behavior:'smooth'})}
+function swCur(C,quiet){const i=swIdx(C);[...C.children].forEach((el,j)=>el.classList.toggle('cur',j===i));
+  const w=C.parentNode;w.querySelector('.swarr.l').classList.toggle('off',i===0);w.querySelector('.swarr.r').classList.toggle('off',i===C.children.length-1);
+  if(i!==C._cur){const first=C._cur<0;C._cur=i;if(!first&&!quiet&&C._name){const n=C._name(C.children[i],i);if(n&&SW_NAMES.includes(n))speak(n)}}}
+function swName(el){const t=el.querySelector('span,b');return t?t.textContent.trim()+'!':''}
 
 /* ---------- построй башню (07.11.2026, просьба родителя): настоящая физика (Matter.js), 7 форм, ставить куда угодно, криво — падает ---------- */
 const COUNT=['Один!','Два!','Три!','Четыре!','Пять!','Шесть!','Семь!','Восемь!','Девять!','Десять!'];
@@ -1361,7 +1392,7 @@ const TALES=[
 let tale=null,pg=0;
 function showBooks(){
   document.getElementById('tales').classList.remove('reading');document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';B.innerHTML='';
-  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';const ci=b.querySelector('.ic img');if(ci)ci.onerror=()=>{ci.parentNode.textContent=t.ic};b.onclick=()=>openTale(i);B.appendChild(b)});
+  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';const ci=b.querySelector('.ic img');if(ci)ci.onerror=()=>{ci.parentNode.textContent=t.ic};b.onclick=()=>openTale(i);B.appendChild(b)});swipeify(B,swName);
   say('tales','Какую сказку почитаем? Выбирай!');
 }
 function openTale(i){tale=TALES[i];pg=0;document.getElementById('tales').classList.add('reading');document.getElementById('books').style.display='none';document.getElementById('page').style.display='block';tSwipe();
