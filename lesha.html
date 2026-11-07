@@ -123,6 +123,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .swipe .ic{font-size:min(36vw,170px)!important;line-height:1}
 .swipe span,.swipe b{font-size:26px!important;line-height:1.15}
 .swipe .fimg{width:100%!important;aspect-ratio:auto!important;flex:1;min-height:min(38vh,280px)}
+.swipe .ic:has(img.scene){width:100%}.swipe>* img.scene{width:100%!important;max-width:100%!important;object-fit:cover!important;border-radius:20px}.books .ic img.scene{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:18px}
 .swipe button.fill{padding:0;overflow:hidden}.swipe button.fill img{width:100%!important;height:100%!important;max-height:none!important;object-fit:cover}
 .swarr{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;background:var(--green);box-shadow:0 5px 0 var(--green2);z-index:3;display:flex;align-items:center;justify-content:center}
 .swarr.l{left:4px}.swarr.r{right:4px}.swarr.off{opacity:0;pointer-events:none}
@@ -1320,7 +1321,7 @@ const TALES=[
     {p:'👴😢👵',img:'ryaba-5',t:'Плачет дед, плачет баба.'},
     {p:'🐔🥚',img:'ryaba-6',t:'А курочка говорит: не плачьте! Я снесу вам яичко простое. Конец!'}]},
   /* 07.11.2026, просьба родителя: ещё 10 сказок (короткие пересказы народных сказок для трёхлетки; картинок пока нет — эмодзи) */
-  {ic:'🏠',cover:'cover-teremok',name:'Теремок',pages:[
+  {ic:'🏠',cover:'teremok-3',name:'Теремок',pages:[
     {p:'🏠🌳',img:'teremok-1',t:'Стоит в поле теремок. Он не низок, не высок.'},
     {p:'🐭🏠',img:'teremok-2',t:'Прибежала мышка-норушка. Кто в теремочке живёт? Никого нет. Стала мышка там жить.'},
     {p:'🐸🐭',img:'teremok-3',t:'Прискакала лягушка-квакушка. Пусти меня, мышка! Заходи! Стали жить вдвоём.'},
@@ -1329,7 +1330,7 @@ const TALES=[
     {p:'🐺🦊',img:'teremok-6',t:'Прибежал волчок — серый бочок. И его пустили. Живут дружно!'},
     {p:'🐻🏠',img:'teremok-7',t:'Пришёл медведь. Полез в теремок — и раздавил его. Ой-ой-ой!'},
     {p:'🔨🏠',img:'teremok-8',t:'Не беда! Все вместе построили новый теремок, больше прежнего. Конец!'}]},
-  {ic:'🧤',cover:'cover-rukavichka',name:'Рукавичка',pages:[
+  {ic:'🧤',cover:'rukavichka-4',name:'Рукавичка',pages:[
     {p:'👴🧤❄️',img:'rukavichka-1',t:'Шёл дед по лесу и потерял рукавичку.'},
     {p:'🐭🧤',img:'rukavichka-2',t:'Прибежала мышка, забралась в рукавичку. Тут я буду жить!'},
     {p:'🐸🐭',img:'rukavichka-3',t:'Прискакала лягушка. Пусти и меня! Залезай!'},
@@ -1338,7 +1339,7 @@ const TALES=[
     {p:'🐻🧤',img:'rukavichka-6',t:'Пришёл медведь. Рукавичка вот-вот лопнет!'},
     {p:'👴🐶',img:'rukavichka-7',t:'Тут дед вернулся с собачкой. Гав-гав! Звери испугались и разбежались.'},
     {p:'👴🧤',img:'rukavichka-8',t:'А дед поднял свою рукавичку и пошёл домой. Конец!'}]},
-  {ic:'🐻',cover:'cover-medvedi',name:'Три медведя',pages:[
+  {ic:'🐻',cover:'medvedi-1',name:'Три медведя',pages:[
     {p:'👧🌲',img:'medvedi-1',t:'Девочка пошла в лес и заблудилась. Видит — домик.'},
     {p:'🏠🐻',img:'medvedi-2',t:'А жили в домике три медведя: папа, мама и маленький Мишутка.'},
     {p:'🥣🥣🥣',img:'medvedi-3',t:'На столе три миски. Девочка попробовала из маленькой мисочки. Вкусно!'},
@@ -1347,7 +1348,7 @@ const TALES=[
     {p:'🐻🐻🐻',img:'medvedi-6',t:'Пришли медведи домой. Кто ел из моей мисочки? Кто сломал мой стульчик?'},
     {p:'🐻👧',img:'medvedi-7',t:'Мишутка увидел девочку. Вот она! Девочка проснулась и выпрыгнула в окно.'},
     {p:'👧🏡',img:'medvedi-8',t:'И убежала домой к маме. Конец!'}]},
-  {ic:'👧',cover:'cover-masha',name:'Маша и медведь',pages:[
+  {ic:'👧',cover:'masha-1',name:'Маша и медведь',pages:[
     {p:'👧🍄',img:'masha-1',t:'Пошла Маша в лес за грибами и заблудилась.'},
     {p:'🏠🐻',img:'masha-2',t:'Пришла к избушке, а там жил медведь. Оставайся, Маша, будешь у меня жить!'},
     {p:'👧🥧',img:'masha-3',t:'Маша напекла пирожков и придумала хитрость.'},
@@ -1355,7 +1356,7 @@ const TALES=[
     {p:'🐻🧺',img:'masha-5',t:'Несёт медведь короб, хочет пирожок съесть. А Маша говорит: вижу, вижу! Не ешь пирожок!'},
     {p:'🐶🐻',img:'masha-6',t:'Пришёл медведь к деревне. Собаки залаяли — медведь испугался и убежал.'},
     {p:'👴👵👧',img:'masha-7',t:'Открыли бабушка с дедушкой короб — а там Маша! Вот радость! Конец!'}]},
-  {ic:'🐐',cover:'cover-kozlyata',name:'Волк и семеро козлят',pages:[
+  {ic:'🐐',cover:'kozlyata-1',name:'Волк и семеро козлят',pages:[
     {p:'🐐🏠',img:'kozlyata-1',t:'Жила-была коза с козлятами. Ушла коза за травкой.'},
     {p:'🐐🎵',img:'kozlyata-2',t:'Козлятушки, ребятушки! Не открывайте никому, только маме!'},
     {p:'🐺🚪',img:'kozlyata-3',t:'Пришёл волк и запел грубым голосом. Козлята говорят: это не мама! Не откроем!'},
@@ -1363,7 +1364,7 @@ const TALES=[
     {p:'🐐🫣',img:'kozlyata-5',t:'Козлята спрятались: кто под стол, кто под кровать, а самый маленький — в печку.'},
     {p:'🐐🐺',img:'kozlyata-6',t:'Тут вернулась мама-коза и прогнала волка. Убегай, серый!'},
     {p:'🐐🐐🐐',img:'kozlyata-7',t:'Все козлята вылезли и обняли маму. Никогда не открывайте чужим! Конец!'}]},
-  {ic:'🐰',cover:'cover-zayushka',name:'Заюшкина избушка',pages:[
+  {ic:'🐰',cover:'zayushka-1',name:'Заюшкина избушка',pages:[
     {p:'🦊🐰',img:'zayushka-1',t:'Была у лисы избушка ледяная, а у зайчика — лубяная, деревянная.'},
     {p:'☀️💧',img:'zayushka-2',t:'Пришла весна. Растаяла лисья избушка.'},
     {p:'🦊🏠',img:'zayushka-3',t:'Попросилась лиса к зайчику погреться, да и выгнала зайчика.'},
@@ -1371,7 +1372,7 @@ const TALES=[
     {p:'🐓🗡️',img:'zayushka-5',t:'Пришёл петушок с косой. Ку-ка-ре-ку! Иди, лиса, вон!'},
     {p:'🦊💨',img:'zayushka-6',t:'Лиса испугалась и убежала.'},
     {p:'🐰🐓🏠',img:'zayushka-7',t:'Стали зайчик с петушком жить вместе в избушке. Конец!'}]},
-  {ic:'🐓',cover:'cover-kotpetuh',name:'Кот, петух и лиса',pages:[
+  {ic:'🐓',cover:'kotpetuh-1',name:'Кот, петух и лиса',pages:[
     {p:'🐱🐓🏠',img:'kotpetuh-1',t:'Жили в избушке кот и петушок.'},
     {p:'🐱🌲',img:'kotpetuh-2',t:'Кот уходил в лес, а петушку говорил: никому не открывай!'},
     {p:'🦊🌾',img:'kotpetuh-3',t:'Пришла лиса и запела: петушок, петушок, золотой гребешок, выгляни в окошко!'},
@@ -1379,14 +1380,14 @@ const TALES=[
     {p:'🐓📣',img:'kotpetuh-5',t:'Кот, спаси меня! — закричал петушок.'},
     {p:'🐱🏃',img:'kotpetuh-6',t:'Кот услышал, прибежал и отнял петушка у лисы.'},
     {p:'🐱🐓',img:'kotpetuh-7',t:'Стали они дальше жить дружно. А петушок больше в окошко не выглядывал. Конец!'}]},
-  {ic:'🦩',cover:'cover-zhuravl',name:'Лиса и журавль',pages:[
+  {ic:'🦩',cover:'zhuravl-1',name:'Лиса и журавль',pages:[
     {p:'🦊🦩',img:'zhuravl-1',t:'Подружились лиса и журавль.'},
     {p:'🦊🍽️',img:'zhuravl-2',t:'Позвала лиса журавля в гости. Сварила кашу и размазала по тарелке.'},
     {p:'🦩🍽️',img:'zhuravl-3',t:'Журавль стучит клювом по тарелке — а ничего не достать.'},
     {p:'🦩🏺',img:'zhuravl-4',t:'Позвал журавль лису к себе. Налил супа в высокий кувшин.'},
     {p:'🦊🏺',img:'zhuravl-5',t:'Лиса крутится вокруг кувшина — а не достать!'},
     {p:'🦊🦩',img:'zhuravl-6',t:'Как ты гостей угощаешь, так и тебя угостят. Конец!'}]},
-  {ic:'🫘',cover:'cover-bob',name:'Петушок и бобовое зёрнышко',pages:[
+  {ic:'🫘',cover:'bob-1',name:'Петушок и бобовое зёрнышко',pages:[
     {p:'🐓🐔',img:'bob-1',t:'Жили-были петушок и курочка.'},
     {p:'🐓🫘',img:'bob-2',t:'Петушок торопился, клевал зёрнышки быстро-быстро — и подавился бобовым зёрнышком.'},
     {p:'🐔🐄',img:'bob-3',t:'Побежала курочка к коровушке: дай маслица, петушка спасти!'},
@@ -1394,7 +1395,7 @@ const TALES=[
     {p:'🐔🧈',img:'bob-5',t:'Дала коровушка маслица. Курочка смазала петушку горлышко.'},
     {p:'🐓🎵',img:'bob-6',t:'Зёрнышко проскочило! Петушок вскочил и запел: ку-ка-ре-ку!'},
     {p:'🐓🐔',img:'bob-7',t:'Не торопись, когда кушаешь! Конец!'}]},
-  {ic:'🦔',cover:'cover-pyh',name:'Пых',pages:[
+  {ic:'🦔',cover:'pyh-1',name:'Пых',pages:[
     {p:'👴👵👧',img:'pyh-1',t:'Жили-были дедушка, бабушка и внучка Алёнка.'},
     {p:'👴🥬',img:'pyh-2',t:'Пошёл дедушка в огород за репкой. А там кто-то: пых-пых-пых! Испугался дед и убежал.'},
     {p:'👵🥬',img:'pyh-3',t:'Пошла бабушка — и снова: пых-пых-пых! Бабушка тоже убежала.'},
@@ -1406,7 +1407,7 @@ const TALES=[
 let tale=null,pg=0;
 function showBooks(){
   document.getElementById('tales').classList.remove('reading');document.getElementById('page').style.display='none';const B=document.getElementById('books');B.style.display='grid';{const w=B.closest('.swwrap');if(w)w.style.display=''}B.innerHTML='';
-  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt="">':t.ic)+'</div><span>'+t.name+'</span>';const ci=b.querySelector('.ic img');if(ci)ci.onerror=()=>{ci.parentNode.textContent=t.ic};b.onclick=()=>openTale(i);B.appendChild(b)});swipeify(B,swName);
+  TALES.forEach((t,i)=>{const b=document.createElement('button');b.innerHTML='<div class="ic">'+(t.cover?'<img src="img/tales/'+t.cover+'.webp" alt=""'+(/^cover-/.test(t.cover)?'':' class="scene"')+'>':t.ic)+'</div><span>'+t.name+'</span>';const ci=b.querySelector('.ic img');if(ci)ci.onerror=()=>{ci.parentNode.textContent=t.ic};b.onclick=()=>openTale(i);B.appendChild(b)});swipeify(B,swName);
   say('tales','Какую сказку почитаем? Выбирай!');
 }
 function openTale(i){tale=TALES[i];pg=0;document.getElementById('tales').classList.add('reading');{const B=document.getElementById('books');B.style.display='none';const w=B.closest('.swwrap');if(w)w.style.display='none'}document.getElementById('page').style.display='block';tSwipe();
