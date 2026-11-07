@@ -2758,7 +2758,7 @@ function mBarSvg(B){const k=B.k,a=B.a,b=B.b,M=Math.max(a+b,a)*1.05,W=n=>Math.max
   else{const top=seg(x0,W(a),50,'#e85a2c',a,1);const big=k==='more'?a+b:a-b;s+=top+(k==='diff'?seg(x0,W(b),120,'#4a8cff',b,0)+'<text x="'+(x0+W(b)+(W(a)-W(b))/2)+'" y="110" text-anchor="middle" font-size="38" font-weight="900" fill="#2f9a5a">?</text>'
     :seg(x0,W(big),120,'#4a8cff','?',0)+'<text x="'+(x0+W(Math.min(a,big))+Math.abs(W(a)-W(big))/2)+'" y="'+(k==='more'?100:85)+'" text-anchor="middle" font-size="28" font-weight="900" fill="#7a5a2a">'+(k==='more'?'на '+b+' больше':'на '+b+' меньше')+'</text>')}
   return s+'</svg>'}
-function gTask(q,c){const box=c.box;box.className='gtk';box.innerHTML='';if(c.Q){c.Q.innerHTML='<div class="gtk-text"></div>'+mBarSvg(q.bar);c.Q.querySelector('.gtk-text').textContent=typo(q.text)}
+function gTask(q,c){const box=c.box;box.className='gtk';box.innerHTML='';if(c.Q){c.Q.innerHTML='<div class="gtk-text"></div>'+(q.bar?mBarSvg(q.bar):'');c.Q.querySelector('.gtk-text').textContent=typo(q.text)}
   let st=0;const lab=G_EL('div','gtk-step'),o=G_EL('div','opts ruw');box.appendChild(lab);box.appendChild(o);
   const show=()=>{const S_=q.steps[st];lab.textContent=S_.ask;o.innerHTML='';let done=false;shuffle(S_.opts.map((t,k)=>({t,k}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t;b.onclick=()=>{if(done||b.classList.contains('no'))return;
     if(!x.k){done=true;b.classList.add('yes');cheer();if(c.snd)c.snd('ok');st++;if(st<q.steps.length){setTimeout(()=>{lab.textContent='';const sol=G_EL('div','gtk-sol');sol.textContent=x.t+' = ?';box.insertBefore(sol,lab);show()},500)}else{const sol=box.querySelector('.gtk-sol');if(sol)sol.textContent=sol.textContent.replace('?',x.t);c.win()}}
@@ -2777,6 +2777,7 @@ function gPerim(q,c){const box=c.box;box.className='gpe';box.innerHTML='';const 
   const t=(x,y,v)=>'<text x="'+x+'" y="'+y+'" text-anchor="middle" font-size="22" font-weight="900" fill="#3b2a20" stroke="none">'+v+' см</text>';
   if(q.k==='tri')svg+='<polygon points="150,25 270,190 30,190"/>'+t(68,100,s[0])+t(236,100,s[1])+t(150,215,s[2]);
   else if(q.k==='rect')svg+='<rect x="40" y="50" width="220" height="120"/>'+t(150,40,s[1])+t(150,198,s[1])+t(14,116,s[0])+t(286,116,s[0]);
+  else if(q.k==='broken')svg+='<polyline points="20,170 90,60 170,150 280,40" fill="none" stroke-width="7" stroke-linecap="round"/><circle cx="20" cy="170" r="7" fill="#4a8cff"/><circle cx="90" cy="60" r="7" fill="#4a8cff"/><circle cx="170" cy="150" r="7" fill="#4a8cff"/><circle cx="280" cy="40" r="7" fill="#4a8cff"/>'+t(34,100,s[0])+t(160,90,s[1])+t(250,130,s[2]);
   else svg+='<rect x="80" y="40" width="140" height="140"/>'+t(150,30,s[0])+t(150,206,s[0])+t(44,116,s[0])+t(256,116,s[0]);
   box.innerHTML=svg+'</g></svg>';if(c.Q)c.Q.innerHTML='';const o=G_EL('div','opts ruw');box.appendChild(o);let done=false;
   shuffle(q.opts.map(t=>({t,k:t===String(q.ans)}))).forEach(x=>{const b=G_EL('button','opt');b.textContent=x.t+' см';b.onclick=()=>{if(done||b.classList.contains('no'))return;if(x.k){done=true;b.classList.add('yes');c.win()}else{b.classList.add('no');c.miss()}};o.appendChild(b)})}
@@ -2873,6 +2874,73 @@ function showTheory(){const T=mathTheory();if(!T)return;const L=LESSONS.math.lis
   c.querySelector('h2').textContent=typo(L.n);const ul=c.querySelector('ul');T.t.forEach(x=>{const li=document.createElement('li');li.textContent=typo(x);ul.appendChild(li)});
   const ex=c.querySelector('.th-ex');T.ex.forEach(x=>{const d=document.createElement('div');d.textContent=x;ex.appendChild(d)});
   const [ear,ok]=c.querySelectorAll('.row .btn');ear.onclick=()=>speak(T.t.join(' '),'uh');ok.onclick=()=>document.getElementById('dnModal').classList.remove('on')}
+
+/* ещё уроки по части 1 (07.11.2026): шаги внутри тем, названия компонентов, проверка, задачи в два действия, ломаная, повторение */
+const M_TERMS=[['что получилось при сложении','сумма'],['что получилось при вычитании','разность'],['числа, которые складывают','слагаемые'],['из какого числа вычитают','уменьшаемое'],['какое число вычитают','вычитаемое']];
+Object.assign(MATH_GEN,{
+  mAdd9:()=>{const a=MR(2,9),e=mEx(a,1,9);return {t:'choose',ask:'Прибавь девять! Девять — это десять без одного.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:'Прибавить девять — прибавить десять и убрать один.'}},
+  mAdd87:()=>{const b=pick([8,7]),a=MR(11-b,9),e=mEx(a,1,b);return {t:'choose',ask:'Прибавь через десяток! Сначала до десяти, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.ten}},
+  mAdd654:()=>{const b=pick([6,5,4,3,2]),a=MR(11-b,9),e=mEx(a,1,b);return {t:'choose',ask:'Прибавь через десяток! Сначала до десяти, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.ten}},
+  mSub1112:()=>{const a=pick([11,12]),b=MR(a-9,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти через десяток! Сначала до десяти, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.tenS}},
+  mSub1318:()=>{const a=MR(13,18),b=MR(a-9,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти через десяток! Сначала до десяти, потом остальное.',show:e.s+' = ?',opts:mOpts(e.v,[-2,-1,1,2]),r:MATH_OK_R.tenS}},
+  mTerms:()=>({t:'match',ask:'Соедини описание с названием! Веди пальцем слева направо.',pairs:shuffle(M_TERMS).slice(0,4),r:'Слагаемое + слагаемое = сумма. Уменьшаемое − вычитаемое = разность.'}),
+  mTermsQ:()=>{const add=Math.random()<.5;let ex,roles;if(add){const a=MR(3,9),b=MR(2,9);ex=a+' + '+b+' = '+(a+b);roles=[[a,'слагаемое'],[a+b,'сумма']]}else{const a=MR(11,18),b=MR(2,9);ex=a+' − '+b+' = '+(a-b);roles=[[a,'уменьшаемое'],[b,'вычитаемое'],[a-b,'разность']]}
+    const [n,name]=pick(roles),all=['слагаемое','сумма','уменьшаемое','вычитаемое','разность'].filter(x=>x!==name);return {t:'choose',ask:'Как называется это число в примере?',show:ex+' → '+n,opts:[name].concat(shuffle(all).slice(0,2)),small:1,r:'Слагаемое + слагаемое = сумма. Уменьшаемое − вычитаемое = разность.'}},
+  mCheck:()=>{const a=MR(4,9),b=MR(3,9),c=a+b;return {t:'choose',ask:'Как проверить сложение? Выбери верную проверку.',show:a+' + '+b+' = '+c,opts:[c+' − '+b+' = '+a,c+' + '+b+' = '+(c+b),a+' − '+Math.min(a,b)+' = '+(a-Math.min(a,b))],small:1,r:'Сложение проверяют вычитанием: из суммы вычитают одно слагаемое — получается другое.'}},
+  mCmpExpr:()=>{const a=MR(5,9),b=MR(3,9),v=a+b,c=v+pick([-1,0,1]),sg=v>c?'>':v<c?'<':'=';return {t:'choose',ask:'Сравни! Сначала посчитай пример.',show:a+' + '+b+' ? '+c,opts:[sg].concat(['>','<','='].filter(x=>x!==sg)),r:'Сначала вычисли значение выражения, потом сравни числа.'}},
+  mCmpExpr100:()=>{const a=MR(2,8)*10+MR(1,5),b=MR(1,3)*10,v=a+b,c=v+pick([-10,-1,0,1,10]),sg=v>c?'>':v<c?'<':'=';return {t:'choose',ask:'Сравни! Сначала посчитай пример.',show:a+' + '+b+' ? '+c,opts:[sg].concat(['>','<','='].filter(x=>x!==sg)),r:'Сначала вычисли значение выражения, потом сравни числа.'}},
+  mNeighbor:()=>{const n=MR(22,98),before=Math.random()<.5;return before?{t:'choose',ask:'Какое число стоит перед этим? Оно на один меньше.',show:'? , '+n,opts:[String(n-1),String(n+1),String(n-10)],r:'Предыдущее число на один меньше, следующее — на один больше.'}
+    :{t:'choose',ask:'Какое число идёт следом? Оно на один больше.',show:n+' , ?',opts:[String(n+1),String(n-1),String(n+10)],r:'Предыдущее число на один меньше, следующее — на один больше.'}},
+  mAddRound:()=>{const d=MR(1,8),u=MR(1,9),a=d*10+u,b=10-u,e=mEx(a,1,b);return {t:'choose',ask:'Дополни до круглого числа! Единицы вместе дают десяток.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'Если единицы вместе дают десять, получается новый десяток: 34 + 6 = 40.'}},
+  mSubRound:()=>{const a=MR(2,9)*10,b=MR(1,9),e=mEx(a,-1,b);return {t:'choose',ask:'Вычти из круглого числа! Возьми один десяток и вычти из него.',show:e.s+' = ?',opts:mOpts(e.v,[-10,-1,1,10]),r:'Из круглого числа: 40 − 3 = 30 + 10 − 3 = 37.'}},
+  mRoundMatch:()=>{const s=new Set(),pairs=[];while(pairs.length<4){const q=MATH_GEN[pick(['mAddRound','mSubRound'])](),v=q.opts[0];if(s.has(v))continue;s.add(v);pairs.push([q.show.replace(' = ?',''),v])}return {t:'match',ask:'Соедини пример с ответом! Веди пальцем от примера к числу.',pairs,r:'34 + 6 = 40, а 40 − 3 = 37.'}},
+  mTask2:()=>mTask2Gen(15),mTask2b:()=>mTask2Gen(60),
+  mBroken:()=>{const s=[MR(2,7),MR(2,8),MR(2,6)],p=s[0]+s[1]+s[2];return {t:'perim',k:'broken',s,ans:p,opts:mOpts(p,[-2,-1,1,2,3]),ask:'Найди длину ломаной! Сложи длины всех звеньев.',r:'Длина ломаной — это сумма длин всех её звеньев.'}}
+});
+function mTask2Gen(max){const w=pick(M_WHO),a=MR(6,max),b=MR(2,9),c=MR(2,Math.min(9,a+b-1)),N=n=>n+' '+plural(n,w[2]);
+  const text='У '+w[1]+' было '+N(a)+'. Подарили ещё '+b+', а потом '+c+' отдали друзьям. Сколько стало?';
+  return {t:'task',text,bar:null,steps:[{ask:'Каким выражением решаем?',opts:[a+' + '+b+' − '+c,a+' − '+b+' + '+c]},{ask:'Сколько получится?',opts:mOpts(a+b-c,[-2,-1,1,2])}],ask:'Задача в два действия! Сначала прибавь, потом вычти.',r:'Решаем по порядку: сначала что добавили, потом что убрали.'}}
+Object.assign(RU_GEN,MATH_GEN);
+LESSONS.math.list.push(
+  {sec:0,n:'Сумма и разность',p:'Как называются числа в примере',g:['mTerms','mTermsQ','mTermsQ','mTerms','mTermsQ','mTermsQ']},
+  {sec:0,n:'Длина ломаной',p:'Звенья и их длины',g:['mBroken','mShapes','mBroken','mBroken','mShapes','mBroken']},
+  {sec:1,n:'Прибавляем девять',p:'9 — это 10 без одного',g:['mAdd9','mFrameAdd','mAdd9','mAdd9','mAdd9','mAdd9']},
+  {sec:1,n:'Прибавляем 8 и 7',p:'Сначала до десяти',g:['mAdd87','mAdd87','mFrameAdd','mAdd87','mAdd87','mAdd87']},
+  {sec:1,n:'Прибавляем 6, 5, 4, 3, 2',p:'Те же шаги через десяток',g:['mAdd654','mAdd654','mFrameAdd','mAdd654','mAdd654','mAdd654']},
+  {sec:1,n:'Вычитаем из 11 и 12',p:'11 − 4, 12 − 7',g:['mSub1112','mSub1112','mFrameSub','mSub1112','mSub1112','mSub1112']},
+  {sec:1,n:'Вычитаем из 13–18',p:'14 − 6, 17 − 8',g:['mSub1318','mSub1318','mFrameSub','mSub1318','mSub1318','mSub1318']},
+  {sec:1,n:'Проверка сложения',p:'Проверяем вычитанием',g:['mCheck','mCheck','mCheck','mScale20','mCheck','mCheck']},
+  {sec:1,n:'Сравниваем выражения',p:'8 + 5 ? 12',g:['mCmpExpr','mCmpExpr','mCmpExpr','mCmpExpr','mCmpExpr','mCmpExpr']},
+  {sec:1,n:'Задачи в два действия',p:'Сначала прибавь, потом вычти',g:['mTask2','mTask2','mTask2','mTask2']},
+  {sec:1,n:'Повторяем перед контрольной',p:'Всё вперемешку',g:['mAdd9','mSub1318','mHouse18','mCheck','mCmpExpr','mTask','mFix20','mScale20']},
+  {sec:2,n:'Соседи числа',p:'Перед и после',g:['mNeighbor','mNeighbor','mTrain1','mNeighbor','mNeighbor','mTrain1']},
+  {sec:2,n:'Повторяем числа до 100',p:'Всё вперемешку',g:['mTensRead','mPlace','mTrain10','mSign','mCatchGt','mUnitsSign','mNeighbor','mOrderNums']},
+  {sec:3,n:'До круглого числа',p:'34 + 6 = 40',g:['mAddRound','mAddRound','mRoundMatch','mAddRound','mAddRound','mAddRound']},
+  {sec:3,n:'Из круглого числа',p:'40 − 3 = 37',g:['mSubRound','mSubRound','mRoundMatch','mSubRound','mSubRound','mSubRound']},
+  {sec:3,n:'Неизвестное число до 100',p:'Весы с большими гирями',g:['mScale100','mScale100','mScale100','mScale100','mScale100','mScale100']},
+  {sec:3,n:'Сравниваем выражения до 100',p:'34 + 20 ? 55',g:['mCmpExpr100','mCmpExpr100','mCmpExpr100','mCmpExpr100','mCmpExpr100','mCmpExpr100']},
+  {sec:3,n:'Задачи в два действия до 100',p:'Решаем по порядку',g:['mTask2b','mTask2b','mTask2b','mTask2b']},
+  {sec:3,n:'Повторяем перед контрольной',p:'Всё вперемешку',g:['mAddRound','mSubRound','mAdd10','mSub1','mBr','mCmpExpr100','mTask2b','mCoinsK']});
+Object.assign(MATH_TH,{
+ 'Сумма и разность':{t:['Числа, которые складывают, — слагаемые. Результат — сумма.','Из уменьшаемого вычитают вычитаемое. Результат — разность.'],ex:['8 + 5 = 13: 8 и 5 — слагаемые, 13 — сумма','15 − 6 = 9: 15 — уменьшаемое, 6 — вычитаемое, 9 — разность']},
+ 'Длина ломаной':{t:['Ломаная состоит из звеньев — отрезков.','Чтобы найти длину ломаной, сложи длины всех звеньев.'],ex:['3 см + 4 см + 2 см = 9 см']},
+ 'Прибавляем девять':{t:['Девять — это десять без одного.','Прибавь десять и убери один.'],ex:['6 + 9 = 6 + 10 − 1 = 15','или 6 + 9 = 6 + 4 + 5 = 15']},
+ 'Прибавляем 8 и 7':{t:['Сначала дополни первое число до десяти.','Потом прибавь то, что осталось от восьми или семи.'],ex:['5 + 8 = 5 + 5 + 3 = 13','6 + 7 = 6 + 4 + 3 = 13']},
+ 'Прибавляем 6, 5, 4, 3, 2':{t:['Шаги те же: сначала до десяти, потом остальное.','Помни пары до десяти.'],ex:['8 + 6 = 8 + 2 + 4 = 14','9 + 3 = 9 + 1 + 2 = 12']},
+ 'Вычитаем из 11 и 12':{t:['Сначала вычти один или два — получится десять.','Потом вычти остальное из десяти.'],ex:['11 − 4 = 11 − 1 − 3 = 7','12 − 7 = 12 − 2 − 5 = 5']},
+ 'Вычитаем из 13–18':{t:['Сначала вычти столько, сколько единиц, — получится десять.','Потом вычти остальное.'],ex:['14 − 6 = 14 − 4 − 2 = 8','17 − 8 = 17 − 7 − 1 = 9']},
+ 'Проверка сложения':{t:['Сложение проверяют вычитанием.','Из суммы вычитают одно слагаемое — должно получиться другое.'],ex:['7 + 6 = 13','Проверка: 13 − 6 = 7 — верно!']},
+ 'Сравниваем выражения':{t:['Сначала вычисли значение выражения.','Потом сравни два числа и поставь знак.'],ex:['8 + 5 ? 12','13 > 12, значит 8 + 5 > 12']},
+ 'Задачи в два действия':{t:['В такой задаче два шага.','Сначала узнай, сколько стало после первого шага, потом — после второго.'],ex:['Было 10, подарили 3, отдали 4','10 + 3 − 4 = 9']},
+ 'Повторяем перед контрольной':{t:['Через десяток: сначала до десяти, потом остальное.','Единицы — к единицам, десятки — к десяткам.','Сначала действие в скобках.'],ex:['8 + 5 = 13','34 + 6 = 40']},
+ 'Соседи числа':{t:['Следующее число на один больше.','Предыдущее число на один меньше.'],ex:['49, 50, 51','Перед 70 стоит 69']},
+ 'Повторяем числа до 100':{t:['Двузначное число: десятки и единицы.','Сравниваем сначала десятки, потом единицы.','1 дм = 10 см.'],ex:['56 = 5 дес. 6 ед.','52 > 48']},
+ 'До круглого числа':{t:['Если единицы вместе дают десять, получается новый десяток.','Десятков становится на один больше, единиц — ноль.'],ex:['34 + 6 = 40','57 + 3 = 60']},
+ 'Из круглого числа':{t:['Возьми один десяток из круглого числа.','Вычти из этого десятка, остальные десятки сохрани.'],ex:['40 − 3 = 30 + 10 − 3 = 37','70 − 8 = 62']},
+ 'Неизвестное число до 100':{t:['Неизвестное слагаемое находят вычитанием.','Из суммы вычти известное слагаемое.'],ex:['34 + ? = 54','54 − 34 = 20']},
+ 'Сравниваем выражения до 100':{t:['Сначала посчитай пример.','Потом сравни: сначала десятки, потом единицы.'],ex:['34 + 20 ? 55','54 < 55']},
+ 'Задачи в два действия до 100':{t:['Решай по шагам, по порядку.','Можно записать одним выражением.'],ex:['Было 40, подарили 5, отдали 3','40 + 5 − 3 = 42']}
+});
 /* порядок уроков математики по разделам: строки — заголовки разделов */
 function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SECS.forEach((n,s)=>{const ii=L.map((x,i)=>i).filter(i=>(L[i].sec||0)===s);if(ii.length){r.push(n);r.push(...ii)}});return r}
 
