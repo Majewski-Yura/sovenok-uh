@@ -598,7 +598,9 @@ function speak(t){
   const parts=splitS(t).filter(s=>vnorm(s)).map(s=>{const h=vhash(vnorm(s));return{s,src:REC.has(h)?'audio/dino/'+h+'.mp3':null}});
   const my=++tok;if(player)player.pause();if('speechSynthesis' in window)speechSynthesis.cancel();let i=0;
   const next=()=>{if(my!==tok||i>=parts.length)return;const p=parts[i++];
-    if(p.src&&player){player.onended=next;player.onerror=()=>robot(p.s,next);player.src=p.src;player.play().catch(()=>robot(p.s,next))}else robot(p.s,next)};
+    /* 07.11.2026: прерванная запись не дочитывается голосом устройства поверх новой фразы */
+    const fb=e=>{if(my!==tok||(e&&e.name==='AbortError'))return;robot(p.s,next)};
+    if(p.src&&player){player.onended=next;player.onerror=()=>fb();player.src=p.src;player.play().catch(fb)}else{if(window.SAY_LOG)console.log('[без записи]',p.s);robot(p.s,next)}};
   next();
 }
 function say(scr,t){const b=document.getElementById(scr+'Say');if(b)b.textContent=typo(t);speak(t)}
@@ -676,7 +678,7 @@ function galDraw(G,folders,fold,pic,open,onFold){G.innerHTML='';G.classList.togg
   folders[fold].ks.forEach(k=>{const P=pic(k),b=document.createElement('button');if(P.fill)b.className='fill';b.innerHTML='<img src="'+P.src+'" alt="" draggable="false">'+(P.ok?'<i class="pzok">⭐</i>':'');b.onclick=()=>open(k);G.appendChild(b)})}
 function startPaint(){go('paintpick');const F=galFolders(PPICS,P_FOLD),f=galFold.paint;
   galDraw(document.getElementById('pgal'),F,f,k=>({src:'img/color-topa/'+k+'.png?v=2'}),openPic,i=>{galFold.paint=i;startPaint()});
-  say('paintpick',f===null?'Что будем раскрашивать? Выбирай!':F[f].n+'! Выбери картинку!')}
+  say('paintpick',f===null?'Что будем раскрашивать? Выбирай!':'Выбери картинку!')}
 function openPic(k){PK=k;go('paint');const P=document.getElementById('palette');P.innerHTML='';
   PCOLORS.forEach(x=>{const b=document.createElement('button');b.style.background=x.c;if(x.c===pCol)b.className='on';
     b.onclick=()=>{pCol=x.c;P.querySelectorAll('button').forEach(y=>y.classList.remove('on'));b.classList.add('on');say('paint',x.say)};P.appendChild(b)});
@@ -1112,7 +1114,7 @@ function pzPics(){
 function startPuzzle(){
   pzPics();go('puzzlepick');S.pzSolved=S.pzSolved||[];const F=galFolders(PICS.map(P=>P.k),PZ_FOLD),f=galFold.puzzle;
   galDraw(document.getElementById('pzgal'),F,f,k=>{const P=PICS.find(x=>x.k===k);return{...P,ok:S.pzSolved.includes(k)}},k=>openPuzzle(PICS.findIndex(x=>x.k===k)),i=>{galFold.puzzle=i;startPuzzle()});
-  say('puzzlepick',f===null?'Что будем собирать? Выбирай!':F[f].n+'! Выбери картинку!');
+  say('puzzlepick',f===null?'Что будем собирать? Выбирай!':'Выбери картинку!');
 }
 function openPuzzle(i){pzPic=i;go('puzzle');newPuzzle();say('puzzle','Собери картинку! Подвинь кусочек к соседу — они слипнутся!')}
 let pzX=[],pzY=[],pzG=[];
