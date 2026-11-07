@@ -46,6 +46,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .tile span{font-size:18px;color:var(--ink2)}
 .tile.hot{border-color:var(--gold);background:var(--gold2)}
 .home{position:fixed;left:12px;bottom:12px;width:76px;height:76px;border-radius:50%;background:var(--green);color:#fff;font-size:40px;box-shadow:0 6px 0 var(--green2);z-index:5;display:none}
+.home svg{display:block;margin:auto}
 .home:active{transform:translateY(4px);box-shadow:0 2px 0 var(--green2)}
 /* раскраска */
 .pline{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
@@ -297,11 +298,11 @@ header{display:flex;justify-content:space-between;align-items:center;gap:10px}
 </style>
 </head>
 <body>
-<button class="home" id="homeBtn" aria-label="Назад" onclick="goBack()">🏠</button>
+<button class="home" id="homeBtn" aria-label="Назад" onclick="goBack()"><svg viewBox="0 0 48 48" width="44" height="44" aria-hidden="true"><path d="M28 10 L14 24 L28 38" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <div class="wrap">
   <header>
     <div class="logo"><img src="img/uh-hello.webp" alt=""><img src="img/topa-hello.webp" alt="" style="margin-left:-6px">Топоух</div>
-    <div style="display:flex;gap:10px;align-items:center"><div class="stars">⭐ <span id="starN">0</span></div><img class="me" src="lesha.jpg" alt="Лёша" onclick="toPicker()" style="cursor:pointer"></div>
+    <div style="display:flex;gap:10px;align-items:center"><div class="stars">⭐ <span id="starN">0</span></div><img class="me" src="lesha.jpg" alt="Лёша" onclick="askGate(toPicker)" style="cursor:pointer"></div>
   </header>
 
   <section class="screen on" id="home">
@@ -764,10 +765,10 @@ function shRound(first){
 }
 
 /* ---------- паровозик (06.11.2026): посади зверька в вагончик нужного цвета ---------- */
-const TR_ANI=[{img:'zoo-cat',ask:'Котик хочет покататься!'},{img:'zoo-dog',ask:'Собачка хочет покататься!'},{img:'zoo-frog',ask:'Лягушка хочет покататься!'},
-  {img:'zoo-pig',ask:'Поросёнок хочет покататься!'},{img:'bear',ask:'Мишка хочет покататься!'},{img:'dino',ask:'Динозаврик хочет покататься!'}];
-const TR_COL=[{c:'#ff5a5f',to:'В красный вагончик!',is:'Это красный вагончик.',need:'Нужен красный!'},{c:'#4a8cff',to:'В синий вагончик!',is:'Это синий вагончик.',need:'Нужен синий!'},
-  {c:'#ffd23f',to:'В жёлтый вагончик!',is:'Это жёлтый вагончик.',need:'Нужен жёлтый!'},{c:'#3ccf6e',to:'В зелёный вагончик!',is:'Это зелёный вагончик.',need:'Нужен зелёный!'}];
+const TR_ANI=[{img:'zoo-cat',ask:'Котик!'},{img:'zoo-dog',ask:'Собачка!'},{img:'zoo-frog',ask:'Лягушка!'},
+  {img:'zoo-pig',ask:'Поросёнок!'},{img:'bear',ask:'Мишка!'},{img:'dino',ask:'Динозаврик!'}];
+const TR_COL=[{c:'#ff5a5f',to:'Красный вагон!',is:'Это красный.',need:'Нужен красный!'},{c:'#4a8cff',to:'Синий вагон!',is:'Это синий.',need:'Нужен синий!'},
+  {c:'#ffd23f',to:'Жёлтый вагон!',is:'Это жёлтый.',need:'Нужен жёлтый!'},{c:'#3ccf6e',to:'Зелёный вагон!',is:'Это зелёный.',need:'Нужен зелёный!'}];
 let trOk=0,trCols=[],trQ=[],trI=0;
 function startTrain(){go('train');trOk=0;counter('trCnt',0,6);trRound(true)}
 function trRound(first){
@@ -775,7 +776,7 @@ function trRound(first){
   r.innerHTML='<img class="loco" src="img/toys/train.webp" alt="Паровозик" draggable="false">'+trCols.map((c,i)=>'<div class="wagon" data-i="'+i+'"><svg viewBox="0 0 100 78"><rect x="2" y="44" width="10" height="6" rx="2" fill="#8a6a4a"/><rect x="6" y="18" width="90" height="42" rx="10" fill="'+c.c+'"/><rect x="14" y="26" width="74" height="12" rx="5" fill="rgba(255,255,255,.4)"/><circle cx="28" cy="64" r="12" fill="#3a3a44"/><circle cx="74" cy="64" r="12" fill="#3a3a44"/><circle cx="28" cy="64" r="4" fill="#ddd"/><circle cx="74" cy="64" r="4" fill="#ddd"/></svg></div>').join('');
   r.classList.remove('go','in');void r.offsetWidth;if(!first)r.classList.add('in');
   const want=shuffle([0,1,2]);trQ=shuffle(TR_ANI).slice(0,3).map((a,i)=>({...a,w:want[i]}));trI=0;
-  setTimeout(()=>{if(first)say('train','Ту-ту! Паровозик приехал! Посади зверят в вагончики!');setTimeout(trNext,first?2600:200)},first?300:1200);
+  setTimeout(()=>{if(first)say('train','Ту-ту! Посади зверят!');setTimeout(trNext,first?2600:200)},first?300:1200);
 }
 function trNext(){
   if(cur()!=='train')return;
@@ -788,8 +789,8 @@ function trNext(){
     t.classList.add('full');t.insertAdjacentHTML('beforeend','<img class="seat" src="img/toys/'+q.img+'.webp" alt="" draggable="false">');
     t.classList.remove('yes');void t.offsetWidth;t.classList.add('yes');w.innerHTML='';
     trOk++;counter('trCnt',Math.min(trOk,6),6);trI++;
-    if(trI<3){say('train',pick(['Молодец!','Правильно!','Ура, поехали дальше!']));setTimeout(trNext,1300)}
-    else{say('train','Все сели! Ту-ту! Поехали!');
+    if(trI<3){say('train',pick(['Молодец!','Правильно!','Ура!']));setTimeout(trNext,1300)}
+    else{say('train','Все сели! Ту-ту!');
       if(trOk>=6){addStar();trOk=0;setTimeout(()=>counter('trCnt',0,6),1500)}
       setTimeout(()=>{const r=document.getElementById('rail');r.classList.add('go');setTimeout(()=>{if(cur()==='train')trRound()},2500)},1200)}
   }});
@@ -1022,12 +1023,34 @@ function pzDown(e,k){
   const mv=ev=>{let dx=ev.clientX-sx,dy=ev.clientY-sy;if(Math.hypot(dx,dy)>6)moved=true;
     dx=Math.max(...grp.map((j,i)=>-x0[i]),Math.min(dx,...grp.map((j,i)=>maxX-x0[i])));
     dy=Math.max(...grp.map((j,i)=>-y0[i]),Math.min(dy,...grp.map((j,i)=>maxY-y0[i])));
-    grp.forEach((j,i)=>{pzX[j]=x0[i]+dx;pzY[j]=y0[i]+dy;pzPlace(j)})};
+    grp.forEach((j,i)=>{pzX[j]=x0[i]+dx;pzY[j]=y0[i]+dy;pzPlace(j)});pzPush(grp,maxX,maxY)};
+  pzGood=[pzX.slice(),pzY.slice()];
   const up=()=>{b.removeEventListener('pointermove',mv);b.removeEventListener('pointerup',up);b.removeEventListener('pointercancel',up);
     grp.forEach(j=>pzBtn(j).classList.remove('lift'));
     if(!moved){speak(pick(['Тяни кусочек к другому!','Потяни меня пальчиком!']));return}
     pzSnap(k)};
   b.addEventListener('pointermove',mv);b.addEventListener('pointerup',up);b.addEventListener('pointercancel',up);
+}
+/* кусочки не ложатся друг на друга (07.11.2026, просьба родителя): чужие группы, задетые перетаскиваемыми, отодвигаются в сторону */
+let pzGood=null;
+function pzPush(moving,maxX,maxY){
+  const c=pzBtn(0).offsetWidth/1.44,m=3,mg=pzG[moving[0]],done=new Set([mg]);let act=moving.slice();
+  const hit=(A,B)=>{const r={R:0,L:0,D:0,U:0};let any=false;A.forEach(a=>B.forEach(o=>{if(Math.abs(pzX[o]-pzX[a])>=c-m||Math.abs(pzY[o]-pzY[a])>=c-m)return;any=true;
+    r.R=Math.max(r.R,pzX[a]+c-pzX[o]);r.L=Math.max(r.L,pzX[o]+c-pzX[a]);r.D=Math.max(r.D,pzY[a]+c-pzY[o]);r.U=Math.max(r.U,pzY[o]+c-pzY[a])}));return any?r:null};
+  const fits=(g,dx,dy)=>g.every(j=>pzX[j]+dx>=-.5&&pzX[j]+dx<=maxX+.5&&pzY[j]+dy>=-.5&&pzY[j]+dy<=maxY+.5);
+  const shift=(g,dx,dy)=>g.forEach(j=>{pzX[j]+=dx;pzY[j]+=dy;pzPlace(j)});
+  const best=(g,r,sign)=>{const v=[['R',sign,0],['L',-sign,0],['D',0,sign],['U',0,-sign]].map(([k,x,y])=>({d:r[k],dx:x*r[k],dy:y*r[k]})).filter(o=>fits(g,o.dx,o.dy)).sort((p,q)=>p.d-q.d);return v[0]};
+  for(let pass=0;pass<4&&act.length;pass++){const next=[];
+    [...new Set([0,1,2,3].map(j=>pzG[j]))].forEach(gid=>{if(done.has(gid))return;const og=[0,1,2,3].filter(j=>pzG[j]===gid),r=hit(act,og);if(!r)return;
+      const v=best(og,r,1);
+      if(v){shift(og,v.dx,v.dy);done.add(gid);next.push(...og);return}
+      /* соседу некуда уйти — перетаскиваемый кусочек упирается в него */
+      if(pass===0){const mv=[0,1,2,3].filter(j=>pzG[j]===mg),w=best(mv,{R:r.L,L:r.R,D:r.U,U:r.D},1);if(w)shift(mv,w.dx,w.dy)}});
+    act=next}
+  /* если кусочки всё равно легли друг на друга — откатить к последнему хорошему положению */
+  const gs=[...new Set([0,1,2,3].map(j=>pzG[j]))],bad=gs.some((g1,i)=>gs.slice(i+1).some(g2=>hit([0,1,2,3].filter(j=>pzG[j]===g1),[0,1,2,3].filter(j=>pzG[j]===g2))));
+  if(bad&&pzGood){[0,1,2,3].forEach(j=>{pzX[j]=pzGood[0][j];pzY[j]=pzGood[1][j];pzPlace(j)});return false}
+  pzGood=[pzX.slice(),pzY.slice()];return true
 }
 /* защёлкнуть группу кусочка k к соседу, если он поднесён правильной стороной (допуск — треть клетки) */
 function pzSnap(k){
@@ -1201,14 +1224,14 @@ function renderToyshop(quiet){
 /* ---------- родителям ---------- */
 /* ---------- для родителей: вход через пример, подтверждение дел, просьбы ---------- */
 let gateCb=null,gateA=0,gateB=0,gateV='';
-function gateNew(){gateA=2;gateB=3+Math.floor(Math.random()*7);if(Math.random()<.5){const t=gateA;gateA=gateB;gateB=t}document.getElementById('gateQ').textContent='Сколько будет '+gateA+' × '+gateB+'?';gateV='';gateDraw()}
+function gateNew(){gateA=2;gateB=3+Math.floor(Math.random()*7);if(Math.random()<.5){const t=gateA;gateA=gateB;gateB=t}document.getElementById('gateQ').textContent='Сколько будет '+gateA+' × '+gateB+' + 100?';gateV='';gateDraw()}
 function gateDraw(){document.getElementById('gateAns').textContent=gateV||'…'}
 function gateKey(k){if(k==='⌫')gateV=gateV.slice(0,-1);else if(k==='✓'){gateOk();return}else if(gateV.length<4)gateV+=k;gateDraw()}
 function askGate(cb){gateCb=cb;const P=document.getElementById('gatePad');P.innerHTML='';
   ['1','2','3','4','5','6','7','8','9','⌫','0','✓'].forEach(k=>{const b=document.createElement('button');b.textContent=k;if(k==='✓')b.className='ok';b.onclick=()=>gateKey(k);P.appendChild(b)});
   gateNew();document.getElementById('gate').classList.add('on')}
 function gateClose(){document.getElementById('gate').classList.remove('on');gateCb=null}
-function gateOk(){if(!gateV)return;if(parseInt(gateV,10)!==gateA*gateB){const a=document.getElementById('gateAns');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');setTimeout(gateNew,450);return}
+function gateOk(){if(!gateV)return;if(parseInt(gateV,10)!==gateA*gateB+100){const a=document.getElementById('gateAns');a.classList.remove('shake');void a.offsetWidth;a.classList.add('shake');setTimeout(gateNew,450);return}
   const cb=gateCb;gateClose();cb&&cb()}
 function openParent(){askGate(()=>go('parent'))}
 function openConfirm(){askGate(showConfirm)}
