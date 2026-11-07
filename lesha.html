@@ -582,7 +582,7 @@ function mergeTopa(r){const L=cloudData(),uq=(a,k)=>{const m=new Map();a.forEach
   const o=Object.assign({},L,r);o.stars=Math.max(L.stars||0,r.stars||0);o.owned=[...new Set([...(r.owned||[]),...(L.owned||[])])];o.toys=[...new Set([...(r.toys||[]),...(L.toys||[])])];
   o.diary=uq([...(r.diary||[]),...(L.diary||[])],x=>x.d+'|'+x.t+'|'+x.a).sort((a,b)=>(a.d+a.t)<(b.d+b.t)?1:-1).slice(0,300);
   o.pending=uq([...(r.pending||[]),...(L.pending||[])],x=>String(x.id));o.ask=r.ask||L.ask||null;
-  o.deeds=Object.assign({},L.deeds||{});Object.keys(r.deeds||{}).forEach(k=>o.deeds[k]=[...new Set([...(o.deeds[k]||[]),...(r.deeds[k]||[])])]);return o}
+  o.deeds=Object.assign({},L.deeds||{});Object.keys(r.deeds||{}).forEach(k=>o.deeds[k]=[...new Set([...(o.deeds[k]||[]),...(r.deeds[k]||[])])]);noCap(o);return o}
 async function cloudInit(){if(!famId||fb)return;
   try{syncState='wait';const base='https://www.gstatic.com/firebasejs/10.12.2/';
     const [A,U,F]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-firestore.js')]);
@@ -596,9 +596,10 @@ async function cloudInit(){if(!famId||fb)return;
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 /* 06.11.2026: звёзды терялись при синхронизации — родитель попросил вернуть Лёше 10 звёзд, один раз */
-/* кепку с Топы сняли по просьбе родителя (07.11.2026): разово, купленная остаётся */
-function capOff(){if(S.capOff1===1)return false;if(S.wear)Object.keys(S.wear).forEach(k=>{if(S.wear[k]==='cap')S.wear[k]=null});S.capOff1=1;return true}
-if(capOff())save();
+/* кепку с Топы сняли по просьбе родителя (07.11.2026): на Топе не рисуется никогда, из wear чистится всегда (флаг capOff1 не помогал — облако возвращало кепку); купленная остаётся в S.owned */
+function noCap(o){o=o||S;let ch=false;if(o.wear)Object.keys(o.wear).forEach(k=>{if(o.wear[k]==='cap'){o.wear[k]=null;ch=true}});return ch}
+function capOff(){return noCap()}
+if(noCap())save();
 if(S.starsBack1!==1){S.stars=(S.stars||0)+10;S.starsBack1=1;save()}
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 
@@ -645,14 +646,18 @@ function mountDino(id,small){
 }
 /* наряды: Топа носит одну вещь; если есть 3D-картинка «Топа в вещи» (WEAR_IMG: имя, ширина при высоте 200), показываем её вместо рисованной вещи */
 const WEAR_IMG={crown:['crown',172],balloon:['balloon',128]};
-const wornItem=()=>['head','face','neck','hand'].map(s=>S.wear[s]).find(Boolean)||Object.values(S.wear).find(Boolean)||null;
+const wornItem=()=>{const ok=k=>k&&k!=='cap';return ['head','face','neck','hand'].map(s=>S.wear[s]).find(ok)||Object.values(S.wear).find(ok)||null};
 function wearOne(slot,k){Object.keys(S.wear).forEach(s=>S.wear[s]=null);S.wear[slot]=k}
+/* поставить картинку позы в рамку 200×200 (низ — на земле, y=92), пропорции из таблицы TOPA_WH */
+const TOPA_WH={balloon:[578,900],blanket:[425,427],blocks:[802,900],book:[900,898],broom:[728,900],car:[805,900],cart:[900,877],check:[821,900],cow:[900,609],crown:[775,900],hello:[698,900],puzzle:[672,900],shirt:[713,900],sick:[794,900],sleep:[344,407],star:[384,465],strawberry:[672,900]};
+function poseImg(im,n){const [W,H]=TOPA_WH[n]||[698,900],k=Math.min(200/W,200/H),w=Math.round(W*k),h=Math.round(H*k);
+  im.setAttribute('href','img/topa-'+n+'.webp');im.setAttribute('width',w);im.setAttribute('height',h);im.setAttribute('x',-w/2);im.setAttribute('y',92-h)}
 function dress(){const k=wornItem();Object.entries(dinos).forEach(([id,svg])=>{
   svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
   if(svg.dataset.fixed)return;  /* у этого Топы своя поза (градусник, футболка, сон) */
   const im=svg.querySelector('image.pose'),wi=k&&WEAR_IMG[k];
-  if(wi){im.setAttribute('href','img/topa-'+wi[0]+'.webp');im.setAttribute('width',wi[1]);im.setAttribute('x',-wi[1]/2);return}
-  im.setAttribute('href','img/topa-hello.webp');im.setAttribute('width',155);im.setAttribute('x',-77.5);
+  if(wi){poseImg(im,wi[0]);return}
+  poseImg(im,'hello');
   if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}})}
 function hop(svg){svg=svg||dinos['dino'+cap(cur())];if(!svg)return;svg.classList.remove('hop');void svg.getBBox();svg.classList.add('hop')}
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -732,9 +737,15 @@ function counter(id,n,max){document.getElementById(id).innerHTML=Array.from({len
 let greeted=false;
 /* поздно вечером Топа на главной спит с мишкой */
 const sleepy=()=>{const h=new Date().getHours();return h>=20||h<7};
-function homePose(){const svg=dinos.dinoHome;if(!svg)return;const im=svg.querySelector('image.pose'),sl=sleepy(),w=sl?169:155;
-  if(sl){im.setAttribute('href','img/topa-sleep.webp');im.setAttribute('width',w);im.setAttribute('x',-w/2);svg.dataset.fixed=1}else delete svg.dataset.fixed;
-  svg.classList.toggle('noacc',sl);dress()}
+/* на главной при каждом показе — другой Топа (07.11.2026, просьба родителя); ночью — спит с мишкой */
+const HOME_POSES=['hello','star','crown','balloon','strawberry','book','car','blocks','puzzle','check','shirt','cart','broom','cow','blanket'];
+let homeLast='';
+function homePose(){const svg=dinos.dinoHome;if(!svg)return;const im=svg.querySelector('image.pose');
+  if(sleepy()){poseImg(im,'sleep');svg.dataset.fixed=1;svg.classList.add('noacc');dress();return}
+  let n;do{n=pick(HOME_POSES)}while(n===homeLast&&HOME_POSES.length>1);homeLast=n;
+  if(n==='hello'){delete svg.dataset.fixed;svg.classList.remove('noacc')}  /* обычный Топа: наряды как раньше */
+  else{poseImg(im,n);svg.dataset.fixed=1;svg.classList.add('noacc')}
+  dress()}
 function homeTalk(){
   document.getElementById('tileFeel').classList.toggle('hot',S.feelDate!==today());homePose();
   if(sleepy()){document.getElementById('homeSay').textContent=typo('Тс-с-с… Топа засыпает. Скоро и Лёше пора в кроватку!');return}
