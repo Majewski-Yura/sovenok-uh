@@ -693,6 +693,176 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .gcl-key{font-size:28px;font-weight:900;height:56px;border-radius:16px;background:var(--bg2);border:3px solid var(--line);box-shadow:var(--shadow);color:var(--ink)}
 .gdots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px;margin:6px auto 0}.gdots i{width:18px;height:18px;border-radius:50%;background:#ff5a5f}
 </style>
+<style id="TOPOUH_REFRESH_V1">
+/* Топоух / Сегодня и Чтение */
+#home, #lessonList.tu-read-library, #read {
+  --tu-paper:#fffaf2;
+  --tu-sheet:#fffdf8;
+  --tu-ink:#223a30;
+  --tu-muted:#54675b;
+  --tu-line:#dedfd1;
+  --tu-sage:#e5eee2;
+  --tu-forest:#205543;
+  --tu-forest-hover:#153f32;
+  --tu-honey:#fff1cc;
+  --tu-serif:Georgia,"Times New Roman",serif;
+  --tu-lift:0 8px 22px rgb(37 51 40 / .065);
+}
+#home,.tu-read-library,#read { min-width:0 }
+#home button:focus-visible,#lessonList.tu-read-library button:focus-visible,#read button:focus-visible {
+  outline:3px solid #a45437;outline-offset:3px;
+}
+#home .hhead {
+  position:relative;isolation:isolate;width:min(100%,760px);max-width:none;margin:6px auto 0;
+  display:flex;justify-content:flex-start;align-items:center;gap:clamp(6px,2.1vw,24px);
+  padding:6px clamp(6px,2.5vw,28px);min-height:76px;border:1px solid #d7e2d4;
+  border-radius:23px;background:radial-gradient(ellipse at 2% 92%,#cfdec4 0,transparent 57%),#e8efe5;
+}
+#home .hhead::before {
+  content:"";position:absolute;inset:7px;z-index:-1;pointer-events:none;border:1px solid rgb(51 89 66 / .13);
+  border-radius:17px;
+}
+#home .hhead .owl { width:clamp(60px,12vw,98px);height:clamp(65px,13vw,106px) }
+#home #homeSay {
+  max-width:none;border:0;box-shadow:none;background:transparent;color:var(--tu-ink);
+  font-size:clamp(.81rem,2.2vw,1rem);line-height:1.45;font-weight:800;
+  padding:7px 52px 7px 2px;
+}
+#home #homeSay::before {display:none}
+#home #homeSay .say {right:0;top:50%;transform:translateY(-50%);width:44px;height:44px;background:#fffdf8}
+#home #dayBar {width:min(100%,720px);max-width:none;margin:13px auto 0;font-size:.85rem;color:#54675b}
+:root.night #home #dayBar {color:#ece8f4}
+#home #dayBar i {height:5px;background:#e4e1d5;margin-top:5px}
+#home #dayBar i b {background:#d8a442}
+#home #dayPath {
+  display:block;width:min(100%,760px);max-width:none;margin:0 auto;padding:0;
+}
+#home .tu-home-intro {padding:14px 4px 9px}
+#home .tu-home-intro h2,#lessonList .tu-library-title,#read .tu-reader-header h2 {
+  margin:3px 0 0;font:700 clamp(1.65rem,4vw,2.55rem)/1.06 var(--tu-serif);letter-spacing:-.035em;
+  color:var(--tu-ink);text-wrap:balance;
+}
+#home .tu-home-intro .tu-step-kicker {color:var(--tu-muted)}
+:root.night #home .tu-home-intro h2,:root.night #home .tu-home-intro .tu-step-kicker,
+:root.night #lessonList .tu-library-title {color:#fff6e9}
+#home .tu-day-steps {display:grid;gap:8px}
+#home .tu-step {
+  display:grid;grid-template-columns:clamp(38px,11vw,62px) minmax(0,1fr) auto;align-items:center;
+  gap:clamp(6px,2.3vw,15px);padding:8px clamp(8px,2.2vw,15px);min-height:70px;
+  border:1px solid var(--tu-line);border-radius:18px;background:var(--tu-sheet);color:var(--tu-ink);
+}
+#home .tu-step--current {background:#e4eee2;border-color:#b7cdbb;box-shadow:var(--tu-lift)}
+#home .tu-step--done .tu-step-icon {background:#e1ebdf}
+#home .tu-step--locked {background:#f5f2eb;border-style:dashed}
+#home .tu-step--locked .tu-step-icon {filter:saturate(.6);background:#eee9df}
+#home .tu-step-icon {
+  width:100%;aspect-ratio:1;display:grid;place-items:center;object-fit:contain;min-width:0;
+  border-radius:14px;padding:4px;background:#f1ecdf;margin:0;
+}
+#home .tu-step-icon img {width:100%;height:100%;object-fit:contain}
+#home .tu-step-kicker,#lessonList .tu-story-meta small,#read .tu-reader-header .tu-step-kicker {
+  display:block;color:var(--tu-muted);font-size:.64rem;line-height:1.3;font-weight:900;letter-spacing:.095em;text-transform:uppercase;
+}
+#home .tu-step-copy h3 {margin:1px 0;font-size:clamp(.98rem,3.4vw,1.23rem);line-height:1.13;font-weight:900;overflow-wrap:anywhere}
+#home .tu-step-copy p,#home .tu-step-copy .tu-step-note {
+  display:block;margin:3px 0 0;color:var(--tu-muted);font-size:.76rem;line-height:1.3;font-weight:800;overflow-wrap:anywhere;
+}
+#home .tu-step-copy .tu-step-note {font-size:.71rem}
+#home .tu-step-action, #read .tu-reader-controls button {
+  min-height:44px;padding:8px clamp(8px,2.25vw,15px);border:1px solid #cbd6cb;border-radius:12px;
+  background:var(--tu-sheet);color:var(--tu-forest);font-size:.82rem;line-height:1.14;font-weight:900;box-shadow:none;
+}
+#home .tu-step-action {max-width:126px}
+#home .tu-step--current .tu-step-action,#read .tu-reader-controls #readNext {
+  background:var(--tu-forest);border-color:var(--tu-forest);color:#fffdf8;
+}
+#home .tu-step--current .tu-step-action:hover,#read .tu-reader-controls #readNext:hover {background:var(--tu-forest-hover)}
+#home .tu-step-action:hover,#read .tu-reader-controls button:hover {border-color:var(--tu-forest)}
+#home .tu-step--locked .tu-step-action {background:transparent;border-color:#ded9ca;color:#585e55}
+#home .tu-step .starsTag,#lessonList .tu-story-card .starsTag,#read #readPrize:not(:empty){
+  background:var(--tu-honey);color:#76500f;border:1px solid #e8cb8b;box-shadow:none;
+}
+#lessonList.tu-read-library {
+  display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;justify-content:stretch;
+  width:100%;max-width:980px;margin:15px auto 0;gap:10px;
+}
+#lessonList .tu-library-title {margin:4px 2px;grid-column:1/-1}
+#lessonList .tu-story-card {
+  display:grid;grid-template-columns:minmax(0,28%) minmax(0,1fr);gap:12px;align-items:center;
+  width:100%;min-width:0;text-align:left;padding:8px;border-radius:18px;border:1px solid var(--tu-line);
+  background:var(--tu-sheet);color:var(--tu-ink);box-shadow:var(--tu-lift);transition:transform .15s,border-color .15s;
+}
+#lessonList .tu-story-card:hover {transform:translateY(-2px);border-color:#829b89}
+#lessonList .tu-story-card:active {transform:none}
+#lessonList .tu-story-cover {
+  width:100%;aspect-ratio:1;height:auto;min-width:0;object-fit:cover;object-position:center;
+  display:block;border-radius:12px;background:#e4e9db;
+}
+#lessonList .tu-story-meta {min-width:0;display:grid;gap:3px;padding:1px 4px 1px 0}
+#lessonList .tu-story-meta :is(strong,h3) {margin:0;display:block;font:700 clamp(1.05rem,3.7vw,1.45rem)/1.12 var(--tu-serif);overflow-wrap:anywhere}
+#lessonList .tu-story-meta > span:not(.tu-story-footer),#lessonList .tu-story-meta p {
+  display:block;margin:0;font-size:.81rem;line-height:1.33;color:var(--tu-muted);
+}
+#lessonList .tu-story-footer {display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:.74rem;color:var(--tu-muted)}
+#read {
+  width:min(100%,970px);margin-inline:auto;color:var(--tu-ink);
+  background:var(--tu-paper);border:1px solid var(--tu-line);border-radius:clamp(15px,3vw,25px);
+  padding:clamp(12px,2.65vw,27px);
+}
+#read .tu-reader-header {display:block;margin:0 auto 8px;max-width:780px;text-align:left}
+#read .tu-reader-header .tu-step-kicker {margin-bottom:4px}
+#read .tu-reader-header h2 {margin:0}
+#read .tu-reader-progress {margin:6px 0 0;color:var(--tu-muted);font-size:.83rem;font-weight:900}
+#read #readPrize:not(:empty) {font-size:.78rem;margin:0 0 8px;padding:4px 10px}
+#read #readProg {margin:0 auto;width:100%;max-width:780px;gap:4px}
+#read #readProg i {background:#e1e3d9;height:5px}
+#read #readProg i.done {background:var(--tu-forest)}
+#read #story {
+  display:grid;gap:12px;min-width:0;width:100%;margin:12px auto 0;padding:clamp(10px,2vw,20px);border-radius:18px;
+  background:var(--tu-sheet);color:var(--tu-ink);border:1px solid var(--tu-line);box-shadow:var(--tu-lift);
+}
+:root.night #read #story {background:var(--tu-sheet);color:var(--tu-ink);border-color:var(--tu-line)}
+#read #storyPic {
+  width:100%;min-width:0;height:clamp(106px,26vw,218px);margin:0 auto;
+  align-items:center;max-width:none;gap:10px;border-radius:13px;overflow:hidden;
+  background:radial-gradient(ellipse at 45% 70%,#f8f0db,transparent 68%),#e8eedf;
+}
+#read #storyPic:not(:has(.scene)) img {height:90%;max-width:44%;width:auto;min-width:0;object-fit:contain}
+#read #storyPic:has(.scene) {height:auto;background:transparent}
+#read #storyPic img.scene {
+  display:block;width:100%;height:auto;max-width:none;max-height:230px;aspect-ratio:1.6;
+  object-fit:cover;box-shadow:none;border-radius:inherit;
+}
+#read #storyText {
+  align-self:center;min-width:0;margin:0;font-size:clamp(1rem,3.8vw,1.22rem);line-height:1.55;color:var(--tu-ink);
+}
+#read #storyText h2 {font:700 clamp(1.35rem,4vw,1.85rem)/1.12 var(--tu-serif);text-align:left;margin-bottom:7px}
+#read #storyOpts:empty {display:none}
+#read #storyOpts .opt {min-height:44px}
+#read .tu-reader-controls {display:flex;justify-content:flex-end;flex-wrap:wrap;gap:7px;margin:12px auto 0}
+#read .tu-reader-controls button {display:inline-flex;align-items:center;justify-content:center;gap:5px;text-align:center}
+#read .tu-reader-controls button[hidden] {display:none}
+#read .tu-reader-controls #readNext {flex-grow:1;max-width:240px}
+#read .tu-reader-controls #readAloud img {width:20px;height:20px!important;object-fit:contain}
+#read .tu-reader-controls button:disabled {opacity:.5;cursor:default}
+@media(min-width:680px) {
+  #home .tu-home-intro {padding:18px 4px 12px}
+  #home .tu-step {min-height:76px}
+  #lessonList.tu-read-library {grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  #lessonList .tu-story-card {grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;align-items:start}
+  #lessonList .tu-story-cover {aspect-ratio:1.36}
+  #lessonList .tu-story-meta {padding:2px 4px 4px}
+  #read #story:has(#storyOpts:empty) {grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:21px}
+  #read #storyPic img.scene {max-height:255px}
+}
+@media (max-width:360px) {
+  #home .tu-step {grid-template-columns:30px minmax(0,1fr) auto}
+  #home .tu-step-action {max-width:94px;font-size:.76rem}
+  #read .tu-reader-controls button {padding-inline:7px}
+  #read .tu-reader-controls #readAloud img {display:none}
+}
+
+</style>
 </head>
 <body>
 <div class="pick" id="pick">
@@ -906,13 +1076,18 @@ label.f{display:block;margin-top:14px;font-size:16px}
   <!-- ЧТЕНИЕ -->
   <section class="screen" id="read">
     <div class="prize" id="readPrize" style="text-align:center"></div>
-    <div class="progress" id="readProg"></div>
+    <header class="tu-reader-header">
+      <span class="tu-step-kicker">Читаем с Ух</span>
+      <h2 id="tuReaderTitle"></h2>
+      <p class="tu-reader-progress" id="tuReaderStatus" aria-live="polite"></p>
+    </header>
+    <div class="progress" id="readProg" aria-hidden="true"></div>
     <div class="story" id="story">
       <div class="story-pic" id="storyPic"></div>
       <div class="story-text" id="storyText"></div>
       <div class="opts en" id="storyOpts"></div>
     </div>
-    <div class="row"><button class="btn soft" id="readAloud"><img src="img/ic/speaker.webp" alt="" style="height:26px;vertical-align:middle"> Прочитать вслух</button><button class="btn" id="readNext">Дальше →</button></div>
+    <div class="row tu-reader-controls"><button type="button" class="btn soft tu-reader-prev" id="tuReaderPrev" hidden>← Назад</button><button class="btn soft" id="readAloud"><img src="img/ic/speaker.webp" alt="" style="height:26px;vertical-align:middle"> Прочитать вслух</button><button class="btn" id="readNext">Дальше →</button></div>
   </section>
 
   <!-- ИГРА -->
@@ -1461,18 +1636,40 @@ function pathSteps(){
   return st}
 const pathX=()=>56;
 function renderPath(){
-  const box=document.getElementById('dayPath');if(!box)return;box.innerHTML='';box.classList.toggle('hz',innerWidth>=900);
+  const box=document.getElementById('dayPath');if(!box)return;
+  box.classList.remove('hz');
+  box.innerHTML='<div class="tu-home-intro"><span class="tu-step-kicker">Вместе с Ух</span><h2>Твоя дорожка на сегодня</h2></div><div class="tu-day-steps"></div>';
+  const list=box.querySelector('.tu-day-steps');
   const st=pathSteps(),now=st.findIndex(s=>!s.done&&!s.lock);
   st.forEach((s,i)=>{
-    const hz=innerWidth>=900,x=(i%2?1:-1)*pathX(),side=x>0?'left':'right';
-    if(i){const d=document.createElement('div');d.className='p-dots';d.innerHTML='<i></i><i></i>';box.appendChild(d)}
-    const r=document.createElement('div');r.className='p-row '+side;r.style.transform=hz?'translateY('+(i%2?36:0)+'px)':'translateX('+x+'px)';
-    const n=document.createElement('button');n.className='p-node'+(s.done?' done':'')+(i===now?' now':'')+(s.lock?' lock':'');
-    n.innerHTML='<img src="'+s.img+'" alt="">';n.setAttribute('aria-label',s.t);n.onclick=()=>{if(s.lock){say('home','Сюрприз откроется, когда пройдёшь всю дорожку! Осталось чуть-чуть.');cheer();return}s.go()};
-    const l=document.createElement('div');l.className='p-lbl';l.innerHTML='<b></b><span></span>'+(s.done?'':'<em class="starsTag">⭐ '+s.star+'</em>');
-    l.querySelector('b').textContent=typo(s.t);l.querySelector('span').textContent=typo(s.p);
-    if(i===now){const g=document.createElement('button');g.className='p-go';g.textContent=s.k==='gift'?'Открыть':'Начать';g.onclick=n.onclick;l.appendChild(g)}
-    r.appendChild(n);r.appendChild(l);box.appendChild(r)});
+    const current=i===now, locked=!!s.lock&&!s.done;
+    const card=document.createElement('article');
+    card.className='tu-step'+(s.done?' tu-step--done':current?' tu-step--current':locked?' tu-step--locked':'');
+    const icon=document.createElement('img');icon.className='tu-step-icon';icon.src=s.img;icon.alt='';
+    const copy=document.createElement('div');copy.className='tu-step-copy';
+    copy.innerHTML='<small class="tu-step-kicker"></small><h3></h3><p></p><span class="tu-step-note"></span>';
+    copy.querySelector('small').textContent=s.done?'Готово':current?'Следующий шаг':locked?'Закрыто':'Ещё сегодня';
+    copy.querySelector('h3').textContent=typo(s.t);
+    copy.querySelector('p').textContent=locked?'Выполни все шаги, чтобы открыть.':typo(s.p);
+    const note=copy.querySelector('.tu-step-note');
+    if(s.done||locked)note.hidden=true;
+    else if(s.k==='lesson'){
+      const l=dayLesson(),base=lessonPrize(l.k+l.i);
+      note.textContent=(base?'⭐ '+base+' за урок · ':'')+'⭐ +2 бонус дня';
+    }else note.textContent='⭐ '+s.star;
+    const action=document.createElement('button');action.type='button';action.className='tu-step-action';
+    action.textContent=s.done?'Посмотреть':locked?'Закрыт':s.k==='gift'?'Открыть':s.k==='lesson'?'Начать урок':s.k==='talk'?'Поговорить':'Открыть';
+    if(locked){action.disabled=true}
+    else{
+      action.setAttribute('aria-label',s.k==='lesson'?'Начать урок дня':action.textContent+': '+s.t);
+      action.onclick=()=>{
+        if(s.k==='lesson'&&action.dataset.opening)return;
+        if(s.k==='lesson'){action.dataset.opening='yes';setTimeout(()=>delete action.dataset.opening,2000)}
+        s.go();
+      };
+    }
+    card.append(icon,copy,action);list.append(card);
+  });
 }
 let pathW=innerWidth;window.addEventListener('resize',()=>{const a=(innerWidth>=900)!==(pathW>=900),b=(innerWidth>=1100)!==(pathW>=1100);pathW=innerWidth;if(a&&document.getElementById('home').classList.contains('on'))renderPath();if(b&&document.getElementById('trip').classList.contains('on'))renderTrip()});
 function stepCard(k){document.getElementById('scClose').textContent='Потом';
@@ -1936,7 +2133,22 @@ const LESSONS={
 let LESSON={subj:'ru',i:0};
 function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   document.getElementById('owlLessons').style.display=k==='en'?'none':'';document.getElementById('owlLessonsT').style.display=k==='en'?'':'none';say('lessons',L.say);
-  const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math'||k==='ru');const done=S.lessonsDone||{};let num=0;if(k==='math'||k==='ru'){renderChapters(k,box,done);return}
+  const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math'||k==='ru');box.classList.toggle('tu-read-library',k==='read');const done=S.lessonsDone||{};let num=0;if(k==='math'||k==='ru'){renderChapters(k,box,done);return}
+  if(k==='read'){
+    const head=document.createElement('h2');head.className='tu-library-title';head.textContent='Истории Ух и Топы';box.append(head);
+    const covers=['st-flashlight','st-pie','st-hedgehog'];
+    L.list.forEach((x,i)=>{
+      const key=k+i,b=document.createElement('button');b.type='button';b.className='tu-story-card'+(done[key]?' done':'');
+      const art=document.createElement('img');art.className='tu-story-cover';art.alt='';art.src='img/stories/'+covers[i]+'.webp';
+      const m=document.createElement('span');m.className='tu-story-meta';
+      m.innerHTML='<small></small><strong></strong><span class="tu-story-description"></span><span class="tu-story-footer"></span>';
+      m.querySelector('small').textContent='История '+(i+1);
+      m.querySelector('strong').textContent=typo(x.n);
+      m.querySelector('.tu-story-description').textContent=typo(x.p);
+      m.querySelector('.tu-story-footer').textContent=done[key]?'✓ Прочитано':STORIES[i].pages.length+' стр. · ⭐ '+lessonPrize(key);
+      b.append(art,m);b.onclick=()=>startLesson(k,i);box.append(b);
+    });return;
+  }
   (k==='math'?MATH_ORDER():L.list.map((x,i)=>i)).forEach(i=>{if(typeof i==='string'){const h=document.createElement('h3');h.className='shelf-h msec';h.textContent=i;box.appendChild(h);return}
     const x=L.list[i],b=document.createElement('button');b.className='card'+(done[k+i]?' done':'');
     num++;b.innerHTML='<div class="ic"><span class="lesson-n">'+num+'</span></div><h3></h3><p style="display:block"></p>';b.querySelector('h3').textContent=typo(x.n);b.querySelector('p').textContent=typo(x.p);
@@ -2059,18 +2271,25 @@ const STORIES=[{title:'Ух и Топа: один трудный день',pages
 let RD=null;
 function startRead(){go('read');showPrize('readPrize','read');RD={s:STORIES[LESSON.subj==='read'?LESSON.i:0],i:0};readShow()}
 function readShow(){
-  const st=RD.s,n=st.pages.length+st.quiz.length,i=RD.i;
+  const activeReader=RD,st=RD.s,n=st.pages.length+st.quiz.length,i=RD.i;
+  const pages=st.pages.length, prev=document.getElementById('tuReaderPrev');
+  const status=document.getElementById('tuReaderStatus');
+  document.getElementById('tuReaderTitle').textContent=typo(st.title);
+  status.textContent=i<pages?'Страница '+(i+1)+' из '+pages:i<n?'Вопрос '+(i-pages+1)+' из '+st.quiz.length:'История прочитана';
+  prev.hidden=!(i>0&&i<pages);
+  prev.onclick=()=>{if(RD.i>0&&RD.i<pages){RD.i--;readShow();if(prev.hidden)document.getElementById('readNext').focus()}};
+
   document.getElementById('readProg').innerHTML=Array.from({length:n},(_,k)=>'<i class="'+(k<i?'done':'')+'"></i>').join('');
   const P=document.getElementById('storyPic'),T=document.getElementById('storyText'),O=document.getElementById('storyOpts'),nx=document.getElementById('readNext'),al=document.getElementById('readAloud');
   O.innerHTML='';const hr=O.parentNode.querySelector('.hint-row');if(hr)hr.remove();nx.style.display='';al.style.display='';
   if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="img/'+k+'.webp" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
-    T.innerHTML=(i===0?'<h2></h2>':'')+'<p style="margin:0"></p>';if(i===0)T.querySelector('h2').textContent=st.title;T.querySelector('p').textContent=typo(pg.t);
-    al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent='Дальше →';nx.onclick=()=>{RD.i++;readShow()};return}
+    T.innerHTML='<p style="margin:0"></p>';T.querySelector('p').textContent=typo(pg.t);
+    al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent=i===pages-1?'К вопросам →':'Дальше →';nx.onclick=()=>{RD.i++;readShow();if(RD.i===pages)document.querySelector('#storyOpts button')?.focus()};return}
   const qi=i-st.pages.length;
   if(qi<st.quiz.length){const q=st.quiz[qi];P.innerHTML='<img src="img/uh-pointer.webp" alt="">';T.innerHTML='<p style="margin:0;text-align:center;font-weight:900"></p>';T.querySelector('p').textContent=typo(q.q);
     al.onclick=()=>speak(q.q,'uh');nx.style.display='none';let done=false;
     shuffle(q.o).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;
-      b.onclick=()=>{if(done||b.classList.contains('no'))return;if(o===q.a){done=true;b.classList.add('yes');speak(pick(['Правильно! Ты внимательно читала!','Точно! Так и было!']),'uh');setTimeout(()=>{RD.i++;readShow()},1300)}else{b.classList.add('no');speak('Хм, давай вспомним ещё разок.','uh')}};O.appendChild(b)});
+      b.onclick=()=>{if(done||b.classList.contains('no'))return;if(o===q.a){done=true;b.classList.add('yes');speak(pick(['Правильно! Ты внимательно читала!','Точно! Так и было!']),'uh');setTimeout(()=>{if(RD===activeReader&&document.getElementById('read').classList.contains('on')){RD.i++;readShow()}},1300)}else{b.classList.add('no');speak('Хм, давай вспомним ещё разок.','uh')}};O.appendChild(b)});
     hintBtn(O,()=>{if(dropWrong(O,t=>t===q.a))speak('Я убрала один неправильный ответ! Выбирай из двух.','uh')});return}
   P.innerHTML='<img src="img/uh-star.webp" alt="">';T.innerHTML='<p style="margin:0;text-align:center"></p>';T.querySelector('p').textContent=typo('Спасибо, что прочитала! А ты тоже помогаешь своему братику Лёше?');
   al.onclick=()=>speak('Спасибо, что прочитала! А ты тоже помогаешь своему братику Лёше?','uh');
