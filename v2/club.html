@@ -181,6 +181,9 @@ h1 em{letter-spacing:0;line-height:1.02;padding-left:.43em}
 .tile strong,.tile i{letter-spacing:0}
 .tile strong{line-height:1.25}
 @media(max-width:550px){h1 em{padding-left:.18em}.feature h2,.editor-read h2{line-height:1.13}}
+/* Empty space between the game stickers must not cover the owl button. */
+.play-cloud{pointer-events:none}
+.play-cloud .play-tag{pointer-events:auto}
 /* Sticker cluster belongs to the reading column, with the owl button beneath it. */
 .editorial-hero{min-height:clamp(495px,42.7vw,780px);padding-bottom:clamp(58px,7.5vw,115px)}
 .topa-stage{top:0;bottom:0;right:0;width:36%;max-width:620px}
@@ -258,7 +261,7 @@ dialog.trip-map{box-sizing:border-box;width:min(1120px,94vw);max-width:none;max-
 <link rel="stylesheet" href="brand-assets/header.css">
 <script defer src="brand-assets/header.js"></script>
 <link rel="stylesheet" href="games/game-dialog.css"><!-- topouh-v2-github-motion-v1 --><link rel="stylesheet" href="motion-assets/motion.css"><script defer src="motion-assets/motion.js"></script>
-<script src="audio-settings/canonical.js"></script><link rel="stylesheet" href="audio-settings/sound.css"><script src="audio-settings/sound.js"></script><script src="audio-settings/ukh-greetings.js"></script><script defer src="audio-settings/embedded.js"></script><link rel="stylesheet" href="theme-assets/white-canvas.css">
+<script src="audio-settings/canonical.js"></script><link rel="stylesheet" href="audio-settings/sound.css"><script src="audio-settings/sound.js"></script><script src="audio-settings/ukh-greetings.js?v=2"></script><script defer src="audio-settings/embedded.js"></script><link rel="stylesheet" href="theme-assets/white-canvas.css">
 <link rel="stylesheet" href="theme-assets/daily-plan.css">
 <link rel="stylesheet" href="brand-assets/star-balance.css"><script defer src="brand-assets/star-balance.js"></script>
 <style>
@@ -437,24 +440,16 @@ topa.addEventListener('pointermove', e => {
   stage.style.setProperty('--look-y', `${(2 * (e.clientY - box.top) / box.height - 1) * 4}px`);
 }, {passive:true});
 topa.addEventListener('pointerleave', clearLook);
-reduced.addEventListener('change', clearLook);
+reduced.addEventListener?.('change', clearLook);
 topa.addEventListener('click', () => {
   if(nextGreeting){
     const i=nextGreeting(), entry=window.TopouhGreetings.phrases[i];
     msg.textContent=entry.text;
-    // Call within the click gesture. Only an approved phrase index crosses the same-origin boundary.
+    let played=false;
     try{
-      if(parent!==window)parent.topouhPlayGreeting?.(window,i);
-      else if('speechSynthesis' in window){
-        const v=speechSynthesis.getVoices().find(x=>x.localService===true&&x.lang.toLowerCase().startsWith('ru'));
-        if(v){
-          const u=new SpeechSynthesisUtterance(entry.text);u.voice=v;u.lang=v.lang;
-          u.pitch={bright:1.47,soft:1.25,play:1.58}[entry.tone];
-          u.rate=entry.tone==='soft'?.92:1.03;
-          speechSynthesis.cancel();speechSynthesis.speak(u);
-        }
-      }
-    }catch(_){/* The visible caption remains available if speech is unavailable. */}
+      if(parent!==window)played=parent.topouhPlayGreeting?.(window,i)===true;
+    }catch(_){}
+    if(!played)window.TopouhGreetings.play(i);
   }
   stage.classList.remove('is-greeting', 'has-blink');
   msg.removeAttribute('data-fresh');

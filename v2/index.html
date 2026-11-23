@@ -966,7 +966,7 @@ html.preview-club-home{overflow:hidden}
 <link rel="stylesheet" href="brand-assets/header.css">
 <script defer src="brand-assets/header.js"></script>
 <!-- topouh-v2-github-motion-v1 --><link rel="stylesheet" href="motion-assets/motion.css"><script defer src="motion-assets/motion.js"></script>
-<link rel="stylesheet" href="audio-settings/sound.css"><script src="audio-settings/sound.js"></script><script src="audio-settings/ukh-greetings.js"></script><link rel="stylesheet" href="theme-assets/white-canvas.css">
+<link rel="stylesheet" href="audio-settings/sound.css"><script src="audio-settings/sound.js"></script><script src="audio-settings/ukh-greetings.js?v=2"></script><link rel="stylesheet" href="theme-assets/white-canvas.css">
 <link rel="stylesheet" href="theme-assets/club-continuity.css">
 <link rel="stylesheet" href="theme-assets/daily-paint.css?v=26">
 <link rel="stylesheet" href="theme-assets/daily-help.css">
@@ -1055,7 +1055,7 @@ html.preview-club-home{overflow:hidden}
 <div class="reveal" id="stepCard" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card"><div class="rv-pic"><img id="scImg" src="" alt=""></div><h2 id="scTitle"></h2><p id="scText"></p><div class="row" style="justify-content:center;gap:10px"><button class="btn" id="scBtn">Сделала!</button><button class="btn soft" id="scClose" onclick="document.getElementById('stepCard').classList.remove('on')">Потом</button></div></div></div>
 <iframe id="beFrame" title="Беларуская мова" hidden referrerpolicy="no-referrer"></iframe>
 <iframe id="catalogueFrame" title="Уроки Топоуха" hidden referrerpolicy="no-referrer"></iframe>
-<iframe id="previewClub" src="club.html" title="Клуб Алисы" hidden referrerpolicy="no-referrer"></iframe>
+<iframe id="previewClub" src="club.html?v=greeting-2" title="Клуб Алисы" hidden referrerpolicy="no-referrer"></iframe>
 <div class="wrap">
   <header class="topouh-main-head" data-topouh-header="main">
     <a class="topouh-ident " href="index.html" target="_top" aria-label="Топоух, на главную"><svg class="topouh-star" viewBox="0 0 37 37" aria-hidden="true" focusable="false"><use href="brand-assets/stars.svg#original"/></svg><img class="topouh-word" src="brand-assets/wordmark.svg" width="160" height="45" alt=""></a>
@@ -4127,8 +4127,9 @@ const previewClub=document.getElementById('previewClub');
 const previewMessageType='topouh-phase1:route';
 window.topouhPlayGreeting=(source,i)=>{
   if(previewClub.hidden||source!==previewClub.contentWindow||!Number.isSafeInteger(i))return;
-  const entry=window.TopouhGreetings?.phrases[i];
-  if(entry)speak(entry.text,'uh',entry.tone);
+  if(!window.TopouhGreetings?.phrases[i])return false;
+  ++playTok;player?.pause();
+  return window.TopouhGreetings.play(i);
 };
 const previewRoutes=Object.freeze({
   trip:()=>{openTrip(false,'club');document.getElementById('backBtn').focus()},
@@ -4164,6 +4165,7 @@ function openClubCatalogue(id){
 }
 function previewHomeVisibility(on){
   if(on)hideAudioCatalogue();
+  if(!on&&!previewClub.hidden)window.TopouhGreetings?.stop();
   previewClub.hidden=!on;
   document.querySelector('.wrap').inert=on;
   const sky=document.getElementById('sky');if(sky)sky.hidden=on;
