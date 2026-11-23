@@ -1,0 +1,39 @@
+#app .ls-lab-reference:not(.ls-lab-workspace){grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+#app .ls-lab-reference .ls-sider{display:grid;grid-template-columns:minmax(0,1fr);align-self:start;min-width:0;gap:12px}
+#app .ls-lab-figure{margin:0;min-width:0}
+#app .ls-lab-field{padding:clamp(13px,2.2vw,25px);background:#f0f8f5;border:1px solid #d5e7df;border-radius:24px;color:#20344c}
+#app .ls-lab-field-title{font-size:clamp(18px,1.7vw,24px);line-height:1.15;font-weight:850;margin:1px 0 12px;overflow-wrap:anywhere}
+#app .ls-lab-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(135px,100%),1fr));gap:8px;align-items:stretch}
+#app .ls-lab-panel{border:1px solid #d4e4e2;border-radius:15px;background:#fff;padding:10px;min-width:0}
+#app .ls-lab-panel h4{font-size:14px;line-height:1.23;margin:0 0 7px;color:#263c56}
+#app .ls-lab-objects{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:center;gap:10px;min-height:58px}
+#app .ls-lab-object{min-width:0;display:grid;justify-items:center;gap:4px;text-align:center;flex:1 1 auto}
+#app .ls-lab-object span{font-size:13px;line-height:1.21;max-width:18ch;overflow-wrap:anywhere}
+#app .ls-lab-symbols{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:2px}
+#app .ls-lab-symbols svg{display:block;width:50px;height:50px;color:var(--lab-paint,#a8dcc9)}
+#app .ls-lab-symbols[data-repeat] svg{width:25px;height:25px}
+#app .ls-lab-caption{margin:10px 0 0;color:#415b61;font-size:.84rem;line-height:1.4}
+#app .ls-lab-theory{margin:12px 0;padding:0}
+#app .ls-lab-theory summary{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:7px 13px;border:1px solid #cfc2e9;border-radius:999px;background:#f6f2fd;color:#382e5c;cursor:pointer;font-size:.9rem;font-weight:800}
+#app .ls-lab-theory summary span{display:grid;place-items:center;width:19px;height:19px;border:1.5px solid currentColor;border-radius:50%;font:800 13px/1 system-ui}
+#app .ls-lab-theory summary:focus-visible{outline:3px solid #6a4caf;outline-offset:3px}
+#app .ls-lab-theory-note{margin-top:8px;padding:11px 14px;border-radius:14px;background:#faf7ff;line-height:1.48;font-size:.91rem}
+#app .ls-lab-theory-note p+p{margin-top:6px}
+#app .ls-lab-mobile-art{display:none}
+@media(min-width:840px) and (min-height:650px){
+ #app .ls-lab-reference > .ls-sider:not([hidden]){position:sticky;top:14px;max-height:calc(100dvh - 28px);overflow:auto;scrollbar-width:thin}
+}
+@media(max-width:839px){
+ #app .ls-lab-reference,#app .ls-lab-reference:not(.ls-lab-workspace){grid-template-columns:minmax(0,1fr)}
+ #app .ls-lab-mobile-art{display:block;margin:14px 0}
+ #app .ls-lab-reference .ls-lab-figure:not(.ls-lab-mobile-art){display:none}
+}
+
+#app .ls-lab-story{margin:0;overflow:hidden;border-radius:24px;background:#edf3f2}
+#app .ls-lab-story img{display:block;width:100%;height:auto;aspect-ratio:640/380;object-fit:contain}
+#app .ls-lab-story-tool{background:none;min-height:0}
+#app .ls-lab-story-tool img{max-height:154px;width:auto;max-width:100%;margin-inline:auto;border-radius:18px}
+@media(max-width:839px){
+ #app .ls-lab-reference .ls-lab-story-tool{display:block}
+ #app .ls-lab-mobile-art.ls-lab-story{margin-block:14px}
+}

@@ -1,0 +1,33 @@
+/* Real task board, not a decorative clone; UI affordances and states stay native. */
+.topouh-lab-clouds.tvb {
+ --tvb-ink:#22355a; --tvb-muted:#405776; --tvb-line:#aec8e5; --tvb-deep:#314e82;
+ --tvb-paper:#f5faff; --tvb-mint:#dbeafb; --tvb-highlight:#bfdef9;
+ width:100%;min-width:0;padding:clamp(10px,1.6vw,18px);border-radius:20px;
+ background:linear-gradient(145deg,#f7fcff 5%,#edf5fd 69%,#eef0ff);
+ text-align:left;color:var(--tvb-ink);
+}
+.topouh-lab-clouds.tvb .tvb-instruction{margin-bottom:10px;font-size:.89rem}
+.topouh-lab-clouds.tvb .tvb-body{gap:10px}
+.topouh-lab-clouds.tvb :is(.tvb-bank,.tvb-target,.tvb-solution){padding:9px;border-radius:13px}
+.topouh-lab-clouds.tvb .tvb-label{margin-bottom:6px}
+.topouh-lab-clouds.tvb .tvb-bank-cards,.topouh-lab-clouds.tvb .tvb-slots {
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;
+}
+.topouh-lab-clouds.tvb .tvb-bank-cards .tvb-card {
+ width:100%;flex-direction:column;justify-content:center;align-items:center;gap:2px;
+ min-height:74px;padding:4px;text-align:center;
+}
+.topouh-lab-clouds.tvb .tvb-card-label {font-size:clamp(.72rem,1.05vw,.88rem);line-height:1.16}
+.topouh-lab-clouds.tvb .tvb-bank-cards .tvb-empty{grid-column:1/-1}
+.topouh-lab-clouds.tvb .tvb-card .tvb-icon{width:58px;height:48px;max-width:100%}
+.topouh-lab-clouds.tvb .tvb-slot .tvb-card{flex-wrap:wrap;justify-content:center;text-align:center;gap:1px}
+.topouh-lab-clouds.tvb .tvb-slot .tvb-icon{width:42px;height:33px}
+.topouh-lab-clouds.tvb .tvb-slot{min-height:100px;border:2px dashed #90a8c5;border-bottom-style:solid;border-bottom-width:4px;border-radius:10px;padding:4px}
+.topouh-lab-clouds.tvb .tvb-slot-button{line-height:1.13}
+.topouh-lab-clouds.tvb .tvb-slot.tvb-drop-highlight{background:var(--tvb-highlight);border-color:#476b9e}
+.topouh-lab-clouds.tvb .tvb-return{line-height:1.18;padding:6px 9px;margin-top:7px}
+.topouh-lab-clouds.tvb :is(.tvb-card,.tvb-slot-button,.tvb-return):focus-visible{outline-color:#214e8e}
+@media(max-width:380px){
+ .topouh-lab-clouds.tvb{padding:6px}
+ .topouh-lab-clouds.tvb :is(.tvb-bank,.tvb-target){padding:5px}
+}

@@ -1,0 +1,92 @@
+.lab-journal {
+ box-sizing: border-box;
+ width: 100%;
+ min-inline-size: 0;
+ padding: clamp(12px, 2vw, 20px);
+ border: 2px solid #bed4c9;
+ border-radius: 22px;
+ background: #edf3eb;
+ color: #263952;
+}
+.lab-journal__entry {
+ display: grid;
+ gap: 4px;
+ padding: 10px 12px;
+ border: 1px solid #d4c39d;
+ border-left: 4px solid #d2a968;
+ border-radius: 10px;
+ background: #fff7e5;
+}
+.lab-journal__stamp {
+ font-size: .76rem;
+ font-weight: 800;
+ letter-spacing: .04em;
+ text-transform: uppercase;
+}
+.lab-journal__record { font-size: 1rem; }
+.lab-journal__caption, .lab-journal__status {
+ margin: 10px 0 8px;
+ font-size: .86rem;
+ line-height: 1.35;
+}
+.lab-journal__strip {
+ display: flex;
+ flex-wrap: wrap;
+ justify-content: flex-start;
+ gap: 4px;
+ padding: 6px;
+ border: 1px dashed #8ca99e;
+ border-radius: 11px;
+ background: #fffaf0;
+}
+.lab-journal__chip {
+ position: relative;
+ box-sizing: border-box;
+ display: grid;
+ place-items: center;
+ flex: 0 0 auto;
+ gap: 1px;
+ width: 36px;
+ min-height: 44px;
+ padding: 3px 3px 2px;
+ border: 2px solid #b9c8bf;
+ border-radius: 8px;
+ background: #fffdf7;
+ color: #263952;
+ cursor: pointer;
+}
+.lab-journal__chip svg { width: 25px; height: 25px; }
+.lab-journal__chip-number { font: 700 .68rem/1.1 system-ui, sans-serif; }
+.lab-journal__chip[aria-pressed="true"] { background: #deefe9; border-color: #266e60; }
+.lab-journal__chip:not(:disabled):hover { border-color: #266e60; }
+.lab-journal__chip:focus-visible { outline: 3px solid #433986; outline-offset: 1px; z-index: 1; }
+.lab-journal__chip:disabled { cursor: default; opacity: 1; }
+.lab-journal__selection {
+ visibility: hidden;
+ position: absolute;
+ right: 1px;
+ top: 1px;
+ background: #286e59;
+ border-radius: 50%;
+ color: white;
+ font: 800 10px/14px system-ui, sans-serif;
+ width: 14px;
+ height: 14px;
+}
+.lab-journal__chip[aria-pressed="true"] .lab-journal__selection,
+.lab-journal__chip--shown .lab-journal__selection { visibility: visible; }
+.lab-journal__chip--shown { outline: 2px dashed #286e59; outline-offset: -2px; }
+.lab-journal__status { min-height: 1.35em; margin-bottom: 0; }
+.lab-journal__answers { display: grid; gap: 5px; margin-top: 10px; }
+.lab-journal__answer {
+ width: 100%; min-height: 42px; padding: 7px 10px;
+ text-align: left; font: inherit; font-size: .85rem;
+ border: 2px solid #bbcec5; border-radius: 9px;
+ background: #fffdf7; color: #263952; cursor: pointer;
+}
+.lab-journal__answer:not(:disabled):hover, .lab-journal__answer[aria-pressed="true"] {
+ border-color: #266e60; background: #deefe9;
+}
+.lab-journal__answer:focus-visible { outline: 3px solid #433986; outline-offset: 1px; }
+.lab-journal__answer:disabled { cursor: default; opacity: 1; }
+.lab-journal__answer--shown { outline: 2px dashed #286e59; outline-offset: -2px; }

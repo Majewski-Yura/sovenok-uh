@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 640 340" font-family="DejaVu Sans, sans-serif" width="640" height="340" role="img" aria-labelledby="scene-title">
+  <title id="scene-title">Ух сверяет покупки на ярмарке</title>
+  <defs>
+    <clipPath id="tile-8">
+      <rect width="640" height="340" rx="34"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#tile-8)">
+    <g id="background">
+      <rect x="0" y="0" width="640" height="340" rx="0" fill="#f8ecd1"/>
+      <path d="M0 246q182 17 336 0t304-14v108H0Z" fill="#e7d8b0"/>
+    </g>
+    <g id="stall">
+      <rect x="404" y="112" width="182" height="125" rx="10" fill="#e3ad82"/>
+      <rect x="420" y="146" width="151" height="68" rx="8" fill="#fae7bc"/>
+      <rect x="406" y="224" width="174" height="62" rx="7" fill="#cd965f"/>
+      <path d="M402 111h187l16 42H386Z" fill="#cb8878"/>
+      <path d="M420 111h20l-10 42h-23Zm49 0h24l1 42h-24Zm51 0h23l11 42h-24Zm53 0h16l16 42h-22Z" fill="#fff0c7"/>
+    </g>
+    <g id="coins">
+      <circle cx="451" cy="181" r="11" fill="#e4b967"/>
+      <circle cx="476" cy="183" r="8" fill="#d7a455"/>
+    </g>
+    <g id="price-tag">
+      <rect x="508" y="163" width="37" height="30" rx="7" fill="#b8bb90"/>
+      <text x="514" y="184" fill="#596e55" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="700">5</text>
+    </g>
+    <g id="stall-shadow">
+      <ellipse cx="499" cy="274" rx="35" ry="6" fill="#ad754f"/>
+    </g>
+    <g id="shopping-plan">
+      <rect x="68" y="150" width="80" height="97" rx="10" fill="#f4e3b9"/>
+      <path d="M70 172h76m-63 21h49m-49 15h49m-49 15h49" fill="none" stroke="#d8b989" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="83" y="166" fill="#6d7e63" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700">ПЛАН</text>
+    </g>
+    <g id="actor-shadow">
+      <ellipse cx="263.5" cy="294" rx="92" ry="11" fill="#4b6459" opacity=".14"/>
+    </g>
+    <g id="owl-tablet" data-origin="290 219" transform="translate(-65.06 25.91) scale(1.1138)">
+ <g id="tail" data-origin="233 191">
+   <path fill="#168990" d="M243 183 C233 185 220 190 213 195 C207 200 213 204 225 202 C218 206 220 210 227 211 C236 212 243 207 249 202Z"/>
+   <path fill="#126e7a" d="M239 193 Q228 200 219 200 Q230 202 244 196Z"/>
+ </g>
+ <g id="feet" data-origin="295 216">
+   <path fill="#ca8d29" d="M266 216q3 5 0 10-8-1-9 2 1 4 10 3 3 5 6 4 3-1 1-4 7 2 8-2 0-3-8-5l1-8zm46-4q4 5 0 9-6 0-6 3 1 3 7 1 3 5 6 3 2-1 0-4 8 2 9-2 0-3-8-3l-1-10z"/>
+   <path fill="#e0a536" d="M267 223q1 3 7 2 9 3 6 5l-7-1q3 5-1 4l-5-4q-8 1-9-2 5-1 9-1zm47-7q4 3 8 3 8 2 5 4l-7-1 1 4q-2 2-5-2l-6 1-2-2 5-2z"/>
+ </g>
+ <g id="silhouette" data-origin="283 181">
+   <path fill="#168a95" d="M230 144C230 133 229 118 232 106C234 95 240 87 247 81C249 75 260 70 274 66C294 56 311 58 327 70C338 79 341 95 345 111C349 126 358 137 358 154C358 170 355 186 343 202C334 214 318 220 303 219C289 224 270 220 255 213C242 207 233 200 230 188C225 176 228 155 230 144Z"/>
+   <path fill="#047986" d="M233 155C235 168 239 179 249 187C247 196 255 207 265 213C250 209 238 204 232 190C228 179 230 164 233 155Z"/>
+   <path fill="#16aabc" d="M246 96C256 79 273 76 288 89C292 82 302 77 314 78C329 79 338 94 341 112C347 133 348 155 345 176C342 197 327 208 305 211C286 215 266 209 251 195C238 183 238 165 240 150Z"/>
+   <path fill="#98d5df" d="M254 168C258 151 275 145 294 145C319 142 335 153 336 175C336 194 323 214 302 215C281 221 259 207 256 191C253 184 252 175 254 168Z"/>
+ </g>
+ <g id="crest-left" data-origin="246 84">
+  <path fill="#168790" d="M247 85c-9 1-20 2-24-2-3-4 1-5 5-5-11-1-17-5-16-10 4-5 15 1 20 4-6-5-7-8-2-8 5 0 12 7 17 11l8 4z"/>
+ </g>
+ <g id="crest-right" data-origin="321 67">
+  <path fill="#188690" d="M306 69c-4-7-4-18 0-24 3-4 5 0 6 3 0-8 5-15 9-13 4 3 2 12 2 15 4-5 7-4 6 1-1 7-4 13-11 18z"/>
+  <path fill="#126a7a" d="M313 56q4-9 6-5 1 4-4 11z"/>
+ </g>
+ <g id="belly-marks" data-origin="297 175" fill="none" stroke="#4da1af" stroke-width="2.4" stroke-linecap="round">
+   <path d="M266 173l-2 5m12-8-2 5m14-5-1 5m12-5 2 5m12 2 2 5m-48 5-1 4m12-2-1 5m12-4 1 5m12 0 1 5m-16 3v4m17-2 1 5"/>
+ </g>
+ <g id="eyes" data-origin="300 112">
+  <path fill="#157e95" d="M255 90q5-7 13-5 3 2 0 4-5 1-9 4zm44-13q5-5 11-4 5 2 0 4l-8 3z"/>
+  <g id="eye-left"><path fill="#fff0c7" d="M255 103c3-10 12-14 20-11 9 2 14 11 10 20-3 10-13 14-21 10-8-3-12-11-9-19Z"/><circle cx="276" cy="113" r="7.8" fill="#162b2c"/><circle cx="278.7" cy="110.8" r="2.05" fill="#fffdf0"/></g>
+  <g id="eye-right"><path fill="#fff0c7" d="M301 87c4-8 13-12 20-7 9 5 11 14 7 21-4 9-12 12-20 7-8-4-11-13-7-21Z"/><circle cx="318" cy="101" r="7.8" fill="#162b2c"/><circle cx="320.6" cy="98.6" r="2" fill="#fffdf0"/></g>
+ </g>
+ <g id="beak" data-origin="298 112">
+  <path fill="#a15c30" d="M291 106q6-8 13-1l1 6q-3 10-8 10-5-1-7-9z"/>
+  <path fill="#eda227" d="M290 111q0-8 7-9 7 0 8 9-6 5-15 0z"/>
+ </g>
+ <g id="cheeks" fill="#f47495">
+   <ellipse cx="262" cy="129" rx="8.8" ry="5.6" transform="rotate(7 262 129)"/><ellipse cx="332" cy="112" rx="7" ry="5.7" transform="rotate(-22 332 112)"/>
+ </g>
+ <g id="tablet" data-origin="352 160">
+   <path fill="#7e9991" d="M312 130q2-5 8-6l61-11q7-1 6 5l-15 57q-1 5-7 6l-57 11q-9-1-8-8z"/>
+   <path fill="#747d75" d="M318 132q1-4 6-5l59-10q3-1 2 4l-14 54q-1 5-6 6l-58 11q-4 0-3-6z"/>
+   <ellipse cx="345" cy="155" rx="6.5" ry="7.4" fill="#9fbab1" transform="rotate(17 345 155)"/><ellipse cx="378" cy="125" rx="2.4" ry="3.2" fill="#4c5650" transform="rotate(17 378 125)"/>
+ </g>
+ <g id="wing-front" data-origin="240 148">
+   <path fill="#087481" d="M243 141c12-2 27 9 38 13 14 6 31-2 36 2 5 4 0 9-10 13 10 0 13 4 9 9-3 4-10 5-18 5 3 7-4 10-14 9-22-1-40-10-48-24-6-13-3-25 7-27Z"/>
+   <path fill="#168b9a" d="M244 141c11 0 23 8 38 13 12 4 24 1 32 3 2 2-5 7-12 10 12 0 14 4 10 7-4 4-13 4-20 4 7 6 2 10-9 9-14-1-37-8-45-21-6-11-5-23 6-25Z"/>
+   <path fill="none" stroke="#2396a5" stroke-width="1.7" stroke-linecap="round" d="M252 155q5 2 8 5m11 2 6 3m-22-1 6 3"/>
+ </g>
+ <g id="wing-grip" data-origin="371 150">
+   <path fill="#086b78" d="M379 137c8-5 10 1 5 9 5 5-1 10-3 13 0 5-4 8-9 7-5 0-8-4-5-9-5-3-4-7 1-11 2-5 8-8 11-9Z"/>
+   <path fill="#168d9c" d="M379 140q7-4 4 2-4 7-12 8-4 0 0-4zm-3 11q8-4 7 0-2 6-11 8-6 0-4-3zm-2 9q7-5 5 1-2 5-8 4-5 0-3-3z"/>
+ </g>
+</g>
+  </g>
+</svg>

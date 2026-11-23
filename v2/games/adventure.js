@@ -5,6 +5,11 @@ const css=`
 .adv-scene p{margin:.6rem 0;line-height:1.45}.adv-banner{display:flex;align-items:center;gap:12px}.adv-banner strong{font-size:1.15rem}.adv-hero{width:49px;height:49px;flex:none}
 .adv-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:9px;margin-top:12px}
 .adv-option{min-height:60px;border:2px solid transparent;border-radius:16px;padding:8px 10px;background:#fff;color:#174e44;font:inherit;font-weight:760;line-height:1.2;cursor:pointer;text-align:left;transition:background .15s,border-color .15s}
+.adv-illustrated{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.adv-option-art{display:flex;gap:5px;flex-wrap:wrap}
+.adv-option-icon{display:block;width:34px;height:34px;flex:none}
+.adv-map-text{margin:6px 0;font-size:.88rem}
+.adv-map-text summary{min-height:32px;cursor:pointer}
 .adv-option:hover{border-color:#60ac82;background:#fffcf4}.adv-option:focus-visible,.adv-direction:focus-visible{outline:3px solid #493984;outline-offset:2px}
 .adv-selected{background:#d9efbf;border-color:#4d9567}.adv-status{min-height:1.45em;font-weight:700;color:#265349;margin-top:10px}.adv-micro{font-size:.88rem;color:#355c51}
 .adv-map{display:grid;grid-template-columns:repeat(5,minmax(35px,58px));justify-content:center;gap:5px;margin:9px auto 12px;max-width:100%}
@@ -32,6 +37,65 @@ function picture(el,key,classes='adv-hero'){
  const wrap=document.createElementNS('http://www.w3.org/2000/svg','svg');
  wrap.setAttribute('viewBox','0 0 44 44');wrap.setAttribute('aria-hidden','true');wrap.setAttribute('class',classes);wrap.innerHTML=paths[key];el.append(wrap)
 }
+const colours={blue:'#8ec7eb',gold:'#f7ce76',green:'#aed891',rose:'#efa19a',violet:'#c7b7ef',cream:'#fff4d3'};
+const iconPath=(d,fill)=>'<path d="'+d+'" fill="'+(colours[fill]||'none')+'" stroke="#355351" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+const iconCircle=(x,y,r,fill)=>'<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+colours[fill]+'" stroke="#355351" stroke-width="2.4"/>';
+const k=iconPath, o=iconCircle;
+const spruce=k('M22 5l-8 11h4L9 28h7L7 36h30l-9-8h7l-9-12h4z','green')+k('M22 36v5');
+const birch=k('M19 14h6v27h-6z','cream')+k('M11 17q-5-6 1-9-2-6 7-6 5-3 9 3 9 1 7 7 7 5 0 9H11z','green')+k('M19 29h4m-2 6h4');
+const optionArt=Object.freeze({
+ 'Сухая тропа':k('M14 41l4-11-5-8 12-9 1-9h7l-1 12-9 8 6 7-3 10z','gold'),
+ 'Мокрый мост':k('M4 30h36M8 30V17m28 13V17M8 21q14-10 28 0m-31 17q5-4 10 0t10 0 10 0','blue'),
+ 'волна':k('M5 27q6-9 13-3t12 2 9-4M5 34q6-9 13-3t12 2 9-4','blue'),
+ 'лист':k('M9 34Q6 8 37 7q3 26-26 30zm-3 4 23-21','green'),
+ 'Круг':o(22,22,15,'blue'),'круг':o(22,22,15,'blue'),
+ 'Квадрат':k('M8 8h28v28H8z','violet'),'квадрат':k('M8 8h28v28H8z','violet'),
+ 'звезда':k('m22 5 5 11 11 1-8 8 2 11-10-6-10 6 2-11-8-8 11-1z','gold'),
+ 'облако':k('M7 30q-9-7 4-13 1-9 11-9 10 0 11 9 12 0 7 11-1 3-6 3H9z','blue'),
+ 'Две точки':o(14,22,4,'rose')+o(29,22,4,'rose'),
+ 'Три точки':o(9,22,4,'rose')+o(22,22,4,'rose')+o(35,22,4,'rose'),
+ '←':k('M5 22l13-10v7h20v6H18v7z','green'),
+ '→':k('M39 22 26 12v7H6v6h20v7z','green'),
+ 'Высоко':k('M10 37h24M22 32V8m-8 9 8-9 8 9','blue'),
+ 'Низко':k('M10 7h24M22 12v24m-8-9 8 9 8-9','blue'),
+ 'месяц':k('M26 7q-15 6-7 19 6 8 18 5Q22 46 10 33 0 16 26 7z','gold'),
+ 'солнце':o(22,22,9,'gold')+k('M22 3v5m0 28v5M3 22h5m28 0h5M8 8l4 4m20 20 4 4m0-28-4 4M12 32l-4 4'),
+ 'Прямой мост':k('M5 12h34v14H5zM8 27v9m28-9v9M5 19h34','gold'),
+ 'Дугообразный мост':k('M5 31q17-32 34 0v7q-17-32-34 0z','gold'),
+ 'полоска':k('M8 8h28v23H8zM12 34v6m3-21h14','violet'),
+ 'точка':k('M8 8h28v23H8zM12 34v6','violet')+o(22,20,3,'cream'),
+ 'Сосны':spruce,'Берёзы':birch,
+ 'Плащ':k('M17 11q5-10 10 0l9 5 4 20-7 2-5-12v13H16V26l-5 12-7-2 4-20zm5 1v27','green'),
+ 'Карта':k('M5 11l11-5 12 4 11-5v27l-11 6-12-4-11 5zm11-5v28m12-24v28','gold')+k('M10 29q4-13 12-9 6 4 12-5'),
+ 'Фляга':k('M17 12h10v7q11 4 10 14-1 6-6 6H13q-5 0-6-6-1-10 10-14zm-2 0V6h14v6z','blue')+k('M12 29h20'),
+ 'Мяч':o(22,22,15,'rose')+k('M10 14q20-1 24 19M17 8q-5 19 17 24'),
+ 'Карандаш':k('M8 32 29 7l7 6-21 25-8 2zM25 12l7 6','gold'),
+ 'Колокольчик':k('M12 31l4-15q6-7 12 0l4 15H12zm-3 0h26m-13-17V9','gold')+o(22,35,3,'rose'),
+ 'Блокнот':k('M11 6h23v34H11zM16 6v34','violet')+k('M7 14h8m-8 8h8m-8 9h8m7-12h8m-8 7h8'),
+ 'Ластик':k('M7 28 22 10l15 12-13 17H16zm8-10 16 13','rose'),
+ 'Кружка':k('M8 13h22v18q0 6-6 6h-9q-7 0-7-6zm22 5h4q10 0 3 10h-7','blue'),
+ 'Фонарик':k('M5 10h12l7 9h14v8H24l-7 8H5zm12 0v25m11-16v8','gold'),
+ 'Шарф':k('M8 12q15-7 28 0v11l-10-3v17h-8V20l-10 4zm14 25v4m4-4v4','rose'),
+ 'Термос':k('M14 7h16v10l3 4v15q0 4-4 4H15q-4 0-4-4V21l3-4zm-1 8h18m-20 9h22','violet'),
+ 'Скакалка':k('M8 15q17 5 14 18t14-14M6 9l6 4-4 7-6-4zm30 3 6 2-3 8-6-2z','violet'),
+ 'Лупа':o(18,17,10,'blue')+k('M24 25 39 37l-4 5-16-13z','rose'),
+ 'Бумага':k('M9 5h19l9 9v25H9zm19 0v10h9','cream')+k('M15 23h16m-16 6h12'),
+ 'Ручка':k('M7 32l21-24 7 6-21 24-8 1zm17-19 7 6M30 9l5-4 5 4-5 6','blue'),
+ 'Конверт':k('M5 10h34v25H5zm0 1 17 14 17-14M5 34l11-12m23 12L28 22','cream'),
+ 'Ключ':o(13,17,7,'gold')+k('M18 23l17 14 4-5-4-4-3 3-3-3 2-3-8-7z','gold'),
+});
+function decorateChoice(b,name,ctx){
+ const symbols=name.split(' · ').map(x=>x==='Карандаши'?'Карандаш':x).flatMap((x,i)=>name==='Карандаши'&&i===0?[x,x]:[x]);
+ if(symbols.some(x=>!optionArt[x]))return;
+ b.classList.add('adv-illustrated');
+ const group=ctx.el('span','','adv-option-art');group.setAttribute('aria-hidden','true');
+ for(const symbol of symbols){
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','adv-option-icon');svg.setAttribute('viewBox','0 0 44 44');
+  svg.setAttribute('focusable','false');svg.innerHTML=optionArt[symbol];group.append(svg);
+ }
+ b.prepend(group);
+}
 const live=(ctx)=>{const out=ctx.el('div','','adv-status');out.setAttribute('role','status');out.setAttribute('aria-live','polite');return out};
 const pick=(arr,ctx)=>arr[Math.floor(ctx.rng()*arr.length)];
 function shuffled(array,ctx){
@@ -50,14 +114,14 @@ registry.push({
  const s=scene(p,ctx,'#e7f7e9'),banner=ctx.el('div',null,'adv-banner');picture(banner,'map');
  const heading=ctx.el('strong'),phase=ctx.el('span','','adv-route-mark'),clue=ctx.el('p'),opts=ctx.el('div',null,'adv-options'),out=live(ctx);
  const lead=ctx.el('div');lead.append(phase,ctx.el('br'),heading);banner.append(lead);s.append(banner,clue,opts,out);
- const route=shuffled(trail,ctx).slice(0,3);let at=0,busy=false;
- function show(){const node=route[at];opts.replaceChildren();out.textContent='';phase.textContent='Тропа '+(at+1)+' из '+route.length;heading.textContent=node.name;clue.textContent=node.clue;
-   for(const name of shuffled([node.good,...node.bad],ctx))opts.append(ctx.button(name,()=>{
+ const route=[trail[0],pick(trail.slice(1,-1),ctx),trail[trail.length-1]];let at=0,busy=false;
+ function show(){const node=route[at];opts.replaceChildren();out.textContent='';phase.textContent='Указатель '+(at+1)+' из '+route.length;heading.textContent=node.name;clue.textContent=node.clue;
+   for(const name of shuffled([node.good,...node.bad],ctx)){const b=ctx.button(name,()=>{
       if(busy)return;
       if(name!==node.good){out.textContent=node.why;return}
-      if(++at===route.length){busy=true;out.textContent='Мы у бухты!';ctx.finish('Топа нашёл бухту по трём подсказкам.');return}
+      if(++at===route.length){busy=true;out.textContent='Мы у бухты!';ctx.finish('Топа сверил подсказки на трёх указателях и нашёл бухту.');return}
       show();out.textContent='Указатель найден. Теперь новая развилка.';opts.querySelector('button')?.focus()
-   },'adv-option'))
+   },'adv-option');decorateChoice(b,name,ctx);opts.append(b);}
  }
  show()
  }
@@ -76,7 +140,12 @@ registry.push({
  const tile=m.join(''),start=tile.indexOf('S'),goal=tile.indexOf('G'),seen=new Set([start]);
  let at=start,finished=false;const grid=ctx.el('div',null,'adv-map');grid.setAttribute('aria-hidden','true');
  const cells=Array.from(tile,(v)=>{const cls=v==='#'?' adv-rock':v==='S'?' adv-start':v==='G'?' adv-goal':'';const c=ctx.el('div',null,'adv-cell'+cls);grid.append(c);return c});
- const keys=ctx.el('div',null,'adv-keys'),out=live(ctx);keys.setAttribute('role','group');keys.setAttribute('aria-label','Управление Топой');s.append(grid,keys,out);
+ const keys=ctx.el('div',null,'adv-keys'),out=live(ctx);keys.setAttribute('role','group');keys.setAttribute('aria-label','Управление Топой');
+ const textMap=ctx.el('details',null,'adv-map-text');
+ textMap.append(ctx.el('summary','Карта словами'),ctx.el('p','Ряды считаем сверху, столбцы — слева.'));
+ const label={'#':'валун','.':'проход','S':'старт','G':'флажок'};
+ m.forEach((row,i)=>textMap.append(ctx.el('p','Ряд '+(i+1)+': '+[...row].map((v,j)=>(j+1)+' — '+label[v]).join('; ')+'.')));
+ s.append(grid,keys,out,textMap);
  function draw(){cells.forEach((c,i)=>{c.replaceChildren();c.classList.toggle('adv-active',i===at);c.classList.toggle('adv-visited',seen.has(i));if(i===at)picture(c,'dragon');else if(tile[i]==='#')picture(c,'rock');else if(i===goal)picture(c,'flag')})}
  const moves={ArrowUp:[0,-1],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowRight:[1,0]};
  function move(key){if(finished)return;const [dx,dy]=moves[key],x=at%5+dx,y=Math.floor(at/5)+dy,idx=y*5+x;if(x<0||x>4||y<0||y>4){out.textContent='Здесь край карты. Попробуй повернуть.';return}if(tile[idx]==='#'){out.textContent='На пути валун. Его можно обойти.';return}at=idx;seen.add(at);draw();out.textContent='Топа: ряд '+(y+1)+', столбец '+(x+1)+'.';if(at===goal){finished=true;ctx.finish('Топа обошёл валуны и добрался до флажка!')}}
@@ -100,7 +169,7 @@ registry.push({
  for(const name of shuffled([...m.items,...m.other],ctx)){const b=ctx.button(name,()=>{
    if(done)return;if(bag.has(name))bag.delete(name);else if(bag.size<3)bag.add(name);else {out.textContent='В рюкзак влезает три вещи. Сними одну, чтобы добавить другую.';return}
    b.setAttribute('aria-pressed',String(bag.has(name)));b.classList.toggle('adv-selected',bag.has(name));pill.textContent='Рюкзак: '+bag.size+' из 3';out.textContent=''
- },'adv-option');b.setAttribute('aria-pressed','false');opts.append(b)}
+ },'adv-option');b.setAttribute('aria-pressed','false');decorateChoice(b,name,ctx);opts.append(b)}
  const check=ctx.button('Проверить рюкзак',()=>{
    if(done)return;if(bag.size<3){out.textContent='Выбери три вещи. Подсказка о походе над карточками.';return}
    const miss=m.items.findIndex(x=>!bag.has(x));if(miss>=0){out.textContent='Пригодится ещё одна вещь: '+m.rem[miss]+'. Пересобери рюкзак.';return}

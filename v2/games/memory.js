@@ -10,6 +10,7 @@
     ['mitten','варежка','<path d="M15 35c-5-3-7-7-5-9 2-3 5-1 8 1l-1-13c0-9 15-9 17 0l1 15c0 5-3 10-10 10-4 0-8-2-10-4Z" fill="#a5a4e4"/><path d="M17 32c5 2 10 3 16 1" stroke="#5d57a4" stroke-width="2" fill="none"/>'],
     ['flower','цветок','<path d="M25 25v14c6-1 9-4 12-8-6-1-9 0-12 5" fill="#79ba9b" stroke="#427b61" stroke-width="2"/><path d="M24 13c-3-8-13-3-10 3-9 0-7 10 0 10-2 7 8 9 11 2 5 5 13-1 7-6 7-4 2-12-5-8Z" fill="#f1a3aa"/><circle cx="23" cy="21" r="4" fill="#d28a38"/>']
   ];
+  const carton=['carton','коробочка','<path d="M5 18 24 10l19 8v18l-19 8-19-8Z" fill="#e6aa73" stroke="#5f4539" stroke-width="2.3" stroke-linejoin="round"/><path d="m5 18 19 8 19-8-19-8Z" fill="#ffe3a5" stroke="#5f4539" stroke-width="2.1" stroke-linejoin="round"/><path d="M24 26v18l19-8V18Z" fill="#c58362" stroke="#5f4539" stroke-width="2.1" stroke-linejoin="round"/><path d="m18 12.5 19 8v5l-5 2v-5l-19-8Z" fill="#fff3d5" stroke="#765546" stroke-width="1.3" stroke-linejoin="round"/><path d="M10 30l7 3" fill="none" stroke="#80513b" stroke-width="2" stroke-linecap="round"/>'];
   const css=`
   .tm-mem{--tm-ink:#253847;--tm-soft:#e3e8fa;color:var(--tm-ink);display:grid;gap:.74rem;margin:.3rem 0;text-align:left}
   .tm-mem p{margin:.1rem 0;line-height:1.43}
@@ -24,8 +25,9 @@
   .tm-mem .tm-mem-next{background:#e5def5;border-color:#a79bcc;padding:.55rem .8rem;width:max-content;min-height:2.7rem}
   .tm-mem .tm-mem-next:hover{background:#dcd0f1}
   .tm-mem-icon{width:clamp(2rem,6vw,3.2rem);height:auto;aspect-ratio:1;overflow:visible}
-  .tm-mem-back{font-size:1.65rem;line-height:1}
+  .tm-mem-card:not([aria-pressed=true]) .tm-mem-icon{width:clamp(2.65rem,7vw,3.45rem)}
   .tm-mem-cardview{background:#f8f4ea;position:relative}
+  .tm-mem-rooftop .tm-mem-icon{box-sizing:content-box;padding:.15rem .42rem .3rem;background:#f3dfda;border-bottom:.16rem solid #aa6b64;border-radius:40% 40% .32rem .32rem}
   .tm-mem-cardview.tm-empty{border-style:dashed;background:#f8f9fd;min-height:4.9rem;color:#6b7091}
   .tm-mem-step{display:block;padding:.25rem .58rem;background:#edf0fc;border-radius:100px;width:max-content;font-size:.82rem;font-weight:800}
   .tm-mem-hide[hidden]{display:none!important}
@@ -53,7 +55,7 @@
     id:'memory-owl-closet',title:'Ух наводит порядок',category:'memory',accent:'#d9e8f9',
     description:'Открывай коробочки и находи пары вещей.',
     mount(p,ctx){
-      const {m,step,text,live}=frame(p,ctx,'Открой две коробочки. Если вещи совпали, оставь их открытыми.');
+      const {m,step,text,live}=frame(p,ctx,'Открой две коробочки. Если в них одинаковые вещи, коробочки останутся открытыми.');
       const board=ctx.el('div',null,'tm-mem-grid');board.setAttribute('role','group');board.setAttribute('aria-label','Коробочки');m.append(board,live);
       let round=0;
       const newRound=()=>{
@@ -64,8 +66,7 @@
         const cards=deck.map((item,i)=>{
           const card=ctx.button('',()=>choose(i),'tm-mem-card');
           const hide=()=>{
-            const dot=ctx.el('span','✦','tm-mem-back');dot.setAttribute('aria-hidden','true');
-            card.replaceChildren(dot);
+            picture(card,carton,false);
             card.setAttribute('aria-label','Коробочка '+(i+1)+', закрыта');
             card.setAttribute('aria-pressed','false');
           };
@@ -99,29 +100,30 @@
   };
   const pattern={
     id:'memory-rooftop-trail',title:'Тропа по крышам',category:'memory',accent:'#e2d9f6',
-    description:'Запомни площадки слева направо и повтори маршрут.',
+    description:'Запомни площадки с символами слева направо и повтори маршрут.',
     mount(p,ctx){
       const {m,step,text,live}=frame(p,ctx,'Ух покажет маршрут слева направо. Запомни его и повтори.');
       const ribbon=ctx.el('div',null,'tm-mem-ribbon'), moves=ctx.el('div',null,'tm-mem-moves');
       moves.setAttribute('role','group');moves.setAttribute('aria-label','Следующая площадка');moves.classList.add('tm-mem-hide');
       m.append(ribbon,moves,live);
       let round=0,seq=[],done=0,controls=[],view=null;
+      const rooftop=(node,item)=>{node.classList.add('tm-mem-rooftop');picture(node,item)};
       function display(){
         round++;done=0;
         step.textContent='Маршрут '+round+' из 3';
-        text.textContent='Запомни площадки слева направо. Смотри столько, сколько нужно.';
+        text.textContent='Запомни символы на площадках слева направо. Смотри столько, сколько нужно.';
         const bag=mix(sprites,ctx.rng).slice(0,4);seq=mix(bag,ctx.rng).slice(0,round+1);
         ribbon.style.setProperty('--tm-cols',seq.length);moves.style.setProperty('--tm-cols',4);
         ribbon.replaceChildren();moves.replaceChildren();moves.hidden=true;
         live.textContent='';
-        seq.forEach((item,i)=>{const box=ctx.el('div',null,'tm-mem-cardview');picture(box,item);box.setAttribute('aria-label',(i+1)+': '+item[1]);ribbon.append(box)});
+        seq.forEach((item,i)=>{const box=ctx.el('div',null,'tm-mem-cardview');rooftop(box,item);box.setAttribute('aria-label',(i+1)+': '+item[1]);ribbon.append(box)});
         view=ctx.button('Запомнила, пора идти',()=>{
           view.remove();view=null;
           text.textContent='Проведи Ух по тем же площадкам. Можно посмотреть маршрут снова.';
           fill();moves.hidden=false;moves.querySelector('button').focus();
           const review=ctx.button('Показать маршрут ещё раз',()=>{
             controls.forEach(b=>b.disabled=true);
-            seq.forEach((item,i)=>{const el=ribbon.children[i];picture(el,item);el.classList.remove('tm-empty');el.setAttribute('aria-label',(i+1)+': '+item[1])});
+            seq.forEach((item,i)=>{const el=ribbon.children[i];rooftop(el,item);el.classList.remove('tm-empty');el.setAttribute('aria-label',(i+1)+': '+item[1])});
             review.remove();view=ctx.button('Снова скрыть маршрут',()=>{
               view.remove();view=null;fill();for(const b of controls)b.disabled=false;
               controls[0].focus();m.append(review);view=review;
@@ -130,12 +132,12 @@
         },'tm-mem-next');m.append(view);
         controls=bag.map(item=>{
           const b=ctx.button('',()=>press(item),'tm-mem-choice');
-          picture(b,item);moves.append(b);return b;
+          rooftop(b,item);moves.append(b);return b;
         });
       }
       function fill(){
         [...ribbon.children].forEach((el,i)=>{
-          if(i<done){picture(el,seq[i]);el.classList.remove('tm-empty');el.setAttribute('aria-label',(i+1)+': '+seq[i][1]);return}
+          if(i<done){rooftop(el,seq[i]);el.classList.remove('tm-empty');el.setAttribute('aria-label',(i+1)+': '+seq[i][1]);return}
           el.textContent=String(i+1);el.classList.add('tm-empty');el.setAttribute('aria-label','Шаг '+(i+1)+', пока пусто');
         });
       }

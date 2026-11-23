@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-topouh-white-canvas>
 <head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; object-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'none'; frame-src 'self'">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Топоух · Топоух 2</title>
+<title>Топоух</title>
 
 
 <style>
@@ -69,7 +69,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;ma
 .cards .card h3{font-size:19px;margin-top:8px}
 .ic img{height:64px;width:auto;display:block}
 .mission .ic img{height:72px}
-.rule:not(:empty)::before{content:"";display:inline-block;width:52px;height:40px;background:url(../img/zapiska.webp) center/contain no-repeat;vertical-align:middle;margin-right:10px}
+.rule:not(:empty)::before{content:"";display:inline-block;width:52px;height:40px;background:url(img/zapiska.webp) center/contain no-repeat;vertical-align:middle;margin-right:10px}
 .card h3{margin:6px 0 4px;font-size:20px;font-weight:900}
 .card p{margin:0;color:var(--ink2);font-size:15px;line-height:1.35}
 .card.hot{border-color:var(--gold);background:var(--gold2)}
@@ -448,7 +448,7 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .tisle.big .tlegend div{padding:5px 8px 5px 28px;background:rgba(255,255,255,.88)}
 .tisle.big .tlegend i{left:8px;width:13px;height:13px;margin-top:-6px}
 .tbub{position:absolute!important;left:12px;top:60px;z-index:6;max-width:min(400px,calc(100% - 24px));width:auto!important;margin:0!important;padding:12px 46px 12px 66px!important;font-size:17px!important;background:rgba(255,255,255,.96)!important;box-shadow:0 6px 0 rgba(0,40,80,.18)!important;transition:all .35s}
-.tbub:before{content:""!important;position:absolute;left:8px!important;top:50%!important;margin:-25px 0 0!important;width:50px;height:50px;border:0!important;background:url(../img/topa-hello.webp) center/contain no-repeat}
+.tbub:before{content:""!important;position:absolute;left:8px!important;top:50%!important;margin:-25px 0 0!important;width:50px;height:50px;border:0!important;background:url(belarusian-assets/topa.svg) center/contain no-repeat}
 .tbub.min{width:62px!important;height:62px;padding:0!important;border-radius:50%!important;overflow:hidden;cursor:pointer}
 .tbub.min span,.tbub.min .say{display:none}
 .tbub.min:before{left:6px!important;margin-top:-25px!important}
@@ -694,7 +694,12 @@ label.f{display:block;margin-top:14px;font-size:16px}
 .gdots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px;margin:6px auto 0}.gdots i{width:18px;height:18px;border-radius:50%;background:#ff5a5f}
 #previewClub{position:fixed;inset:0;width:100%;height:100%;border:0;background:white;z-index:10000}
 #previewClub[hidden]{display:none}
+html.preview-club-home :is(#cele,#stepCard).on.club-plan-overlay{z-index:10001}
+html.preview-club-home :is(#pinModal,#confModal).on{z-index:10002}
+html.preview-club-home :is(#cele,#stepCard).on.club-plan-overlay .rv-card{max-height:92vh;overflow:auto}
 html.preview-club-home{overflow:hidden}
+#beFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#f5f7ee;z-index:10001}
+#beFrame[hidden]{display:none}
 </style>
 <style id="TOPOUH_REFRESH_V1">
 /* Топоух / Сегодня и Чтение */
@@ -866,68 +871,198 @@ html.preview-club-home{overflow:hidden}
 }
 
 </style>
-<link rel="stylesheet" href="wardrobe-assets/wardrobe-studio.css">
+<!-- Club stories and daily views -->
+<link rel="stylesheet" href="belarusian-assets/club-story-daily.css">
+<style id="club-side-sections-css">
+/* Topouh Club: the gallery, workspace and diary. Only these screens vary. */
+#pbook,#paint,#dnev{--cs-ink:#2a233c;--cs-muted:#554b62;--cs-line:#ded2d8;--cs-paper:#fffdf9;--cs-tint:#fbd1c1;--cs-tint-2:#fff1e8;--cs-accent:#693d51;color:var(--cs-ink)}
+#dnev{--cs-tint:#decdfb;--cs-tint-2:#f7f0ff;--cs-line:#dcd0ec;--cs-accent:#51377a}
+#pbook.on,#dnev.on{padding-bottom:clamp(25px,5vw,62px)}
+#pbook button:focus-visible,#paint button:focus-visible,#dnev button:focus-visible,#dnModal button:focus-visible,#dnModal input:focus-visible,#dnModal textarea:focus-visible{outline:3px solid #5133a4;outline-offset:3px}
+.cs-head{position:relative;isolation:isolate;overflow:hidden;min-width:0;min-height:clamp(146px,19vw,235px);display:flex;flex-direction:column;justify-content:center;gap:6px;background:var(--cs-tint);border:1px solid var(--cs-line);border-radius:24px;padding:clamp(20px,4.8vw,59px);margin:0 0 clamp(14px,2vw,24px);text-align:left}
+.cs-head::after{content:"";position:absolute;z-index:-1;right:8%;top:-18%;width:clamp(118px,30vw,430px);aspect-ratio:1;border:2px dotted var(--cs-accent);border-radius:48%;opacity:.35;transform:rotate(-19deg);box-shadow:65px 15px 0 -3px #fff8}
+.cs-head h1{margin:0;color:var(--cs-ink);font-weight:900;font-size:clamp(41px,7vw,83px);letter-spacing:-.052em;line-height:.99}
+.cs-head p{margin:6px 0 0;font-size:clamp(.94rem,1.6vw,1.15rem);max-width:53ch;color:var(--cs-muted);font-weight:650}
+.cs-eyebrow{font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;font-weight:850;color:var(--cs-accent)}
+.cs-shelf{min-width:0;background:var(--cs-paper);border:1px solid var(--cs-line);border-radius:17px;padding:clamp(14px,2.75vw,30px);margin:14px 0}
+.cs-shelf h2{margin:0 0 .75rem;color:var(--cs-ink);font-size:clamp(21px,2.7vw,34px);font-weight:875;letter-spacing:-.034em}
+#pbook #pbookSay{margin:0 0 14px!important;max-width:none;width:100%;background:#fffaf4;border:1px solid var(--cs-line);box-shadow:none;border-radius:14px;color:var(--cs-ink)}
+#pbook #pbookSay .say{min-width:42px;min-height:42px}
+#pbook #myPaints,#pbook #paintShop{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,132px),1fr));gap:10px}
+#pbook #myPaints button,#pbook #paintShop button{width:auto;height:auto;min-width:0;min-height:142px;background:#fff;border:1px solid var(--cs-line);border-radius:13px;color:var(--cs-ink);box-shadow:0 2px 0 #efe4e3;padding:9px;transition:border-color .15s,transform .15s}
+#pbook #myPaints button img,#pbook #paintShop button img{display:block;width:100%;height:auto;aspect-ratio:1.24;max-height:154px;object-fit:contain;background:#fff8f1;border-radius:7px}
+#pbook #paintShop button b,#pbook #myPaints button span{font-size:.9rem;line-height:1.23}
+#pbook #myPaints button span{display:block;margin-top:7px;font-weight:800}
+#pbook #paintShop button span{color:#623e26;background:#ffecc4;border-radius:999px;padding:3px 7px;opacity:1}
+#pbook #paintShop button.lock{opacity:1;border-style:dashed;background:#fffdfb}
+#pbook #paintShop button.lock span{background:#f1e9eb;color:#5d4f52}
+#pbook #myPaints button:hover,#pbook #paintShop button:hover{border-color:#a0586d;transform:translateY(-2px)}
+#pbook #myPaints .empty,#pbook #paintShop .empty{grid-column:1/-1;color:var(--cs-muted)!important;text-align:left;background:#fff0e7;border-radius:12px;padding:12px 14px;font-size:.96rem}
+#paint.on{display:grid;grid-template-columns:minmax(0,1fr);gap:13px;align-items:start}
+#paint.on > .cs-head,#paint.on > .paint-wrap,#paint.on > .cs-tools{grid-area:auto;margin:0}
+#paint > .cs-head{min-height:0;padding:clamp(16px,3vw,28px)}
+#paint > .cs-head h1{font-size:clamp(29px,5vw,52px)}
+#paint > .paint-wrap{width:min(100%,660px);max-width:none;justify-self:center;border:1px solid var(--cs-line);border-radius:16px;box-shadow:0 4px 0 #f1e5e2;background:#fff}
+#paint #paintCv{width:100%;height:auto;max-width:none;display:block}
+#paint > .cs-tools{min-width:0;background:var(--cs-paper);border:1px solid var(--cs-line);border-radius:16px;padding:clamp(15px,2.7vw,27px)}
+.cs-tool-label{display:block;margin:0 0 6px;color:var(--cs-accent);font-size:.73rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+#paint #ptools,#paint #palette,#paint .cs-tools .row{max-width:none;margin:0;justify-content:flex-start;gap:8px}
+#paint #ptools{margin-bottom:16px}
+#paint #ptools button,#paint .cs-tools .btn{min-height:42px;box-shadow:none;border-radius:9px}
+#paint #ptools>button{background:#fff8ef;border:1px solid var(--cs-line);color:var(--cs-ink)}
+#paint #ptools>button.on{background:#fbd1c1;border-color:#a0586d}
+#paint #ptools .psizes button{min-width:41px}
+#paint #palette{margin-bottom:18px}
+#paint #palette button{width:39px;height:39px;border:3px solid #fff;box-shadow:0 0 0 1px #b8a8ad;transform:none}
+#paint #palette button.on{box-shadow:0 0 0 2px #322344,0 0 0 5px #f6e7f1}
+#paint .cs-tools .btn{font-size:.84rem;color:#fff;background:#4b326e;border-color:#4b326e}
+#paint .cs-tools .btn.soft{color:var(--cs-ink);background:#fff0e7;border:1px solid var(--cs-line)}
+@media(min-width:880px){
+ #paint.on{grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:clamp(16px,3vw,42px)}
+ #paint.on > .cs-head{grid-column:1/-1}
+ #paint.on > .paint-wrap{grid-column:1;grid-row:2}
+ #paint.on > .cs-tools{grid-column:2;grid-row:2}
+}
+#dnev #dnBox{max-width:none;margin:0}
+#dnev .dn-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(8px,2vw,21px);border:1px solid var(--cs-line);border-radius:24px;background:var(--cs-tint);color:var(--cs-ink);box-shadow:none;padding:clamp(15px,4vw,42px)}
+#dnev .dn-week{min-width:0;text-align:center;color:var(--cs-ink)}
+#dnev .dn-week h1{display:block;margin:0;color:var(--cs-ink);font-size:clamp(36px,6.8vw,75px);font-weight:900;letter-spacing:-.045em;line-height:1.05}
+#dnev .dn-week span{display:block;margin-top:6px;font-size:clamp(.87rem,1.5vw,1.04rem);color:var(--cs-muted);font-weight:700;opacity:1;overflow-wrap:anywhere}
+#dnev .dn-arr{color:var(--cs-accent);background:#fffafc;border:1px solid #a598c5;box-shadow:none;font-size:30px;min-width:44px;min-height:44px}
+#dnev .dn-arr:hover{background:#fff;box-shadow:0 2px #c4addd}
+#dnev .dn-tools{justify-content:flex-start;gap:9px;flex-wrap:wrap;margin:12px 0 16px}
+#dnev .dn-tools .btn{font-size:.9rem;min-height:42px;border:1px solid var(--cs-line);border-radius:9px;color:var(--cs-ink);background:#faf2ff;box-shadow:none}
+#dnev .dn-book{background:none;box-shadow:none;border-radius:0;display:grid;grid-template-columns:1fr;gap:12px}
+#dnev .dn-page,#dnev .dn-book .dn-page:first-child{display:contents;border:0;box-shadow:none}
+#dnev .dn-day{border:1px solid var(--cs-line);border-radius:14px;background:var(--cs-paper);padding:11px 13px;min-width:0;min-height:128px;display:flex;flex-direction:column}
+#dnev .dn-day.today{border:2px solid #7851a9;background:#faf2ff;padding:10px 12px}
+#dnev .dn-dh{gap:7px;flex-wrap:wrap;color:var(--cs-ink)}
+#dnev .dn-dh b{font-size:clamp(1rem,2.3vw,1.45rem);line-height:1.15}
+#dnev .dn-day.today .dn-dh b{background:#e5d3f6;box-shadow:none;padding:2px 6px}
+#dnev .dn-dh span{font-size:.86rem;color:var(--cs-accent);font-weight:710}
+#dnev .dn-rest{color:#255d43;background:#edf5dc;font-size:.83rem}
+#dnev .dn-rows{margin:7px 0;border:0;background:none;min-width:0}
+#dnev .dn-row{border-top:1px solid #eee6f2;display:grid;grid-template-columns:13px minmax(0,1fr) auto;grid-template-areas:'n s a' 'n t t';align-content:center;gap:4px;min-height:36px;padding:4px 0}
+#dnev .dn-row:hover:not(.empty){background:#f7edfa;border-radius:5px}
+#dnev .dn-row i{grid-area:n;color:#625579}
+#dnev .dn-s{grid-area:s;display:block;text-align:left;overflow-wrap:anywhere;background:none;border:0;color:var(--cs-accent);font-size:.85rem;padding:3px 2px;border-radius:3px}
+#dnev .dn-t{grid-area:t;min-width:0;padding:0 2px;color:var(--cs-ink);font:500 .88rem/1.35 system-ui,sans-serif;overflow-wrap:anywhere}
+#dnev .dn-row.ok .dn-t{color:#2f6243}
+#dnev .dn-act{grid-area:a}
+#dnev .dn-ok,#dnev .dn-go{min-height:36px;min-width:37px;border:0;box-shadow:none}
+#dnev .dn-add{display:inline-flex;align-items:center;align-self:flex-start;min-height:40px;margin:auto 0 0;color:var(--cs-accent);background:#f7effe;padding:4px 9px;border-radius:8px;text-align:left}
+#dnev .dn-add:hover{background:#efe0ff}
+#dnev .dn-tip{font-size:.93rem;color:var(--cs-muted);text-align:left;margin:13px 0 0}
+#dnModal .dn-card{background:#fffaf9;border:1px solid #dcd0ec;border-radius:19px}
+#dnModal .dn-card h2{color:#38294a;font-weight:850}
+#dnModal .dn-card .dn-ta{font:500 1.03rem/1.4 system-ui,sans-serif;color:#2a233c}
+#dnModal .dn-card .chip{min-height:38px}
+@media(min-width:580px){#dnev .dn-book{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1050px){#dnev .dn-book{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){#pbook #myPaints button,#pbook #paintShop button{transition:none;transform:none}}
+
+</style>
+<!-- topouh-shared-brand-v1 -->
+<link rel="stylesheet" href="brand-assets/header.css">
+<script defer src="brand-assets/header.js"></script>
+<!-- topouh-v2-github-motion-v1 --><link rel="stylesheet" href="motion-assets/motion.css"><script defer src="motion-assets/motion.js"></script>
+<link rel="stylesheet" href="audio-settings/sound.css"><script src="audio-settings/sound.js"></script><script src="audio-settings/ukh-greetings.js"></script><link rel="stylesheet" href="theme-assets/white-canvas.css">
+<link rel="stylesheet" href="theme-assets/club-continuity.css">
+<link rel="stylesheet" href="theme-assets/daily-paint.css?v=26">
+<link rel="stylesheet" href="theme-assets/daily-help.css">
+<link rel="stylesheet" href="theme-assets/daily-diary.css">
+<link rel="stylesheet" href="theme-assets/daily-evening.css?v=2">
 <link rel="stylesheet" href="brand-assets/star-balance.css"><script defer src="brand-assets/star-balance.js"></script>
-<link rel="stylesheet" href="paint-assets/paint-hero.css">
+<link rel="stylesheet" href="theme-assets/wardrobe-studio.css">
+<link rel="stylesheet" href="theme-assets/parent-cabinet.css">
+<link rel="stylesheet" href="theme-assets/parent-gate.css">
 </head>
 <body>
 <div class="sky" id="sky"></div>
 <div class="reveal" id="cele" onclick="closeCele()"><div class="rv-card cele-card">
-  <div class="cele-pic"><img id="celeImg" src="../img/uh-star.webp" alt=""></div>
+  <div class="cele-pic"><img id="celeImg" src="belarusian-assets/ukh-celebrate.svg" alt=""></div>
   <h2 id="celeTitle">Молодец!</h2><p id="celeText"></p>
   <button class="btn" onclick="closeCele()">Ура!</button>
 </div></div>
-<div class="reveal" id="pinModal" onclick="if(event.target===this)pinClose()"><div class="rv-card">
-  <div style="font-size:48px">🔐</div><h2 id="pinTitle" style="margin:6px 0"></h2><p id="pinHint" style="color:var(--ink2)"></p>
-  <div class="pin-dots" id="pinDots">…</div>
-  <div class="pin-pad" id="pinPad"></div>
-  <div class="row"><button class="btn soft" onclick="pinClose()">Отмена</button></div>
-  <button id="pinForgot" onclick="pinForgot()" style="margin-top:10px;color:var(--ink2);font-size:14px;text-decoration:underline">Забыли код?</button>
+<div class="reveal" id="pinModal" onclick="if(event.target===this)pinClose()"><div class="rv-card" data-parent-gate="v29" role="dialog" aria-modal="true" aria-labelledby="pinTitle" aria-describedby="pinHint">
+  <div class="parent-gate-heading">
+    <span class="parent-gate-lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 10V7.75a4.5 4.5 0 0 1 9 0V10"/><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M12 14.25v2.5"/></svg></span>
+    <div><span class="parent-gate-kicker">Родительский раздел</span><h2 id="pinTitle" tabindex="-1"></h2></div>
+    <button class="parent-gate-close" type="button" onclick="pinClose()" aria-label="Закрыть"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+  </div>
+  <p id="pinHint"></p>
+  <div class="parent-gate-answer"><span>Ответ</span><output class="pin-dots" id="pinDots" aria-live="polite">…</output></div>
+  <div class="pin-pad" id="pinPad" role="group" aria-label="Клавиатура для ответа"></div>
+  <button id="pinForgot" onclick="pinForgot()" hidden>Забыли код?</button>
 </div></div>
+<script data-parent-gate-focus>
+(() => {
+  const gate = document.getElementById('pinModal');
+  const title = document.getElementById('pinTitle');
+  const keypad = document.getElementById('pinPad');
+  let previous = null;
+  new MutationObserver(() => {
+    if (gate.classList.contains('on')) {
+      previous = document.activeElement;
+      for (const button of keypad.querySelectorAll('button')) {
+        button.type = 'button';
+        if (button.textContent === '✓') button.setAttribute('aria-label', 'Подтвердить ответ');
+        if (button.textContent === '⌫') button.setAttribute('aria-label', 'Удалить цифру');
+      }
+      title.focus({preventScroll:true});
+    } else {
+      const active = document.activeElement;
+      if (previous && !gate.contains(previous) && previous.getClientRects().length &&
+          (gate.contains(active) || active === document.body)) {
+        previous.focus({preventScroll:true});
+      }
+      previous = null;
+    }
+  }).observe(gate,{attributes:true,attributeFilter:['class']});
+  gate.addEventListener('keydown', event => {
+    if (!gate.classList.contains('on') || event.altKey || event.metaKey || event.ctrlKey) return;
+    if (event.key === 'Escape') {
+      event.preventDefault(); event.stopPropagation(); gate.querySelector('.parent-gate-close').click(); return;
+    }
+    if (event.key === 'Tab') {
+      const controls = [...gate.querySelectorAll('button')].filter(el => el.getClientRects().length);
+      const index = controls.indexOf(document.activeElement);
+      if (event.shiftKey && index <= 0) {event.preventDefault(); controls.at(-1)?.focus();}
+      if (!event.shiftKey && (index < 0 || index === controls.length - 1)) {event.preventDefault(); controls[0]?.focus();}
+      return;
+    }
+    if (event.repeat) return;
+    const key = /^\d$/.test(event.key) ? event.key : event.key === 'Backspace' ? '⌫' : event.key === 'Enter' && event.target === title ? '✓' : null;
+    const btn = key && [...keypad.querySelectorAll('button')].find(b => b.textContent === key);
+    if (btn) {event.preventDefault(); event.stopPropagation(); btn.click();}
+  });
+})();
+</script>
 <div class="reveal" id="confModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card" style="max-width:560px;text-align:left">
-  <h2 style="margin:0 0 6px;text-align:center">Мила помогла?</h2><p style="color:var(--ink2);text-align:center;margin-top:0">Подтвердите — и&nbsp;она получит звёздочки.</p>
+  <h2 style="margin:0 0 6px;text-align:center">Алиса помогла?</h2><p style="color:var(--ink2);text-align:center;margin-top:0">Подтвердите — и&nbsp;она получит звёздочки.</p>
   <div class="diary" id="confList"></div>
   <div class="row"><button class="btn soft" onclick="document.getElementById('confModal').classList.remove('on')">Закрыть</button></div>
 </div></div>
 <div class="reveal" id="reveal" onclick="if(event.target===this)closeReveal()"><div class="rv-card"><div class="rv-pic" id="rvPic"></div><h2 id="rvTitle"></h2><p id="rvSay"></p><button class="btn" onclick="closeReveal()">Ура!</button></div></div>
 <nav class="tabs" id="tabs">
-  <button class="on" onclick="go('home')"><img src="../img/uh-hello.webp" alt=""><span>Сегодня</span></button>
-  <button onclick="openSmart()"><img src="../img/ic/smart.webp" alt=""><span>Уроки</span></button>
-  <button onclick="go('shop')"><img src="../img/ic/wardrobe.webp" alt=""><span>Гардероб</span></button>
-  <button onclick="openPaints()"><img src="../img/zapiska.webp" alt=""><span>Раскраски</span></button>
-  <button onclick="openDnev()"><img src="../img/words/notebook.webp" alt=""><span>Дневник</span></button>
+  <button class="on" onclick="go('home')"><img src="belarusian-assets/ukh.svg" alt=""><span>Сегодня</span></button>
+  <button onclick="openSmart()"><img src="img/ic/smart.webp" alt=""><span>Уроки</span></button>
+  <button onclick="go('shop')"><img src="img/ic/wardrobe.webp" alt=""><span>Гардероб</span></button>
+  <button onclick="openPaints()"><img src="img/zapiska.webp" alt=""><span>Раскраски</span></button>
+  <button onclick="openDnev()"><img src="img/words/notebook.webp" alt=""><span>Дневник</span></button>
 </nav>
 <div class="reveal" id="dnModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card dn-card" id="dnCard"></div></div>
 <div class="reveal" id="stepCard" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card"><div class="rv-pic"><img id="scImg" src="" alt=""></div><h2 id="scTitle"></h2><p id="scText"></p><div class="row" style="justify-content:center;gap:10px"><button class="btn" id="scBtn">Сделала!</button><button class="btn soft" id="scClose" onclick="document.getElementById('stepCard').classList.remove('on')">Потом</button></div></div></div>
-<iframe id="previewClub" src="club.html" title="Клуб Топоуха" hidden referrerpolicy="no-referrer"></iframe>
+<iframe id="beFrame" title="Беларуская мова" hidden referrerpolicy="no-referrer"></iframe>
+<iframe id="catalogueFrame" title="Уроки Топоуха" hidden referrerpolicy="no-referrer"></iframe>
+<iframe id="previewClub" src="club.html" title="Клуб Алисы" hidden referrerpolicy="no-referrer"></iframe>
 <div class="wrap">
-  <header>
-    <div class="logo"><img src="../img/uh-hello.webp" alt="" style="height:34px"><img src="../img/topa-hello.webp" alt="" style="height:34px;margin-left:-6px">Топоух</div>
+  <header class="topouh-main-head" data-topouh-header="main">
+    <a class="topouh-ident " href="index.html" target="_top" aria-label="Топоух, на главную"><svg class="topouh-star" viewBox="0 0 37 37" aria-hidden="true" focusable="false"><use href="brand-assets/stars.svg#original"/></svg><img class="topouh-word" src="brand-assets/wordmark.svg" width="160" height="45" alt=""></a>
     <div style="display:flex;gap:8px;align-items:center">
       <button class="back" id="backBtn" style="display:none" onclick="goBack()">←<span class="bk-t"> Назад</span></button>
       <span class="topouh-star-balance stars" role="status"><span class="topouh-balance-star" aria-hidden="true">★</span><span class="topouh-balance-label">Звёзды: </span><b id="starN" data-topouh-star-count>0</b></span>
-      <button class="me" id="meBtn" aria-label="Мила" onclick="meClick()"><svg viewBox="0 0 100 100">
-        <defs><clipPath id="meClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
-        <g clip-path="url(#meClip)">
-          <rect width="100" height="100" fill="#a9d2f5"/>
-          <path d="M0 22 q20 -6 40 0 q20 6 60 -2" stroke="#fff" stroke-width="5" fill="none" opacity=".7"/>
-          <rect y="66" width="100" height="34" fill="#f5d33b"/>
-          <circle cx="10" cy="72" r="3" fill="#ffe56b"/><circle cx="88" cy="70" r="3" fill="#ffe56b"/><circle cx="80" cy="80" r="2.5" fill="#8cc63f"/>
-          <path d="M21 46 q-1 -32 29 -32 q30 0 29 32 l5 44 q-34 10 -68 0 Z" fill="#8a5a3c"/>
-          <path d="M16 100 q3 -24 34 -25 q31 1 34 25 Z" fill="#fff4f1"/>
-          <path d="M39 76 l11 13 l11 -13 Z" fill="#f59a9a"/>
-          <path d="M38 76 l-6 10 l8 2 Z M62 76 l6 10 l-8 2 Z" fill="#f3e3de"/>
-          <rect x="44" y="64" width="12" height="13" rx="4" fill="#f0c6ad"/>
-          <ellipse cx="50" cy="48" rx="21" ry="23" fill="#f8dcc8"/>
-          <path d="M29 46 q-3 -28 21 -29 q24 1 21 29 q-5 -18 -21 -19 q-16 1 -21 19 Z" fill="#9a6644"/>
-          <path d="M50 18 q-1 6 0 10" stroke="#7a4a2e" stroke-width="1.6" fill="none"/>
-          <ellipse cx="50" cy="12" rx="10" ry="6" fill="#8a5a3c"/>
-          <path d="M36 42 q5 -3 10 0 M54 42 q5 -3 10 0" stroke="#7a4a2e" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-          <ellipse cx="41" cy="50" rx="4.6" ry="5.6" fill="#3b3040"/><ellipse cx="59" cy="50" rx="4.6" ry="5.6" fill="#3b3040"/>
-          <circle cx="39.4" cy="47.8" r="1.9" fill="#fff"/><circle cx="57.4" cy="47.8" r="1.9" fill="#fff"/>
-          <ellipse cx="33" cy="58" rx="4.6" ry="2.6" fill="#f7a0b0" opacity=".85"/><ellipse cx="67" cy="58" rx="4.6" ry="2.6" fill="#f7a0b0" opacity=".85"/>
-          <path d="M43 60 q7 6 14 0" stroke="#b5534a" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-        </g></svg></button>
+      <button type="button" class="me topouh-player" id="meBtn" aria-label="Алиса" onclick="meClick()"><span class="topouh-player-photo" aria-hidden="true">А</span><span class="topouh-player-copy">Алиса</span></button>
     </div>
   </header>
 
@@ -935,38 +1070,38 @@ html.preview-club-home{overflow:hidden}
   <section class="screen on" id="home">
     <div class="hhead">
       <div id="owlHome"></div>
-      <div class="bubble side" id="homeSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble side" id="homeSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div class="daybar" id="dayBar"></div>
     <div class="path" id="dayPath"></div>
     <div class="oldhome" hidden>
     <div class="mission today" id="todayBox" style="display:none">
-      <div class="ic"><img src="../img/ic/smart.webp" alt=""></div>
+      <div class="ic"><img src="img/ic/smart.webp" alt=""></div>
       <div style="flex:1"><small>Урок дня · <b class="starsTag">⭐ +2</b> <span class="streak" id="streakTag"></span></small><p id="todayText"></p></div>
       <button class="btn" id="todayBtn" onclick="startToday()">Начать</button>
     </div>
     <div class="mission" id="missionBox" style="display:none">
-      <div class="ic"><img src="../img/ryukzak.webp" alt="Рюкзак"></div>
+      <div class="ic"><img src="img/ryukzak.webp" alt="Рюкзак"></div>
       <div style="flex:1"><small>Задание от Ух на школьный день</small> <b class="starsTag">⭐ 2</b><p id="missionText"></p></div>
       <button class="btn" onclick="missionDone()">Сделала!</button>
     </div>
     </div>
     <div class="mission pend" id="pendBox" style="display:none">
-      <div class="ic"><img src="../img/ic/wait.webp" alt="Песочные часы"></div>
+      <div class="ic"><img src="img/ic/wait.webp" alt="Песочные часы"></div>
       <div style="flex:1"><small>Ждёт подтверждения мамы или папы</small><p id="pendText"></p></div>
       <button class="btn" onclick="openConfirm()">Подтвердить</button>
     </div>
     <div class="oldhome" hidden>
     <div class="mission mom" id="momBox" style="display:none">
-      <div class="ic"><img src="../img/ic/mom.webp" alt="Конверт"></div>
+      <div class="ic"><img src="img/ic/mom.webp" alt="Конверт"></div>
       <div style="flex:1"><small>Мама просит · <b class="starsTag">⭐ 3</b></small><p id="momText"></p></div>
       <button class="btn" onclick="momDone()">Сделала!</button>
     </div>
     <div class="cards">
-      <button class="card" onclick="openSmart()"><div class="ic"><img src="../img/ic/smart.webp" alt="Лампочка и книжки"></div><h3>Умнее каждый день</h3><p>Русский, чтение, английский и&nbsp;математика</p></button>
-      <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="../img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;Сашей. Ух будет болеть за&nbsp;тебя!</p></button>
-      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="../img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><b class="starsTag">⭐ 8</b><p>Расскажи Ух, как прошёл день в школе</p></button>
-      <button class="card" onclick="go('shop')"><div class="ic"><img src="../img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Ух</h3><p>Наряди Ух за звёздочки</p></button>
+      <button class="card" onclick="openSmart()"><div class="ic"><img src="img/ic/smart.webp" alt="Лампочка и книжки"></div><h3>Умнее каждый день</h3><p>Русский, чтение, английский и&nbsp;математика</p></button>
+      <button class="card" id="cardHelp" onclick="startHelp()"><div class="ic"><img src="img/ic/dustpan.webp" alt="Совок и щётка"></div><h3>Помощница</h3><p>Уборка, посуда и&nbsp;игры с&nbsp;братиком. Ух будет болеть за&nbsp;тебя!</p></button>
+      <button class="card" id="cardTalk" onclick="startTalk()"><div class="ic"><img src="img/kruzhka.webp" alt="Кружка чая"></div><h3>Вечерний разговор</h3><b class="starsTag">⭐ 8</b><p>Расскажи Ух, как прошёл день в школе</p></button>
+      <button class="card" onclick="go('shop')"><div class="ic"><img src="img/ic/wardrobe.webp" alt="Шкаф с нарядами"></div><h3>Гардероб Ух</h3><p>Наряди Ух за звёздочки</p></button>
     </div>
     </div>
     <div class="foot"><button onclick="openParent()">Для родителей</button></div>
@@ -974,32 +1109,53 @@ html.preview-club-home{overflow:hidden}
   </section>
 
   <!-- РАЗГОВОР -->
-  <section class="screen" id="talk">
-    <div class="stage">
-      <div id="owlTalk"></div>
-      <div class="progress" id="talkProg"></div>
-      <div class="bubble" id="talkSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
-      <div id="talkInput" style="width:100%;display:flex;flex-direction:column;align-items:center;margin-top:14px">
-        <textarea id="talkText" placeholder="Напиши тут… или расскажи вслух маме"></textarea>
-        <div class="chips" id="talkChips"></div>
-        <div class="row"><button class="btn" onclick="talkNext()">Рассказать Ух</button></div>
+  <section class="screen" id="talk" aria-labelledby="talkTitle">
+    <div class="talk-layout">
+      <header class="talk-heading">
+        <p class="talk-kicker">ТВОЙ ВЕЧЕР В КЛУБЕ</p>
+        <h1 id="talkTitle" tabindex="-1">Вечером с Ух</h1>
+        <p>Немного времени, чтобы вспомнить день и рассказать о нём.</p>
+      </header>
+      <div class="talk-work">
+        <div class="talk-step">
+          <p id="talkProgressLabel">Вопрос 1 из 3</p>
+          <div class="progress" id="talkProg" role="progressbar" aria-label="Ответы на вопросы" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0"></div>
+        </div>
+        <div class="talk-question bubble" id="talkSay">
+          <button type="button" class="say" aria-label="Послушать Ух"><img src="img/ic/speaker.webp" alt=""></button>
+          <div class="talk-question-copy"><p>Ух спрашивает</p><span aria-live="polite" aria-atomic="true"></span></div>
+        </div>
+        <div id="talkInput">
+          <label for="talkText">Твой рассказ</label>
+          <textarea id="talkText" rows="3" placeholder="Можно начать с одного слова" aria-describedby="talkInputNote"></textarea>
+          <div class="chips" id="talkChips" role="group" aria-label="Варианты для начала"></div>
+          <p id="talkInputNote">Можно рассказать вслух близким и продолжить без текста.</p>
+          <div class="row"><button type="button" class="btn" id="talkNextBtn" onclick="talkNext()">Рассказать Ух</button></div>
+        </div>
+        <div class="row" id="talkEnd" style="display:none">
+          <p class="talk-end-note">Вечерний разговор завершён</p>
+          <button type="button" class="btn" id="talkDoneBtn" onclick="go('home')">Пока, Ух!</button>
+        </div>
       </div>
-      <div class="row" id="talkEnd" style="display:none"><button class="btn" onclick="go('home')">Пока, Ух!</button></div>
+      <aside class="talk-art" aria-label="Ух у вечернего окна">
+        <div class="talk-window" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div id="owlTalk"><img src="belarusian-assets/ukh-evening.svg" alt="" width="1024" height="1024" decoding="async"></div>
+      </aside>
     </div>
   </section>
 
   <!-- УМНЕЕ КАЖДЫЙ ДЕНЬ -->
   <section class="screen" id="smart">
     <div class="stage">
-      <div class="bubble down" id="smartSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble down" id="smartSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
       <div id="owlSmart"></div>
     </div>
     <div class="cards">
-      <button class="card" onclick="openSubject('ru')"><div class="ic"><img src="../img/zapiska.webp" alt="Блокнот"></div><h3>Русский</h3><p>Записка Ух</p></button>
-      <button class="card" onclick="openSubject('read')"><div class="ic"><img src="../img/ic/book.webp" alt="Книжка"></div><h3>Чтение</h3><p>Истории про Ух и&nbsp;Топу</p></button>
-      <button class="card" onclick="openSubject('en')"><div class="ic"><img src="../img/ic/abc.webp" alt="ABC"></div><h3>Английский</h3><p>Научи Топу</p></button>
-      <button class="card trip-card" onclick="openTrip()"><div class="ic"><img src="../img/topa-hello.webp" alt="Топа"></div><h3>Кругосветка Топы</h3><p>Английский по&nbsp;островам</p></button>
-      <button class="card" onclick="openSubject('math')"><div class="ic"><img src="../img/ic/abacus.webp" alt="Счёты"></div><h3>Математика</h3><p>Помоги Ух посчитать</p></button>
+      <button class="card" onclick="openSubject('ru')"><div class="ic"><img src="img/zapiska.webp" alt="Блокнот"></div><h3>Русский</h3><p>Записка Ух</p></button>
+      <button class="card" onclick="openSubject('read')"><div class="ic"><img src="img/ic/book.webp" alt="Книжка"></div><h3>Чтение</h3><p>Истории про Ух и&nbsp;Топу</p></button>
+      <button class="card" onclick="openSubject('en')"><div class="ic"><img src="img/ic/abc.webp" alt="ABC"></div><h3>Английский</h3><p>Научи Топу</p></button>
+      <button class="card trip-card" onclick="openTrip()"><div class="ic"><img src="belarusian-assets/topa.svg" alt="Топа"></div><h3>Кругосветка Топы</h3><p>Английский по&nbsp;островам</p></button>
+      <button class="card" onclick="openSubject('math')"><div class="ic"><img src="img/ic/abacus.webp" alt="Счёты"></div><h3>Математика</h3><p>Помоги Ух посчитать</p></button>
     </div>
   </section>
 
@@ -1010,7 +1166,7 @@ html.preview-club-home{overflow:hidden}
   <section class="screen" id="trip">
     <div class="stage">
       <div id="owlTrip"></div>
-      <div class="bubble" id="tripSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="tripSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="tripMap"></div>
   </section>
@@ -1021,7 +1177,7 @@ html.preview-club-home{overflow:hidden}
       <div id="owlTripL"></div>
       <div class="prize" id="tripLPrize"></div>
       <div class="progress" id="tripProg"></div>
-      <div class="bubble" id="tripLSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="tripLSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="tripBody">
       <div class="eq" id="tripQ"></div>
@@ -1034,28 +1190,27 @@ html.preview-club-home{overflow:hidden}
   <!-- УРОКИ ПРЕДМЕТА -->
   <section class="screen" id="lessons">
     <div class="stage">
-      <div class="bubble down" id="lessonsSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble down" id="lessonsSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
       <div id="owlLessons"></div><div id="owlLessonsT" style="display:none"></div>
     </div>
     <div class="cards" id="lessonList"></div>
   </section>
 
   <!-- РАСКРАСКА -->
-  <section class="screen" id="paint">
-<div class="public-paint-hero"><div><small>Творческая мастерская</small><h1>Твоя раскраска</h1><p>Залей цветом целую область или нарисуй кистью.</p></div><img src="paint-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024"></div>
+  <section class="screen" id="paint"><div class="cs-head cs-head-painter"><div class="cs-painter-copy"><span class="cs-eyebrow">Творческая мастерская</span><h1>Твоя раскраска</h1><p>Залей цветом целую область или нарисуй кистью.</p></div><img class="cs-painter-mascot" src="belarusian-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024" decoding="async"></div>
     <div class="paint-wrap"><canvas id="paintCv" width="800" height="993"></canvas><img id="paintImg" class="pline" alt=""></div>
-    <div class="ptools" id="ptools">
+    <div class="cs-tools"><span class="cs-tool-label" id="cs-tools-label">Инструменты</span><div class="ptools" id="ptools" role="group" aria-labelledby="cs-tools-label">
       <button data-t="fill" class="on" onclick="pTool('fill')">🪣 Заливка</button>
       <button data-t="brush" onclick="pTool('brush')">🖌️ Кисть</button>
-      <span class="psizes"><button data-s="6" onclick="pSz(6)"><i style="width:8px;height:8px"></i></button><button data-s="16" class="on" onclick="pSz(16)"><i style="width:15px;height:15px"></i></button><button data-s="34" onclick="pSz(34)"><i style="width:24px;height:24px"></i></button></span>
+      <span class="psizes"><button data-s="6" aria-label="Тонкая кисть" aria-pressed="false" onclick="pSz(6)"><i style="width:8px;height:8px"></i></button><button data-s="16" aria-label="Средняя кисть" aria-pressed="true" class="on" onclick="pSz(16)"><i style="width:15px;height:15px"></i></button><button data-s="34" aria-label="Широкая кисть" aria-pressed="false" onclick="pSz(34)"><i style="width:24px;height:24px"></i></button></span>
     </div>
-    <div class="palette" id="palette"></div>
+    <span class="cs-tool-label" id="cs-palette-label">Палитра</span><div class="palette" id="palette" role="group" aria-labelledby="cs-palette-label"></div>
     <div class="row">
       <button class="btn soft" onclick="paintUndo()">↩️ Назад</button>
       <button class="btn soft" onclick="paintLoad(PK)">🧽 Сначала</button>
       <button class="btn" onclick="paintSave(false)">⬇️ Сохранить мою</button>
       <button class="btn soft" onclick="paintSave(true)">🖨️ Контур для печати</button>
-    </div>
+    </div></div>
   </section>
 
   <!-- МАТЕМАТИКА -->
@@ -1064,7 +1219,7 @@ html.preview-club-home{overflow:hidden}
       <div id="owlMath"></div>
       <div class="prize" id="mathPrize"></div><button class="thbtn" onclick="showTheory()">📖 Правило</button>
       <div class="progress" id="mathProg"></div>
-      <div class="bubble" id="mathSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="mathSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="mathBody">
       <div class="word" id="mathTask"></div>
@@ -1079,7 +1234,7 @@ html.preview-club-home{overflow:hidden}
     <div class="prize" id="readPrize" style="text-align:center"></div>
     <header class="tu-reader-header">
       <span class="tu-step-kicker">Читаем с Ух</span>
-      <h2 id="tuReaderTitle"></h2>
+      <h2 id="tuReaderTitle" tabindex="-1"></h2>
       <p class="tu-reader-progress" id="tuReaderStatus" aria-live="polite"></p>
     </header>
     <div class="progress" id="readProg" aria-hidden="true"></div>
@@ -1088,7 +1243,7 @@ html.preview-club-home{overflow:hidden}
       <div class="story-text" id="storyText"></div>
       <div class="opts en" id="storyOpts"></div>
     </div>
-    <div class="row tu-reader-controls"><button type="button" class="btn soft tu-reader-prev" id="tuReaderPrev" hidden>← Назад</button><button class="btn soft" id="readAloud"><img src="../img/ic/speaker.webp" alt="" style="height:26px;vertical-align:middle"> Прочитать вслух</button><button class="btn" id="readNext">Дальше →</button></div>
+    <div class="row tu-reader-controls"><button type="button" class="btn soft tu-reader-prev" id="tuReaderPrev" hidden>← Назад</button><button type="button" class="btn soft" id="tuReaderReview" hidden>Перечитать историю</button><button class="btn soft" id="readAloud"><img src="img/ic/speaker.webp" alt="" style="height:26px;vertical-align:middle"> Прочитать вслух</button><button class="btn" id="readNext">Дальше →</button></div>
   </section>
 
   <!-- ИГРА -->
@@ -1097,7 +1252,7 @@ html.preview-club-home{overflow:hidden}
       <div id="owlGame"></div>
       <div class="prize" id="gamePrize"></div><button class="thbtn" id="gameTh" onclick="showTheory()">📖 Правило</button>
       <div class="progress" id="gameProg"></div>
-      <div class="bubble" id="gameSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="gameSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="gameBody">
       <div class="word" id="gameWord"></div>
@@ -1108,17 +1263,19 @@ html.preview-club-home{overflow:hidden}
   </section>
 
   <!-- ПОМОЩНИЦА -->
-  <section class="screen" id="help">
+  <section class="screen" id="help" aria-labelledby="help-title">
+    <div class="help-head"><p>ПЛАН ДНЯ</p><h1 id="help-title" tabindex="-1">Помочь маме</h1></div>
     <div class="stage">
       <div id="owlHelp"></div>
-      <div class="bubble" id="helpSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="helpSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div class="tasks" id="helpMenu"></div>
     <div id="helpBody" style="display:none">
-      <div class="timer" id="helpTimer" style="display:none"></div>
+      <div class="timer" id="helpTimer" role="timer" aria-label="Осталось времени" style="display:none"></div>
       <div class="checks" id="helpChecks"></div>
       <div class="idea" id="helpIdea" style="display:none"></div>
     </div>
+    <p id="helpReceipt" role="status" hidden></p>
     <div class="row" id="helpRow"></div>
   </section>
 
@@ -1128,7 +1285,7 @@ html.preview-club-home{overflow:hidden}
       <div id="owlEng"></div>
       <div class="prize" id="engPrize"></div>
       <div class="progress" id="engProg"></div>
-      <div class="bubble" id="engSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      <div class="bubble" id="engSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
     </div>
     <div id="engBody">
       <div class="eq" id="engQ"></div>
@@ -1140,16 +1297,13 @@ html.preview-club-home{overflow:hidden}
 
   <!-- МАГАЗИН -->
   <!-- РАСКРАСКИ (06.11.2026, решение родителя): только раскраски — мои (за вещи и купленные) и магазин раскрасок; вещей здесь нет -->
-  <section class="screen" id="pbook">
-<div class="public-paint-hero"><div><small>Творческая мастерская</small><h1>Раскраски</h1><p>Открой любимую раскраску или выбери новую в магазине.</p></div><img src="paint-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024"></div>
-    <div class="bubble" id="pbookSay" style="margin:6px auto 0"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
-    <h3 class="shelf-h">Мои раскраски</h3>
-    <div class="paints" id="myPaints"></div>
-    <h3 class="shelf-h">Магазин раскрасок</h3>
-    <div class="pshop" id="paintShop"></div>
+  <section class="screen" id="pbook"><div class="cs-head cs-head-painter"><div class="cs-painter-copy"><span class="cs-eyebrow">Творческая мастерская</span><h1>Раскраски</h1><p>Открой любимую раскраску или выбери новую в магазине.</p></div><img class="cs-painter-mascot" src="belarusian-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024" decoding="async"></div>
+    <div class="bubble" id="pbookSay" style="margin:6px auto 0"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
+    <div class="cs-shelf"><h2>Мои раскраски</h2><div class="paints" id="myPaints"></div></div>
+    <div class="cs-shelf"><h2>Магазин раскрасок</h2><div class="pshop" id="paintShop"></div></div>
   </section>
 
-  <section class="screen" id="shop" data-wardrobe-studio="public-v2" aria-labelledby="wardrobe-title">
+  <section class="screen" id="shop" data-wardrobe-studio="v27" aria-labelledby="wardrobe-title">
     <div class="wardrobe-heading">
       <p class="wardrobe-kicker">КЛУБ · НАГРАДЫ</p>
       <h1 id="wardrobe-title" tabindex="-1">Гардероб Ух</h1>
@@ -1159,7 +1313,7 @@ html.preview-club-home{overflow:hidden}
       <section class="stage wardrobe-stage" aria-labelledby="wardrobe-stage-title">
         <h2 id="wardrobe-stage-title">Примерочная</h2>
         <div id="owlShop"></div>
-        <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+        <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span></span></div>
       </section>
       <div class="wardrobe-side">
         <section class="wardrobe-panel" aria-labelledby="wardrobe-owned-title">
@@ -1180,10 +1334,11 @@ html.preview-club-home{overflow:hidden}
   </section>
 
   <!-- РОДИТЕЛЯМ -->
-  <section class="screen" id="parent">
-    <h2 style="font-weight:900">Для родителей</h2>
-    <p style="color:var(--ink2);line-height:1.5;margin-top:0">Здесь видно, что Мила рассказала Ух. Всё хранится только в&nbsp;этом браузере.</p>
-    <label class="f">Что сейчас у Милы
+  <section class="screen" id="parent" data-parent-layout="v28" aria-labelledby="parent-cabinet-title">
+  <div class="parent-hero"><div><p class="parent-kicker">Топоух · для взрослых</p><h1 id="parent-cabinet-title" tabindex="-1">Кабинет родителя</h1><p>Подтверждения, настройки и дневник в одном месте.</p></div><span class="parent-local">Данные в этом браузере</span></div>
+  <section class="parent-card parent-priority" aria-labelledby="pc-pending"><h2 id="pc-pending">Ждут подтверждения</h2><div class="diary" id="parentPend"></div>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" id="parentConfirmButton" onclick="showConfirm()">Подтвердить дела</button></div></section>
+  <div class="parent-columns"><div class="parent-cell"><section class="parent-card " aria-labelledby="pc-routine"><h2 id="pc-routine">Режим и школа</h2><label class="f">Что сейчас у Алисы
       <select class="t" id="modeIn">
         <option value="auto">Здорова — школа, выходные и каникулы по календарю</option>
         <option value="sick">Болеет, сидит дома</option>
@@ -1193,36 +1348,22 @@ html.preview-club-home{overflow:hidden}
     <label class="f">Если болеет: в&nbsp;школу снова с (можно не заполнять)
       <input class="t" id="backIn" type="date">
     </label>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveMode()">Сохранить</button></div>
-    <label class="f">Тема завтрашнего урока (Ух спросит про неё вечером)
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveMode()">Сохранить</button></div></section><section class="parent-card " aria-labelledby="pc-topic"><h2 id="pc-topic">Тема урока</h2><label class="f">Тема завтрашнего урока (Ух спросит про неё вечером)
       <input class="t" id="topicIn" placeholder="например: парные согласные">
     </label>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div>
-    <h3 style="margin-top:20px">Ждут подтверждения</h3>
-    <div class="diary" id="parentPend"></div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="showConfirm()">Подтвердить дела</button></div>
-    <label class="f">Попросить Милу помочь (Ух покажет просьбу на главной)
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="saveTopic()">Сохранить тему</button></div></section></div><div class="parent-cell"><section class="parent-card " aria-labelledby="pc-request"><h2 id="pc-request">Просьба о помощи</h2><label class="f">Попросить Алису помочь (Ух покажет просьбу на главной)
       <input class="t" id="momIn" placeholder="например: убери, пожалуйста, игрушки">
     </label>
     <div class="chips" style="justify-content:flex-start">
       <button class="chip" onclick="sendMomAsk('Убери, пожалуйста, в своей комнате')">🧸 Убрать в комнате</button>
       <button class="chip" onclick="sendMomAsk('Помоги, пожалуйста, помыть посуду')">🍽️ Помыть посуду</button>
-      <button class="chip" onclick="sendMomAsk('Я занята — поиграй, пожалуйста, с Сашей')">🦖 Поиграть с Сашей</button>
+      <button class="chip" onclick="sendMomAsk('Я занята — поиграй, пожалуйста, с братиком')">🦖 Поиграть с братиком</button>
     </div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div>
-    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="twoTap(this,()=>{S.stars=0;save();setStars();toast('Звёзды обнулены')})">Обнулить звёзды</button> <button class="btn soft" onclick="twoTap(this,()=>{S.owned=[];S.wear={};save();dress();toast('Купленные вещи убраны')})">Убрать купленные вещи</button> <button class="btn soft" onclick="twoTap(this,()=>{S.help=null;S.pending=(S.pending||[]).filter(x=>x.d!==today()||/^(Мама просила|Задание)/.test(x.what));save();renderPending&&renderPending();toast('Дела «Помощницы» за сегодня сброшены')})">Сбросить «Помощницу» за сегодня</button></div>
-    <h3 style="margin-top:24px">☁️ Общая база</h3>
-    <div id="syncBox"></div>
-        <p id="persistNote">Здесь отдельный тестовый прогресс; импорт и фотографии отключены.</p>
-    <h3 style="margin-top:24px">Голоса</h3>
-    <p style="color:var(--ink2);font-size:14px;margin:0">Ух, Топа и&nbsp;английские слова говорят живыми записанными голосами. Настройки ниже — запасной голос устройства для фраз, которых нет в&nbsp;записи (например, с&nbsp;темой урока).</p>
-    <div id="voiceBox"></div>
-    <h3 style="margin-top:24px">Где Мила чаще ошибается</h3>
-    <p style="color:var(--ink2);font-size:14px;margin:0">После ошибки Ух объясняет правило и сразу даёт похожее слово. Здесь — какие правила путаются чаще.</p>
-    <div class="diary" id="mistList"></div>
-    <h3 style="margin-top:24px">Дневник разговоров</h3>
-    <div class="diary" id="diaryList"></div>
-  </section>
+    <div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="sendMomAsk()">Попросить</button></div></section><section class="parent-card " aria-labelledby="pc-sound"><h2 id="pc-sound">Музыка и звуки</h2><p>Музыку и звуковые эффекты можно включать по отдельности.</p><div class="parent-switches"><label><span>Фоновая музыка</span><input id="parentMusic" type="checkbox"></label><label><span>Звуковые эффекты</span><input id="parentEffects" type="checkbox"></label></div></section><section class="parent-card " aria-labelledby="pc-voice"><h2 id="pc-voice">Голоса</h2><p>Выберите голос устройства для фраз, у которых нет записи.</p><div id="voiceBox"></div></section></div></div>
+  <div class="parent-columns"><div class="parent-cell"><section class="parent-card " aria-labelledby="pc-diary"><h2 id="pc-diary">Дневник разговоров</h2><div class="diary" id="diaryList"></div></section></div><div class="parent-cell"><section class="parent-card " aria-labelledby="pc-mistakes"><h2 id="pc-mistakes">Частые ошибки</h2><p>Здесь видно, к каким правилам стоит ещё раз вернуться.</p><div class="diary" id="mistList"></div></section></div></div>
+  <details class="parent-card parent-tools"><summary>Хранение данных и сбросы</summary><div id="syncBox"></div>
+        <p id="persistNote">Прогресс хранится в этом браузере. Загрузка фотографий и семейная синхронизация отключены.</p><div class="row" style="justify-content:flex-start"><button class="btn soft" onclick="twoTap(this,()=>{S.stars=0;save();setStars();toast('Звёзды обнулены')})">Обнулить звёзды</button> <button class="btn soft" onclick="twoTap(this,()=>{S.owned=[];S.wear={};save();dress();toast('Купленные вещи убраны')})">Убрать купленные вещи</button> <button class="btn soft" onclick="twoTap(this,()=>{S.help=null;S.pending=(S.pending||[]).filter(x=>x.d!==today()||/^(Мама просила|Задание)/.test(x.what));save();renderPending&&renderPending();toast('Дела «Помощницы» за сегодня сброшены')})">Сбросить «Помощницу» за сегодня</button></div></details>
+ </section>
 </div>
 
 <template id="owlTpl">
@@ -1230,34 +1371,34 @@ html.preview-club-home{overflow:hidden}
   <defs><radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
   <ellipse cx="11" cy="72" rx="44" ry="7" fill="url(#uhShadow)"/>
   <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="48" y="-62" font-size="18">z</text><text x="60" y="-76" font-size="13">z</text></g>
-  <g class="body"><image class="pose" href="../img/uh-hello.webp" x="-79.35" y="-82" width="158.7" height="156"/>
-  <circle class="lid" cx="-8" cy="-37.4" r="14.5" fill="#efdcbd"/>
-  <circle class="lid" cx="29.7" cy="-37.4" r="14.5" fill="#efdcbd"/>
-  <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
-  <g class="acc acc-glasses"><image href="../img/ochki.webp" x="-26.9" y="-56.1" width="80.3" height="32.5"/></g>
-  <g class="acc acc-cap"><image href="../img/kolpak.webp" x="-51" y="-119.7" width="100" height="91.7"/></g>
-  <g class="acc acc-butterfly"><image class="flutter" href="../img/babochka-podruzhka.webp" x="-49.0" y="-93.2" width="38" height="38.5"/></g>
-  <g class="acc acc-bow"><image href="../img/bantik.webp" x="15.0" y="-87.4" width="44" height="34.8" transform="rotate(14 37 -70)"/></g>
-  <g class="acc acc-crown"><image href="../img/korona.webp" x="-24.2" y="-116.6" width="70" height="64.6"/></g>
-  <g class="acc acc-wizard"><image href="../img/shlyapa.webp" x="-35.2" y="-125" width="92" height="75.5"/></g>
-  <g class="acc acc-wreath"><image href="../img/venok.webp" x="-35.2" y="-98.0" width="92" height="48" preserveAspectRatio="none"/></g>
-  <g class="acc acc-phones"><image href="../img/naushniki.webp" x="-56.6" y="-90.4" width="135.3" height="80.7"/></g>
-  <g class="acc acc-shades"><image href="../img/temnye-ochki.webp" x="-31.5" y="-50.0" width="83.7" height="32.1"/></g>
-  <g class="acc acc-scarf"><image href="../img/sharf.webp" x="-43" y="-31" width="110" height="73" preserveAspectRatio="none"/></g>
-  <g class="acc acc-bowtie"><image href="../img/babochka.webp" x="-15.0" y="3.4" width="40" height="23.2"/></g>
-  <g class="acc acc-medal"><image href="../img/medal.webp" x="-22.0" y="-0.9" width="56" height="53.8"/></g>
-  <g class="acc acc-balloon"><image href="../img/sharik.webp" x="44.7" y="-83.0" width="49.7" height="95" transform="rotate(10 74 12)"/></g>
-  <g class="acc acc-pencil"><image href="../img/karandash.webp" x="46.8" y="-23.0" width="46.5" height="62"/></g>
-  <g class="acc acc-book"><image href="../img/knizhka.webp" x="39.0" y="1.5" width="50" height="45.0"/></g>
+  <g class="body"><image class="pose" href="belarusian-assets/ukh.svg" x="-80" y="-100" width="160" height="188"/>
+  <circle class="lid" cx="-13.7" cy="-22.2" r="7.4" fill="#f8f1df"/>
+  <circle class="lid" cx="13.6" cy="-31.1" r="7.3" fill="#f8f2e0"/>
+  <g class="zz"><path d="M-20 -22 q6 5 12 0 M7 -31 q6 5 12 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
+  <g class="acc acc-glasses"><image href="wardrobe-assets/glasses.svg" x="-26.9" y="-56.1" width="80.3" height="32.5"/></g>
+  <g class="acc acc-cap"><image href="wardrobe-assets/cap.svg" x="-51" y="-119.7" width="100" height="91.7"/></g>
+  <g class="acc acc-butterfly"><image class="flutter" href="wardrobe-assets/butterfly.svg" x="-49.0" y="-93.2" width="38" height="38.5"/></g>
+  <g class="acc acc-bow"><image href="wardrobe-assets/bow.svg" x="15.0" y="-87.4" width="44" height="34.8" transform="rotate(14 37 -70)"/></g>
+  <g class="acc acc-crown"><image href="wardrobe-assets/crown.svg" x="-24.2" y="-116.6" width="70" height="64.6"/></g>
+  <g class="acc acc-wizard"><image href="wardrobe-assets/wizard.svg" x="-35.2" y="-125" width="92" height="75.5"/></g>
+  <g class="acc acc-wreath"><image href="wardrobe-assets/wreath.svg" x="-35.2" y="-98.0" width="92" height="48" preserveAspectRatio="none"/></g>
+  <g class="acc acc-phones"><image href="wardrobe-assets/phones.svg" x="-56.6" y="-90.4" width="135.3" height="80.7"/></g>
+  <g class="acc acc-shades"><image href="wardrobe-assets/shades.svg" x="-31.5" y="-50.0" width="83.7" height="32.1"/></g>
+  <g class="acc acc-scarf"><image href="wardrobe-assets/scarf.svg" x="-43" y="-31" width="110" height="73" preserveAspectRatio="none"/></g>
+  <g class="acc acc-bowtie"><image href="wardrobe-assets/bowtie.svg" x="-15.0" y="3.4" width="40" height="23.2"/></g>
+  <g class="acc acc-medal"><image href="wardrobe-assets/medal.svg" x="-22.0" y="-0.9" width="56" height="53.8"/></g>
+  <g class="acc acc-balloon"><image href="wardrobe-assets/balloon.svg" x="44.7" y="-83.0" width="49.7" height="95" transform="rotate(10 74 12)"/></g>
+  <g class="acc acc-pencil"><image href="wardrobe-assets/pencil.svg" x="46.8" y="-23.0" width="46.5" height="62"/></g>
+  <g class="acc acc-book"><image href="wardrobe-assets/book.svg" x="39.0" y="1.5" width="50" height="45.0"/></g>
 </svg>
 </template>
 
 <template id="babyTpl">
-<svg class="owl small" viewBox="-80 -88 160 175" aria-label="Братик Топа">
+<svg class="owl small" viewBox="-80 -88 160 175" aria-label="Дракончик Топа">
   <defs><radialGradient id="uhShadow"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>
   <ellipse cx="11" cy="72" rx="44" ry="7" fill="url(#uhShadow)"/>
   <g class="zz" fill="#8ea0ff" font-family="Nunito" font-weight="900"><text x="48" y="-62" font-size="18">z</text><text x="60" y="-76" font-size="13">z</text></g>
-  <g class="body"><image class="pose" href="../img/topa-hello.webp" x="-62" y="-84" width="124" height="160"/>
+  <g class="body"><image class="pose" href="belarusian-assets/topa.svg" x="-76" y="-87" width="152" height="162"/>
   <!-- у Топы нет совиных век: моргали бежевыми кругами на месте глаз Ух -->
   <g class="zz"><path d="M-19 -36 q11 8 22 0 M18.5 -36 q11 8 22 0" stroke="#5a3a2a" stroke-width="3" fill="none" stroke-linecap="round"/></g>
 </g>
@@ -1270,20 +1411,12 @@ const KEY='topouh-v2-github-local-v1', PREVIEW_VIEWER='topouh-v2-github-viewer';
 let S={trip:{done:{},stamps:0},stars:0,owned:[],wear:{},diary:[],mission:null,missionDate:null,talkDate:null,topic:'',mode:'auto',backDate:''};
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
 if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
-/* разовое обнуление звёзд (04.11.2026) */
-
-function applyResets(){let ch=false;if(S.ownedReset!==1){S.owned=[];S.wear={};S.ownedReset=1;ch=true}
-  /* 06.11.2026: бантик пропал из-за перезаписи общей базы старой копией — возвращаем один раз */
-  if(S.bowBack!==1){S.owned=S.owned||[];if(!S.owned.includes('bow'))S.owned.push('bow');S.bowBack=1;ch=true}
-  return ch}
-if(applyResets()){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-if(S.starsReset!==1){S.stars=0;S.starsReset=1;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+/* Keep existing GitHub saves as-is: do not reset rewards or inventory. */
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
 /* Family sync is intentionally absent from the private draft. */
-const FAM_KEY='topouh-phase1-family-disabled';
 const cloudInit=async()=>{}, cloudPush=()=>{};
-function renderSync(){const n=document.getElementById('syncBox');if(n)n.textContent='В этом предпросмотре семейная синхронизация отключена.'}
+function renderSync(){const n=document.getElementById('syncBox');if(n)n.textContent='Синхронизации с закрытой версией нет.'}
 const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 
 /* ---------- типографика: без висячих строк ---------- */
@@ -1314,7 +1447,7 @@ const ruVoices=()=>('speechSynthesis' in window)?speechSynthesis.getVoices().fil
 const enVoices=()=>('speechSynthesis' in window)?speechSynthesis.getVoices().filter(v=>v.localService===true&&v.lang.startsWith('en')):[];
 function findVoice(list,name,fallback){return list.find(v=>v.name===name)||list.find(v=>fallback.test(v.name))||list[0]||null}
 /* запасной голос устройства */
-function robot(t,who,cb){
+function robot(t,who,cb,tone){
   if(!('speechSynthesis' in window)){cb&&cb();return}
   let u;
   if(who==='en'){
@@ -1324,7 +1457,8 @@ function robot(t,who,cb){
   }else{
     const c=vset(who),pr=VOICE_PRESETS.find(p=>p.k===c.p)||VOICE_PRESETS[0];
     u=new SpeechSynthesisUtterance(t.replace(/[^\p{L}\p{N}\s.,!?…—-]/gu,''));
-    u.lang='ru-RU';const v=findVoice(ruVoices(),c.name,/Milena|Милена|Alyona|Google/i);if(v)u.voice=v;u.pitch=pr.pitch;u.rate=pr.rate;
+    u.lang='ru-RU';const v=findVoice(ruVoices(),c.name,/Milena|Милена|Alyona|Google/i);if(v)u.voice=v;const expression={bright:[.09,1.04],soft:[-.07,.92],play:[.17,1.05]}[tone]||[0,1];
+    u.pitch=Math.max(.5,Math.min(2,pr.pitch+expression[0]));u.rate=pr.rate*expression[1];
   }
   if(cb){u.onend=cb;u.onerror=cb}
   if(u.voice&&u.voice.localService===true)speechSynthesis.speak(u);else if(cb)cb();
@@ -1340,17 +1474,17 @@ function splitS(t){
 let REC={uh:new Set(),baby:new Set(),en:new Set()};
 /* No recordings are copied to this draft. */
 const player=typeof Audio!=='undefined'?new Audio():null;let playTok=0;
-function speak(t,who){
+function speak(t,who,tone){
   who=who||'uh';
   const parts=(who==='en'?[t]:splitS(t)).filter(s=>vnorm(s)).map(s=>{const h=vhash(vnorm(s));return {s,src:REC[who].has(h)?'audio/'+who+'/'+h+'.mp3':null}});
-  const tok=++playTok;if(player)player.pause();if('speechSynthesis' in window)speechSynthesis.cancel();
+  const tok=++playTok;window.TopouhAudio?.duck(parts.length>0);if(player)player.pause();if('speechSynthesis' in window)speechSynthesis.cancel();
   let i=0;
   const next=()=>{
-    if(tok!==playTok||i>=parts.length)return;const p=parts[i++];
+    if(tok!==playTok)return;if(i>=parts.length){window.TopouhAudio?.duck(false);return}const p=parts[i++];
     /* 07.11.2026: двойной голос — прерванный запуск (AbortError) раньше дочитывался запасным голосом поверх новой фразы */
-    const fb=e=>{if(tok!==playTok||(e&&e.name==='AbortError'))return;robot(p.s,who,next)};
+    const fb=e=>{if(tok!==playTok||(e&&e.name==='AbortError'))return;robot(p.s,who,next,tone)};
     if(p.src&&player){player.onended=next;player.onerror=()=>fb();player.src=p.src;player.play().catch(fb)}
-    else robot(p.s,who,next);
+    else robot(p.s,who,next,tone);
   };
   next();
 }
@@ -1375,9 +1509,9 @@ function mountOwl(id,small,tpl){
   el.appendChild(svg);owls[id]=svg;if(!tpl)setPose(id);dress();
 }
 /* позы Ух: hello — здоровается, pointer — урок, book — правило/задание, star — награда */
-const POSE={owlHome:'hello',owlTalk:'hello',owlGame:'pointer',owlShop:'star'};
-if(typeof Image!=='undefined')['hello','pointer','book','star'].forEach(n=>{const i=new Image();i.src='../img/uh-'+n+'.webp'});
-function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);const pn=name||POSE[id]||'hello';svg.dataset.pose=pn;im.setAttribute('href','../img/uh-'+pn+'.webp')}
+const MASCOT_SVG=Object.freeze({hello:'belarusian-assets/ukh.svg',pointer:'belarusian-assets/ukh-guide.svg',book:'belarusian-assets/ukh-reading.svg',star:'belarusian-assets/ukh-celebrate.svg',wardrobe:'belarusian-assets/wardrobe-ukh.svg',topa:'belarusian-assets/topa.svg'});
+const POSE={owlHome:'hello',owlGame:'pointer',owlShop:'wardrobe'};
+function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySelector('image.pose');if(!im||svg.getAttribute('aria-label')!=='Совёнок Ух')return;clearTimeout(svg._pt);const pn=name||POSE[id]||'hello';svg.dataset.pose=pn;im.setAttribute('href',MASCOT_SVG[pn]||MASCOT_SVG.hello)}
 function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;setPose(id,'star');svg._pt=setTimeout(()=>setPose(id,back),1700)}
 function dress(){
   Object.values(owls).forEach(svg=>{
@@ -1390,10 +1524,9 @@ function dress(){
 function cheer(svg){svg=svg||owls[current()];if(!svg)return;svg.classList.remove('happy');void svg.getBBox();svg.classList.add('happy')}
 const TICKLE=['Хи-хи, щекотно!','Ух-ух! Я тут!','Пушистая, правда?','Ой, мои пёрышки!'];
 /* фото-аватар: только в этом браузере */
-const PHOTO_KEY='topouh-phase1-photo-disabled';
 function showPhoto(){}
 function meClick(){openParent()}
-const BABY_TICKLE=['Р-р-р! Хи-хи!','Ой! Я маленький, но зубастый!','Мила, ты моя самая любимая!','Р-р-р! Обними меня!'];
+const BABY_TICKLE=['Р-р-р! Хи-хи!','Ой! Я маленький, но зубастый!','Алиса, ты моя самая любимая!','Р-р-р! Обними меня!'];
 
 /* ---------- общее ---------- */
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1517,7 +1650,7 @@ function renderMom(){
   else b.style.display='none';
 }
 function missionDone(){
-  const home=/комнат|посуд|Саш|вещи по местам|маме/i.test(S.mission);
+  const home=/комнат|посуд|брат|поигра|вещи по местам|маме/i.test(S.mission);
   S.diary.unshift({d:today(),q:'Задание: '+S.mission,a:'Выполнила'});
   if(home)addPending('Задание: '+S.mission,2);else addStars(2,'за задание');
   S.mission=null;save();renderHome();
@@ -1531,15 +1664,15 @@ const diaryToday=re=>(S.diary||[]).some(d=>d.d===today()&&re.test(d.q));
 function pathSteps(){
   const L=dayLesson(),x=LESSONS[L.k].list[L.i],md=mode(),st=[];
   const missDone=!S.mission&&diaryToday(/^Задание: /);
-  if(S.mission||missDone)st.push({k:'mission',img:'../img/ryukzak.webp',t:md==='school'?'В школу':'Задание от Ух',p:missDone?'выполнено':'задание от Ух',done:missDone,star:2,go:()=>stepCard('mission')});
-  st.push({k:'lesson',img:'../img/ic/smart.webp',t:'Урок дня',p:LESSONS[L.k].name+': '+x.n,done:!!L.done,star:2,go:startToday});
-  {const nk=dnNextSchool(),hw=nk?dnHwFor(nk):[];if(hw.length){const nd=new Date(nk+'T12:00');st.push({k:'hw',img:'../img/words/notebook.webp',t:'Домашка',p:'на '+DN_DAYS[nd.getDay()].toLowerCase(),done:hw.every(h=>h.done||h.pend),star:hw.length,go:()=>openDnev(nk)})}}
+  if(S.mission||missDone)st.push({k:'mission',img:'img/ryukzak.webp',t:md==='school'?'В школу':'Задание от Ух',p:missDone?'выполнено':'задание от Ух',done:missDone,star:2,go:()=>stepCard('mission')});
+  st.push({k:'lesson',img:'img/ic/smart.webp',t:'Урок дня',p:LESSONS[L.k].name+': '+x.n,done:!!L.done,star:2,go:startToday});
+  {const nk=dnNextSchool(),hw=nk?dnHwFor(nk):[];if(hw.length){const nd=new Date(nk+'T12:00');st.push({k:'hw',img:'img/words/notebook.webp',t:'Домашка',p:'на '+DN_DAYS[nd.getDay()].toLowerCase(),done:hw.every(h=>h.done||h.pend),star:hw.length,go:()=>openDnev(nk)})}}
   const momDoneT=!(S.momAsk&&S.momAsk.t)&&diaryToday(/^Мама просила: /);
-  if((S.momAsk&&S.momAsk.t)||momDoneT)st.push({k:'mom',img:'../img/ic/mom.webp',t:'Мама просит',p:momDoneT?'сделано':'записка от мамы',done:momDoneT,star:3,go:()=>stepCard('mom')});
-  st.push({k:'help',img:'../img/ic/dustpan.webp',t:'Помочь маме',p:'уборка, посуда, Саша',done:!!(S.help&&S.help.d===today()&&S.help.done.length),star:3,go:startHelp});
-  st.push({k:'talk',img:'../img/kruzhka.webp',t:md==='school'?'Вечером':'Поболтать',p:'разговор с Ух',done:S.talkDate===today(),star:8,go:startTalk});
+  if((S.momAsk&&S.momAsk.t)||momDoneT)st.push({k:'mom',img:'img/ic/mom.webp',t:'Мама просит',p:momDoneT?'сделано':'записка от мамы',done:momDoneT,star:3,go:()=>stepCard('mom')});
+  st.push({k:'help',img:'img/ic/dustpan.webp',t:'Помочь маме',p:'уборка, посуда, игры',done:!!(S.help&&S.help.d===today()&&S.help.done.length),star:3,go:startHelp});
+  st.push({k:'talk',img:'img/kruzhka.webp',t:md==='school'?'Вечером':'Поболтать',p:'разговор с Ух',done:S.talkDate===today(),star:8,go:startTalk});
   const all=st.every(s=>s.done);
-  st.push({k:'gift',img:'../img/ic/gift.webp',t:'Сюрприз',p:all?(S.giftDate===today()?'открыт':'открой!'):'в конце дня',done:S.giftDate===today(),lock:!all,star:3,go:openGift});
+  st.push({k:'gift',img:'img/ic/gift.webp',t:'Сюрприз',p:all?(S.giftDate===today()?'открыт':'открой!'):'в конце дня',done:S.giftDate===today(),lock:!all,star:3,go:openGift});
   return st}
 const pathX=()=>56;
 function renderPath(){
@@ -1582,7 +1715,7 @@ let pathW=innerWidth;window.addEventListener('resize',()=>{const a=(innerWidth>=
 function stepCard(k){document.getElementById('scClose').textContent='Потом';
   const c=document.getElementById('stepCard'),b=document.getElementById('scBtn');
   const done=k==='mission'?!S.mission:!(S.momAsk&&S.momAsk.t);
-  document.getElementById('scImg').src=k==='mission'?'../img/ryukzak.webp':'../img/ic/mom.webp';
+  document.getElementById('scImg').src=k==='mission'?'img/ryukzak.webp':'img/ic/mom.webp';
   document.getElementById('scTitle').textContent=typo(k==='mission'?MODE_TXT[mode()].mission:'Мама просит');
   document.getElementById('scText').textContent=typo(done?'Уже сделано! Ты молодец.':(k==='mission'?S.mission:S.momAsk.t));
   b.style.display=done?'none':'';b.onclick=()=>{c.classList.remove('on');k==='mission'?missionDone():momDone()};
@@ -1595,7 +1728,7 @@ function openGift(){
   celebrate('Весь день пройден! Ух гордится тобой.');
 }
 function openPaints(){go('pbook');renderPbook();say('pbook','Что будем раскрашивать? Новые раскраски можно купить за звёздочки.')}
-
+/* ---------- Дневник Алисы — как бумажный (06.11.2026) ---------- */
 /* S.dn = {sched:{1..6:[предметы]}, hw:{'ГГГГ-ММ-ДД':[{id,s,t,done,pend}]}}; задание пишется в день, на который его задали */
 const DN_SUBJ=['Русский язык','Литературное чтение','Математика','Белорусский язык','Человек и мир','Английский язык','Изобразительное искусство','Музыка','Трудовое обучение','Физкультура'];
 /* куда ведёт «Потренироваться»; точные уроки добавим, когда заполним программу (поле go у задания) */
@@ -1627,11 +1760,12 @@ function renderDnev(){
   const box=document.getElementById('dnBox'),D=DN();box.innerHTML='';
   const sat=new Date(dnMon);sat.setDate(sat.getDate()+5);
   const head=document.createElement('div');head.className='dn-head';
-  head.innerHTML='<button class="dn-arr" aria-label="Прошлая неделя">‹</button><div class="dn-week"><b>Дневник</b><span></span></div><button class="dn-arr" aria-label="Следующая неделя">›</button>';
-  head.querySelector('span').textContent=dnMon.getDate()+' '+(dnMon.getMonth()===sat.getMonth()?'':DN_MON[dnMon.getMonth()]+' ')+'— '+sat.getDate()+' '+DN_MON[sat.getMonth()]+' '+sat.getFullYear();
-  const [pv,nx]=head.querySelectorAll('.dn-arr');pv.onclick=()=>dnShiftWeek(-1);nx.onclick=()=>dnShiftWeek(1);box.appendChild(head);
-  const tools=document.createElement('div');tools.className='dn-tools';tools.innerHTML='<button class="btn soft">Сегодня</button><button class="btn soft">Расписание уроков</button>';
-  tools.children[0].onclick=()=>openDnev();tools.children[1].onclick=dnSchedEdit;box.appendChild(tools);
+  head.innerHTML='<div class="dn-week"><p class="dn-kicker">Учебный клуб</p><h1>Дневник</h1><p class="dn-week-sub">Расписание и задания на неделю</p></div><nav class="dn-weeknav" aria-label="Выбор недели"><button type="button" class="dn-arr" aria-label="Прошлая неделя">‹</button><span class="dn-range" aria-live="polite"></span><button type="button" class="dn-arr" aria-label="Следующая неделя">›</button></nav>';
+  const range=new Intl.DateTimeFormat('ru',{day:'numeric',month:'long'});
+  head.querySelector('.dn-range').textContent=(dnMon.getMonth()===sat.getMonth()?dnMon.getDate():range.format(dnMon))+' – '+range.format(sat)+' '+sat.getFullYear();
+  const [pv,nx]=head.querySelectorAll('.dn-arr');pv.onclick=()=>{dnShiftWeek(-1);box.querySelector('.dn-arr:first-child')?.focus()};nx.onclick=()=>{dnShiftWeek(1);box.querySelector('.dn-arr:last-child')?.focus()};box.appendChild(head);
+  const tools=document.createElement('div');tools.className='dn-tools';tools.innerHTML='<span class="dn-section-title">Моя неделя</span><button type="button" class="btn soft">Сегодня</button><button type="button" class="btn soft">Расписание уроков</button>';
+  const [currentWeek,schedule]=tools.querySelectorAll('button');currentWeek.onclick=()=>{openDnev();(box.querySelector('.dn-day.today .dn-dh b')||box.querySelector('.dn-tools button'))?.focus()};schedule.onclick=dnSchedEdit;box.appendChild(tools);
   const book=document.createElement('div');book.className='dn-book';
   for(let p=0;p<2;p++){const page=document.createElement('div');page.className='dn-page';
     for(let k=0;k<3;k++){const i=p*3+k,d=new Date(dnMon);d.setDate(d.getDate()+i);page.appendChild(dnDay(d))}book.appendChild(page)}
@@ -1642,23 +1776,24 @@ function dnDay(d){
   const D=DN(),key=dnYmd(d),wd=d.getDay(),rest=restName(d),list=D.hw[key]||[],subs=(D.sched[wd]||[]).slice();
   list.forEach(h=>{if(!subs.includes(h.s))subs.push(h.s)});
   const el=document.createElement('div');el.className='dn-day'+(key===today()?' today':'');
-  el.innerHTML='<div class="dn-dh"><b></b><span></span></div>';el.querySelector('b').textContent=DN_DAYS[wd];el.querySelector('span').textContent=d.getDate()+' '+DN_MON[d.getMonth()];
+  el.innerHTML='<div class="dn-dh"><b tabindex="-1"></b><time></time></div>';el.querySelector('b').textContent=DN_DAYS[wd];const dayDate=el.querySelector('time');dayDate.textContent=d.getDate()+' '+DN_MON[d.getMonth()];dayDate.dateTime=key;
+  if(key===today()){el.setAttribute('aria-current','date');el.querySelector('.dn-dh').insertAdjacentHTML('beforeend','<span class="dn-today-tag">Сегодня</span>');}
   if(rest){el.insertAdjacentHTML('beforeend','<div class="dn-rest"></div>');el.querySelector('.dn-rest').textContent=rest[0].toUpperCase()+rest.slice(1)}
   const tb=document.createElement('div');tb.className='dn-rows';
   subs.forEach((s,n)=>{const hs=list.filter(h=>h.s===s);(hs.length?hs:[null]).forEach((h,j)=>tb.appendChild(dnRow(key,s,h,j?'':String(n+1))))});
-  if(!subs.length&&!rest)tb.insertAdjacentHTML('beforeend','<div class="dn-row empty"><i></i><span class="dn-s"></span><span class="dn-t"></span></div>');
+  if(!subs.length&&!rest)tb.insertAdjacentHTML('beforeend','<p class="dn-empty">Пока нет уроков и заданий.</p>');
   el.appendChild(tb);
-  const add=document.createElement('button');add.className='dn-add';add.textContent='+ записать задание';add.onclick=()=>dnEdit(key,null,'');el.appendChild(add);
+  const add=document.createElement('button');add.className='dn-add';add.type='button';add.textContent='+ Записать задание';add.onclick=()=>dnEdit(key,null,'');el.appendChild(add);
   return el}
 function dnRow(key,s,h,num){
   const r=document.createElement('div');r.className='dn-row'+(h&&(h.done||h.pend)?' ok':'');
-  r.innerHTML='<i></i><span class="dn-s"></span><span class="dn-t"></span><span class="dn-act"></span>';r.querySelector('i').textContent=num;
-  r.querySelector('.dn-s').textContent=s;r.querySelector('.dn-t').textContent=h?h.t+((h.pg&&!/с\.?\s*\d/i.test(h.t))||h.no?' · '+[h.pg?'с. '+h.pg:'',h.no?'№ '+h.no:''].filter(Boolean).join(', '):''):'';
+  r.innerHTML='<i></i><button type="button" class="dn-s"></button><span class="dn-t"></span><span class="dn-act"></span>';r.querySelector('i').textContent=num;
+  const subject=r.querySelector('.dn-s');subject.textContent=s;subject.setAttribute('aria-label',s+': '+(h?'изменить задание':'записать задание'));r.querySelector('.dn-t').textContent=h?h.t+((h.pg&&!/с\.?\s*\d/i.test(h.t))||h.no?' · '+[h.pg?'с. '+h.pg:'',h.no?'№ '+h.no:''].filter(Boolean).join(', '):''):'';
   r.onclick=e=>{if(e.target.closest('.dn-act'))return;dnEdit(key,h,s)};
   const a=r.querySelector('.dn-act');
-  if(h){const ok=document.createElement('button');ok.className='dn-ok';ok.textContent=h.done||h.pend?'✓':'Сделала';ok.title='Отметить, что сделала';
+  if(h){const ok=document.createElement('button');ok.className='dn-ok';ok.type='button';ok.textContent=h.done?'✓ Готово':h.pend?'На проверке':'Отметить';ok.dataset.status=h.done?'done':h.pend?'pending':'todo';ok.title=h.done?'Уже сделано':h.pend?'Ждёт подтверждения':'Отметить, что сделала';
       ok.onclick=()=>{if(h.done||h.pend){toast(h.pend?'Ждёт подтверждения мамы или папы':'Уже сделано!');return}h.pend=today();addPending('Домашнее задание: '+s+' — '+h.t,1);save();cheer();renderDnev();if(document.getElementById('home').classList.contains('on'))renderPath()};a.appendChild(ok);
-    if(h.go||DN_GO[s]){const p=document.createElement('button');p.className='dn-go';p.textContent='▶';p.title='Потренироваться';p.setAttribute('aria-label','Потренироваться');p.onclick=()=>{document.getElementById('dnModal').classList.remove('on');dnGoHw(s,h)};a.appendChild(p)}}
+    if(h.go||DN_GO[s]){const p=document.createElement('button');p.className='dn-go';p.type='button';p.textContent='Потренироваться';p.title='Потренироваться';p.setAttribute('aria-label','Потренироваться');p.onclick=()=>{document.getElementById('dnModal').classList.remove('on');dnGoHw(s,h)};a.appendChild(p)}}
   return r}
 /* окно записи задания */
 function dnModal(html){const m=document.getElementById('dnModal'),c=document.getElementById('dnCard');c.innerHTML=html;m.classList.add('on');return c}
@@ -1693,26 +1828,26 @@ function dnSchedEdit(){
   draw();c.querySelector('.row .btn').onclick=()=>{document.getElementById('dnModal').classList.remove('on');renderDnev()};
 }
 function dnHwFor(key){return (DN().hw[key]||[])}
-
+/* ---------- помощница: уборка, посуда, игры с братиком ---------- */
 const HELP=[
   {k:'room',ic:'🧸',img:'help-room',n:'Уборка в комнате',p:'Наперегонки с Ух!',stars:4},
   {k:'dishes',ic:'🍽️',img:'help-dishes',n:'Помыть посуду',p:'Пусть всё блестит',stars:3},
-  {k:'lesha',ic:'🦖',img:'help-lesha',n:'Поиграть с Сашей',p:'Когда мама занята',stars:3}
+  {k:'lesha',ic:'🦖',img:'',n:'Поиграть с братиком',p:'Когда мама занята',stars:3}
 ];
 const ROOM=[['🧸','Игрушки — по домикам','room-toys'],['👕','Одежда — в шкаф','room-clothes'],['📚','Книжки — на полку','room-books'],['✏️','Стол — чистый','room-desk'],['🛏️','Кровать заправлена','room-bed'],['🗑️','Мусор — в ведро','room-trash']];
 const DISH=[['🥛','Чашки и стаканы','dish-cups'],['🍽️','Тарелки','dish-plates'],['🥄','Ложки и вилки','dish-spoons'],['🧽','Раковина чистая, губка отжата','dish-sink']];
-const helpImg=(el,k,e)=>{if(k)el.innerHTML='<img src="../img/help/'+k+'.webp" alt="">';else el.textContent=e};
+const helpImg=(el,k,e)=>{if(k)el.innerHTML='<img src="img/help/'+k+'.webp" alt="">';else el.textContent=e};
 const LESHA_IDEAS=[
-  {ic:'🧱',t:'Постройте из кубиков высокую башню. А потом пусть Саша её сломает — бух!'},
+  {ic:'🧱',t:'Постройте из кубиков высокую башню. А потом пусть братик её сломает — бух!'},
   {ic:'🚗',t:'Устройте гонки машинок по коридору. Чья машинка первой доедет до двери?'},
-  {ic:'📖',t:'Почитай Саше книжку с картинками. Спрашивай его: а где тут собачка?'},
-  {ic:'🙈',t:'Спрячь игрушку в комнате, а Саша пусть ищет. Подсказывай: тепло, теплее, горячо!'},
-  {ic:'🖍️',t:'Порисуйте вместе. Ты рисуешь домик, а Саша — солнышко.'},
-  {ic:'🧩',t:'Соберите вместе пазл. Дай Саше вставить последний кусочек!'},
+  {ic:'📖',t:'Почитай братику книжку с картинками. Спрашивай его: а где тут собачка?'},
+  {ic:'🙈',t:'Спрячь игрушку в комнате, а братик пусть ищет. Подсказывай: тепло, теплее, горячо!'},
+  {ic:'🖍️',t:'Порисуйте вместе. Ты рисуешь домик, а братик — солнышко.'},
+  {ic:'🧩',t:'Соберите вместе пазл. Дай братику вставить последний кусочек!'},
   {ic:'💃',t:'Устройте танцы под весёлую песенку. Кто станцует смешнее?'},
-  {ic:'🎒',t:'Положи игрушку в мешочек, а Саша пусть угадает её на ощупь.'},
-  {ic:'🦖',t:'Открой Саше его приложение с Топой и помоги ему поиграть.'},
-  {ic:'🐻',t:'Поиграйте в доктора: полечите мишку, как мама лечит вас.'}
+  {ic:'🎒',t:'Положи игрушку в мешочек, а братик пусть угадает её на ощупь.'},
+  {ic:'🦖',t:'Выберите игру с Топой и попробуйте сыграть вместе.'},
+  {ic:'🐻',t:'Поиграйте в доктора: полечите мишку, как в сказке про ветеринара.'}
 ];
 const ROOM_OK=['Ух ты, быстро!','Красота! Дальше!','Ух-ух, вот это скорость!','Отлично! Комната уже улыбается!','Так держать!'];
 const DISH_OK=['Блестит!','Чистота!','Ух ты, как сверкает!','Молодец! Ещё немножко!'];
@@ -1721,7 +1856,7 @@ const helpDoneToday=k=>S.help&&S.help.d===today()&&S.help.done.includes(k);
 function stopHelpTimer(){if(H&&H.iv){clearInterval(H.iv);H.iv=null}}
 function startHelp(){
   stopHelpTimer();go('help');setPose('owlHelp','hello');
-  document.getElementById('helpBody').style.display='none';document.getElementById('helpRow').innerHTML='';
+  document.getElementById('helpBody').style.display='none';document.getElementById('helpRow').innerHTML='';document.getElementById('helpReceipt').hidden=true;
   const M=document.getElementById('helpMenu');M.style.display='';M.innerHTML='';
   HELP.forEach(h=>{const b=document.createElement('button');b.className='task';
     b.innerHTML='<div class="ic"></div><h3></h3><p></p>'+(helpDoneToday(h.k)?'<span class="badge">✓ Сегодня</span>':'');
@@ -1737,9 +1872,9 @@ function startChecks(k){
   document.getElementById('helpMenu').style.display='none';document.getElementById('helpBody').style.display='';
   document.getElementById('helpIdea').style.display='none';
   const C=document.getElementById('helpChecks');C.innerHTML='';
-  list.forEach((x,i)=>{const b=document.createElement('button');b.className='chk';b.innerHTML='<span class="ic"></span><span></span>';
+  list.forEach((x,i)=>{const b=document.createElement('button');b.className='chk';b.setAttribute('aria-pressed','false');b.innerHTML='<span class="ic"></span><span></span>';
     helpImg(b.children[0],x[2],x[0]);b.children[1].textContent=x[1].replace(/ — /,'\u00a0— ').replace(/(^|\s)([а-яё]{1,2})\s/gi,'$1$2\u00a0');
-    b.onclick=()=>{if(H.on.has(i))return;H.on.add(i);b.classList.add('on');cheer();
+    b.onclick=()=>{if(H.on.has(i))return;H.on.add(i);b.classList.add('on');b.setAttribute('aria-pressed','true');cheer();
       if(H.on.size===list.length)finishChecks();else say('help',pick(room?ROOM_OK:DISH_OK))};
     C.appendChild(b)});
   const T=document.getElementById('helpTimer');T.style.display='none';T.classList.remove('low');
@@ -1773,11 +1908,11 @@ function startLesha(){
   const I=document.getElementById('helpIdea');I.style.display='';
   let last=-1;
   const next=()=>{let i;do{i=Math.floor(Math.random()*LESHA_IDEAS.length)}while(i===last&&LESHA_IDEAS.length>1);last=i;
-    const x=LESHA_IDEAS[i];I.innerHTML='<button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span class="ic"></span><span></span>';I.children[1].textContent=x.ic;I.children[2].textContent=typo(x.t);
+    const x=LESHA_IDEAS[i];I.innerHTML='<button class="say" aria-label="Послушать"><img src="img/ic/speaker.webp" alt=""></button><span class="ic"></span><span></span>';I.children[1].textContent=x.ic;I.children[2].textContent=typo(x.t);
     I.children[0].onclick=()=>speak(typo(x.t),'uh');
-    say('help',pick(['Вот моя идея!','А как тебе такая игра?','Саше точно понравится!','Попробуем вот так?']))};
+    say('help',pick(['Вот моя идея!','А как тебе такая игра?','братику точно понравится!','Попробуем вот так?']))};
   next();
-  helpRow([['Другая идея',next,1],['Поиграли!',()=>finishHelp('lesha','Поиграла с Сашей, пока мама была занята','Спасибо! Ты отличная старшая сестра. Саше с тобой так весело, а мама смогла спокойно доделать дела!')],['← Выбрать другое',startHelp,1]]);
+  helpRow([['Другая идея',next,1],['Поиграли!',()=>finishHelp('lesha','Поиграла с братиком, пока мама была занята','Спасибо! Ты отличная старшая сестра. Братику с тобой так весело, а мама смогла спокойно доделать дела!')],['← Выбрать другое',startHelp,1]]);
 }
 /* домашние дела: звёзды только после подтверждения мамы или папы */
 function addPending(what,stars){
@@ -1792,6 +1927,9 @@ function finishHelp(k,diary,msg){
   S.diary.unshift({d:today(),q:'Помогла маме',a:diary});save();cheer();
   if(first){addPending(diary,h.stars);msg+=' Покажи маме или папе — пусть подтвердят, и звёздочки твои!'}
   say('help',msg);
+  const receipt=document.getElementById('helpReceipt');
+  receipt.textContent=first?'Дело отмечено. Звёзды появятся после подтверждения мамы или папы.':'Дело отмечено. Звёзды за него сегодня повторно не начисляются.';
+  receipt.hidden=false;
   helpRow([['Ещё помочь',startHelp],['Домой',()=>go('home'),1]]);
 }
 /* просьба мамы (пишется в «Для родителей») */
@@ -1805,7 +1943,7 @@ function momDone(){
 let pinCb=null;
 /* вход для взрослых: пример, который ребёнок не решит (кода нет) */
 let pinVal='',gateA=0,gateB=0;
-
+/* 07.11.2026 (просьба родителя): пример сложнее — 2 × N + 100,  */
 function gateNew(){gateA=2;gateB=3+Math.floor(Math.random()*7);
   document.getElementById('pinHint').textContent=typo('Сколько будет 2 × '+gateB+' + 100?');pinVal='';pinDraw()}
 function pinDraw(){const d=document.getElementById('pinDots');d.textContent=pinVal||'…'}
@@ -1824,7 +1962,7 @@ function pinOk(){
   const cb=pinCb;pinClose();cb&&cb();
 }
 function checkPersist(){}
-function openParent(){askPin(()=>go('parent'))}
+function openParent(){askPin(()=>{go('parent');const h=document.querySelector('#parent h1');if(h){h.tabIndex=-1;h.focus({preventScroll:true})}})}
 function openConfirm(){askPin(showConfirm)}
 function showConfirm(){
   const L=document.getElementById('confList');L.innerHTML='';
@@ -1832,8 +1970,8 @@ function showConfirm(){
     r.innerHTML='<div style="flex:1;min-width:160px"><small></small><div></div></div><button class="btn" style="padding:10px 16px;font-size:16px">✓ Да, сделала</button><button class="btn soft" style="padding:10px 16px;font-size:16px">Не сейчас</button>';
     r.querySelector('small').textContent=x.d.split('-').reverse().join('.')+' · ⭐ '+x.stars;r.querySelector('div div').textContent=typo(x.what);
     const [ok,no]=r.querySelectorAll('button');
-    ok.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);S.diary.unshift({d:today(),q:'Родитель подтвердил',a:x.what+' (+'+x.stars+' ⭐)'});save();r.remove();addStars(x.stars,'— мама и папа подтвердили!');afterConfirm()};
-    no.onclick=()=>{S.pending=S.pending.filter(y=>y.id!==x.id);save();r.remove();afterConfirm()};
+    ok.onclick=()=>{if(!(S.pending||[]).some(y=>y.id===x.id))return;S.pending=S.pending.filter(y=>y.id!==x.id);S.diary.unshift({d:today(),q:'Родитель подтвердил',a:x.what+' (+'+x.stars+' ⭐)'});r.remove();addStars(x.stars,'— мама и папа подтвердили!');afterConfirm()};
+    no.onclick=()=>{document.getElementById('confModal').classList.remove('on');document.getElementById('parentConfirmButton')?.focus();toast('Подтвердить можно позже')};
     L.appendChild(r)});
   if(!L.children.length)L.innerHTML='<div class="entry">Нет дел, которые ждут подтверждения.</div>';
   document.getElementById('confModal').classList.add('on');
@@ -1842,12 +1980,12 @@ function afterConfirm(){renderPending();if(document.getElementById('parent').cla
 function sendMomAsk(t){
   t=(t||document.getElementById('momIn').value).trim();if(!t)return;
   S.momAsk={t,d:today()};save();document.getElementById('momIn').value='';
-  const x=document.createElement('div');x.className='toast';x.textContent='Ух передаст Миле';document.body.appendChild(x);setTimeout(()=>x.remove(),1600);
+  const x=document.createElement('div');x.className='toast';x.textContent='Ух передаст Алисе';document.body.appendChild(x);setTimeout(()=>x.remove(),1600);
 }
 
 /* ---------- вечерний разговор ---------- */
 const QUESTIONS=[
-  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с Сашей','Пока ничем']},
+  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с братиком','Пока ничем']},
   {q:'Что сегодня было самое смешное в школе?',chips:['Ничего смешного','На перемене','На уроке']},
   {q:'Расскажи мне одну новую вещь, которую ты сегодня узнала. Я, совушка, такого точно не знаю!',chips:['Новое слово','Новое правило','Про животных']},
   {q:'С кем ты сегодня играла или болтала на перемене?',chips:['С подружкой','С разными ребятами','Ни с кем']},
@@ -1856,20 +1994,20 @@ const QUESTIONS=[
   {q:'Какое у тебя было настроение в школе? Покажи цветом: солнечное, облачное или грозовое?',chips:['☀️ Солнечное','⛅ Облачное','⛈ Грозовое']},
   {q:'Учительница сегодня сказала что-нибудь интересное? Повтори, пожалуйста, мне тоже хочется знать!',chips:['Да!','Не помню']},
   {q:'Что ты сегодня ела в столовой? Совы едят мышей, мне очень любопытно, что едят девочки!',chips:['Кашу','Суп','Не помню']},
-  {q:'Мой братик Топа спрашивает: а что сегодня делал Саша? Вы во что-нибудь играли?',chips:['Играли!','Не успели','Он мешал']}
+  {q:'Мой братик Топа спрашивает: а что сегодня делал братик? Вы во что-нибудь играли?',chips:['Играли!','Не успели','Он мешал']}
 ];
 const LESHA_REACT='Топа передаёт: младшие братики иногда шалят, потому что очень хотят играть со старшей сестрой. Он тебя любит!';
 const REACT=['Ух ты! Вот это да!','Ничего себе! Я бы так не смогла.','Как интересно! Ух запомнит.','Ух-ух! А дальше?','Здорово! Ты так понятно объясняешь, как учительница!','Хи-хи! Вот это история!'];
 const MISSIONS=['После школы разложи свои вещи по местам','Узнай в школе одно новое слово и научи ему меня вечером','Посчитай, сколько окон в твоём классе','Запомни самое смешное, что случится за день','Найди в школе что-нибудь круглое и что-нибудь синее','Спроси у кого-нибудь, какое у него любимое животное','Узнай, какая книжка нравится твоей учительнице','Сделай комплимент подружке и посмотри, как она улыбнётся','Найди в учебнике слово с буквой Щ и запомни его','Узнай одно английское слово на уроке и скажи мне его'];
 const HOLIDAY_Q=[
-  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с Сашей','Пока ничем']},
+  {q:'Чем ты сегодня помогла маме? Мне кажется, ты отличная помощница!',chips:['Убрала в комнате','Помыла посуду','Играла с братиком','Пока ничем']},
   {q:'Что сегодня было самое интересное?',chips:['Гуляла','Играла','Смотрела мультик']},
   {q:'Во что ты сегодня играла? Научи меня, я в такое никогда не играла!',chips:['В куклы','В настолку','На улице']},
   {q:'По кому из класса ты уже соскучилась?',chips:['По подружке','По учительнице','По всем']},
   {q:'Что интересного ты расскажешь в классе, когда вернёшься?',chips:['Пока не знаю','Есть одна история!']},
   {q:'Если бы я пришла в твою школу, что бы ты мне показала первым делом?',chips:['Свой класс','Столовую','Спортзал']},
   {q:'Какую книжку или мультик ты сегодня видела? О чём он?',chips:['Книжку','Мультик','Ничего']},
-  {q:'Мой братик Топа спрашивает: а во что вы сегодня играли с Сашей? Он тоже хочет так научиться!',chips:['Играли!','Не успели','Он мешал']}
+  {q:'Мой братик Топа спрашивает: а во что вы сегодня играли с братиком? Он тоже хочет так научиться!',chips:['Играли!','Не успели','Он мешал']}
 ];
 const SICK_Q=[
   {q:'Что самое уютное у тебя в кровати?',chips:['Подушка','Одеяло','Игрушка']},
@@ -1878,67 +2016,111 @@ const SICK_Q=[
   {q:'По кому из класса ты соскучилась?',chips:['По подружке','По учительнице','По всем']},
   {q:'Посмотри в окно. На что похоже небо или облако?',chips:['На зверя','На вату','Серое']},
   {q:'Какую сказку тебе сегодня читали? Чем она закончилась?',chips:['Не читали','Расскажу!']},
-  {q:'Мой братик Топа спрашивает: а Саша заходил тебя проведать? Что он делал?',chips:['Заходил!','Принёс игрушку','Шумел']}
+  {q:'Мой братик Топа спрашивает: а братик заходил тебя проведать? Что он делал?',chips:['Заходил!','Принёс игрушку','Шумел']}
 ];
 const SICK_FIRST={q:'Как ты себя чувствуешь сегодня?',chips:['Получше','Так себе','Плохо']};
 const SOFT_REACT=['Спасибо, что рассказала!','Ух укроет тебя крылышком.','Как хорошо, что ты мне это рассказала!','Ух-ух, понятно. А ещё?'];
-const HOLIDAY_M=['Убери свою комнату так, чтобы мама ахнула','Помоги маме помыть посуду после обеда','Поиграй с Сашей, когда мама будет занята','Придумай с Сашей общую игру и научи ей потом Топу','Насмеши Сашу и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
-const SICK_M=['Расскажи Саше сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
+const HOLIDAY_M=['Убери свою комнату так, чтобы мама ахнула','Помоги маме помыть посуду после обеда','Поиграй с братиком, когда мама будет занята','Придумай с братиком общую игру и научи ей потом Топу','Насмеши братика и посчитай, сколько раз он засмеялся','Найди дома слово с буквой Щ и научи меня','Нарисуй свой класс — я ведь его никогда не видела','Найди на улице три жёлтых листика','Узнай у мамы одно новое слово и научи меня','Придумай, какой рисунок подарить учительнице после каникул','Позвони или напиши подружке из класса','Посчитай, сколько ступенек у тебя в подъезде'];
+const SICK_M=['Расскажи братику сказку или покажи ему картинку в книжке','Найди в окне трёх птиц','Придумай имя своей подушке','Попроси почитать сказку и запомни, чем она закончилась','Нарисуй, каким ты представляешь меня в школе','Найди в комнате пять круглых вещей','Спой тихонько любимую песенку игрушке'];
 let talk=null;
 function startTalk(){
-  go('talk');setPose('owlTalk');
+  go('talk');
   const md=mode();
   let qs;
   if(md==='sick')qs=[SICK_FIRST].concat(shuffle(SICK_Q).slice(0,2));
   else if(md==='holiday')qs=shuffle(HOLIDAY_Q).slice(0,3);
   else qs=shuffle(QUESTIONS).slice(0,3);
   if(md==='school'&&S.topic)qs[1]={q:'Вы проходили «'+S.topic+'»? Объясни мне, пожалуйста, что это такое. Я совсем-совсем не знаю!',chips:['Попробую!','Ещё не проходили']};
-  talk={qs,i:0,ans:[]};
+  talk={qs,i:0,ans:[],day:today(),locked:false};
   document.getElementById('talkEnd').style.display='none';document.getElementById('talkInput').style.display='flex';
   talkShow();
+  document.getElementById('talkTitle').focus({preventScroll:true});
+}
+function talkUpdateProgress(round){
+  const total=round.qs.length, done=round.i;
+  const progress=document.getElementById('talkProg');
+  progress.setAttribute('aria-valuemax',String(total));
+  progress.setAttribute('aria-valuenow',String(done));
+  progress.innerHTML=round.qs.map((_,k)=>'<i class="'+(k<done?'done':'')+'"></i>').join('');
+  document.getElementById('talkProgressLabel').textContent=done===total?'Вопросы закончились':'Вопрос '+(done+1)+' из '+total;
 }
 function talkShow(){
   const q=talk.qs[talk.i];
+  document.getElementById('talkNextBtn').disabled=false;
   say('talk',(talk.i===0?'Ух-ух! Устраивайся поудобнее. ':'')+q.q);
   document.getElementById('talkText').value='';
   const c=document.getElementById('talkChips');c.innerHTML='';
   q.chips.forEach(t=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>{const ta=document.getElementById('talkText');ta.value=(ta.value?ta.value+' ':'')+t;ta.focus()};c.appendChild(b)});
-  document.getElementById('talkProg').innerHTML=talk.qs.map((_,k)=>'<i class="'+(k<talk.i?'done':'')+'"></i>').join('');
+  talkUpdateProgress(talk);
+}
+/* topouh-club-talk-rewards-v1 */
+function talkRewardClaims(day){
+  const entry=S.talkRewardDay;
+  return entry&&entry.day===day&&Number.isInteger(entry.replies)?Math.max(0,Math.min(3,entry.replies)):0;
 }
 function talkNext(){
+  const round=talk, day=today();
+  if(!round||round.day!==day||round.locked||round.i>=round.qs.length||
+     !document.getElementById('talk').classList.contains('on'))return;
+  round.locked=true;
+  document.getElementById('talkNextBtn').disabled=true;
   const a=document.getElementById('talkText').value.trim()||'(рассказала вслух)';
-  talk.ans.push(a);S.diary.unshift({d:today(),q:talk.qs[talk.i].q,a});save();
-  if(S.talkDate!==today())addStars(1,'за рассказ');
-  talk.i++;
-  if(talk.i<talk.qs.length){say('talk',/Саш/.test(talk.qs[talk.i-1].q)&&/мешал|Шумел/.test(a)?LESHA_REACT:pick(mode()==='sick'?SOFT_REACT:REACT));setTimeout(talkShow,1600);return}
-  setTimeout(()=>setPose('owlTalk','book'),2000);S.talkDate=today();S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);save();
+  const q=round.qs[round.i];
+  round.ans.push(a);S.diary.unshift({d:day,q:q.q,a});
+  round.i++;
+  const finished=round.i===round.qs.length;
+  const firstToday=S.talkDate!==day;
+  let reward=0;
+  if(firstToday){
+    const claims=talkRewardClaims(day);
+    if(claims<3){S.talkRewardDay={day,replies:claims+1};reward++}
+    if(finished){S.talkDate=day;reward+=5}
+  }
+  if(finished){
+    S.mission=pick(mode()==='sick'?SICK_M:mode()==='holiday'?HOLIDAY_M:MISSIONS);
+  }
+  // addStars persists reward, claims and completion together. Cosmetic callbacks never grant stars.
+  if(reward)addStars(reward,finished?'за разговор с Ух':'за рассказ');
+  else save();
+  const current=()=>talk===round&&today()===round.day&&document.getElementById('talk').classList.contains('on');
+  if(!finished){
+    say('talk',/братиком/.test(q.q)&&/мешал|Шумел/.test(a)?LESHA_REACT:pick(mode()==='sick'?SOFT_REACT:REACT));
+    setTimeout(()=>{if(current()){round.locked=false;talkShow()}},1600);
+    return;
+  }
+  const mission=S.mission;
   document.getElementById('talkInput').style.display='none';document.getElementById('talkEnd').style.display='flex';
-  document.getElementById('talkProg').innerHTML=talk.qs.map(()=>'<i class="done"></i>').join('');
-  const firstTalk=S.talkDate!==today();
-  setTimeout(()=>{if(firstTalk)addStars(5,'за разговор с Ух');setTimeout(()=>celebrate('Спасибо за рассказ! Ух всё запомнила.','uh-book'),2500);say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+S.mission[0].toLowerCase()+S.mission.slice(1)+'. Справишься?')},900);
+  talkUpdateProgress(round);
+  document.getElementById('talkDoneBtn').focus({preventScroll:true});
+  setTimeout(()=>{
+    if(!current())return;
+    say('talk',(mode()==='sick'?'Спасибо! Выздоравливай скорее, Ух тебя ждёт. Лёгкое задание на завтра: ':'Спасибо! Ты лучшая рассказчица на свете. А вот тебе секретное задание на завтра: ')+mission[0].toLowerCase()+mission.slice(1)+'. Справишься?');
+    setTimeout(()=>{if(current())celebrate('Спасибо за рассказ! Ух всё запомнила.',null,'belarusian-assets/ukh-evening.svg')},2500);
+  },900);
 }
 
 /* ---------- раскраска: заливка пальцем и кисть ---------- */
 const PCOL=['#ff5a5f','#ff9a3c','#ffd23f','#8fd14f','#3ccf6e','#4ac6ff','#4a8cff','#a77bff','#ff8fc0','#b98060','#7a4a2e','#ffe0c2','#ffffff','#9aa3ad'];
 let PK='',pCol=PCOL[0],pHist=[],pT='fill',pSize=16,pLine=null;
-/* раскраски из магазина (06.11.2026): ключ 't-…' — контур из ../img/color-topa, покупка за звёзды, купленные — S.paintsOwned */
+/* раскраски из магазина (06.11.2026): ключ 't-…' — контур из img/color-topa, покупка за звёзды, купленные — S.paintsOwned */
 const PSHOP=[['topa','Топа'],['cap','Топа в кепке'],['balloon','Топа с шариком'],['crown','Топа в короне'],['topa-book','Топа с книжкой'],['car','Машинка'],['train','Паровозик'],
   ['repka','Дед и репка'],['repka-mouse','Мышка на репке'],['kolobok','Колобок'],['kolobok-hare','Колобок и заяц'],['fox','Лиса'],['bear','Медведь'],['hen','Курочка Ряба'],['dedbaba','Дед и баба'],['mouse-egg','Мышка и яичко'],
   ['topa-ball','Топа с мячом'],['topa-bike','Топа на велосипеде'],['uh-topa','Ух и Топа'],['firetruck','Пожарная машина'],['bus','Автобус'],['tractor','Трактор'],['rocket','Ракета'],
   ['castle','Замок'],['kitten','Котик'],['puppy','Щенок'],['frog','Лягушка'],['piglet','Поросёнок'],['cow','Коровка'],['dinos','Динозаврики']];
 const PSHOP_PRICE=20;
-
+/* сложные раскраски Алисы (07.11.2026, просьба родителя): магазин — только они, ключ 'a-…' (img/color-workshop); подарочные за вещи и за острова — эксклюзив, в магазине не повторяются.
+   Простые контуры Тимы ('t-…', PSHOP) больше не продаются, но купленные остаются в «Моих раскрасках». */
 const PSHOP_A=[['uh-berries','Ух собирает ягоды'],['uh-pie','Ух и Топа пекут пирог'],['uh-skates','Ух на коньках'],['uh-night','Ух с фонариком ночью'],['uh-ship','Ух и Топа на кораблике'],['topa-flowers','Топа на велосипеде с цветами'],['topa-sand','Топа строит замок из песка'],
   ['winter-house','Зимний домик со снеговиком'],['autumn-forest','Осенний лес с ёжиком'],['kitten-basket','Котёнок в корзинке'],['fox-flowers','Лисичка в цветах'],['squirrel','Белочка с орешками'],['pony','Пони с бантиками'],['butterflies','Бабочки и цветы'],
   ['sea','Подводный мир'],['castle','Сказочный замок'],['dollhouse','Кукольный домик'],['cake','Торт ко дню рождения'],['vase','Ваза с цветами'],['gingerbread','Пряничный домик'],['space','Космос и ракета']];
-/* раскраски островов кругосветки — подарок за вход (остров 1 — за первый заход); заполняется, когда готовы картинки ../img/color-alisa/isl-N.png */
+/* раскраски островов кругосветки — подарок за вход (остров 1 — за первый заход); заполняется, когда готовы картинки img/color-workshop/isl-N.png */
 const ISL_PAINT=['isl-1','isl-2','isl-3','isl-4','isl-5','isl-6'];
 const ISL_NAMES=['Остров Привет','Снежный остров','Вкусный остров','Остров Домик','Остров Зверей','Остров Школа'];
-const pSrc=k=>k.startsWith('a-')?'../img/color-alisa/'+k.slice(2)+'.png':k.startsWith('t-')?'../img/color-topa/'+k.slice(2)+'.png':'../img/color/'+k+'.png';
+const pSrc=k=>k.startsWith('a-')?'img/color-workshop/'+k.slice(2)+'.png':k.startsWith('t-')?'img/color-topa/'+k.slice(2)+'.png':'img/color/'+k+'.png';
 function renderPbook(){
   const M=document.getElementById('myPaints');M.innerHTML='';const bought=S.paintsOwned||[];
-  const add=(src,n,k)=>{const b=document.createElement('button');b.innerHTML='<img src="'+src+'" alt="">';b.title='Раскрасить: '+n;b.onclick=()=>openPaint(k);M.appendChild(b)};
-  ITEMS.filter(it=>S.owned.includes(it.k)).forEach(it=>add('../img/color/'+it.k+'.png',it.n,it.k));
+  const add=(src,n,k)=>{const b=document.createElement('button');b.innerHTML='<img src="'+src+'" alt="">';b.title='Раскрасить: '+n;const label=document.createElement('span');label.textContent=n;b.appendChild(label);b.onclick=()=>openPaint(k);M.appendChild(b)};
+  ITEMS.filter(it=>S.owned.includes(it.k)).forEach(it=>add('img/color/'+it.k+'.png',it.n,it.k));
   PSHOP.filter(([k])=>bought.includes('t-'+k)).forEach(([k,n])=>add(pSrc('t-'+k),n,'t-'+k));
   PSHOP_A.filter(([k])=>bought.includes('a-'+k)).forEach(([k,n])=>add(pSrc('a-'+k),n,'a-'+k));
   (S.paintsGift||[]).forEach(k=>{const ii=+k.replace(/\D/g,'')-1;add(pSrc('a-'+k),'Подарок: '+(ISL_NAMES[ii]||'остров'),'a-'+k);M.lastChild.classList.add('gift')});
@@ -1956,11 +2138,12 @@ function buyPaint(k){
   if(S.stars<PSHOP_PRICE){say('pbook','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
   S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('a-'+k);setStars();save();say('pbook','Новая раскраска! Давай раскрасим её вместе!');renderPbook();
   setTimeout(()=>openPaint('a-'+k),900)}
-function pTool(t){pT=t;document.querySelectorAll('#ptools>button').forEach(b=>b.classList.toggle('on',b.dataset.t===t));document.getElementById('ptools').classList.toggle('brush',t==='brush');
+function pTool(t){pT=t;document.querySelectorAll('#ptools>button').forEach(b=>{const on=b.dataset.t===t;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))});document.getElementById('ptools').classList.toggle('brush',t==='brush');
   document.getElementById('paintCv').style.touchAction=t==='brush'?'none':'manipulation'}
-function pSz(n){pSize=n;document.querySelectorAll('.psizes button').forEach(b=>b.classList.toggle('on',+b.dataset.s===n))}
+function pSz(n){pSize=n;document.querySelectorAll('.psizes button').forEach(b=>{const on=+b.dataset.s===n;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))})}
 function openPaint(k){const c=document.querySelector('.screen.on').id;if(c==='pbook'||c==='shop')pFrom=c;go('paint');PK=k;const P=document.getElementById('palette');P.innerHTML='';
-  PCOL.forEach(c=>{const b=document.createElement('button');b.style.background=c;if(c===pCol)b.className='on';b.onclick=()=>{pCol=c;P.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on')};P.appendChild(b)});
+  const names=['Красный','Оранжевый','Жёлтый','Салатовый','Зелёный','Голубой','Синий','Фиолетовый','Розовый','Светло-коричневый','Тёмно-коричневый','Персиковый','Белый','Серый'];
+  PCOL.forEach((c,i)=>{const b=document.createElement('button');b.style.background=c;b.title=names[i]||'Цвет '+c;b.setAttribute('aria-label',b.title);b.setAttribute('aria-pressed',String(c===pCol));if(c===pCol)b.className='on';b.onclick=()=>{pCol=c;P.querySelectorAll('button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',String(x===b))})};P.appendChild(b)});
   pTool(pT);paintLoad(k);speak('Выбери цвет и нажми на рисунок!','uh')}
 function paintLoad(k){const cv=document.getElementById('paintCv'),c=cv.getContext('2d'),im=new Image();
   im.onload=()=>{const z=Math.min(1,800/im.naturalWidth);cv.width=Math.round(im.naturalWidth*z);cv.height=Math.round(im.naturalHeight*z);
@@ -2008,7 +2191,7 @@ const LESSONS={
     {n:'Соедини линией',p:'Слова наоборот и похожие слова',g:['matchAnt','matchSyn','catchKto','matchAnt','matchSyn']}]},
   read:{name:'Чтение',say:'Выбирай историю! Прочитай её сама, а я помогу, если надо.',list:[
     {n:'Один трудный день',p:'Как Ух помогала Топе'},{n:'Пирог для мамы',p:'Как Ух и Топа пекли пирог'},{n:'Топа идёт в садик',p:'Почему учиться интересно'}]},
-  en:{name:'Английский',say:'Привет! Я Топа, младший братик Ух. Да-да, я динозаврик, а Ух — сова, но мы всё равно брат и сестра! Выбирай урок и научи меня английскому!',list:[
+  en:{name:'Английский',say:'Привет! Я Топа, младший братик Ух. Да-да, я дракончик, а Ух — сова, но мы всё равно брат и сестра! Выбирай урок и научи меня английскому!',list:[
     {n:'Цвета и числа',p:'red, blue, one, two…'},{n:'Животные и Хеллоуин',p:'cat, dog, ghost, pumpkin…'},{n:'Я, ты, он и am, is, are',p:'I am happy! How are you?'},{n:'Части тела',p:'head, eyes, nose… Покажи на картинке!'},{n:'Семья',p:'mother, father, sister, brother…'},{n:'Буквы',p:'A, B, C… С какой буквы слово?'}]},
   math:{name:'Математика',say:'Выбирай урок математики! Будем считать вместе.',list:[
     {n:'Сложение и вычитание до 20',p:'Жёлуди, пёрышки и ягодки',t:['add20','sub20','miss']},
@@ -2021,11 +2204,16 @@ function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   document.getElementById('owlLessons').style.display=k==='en'?'none':'';document.getElementById('owlLessonsT').style.display=k==='en'?'':'none';say('lessons',L.say);
   const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math'||k==='ru');box.classList.toggle('tu-read-library',k==='read');const done=S.lessonsDone||{};let num=0;if(k==='math'||k==='ru'){renderChapters(k,box,done);return}
   if(k==='read'){
-    const head=document.createElement('h2');head.className='tu-library-title';head.textContent='Истории Ух и Топы';box.append(head);
+    const head=document.createElement('section');head.className='club-library-head';
+    const copy=document.createElement('div');copy.className='club-library-copy';
+    copy.innerHTML='<span class="club-library-kicker">Читаем вместе</span><h1 class="tu-library-title" tabindex="-1">Истории с Ух и Топой</h1><p>Выбери рассказ, листай страницы и проверь, что запомнилось.</p><a class="club-library-link" href="lessons.html?course=reading">К урокам чтения</a>';
+    const owl=document.createElement('img');owl.src='belarusian-assets/ukh.svg';owl.alt='';
+    head.append(copy,owl);box.append(head);
+    requestAnimationFrame(()=>{if(document.getElementById('lessons').classList.contains('on'))copy.querySelector('h1').focus({preventScroll:true})});
     const covers=['story1-6','story2-5','story3-5'];
     L.list.forEach((x,i)=>{
       const key=k+i,b=document.createElement('button');b.type='button';b.className='tu-story-card'+(done[key]?' done':'');
-      const art=document.createElement('img');art.className='tu-story-cover';art.alt='';art.src='img/stories/vector/'+covers[i]+'.svg';
+      const art=document.createElement('img');art.className='tu-story-cover';art.alt='';art.src='img/stories/vector/'+covers[i]+'.svg?v=26';
       const m=document.createElement('span');m.className='tu-story-meta';
       m.innerHTML='<small></small><strong></strong><span class="tu-story-description"></span><span class="tu-story-footer"></span>';
       m.querySelector('small').textContent='История '+(i+1);
@@ -2066,8 +2254,8 @@ function renderToday(){
   document.getElementById('todayText').textContent=typo(LESSONS[L.k].name+': '+x.n);
   const n=streakNow();document.getElementById('streakTag').textContent=n?'🔥 '+n+' '+dayWord(n)+' подряд':'';
   const b=document.getElementById('todayBtn');b.textContent=L.done?'✓ Готово':'Начать';b.disabled=false}
-function startToday(){const L=dayLesson();if(L.done){say('home','Урок дня уже сделан! Завтра будет новый. А сейчас можно позаниматься чем хочешь.');return}
-  LESSON={subj:L.k,i:L.i};say('home','Это урок дня! Сделаешь его — получишь ещё две звёздочки и огонёк.');setTimeout(()=>startLesson(L.k,L.i),1800)}
+function startToday(immediate=false){const L=dayLesson();if(L.done){say('home','Урок дня уже сделан! Завтра будет новый. А сейчас можно позаниматься чем хочешь.');return}
+  LESSON={subj:L.k,i:L.i};say('home','Это урок дня! Сделаешь его — получишь ещё две звёздочки и огонёк.');if(immediate===true)startLesson(L.k,L.i);else setTimeout(()=>startLesson(L.k,L.i),1800)}
 function todayCheck(){const L=dayLesson();if(L.done||LESSON.subj!==L.k||LESSON.i!==L.i)return;
   L.done=1;const t=S.streak||{n:0,last:''};t.n=t.last===dayOff(-1)?t.n+1:(t.last===today()?t.n:1);t.last=today();S.streak=t;save();
   setTimeout(()=>addStars(2,'за урок дня'),2200);setTimeout(()=>toast('🔥 Огонёк: '+t.n+' '+dayWord(t.n)+' подряд!'),4300)}
@@ -2075,7 +2263,7 @@ function todayCheck(){const L=dayLesson();if(L.done||LESSON.subj!==L.k||LESSON.i
 /* ---------- Умнее каждый день ---------- */
 const SMART=['game','eng','math','read'];
 function openSmart(){go('smart');say('smart',pick(['Что сегодня узнаем? Русский, чтение, английский или математика?','Каждый день — чуточку умнее! С чего начнём?','Выбирай! Я с тобой.']))}
-function goBack(){const c=document.querySelector('.screen.on').id;if(c==='tripL'){openTrip(true);return}if(c==='trip'){if(previewTripOrigin==='home'){go('home');focusClubTrip()}else openSmart();return}if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint'){if(pFrom==='pbook')openPaints();else go('shop')}else go('home')}
+function goBack(){const c=document.querySelector('.screen.on').id;if(topNavBack(c))return;if(c==='shop'&&beShop){beShopBack();return}if(c==='tripL'){openTrip(true);return}if(c==='trip'){if(previewTripOrigin==='home'){go('home');focusClubTrip()}else openSmart();return}if(c==='lessons'&&LESSON.subj==='read'){go('home');return}if(c==='lessons')openSmart();else if(SMART.includes(c))openSubject(LESSON.subj);else if(c==='paint'){if(pFrom==='pbook')openPaints();else go('shop')}else go('home')}
 
 /* ---------- математика: Ух считает и сомневается ---------- */
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -2162,24 +2350,27 @@ function readShow(){
   const status=document.getElementById('tuReaderStatus');
   document.getElementById('tuReaderTitle').textContent=typo(st.title);
   status.textContent=i<pages?'Страница '+(i+1)+' из '+pages:i<n?'Вопрос '+(i-pages+1)+' из '+st.quiz.length:'История прочитана';
+  const review=document.getElementById('tuReaderReview');
   prev.hidden=!(i>0&&i<pages);
+  review.hidden=!(i>=pages&&i<n);
+  review.onclick=()=>{if(RD!==activeReader||RD.i<pages||RD.i>=n)return;RD.resume=RD.i;RD.i=0;readShow();document.getElementById('tuReaderTitle').focus({preventScroll:true})};
   prev.onclick=()=>{if(RD.i>0&&RD.i<pages){RD.i--;readShow();if(prev.hidden)document.getElementById('readNext').focus()}};
 
   document.getElementById('readProg').innerHTML=Array.from({length:n},(_,k)=>'<i class="'+(k<i?'done':'')+'"></i>').join('');
   const P=document.getElementById('storyPic'),T=document.getElementById('storyText'),O=document.getElementById('storyOpts'),nx=document.getElementById('readNext'),al=document.getElementById('readAloud');
   O.innerHTML='';const hr=O.parentNode.querySelector('.hint-row');if(hr)hr.remove();nx.style.display='';al.style.display='';
-  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="'+(k.startsWith('stories/vector/')?'img/'+k+'.svg':'../img/'+k+'.webp')+'" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
+  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="img/'+k+(k.startsWith('stories/vector/')?'.svg?v=26':'.webp')+'" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
     T.innerHTML='<p style="margin:0"></p>';T.querySelector('p').textContent=typo(pg.t);
-    al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent=i===pages-1?'К вопросам →':'Дальше →';nx.onclick=()=>{RD.i++;readShow();if(RD.i===pages)document.querySelector('#storyOpts button')?.focus()};return}
+    al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent=i===pages-1?(RD.resume?'Вернуться к вопросу':'К вопросам →'):'Дальше →';nx.onclick=()=>{RD.i++;if(RD.i===pages&&RD.resume){RD.i=RD.resume;RD.resume=0}readShow();if(RD.i>=pages)document.querySelector('#storyOpts button')?.focus()};return}
   const qi=i-st.pages.length;
-  if(qi<st.quiz.length){const q=st.quiz[qi];P.innerHTML='<img src="games/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center;font-weight:900"></p>';T.querySelector('p').textContent=typo(q.q);
+  if(qi<st.quiz.length){const q=st.quiz[qi];P.innerHTML='<img src="belarusian-assets/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center;font-weight:900"></p>';T.querySelector('p').textContent=typo(q.q);
     al.onclick=()=>speak(q.q,'uh');nx.style.display='none';let done=false;
     shuffle(q.o).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;
-      b.onclick=()=>{if(done||b.classList.contains('no'))return;if(o===q.a){done=true;b.classList.add('yes');speak(pick(['Правильно! Ты внимательно читала!','Точно! Так и было!']),'uh');setTimeout(()=>{if(RD===activeReader&&document.getElementById('read').classList.contains('on')){RD.i++;readShow()}},1300)}else{b.classList.add('no');speak('Хм, давай вспомним ещё разок.','uh')}};O.appendChild(b)});
+      b.onclick=()=>{if(done||b.classList.contains('no'))return;if(o===q.a){done=true;review.hidden=true;b.classList.add('yes');speak(pick(['Правильно! Ты внимательно читала!','Точно! Так и было!']),'uh');setTimeout(()=>{if(RD===activeReader&&RD.i===i&&document.getElementById('read').classList.contains('on')){RD.i++;readShow();(document.querySelector('#storyOpts button')||document.getElementById('tuReaderTitle')).focus({preventScroll:true})}},1300)}else{b.classList.add('no');speak('Хм, давай вспомним ещё разок.','uh')}};O.appendChild(b)});
     hintBtn(O,()=>{if(dropWrong(O,t=>t===q.a))speak('Я убрала один неправильный ответ! Выбирай из двух.','uh')});return}
-  P.innerHTML='<img src="games/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center"></p>';T.querySelector('p').textContent=typo('Спасибо, что прочитала! А ты тоже помогаешь своему братику Саше?');
-  al.onclick=()=>speak('Спасибо, что прочитала! А ты тоже помогаешь своему братику Саше?','uh');
-  S.diary.unshift({d:today(),q:'Чтение',a:'Прочитала историю «'+st.title+'»'});save();lessonDone();lessonReward('за чтение');celebrate('Ты прочитала целую историю! Это здорово.','uh-book');
+  P.innerHTML='<img src="belarusian-assets/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center"></p>';T.querySelector('p').textContent=typo('Спасибо, что прочитала! А ты тоже помогаешь своему братику?');
+  al.onclick=()=>speak('Спасибо, что прочитала! А ты тоже помогаешь своему братику?','uh');
+  S.diary.unshift({d:today(),q:'Чтение',a:'Прочитала историю «'+st.title+'»'});save();lessonDone();lessonReward('за чтение');celebrate('Ты прочитала целую историю! Это здорово.','uh-book','belarusian-assets/ukh.svg');
   nx.textContent='К историям';nx.onclick=()=>openSubject('read');
 }
 
@@ -2198,7 +2389,7 @@ const WORDS=[
   {p:'',s:'инск',o:['М','м'],r:R.cap,pre:'город '},{p:'',s:'урка',o:['М','м'],r:R.cap,pre:'кошка '},
   {p:'',s:'еман',o:['Н','н'],r:R.cap,pre:'река '},{p:'',s:'х',o:['У','у'],r:R.cap,pre:'совёнок '}
 ];
-const DOUBT=['Хм… я написала и засомневалась. Какую букву поставить?','Ух! Тут у меня дырка. Что вставить?','Помоги, а? Я в школу не хожу, вот и путаюсь.','Учительница Мила, подскажи!'];
+const DOUBT=['Хм… я написала и засомневалась. Какую букву поставить?','Ух! Тут у меня дырка. Что вставить?','Помоги, а? Я в школу не хожу, вот и путаюсь.','Учительница Алиса, подскажи!'];
 const OK=['Точно! Ух запомнит.','Ура! Ты как настоящая учительница!','Ух-ух, правильно! Спасибо!','Вот это да! Сразу видно, кто ходит в школу.'];
 const OOPS_RULE=['Ой, тут ловушка! Смотри, какое правило:','Почти! Давай вспомним правило:','Ничего страшного! Вот подсказка:'];
 const AGAIN=['А теперь похожее слово — с той же ловушкой! Справишься?','Ещё одно слово на это же правило. Проверим, как ты запомнила!'];
@@ -2282,7 +2473,7 @@ const RU_CHK=[['вода','воды','водичка','водолаз'],['лис
 const RU_ODD=[['лес','лесник','лесной','лиса'],['гриб','грибной','грибник','груша'],['вода','водичка','водяной','ворона'],['снег','снеговик','снежинка','санки'],['сад','садовник','садик','сани'],['кот','котёнок','котик','кофта']];
 const RU_SYN=['весёлый — радостный','бежать — мчаться','смелый — храбрый','грустный — печальный','большой — огромный'];
 const RU_ANT=['большой — маленький','день — ночь','горячий — холодный','высокий — низкий','весёлый — грустный'];
-const RU_SENT=['Ух живёт в дупле.','Топа любит кубики.','Мила идёт в школу.','Мама печёт пирог.','Саша строит башню.','Зимой идёт снег.','Кошка спит на окне.'];
+const RU_SENT=['Ух живёт в дупле.','Топа любит кубики.','Алиса идёт в школу.','Мама печёт пирог.','Тима строит башню.','Зимой идёт снег.','Кошка спит на окне.'];
 const RU_ABC='АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
 const RU_ABCW=[['арбуз','банан','вишня','груша'],['дом','ёлка','жук','заяц'],['кот','лиса','мышь','нос'],['пёс','рыба','сова','тыква'],['ива','кит','лук','мак']];
 const RU_GEN={
@@ -2393,7 +2584,7 @@ function ruOrder(q,W,box,miss,win){
 /* ---------- игра «Братик Топа и английский» (по темам занятий) ---------- */
 const speakEn=t=>speak(t,'en');
 /* выбор голосов в «Для родителей» */
-const VOICE_SAMPLE={uh:'Ух-ух! Привет! Расскажешь мне, как прошёл день в школе?',baby:'Р-р-р! Я Топа, братик Ух. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
+const VOICE_SAMPLE={uh:'Ух-ух! Привет, Алиса! Расскажешь мне, как прошёл день в школе?',baby:'Р-р-р! Я Топа, братик Ух. Научишь меня английскому?',en:'Hello! How are you? I am happy!'};
 function setVoice(who,key,val){S.voices=S.voices||{};S.voices[who]=Object.assign(vset(who),{[key]:val});save()}
 function renderVoices(){
   const box=document.getElementById('voiceBox');if(!box)return;box.innerHTML='';
@@ -2519,7 +2710,7 @@ const PRON=[{en:'I',ru:'я'},{en:'you',ru:'ты'},{en:'he',ru:'он'},{en:'she',
 const BE=[['I','am','happy','Я счастлива'],['She','is','tired','Она устала'],['He','is','hungry','Он голодный'],['They','are','angry','Они злятся'],['We','are','friends','Мы друзья'],['You','are','my friend','Ты мой друг'],['It','is','a cat','Это кошка'],['I','am','a girl','Я девочка'],['The ghost','is','white','Привидение белое'],['We','are','happy','Мы счастливы']];
 const PAINT=[{en:'frog',c:'green'},{en:'fox',c:'orange'},{en:'ghost',c:'white'},{en:'bat',c:'purple'},{en:'bear',c:'brown'},{en:'pumpkin',c:'orange'},{en:'apple',c:'red'},{en:'sun',c:'yellow'},{en:'pig',c:'pink'},{en:'grapes',c:'purple'}];
 const BE_RULE='I — am, he / she / it — is, you / we / they — are';
-const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестричка на свете!','Ура! Мила, ты так понятно объясняешь!','Ура-ура! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
+const B_OK=['Р-р-р! Теперь понял! Ты лучшая сестричка на свете!','Ура! Алиса, ты так понятно объясняешь!','Ура-ура! Запомнил! Скажи ещё раз, как это звучит?','Ой, как здорово! Я теперь почти англичанин!'];
 const B_OOPS=['Ой, это я бы тоже так перепутал! Попробуем другое?','Хм… Кажется, не то. Помоги ещё разок!','Ничего! Мы с тобой вместе разберёмся.'];
 let E=null;
 const others=(list,item,n,key)=>shuffle(list.filter(x=>x[key]!==item[key])).slice(0,n);
@@ -2530,11 +2721,11 @@ const LETTERS='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 /* части тела: где обвести и куда можно нажать */
 const BODY_SPOT={head:[[50,26,24,24]],eyes:[[42,28,6,6],[58,28,6,6]],ears:[[26,30,6,8],[74,30,6,8]],nose:[[50,35,5,5]],mouth:[[50,42,8,5]],hair:[[50,10,22,9]],
   hands:[[17,76,9,9],[83,76,9,9]],tummy:[[50,70,15,12]],legs:[[42,100,8,12],[58,100,8,12]],feet:[[40,121,11,6],[60,121,11,6]]};
-/* мальчик в полный рост (../img/en/body.webp, 420×620 = viewBox 312×460) и зоны для «покажи, где…» */
+/* мальчик в полный рост (img/en/body.webp, 420×620 = viewBox 312×460) и зоны для «покажи, где…» */
 const BODY_PH={hair:[[155,47,70,32]],head:[[155,102,72,82]],eyes:[[130,113,16,16],[182,113,16,16]],ears:[[95,127,12,18],[218,127,12,18]],nose:[[156,127,11,11]],
   mouth:[[156,144,20,9]],tummy:[[156,252,50,40]],hands:[[55,294,28,28],[255,294,28,28]],legs:[[130,402,18,32],[185,402,18,32]],feet:[[118,437,26,13],[192,437,26,13]]};
 function BODY(hl,tap){
-  let g='<image href="../img/en/body.webp" x="0" y="0" width="312" height="460"/>';
+  let g='<image href="img/en/body.webp" x="0" y="0" width="312" height="460"/>';
   if(hl)(BODY_PH[hl]||[]).forEach(a=>g+='<ellipse cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+4)+'" ry="'+(a[3]+4)+'" fill="#ffe14d" fill-opacity=".35" stroke="#ff3b30" stroke-width="5"/>');
   if(tap)['head','hair','tummy','hands','legs','feet','ears','eyes','mouth','nose'].forEach(k=>BODY_PH[k].forEach(a=>g+='<ellipse class="spot" data-p="'+k+'" cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+3)+'" ry="'+(a[3]+3)+'" fill="#000" fill-opacity="0"/>'));
   return '<svg class="art body" viewBox="0 0 312 460" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
@@ -2551,11 +2742,11 @@ function BODY_OLD(hl,tap){const K='#3b2a20',st='stroke="'+K+'" stroke-width="2.5
   if(tap)Object.keys(BODY_SPOT).filter(k=>k!=='head').concat(['head']).reverse().forEach(k=>BODY_SPOT[k].forEach(a=>g+='<ellipse class="spot" data-p="'+k+'" cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(a[2]+2)+'" ry="'+(a[3]+2)+'" fill="#000" fill-opacity="0"/>'));
   return '<svg class="art body" viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">'+g+'</svg>'}
 /* картинка слова для любого списка */
-/* сгенерированные картинки на белом фоне (../img/en/<слово>.webp), без вырезания */
+/* сгенерированные картинки на белом фоне (img/en/<слово>.webp), без вырезания */
 const EN_IMG=['mother','father','sister','brother','baby','grandma','grandpa','family','head','eyes','ears','nose','mouth','hair','hands','fingers','tummy','legs','feet','cat','dog','fox','frog','rabbit','bird','fish','mouse','bear','pumpkin','ghost','bat','monster','spider','witch','apple','sun','pig','grapes','happy','tired','angry','hungry','great','bad','pron-i','pron-you','pron-he','pron-she','pron-it','pron-we','pron-they'];
 const EN_ALIAS={"I'm happy":'happy',"I'm tired":'tired',"I'm angry":'angry',"I'm hungry":'hungry',"I'm great!":'great',"I'm bad":'bad',I:'pron-i',you:'pron-you',he:'pron-he',she:'pron-she',it:'pron-it',we:'pron-we',they:'pron-they'};
 /* картинка слова: из Gemini, если есть; сова — наша Ух; иначе векторная */
-const enPic=k=>EN_IMG.includes(EN_ALIAS[k]||k)?'<img class="art photo" src="../img/en/'+(EN_ALIAS[k]||k)+'.webp" alt="">':k==='owl'?'<img class="art photo" src="../img/uh-hello.webp" alt="" style="object-fit:contain">':ART(k);
+const enPic=k=>EN_IMG.includes(EN_ALIAS[k]||k)?'<img class="art photo" src="img/en/'+(EN_ALIAS[k]||k)+'.webp" alt="">':k==='owl'?'<img class="art photo" src="belarusian-assets/ukh.svg" alt="" style="object-fit:contain">':ART(k);
 function wordPic(it){if(EN_IMG.includes(it.en)||it.en==='owl')return enPic(it.en);if(COLORS.includes(it))return '<span class="sw" style="background:'+it.c+'"></span>';if(NUMBERS.includes(it))return '<span class="num">'+(NUMBERS.indexOf(it)+1)+'</span>';
   if(BODY_W.includes(it))return BODY(it.en);return enPic(it.en)}
 /* ошибка в английском: это же задание повторится в конце урока (не больше двух за урок) */
@@ -2611,8 +2802,8 @@ function engStep(){
     const teachable=E.list.filter(q=>q.word&&q.opts&&typeof q.opts[0]==='string'&&q.opts[0].trim());
     if(teachable.length){
       const lw=pick(teachable).opts[0];
-      say('eng','Ура! Я теперь столько знаю! Попробуй рассказать о путешествии кому-нибудь дома. Ты, наверное, самая лучшая старшая сестра! Может, научишь и Сашу слову «'+lw+'»? Вот он удивится!');
-      S.mission='Научи Сашу английскому слову «'+lw+'» и расскажи Топе, как у него получилось';
+      say('eng','Ура! Я теперь столько знаю! Ух говорит, у тебя может быть младший братик. Ты, наверное, самая лучшая старшая сестра! Может, научишь и братика слову «'+lw+'»? Вот он удивится!');
+      S.mission='Научи братика английскому слову «'+lw+'» и расскажи Топе, как у него получилось';
     }else{
       say('eng','Ура! Мы закончили урок. Спасибо, что помогла мне потренировать английский!');
     }
@@ -2625,7 +2816,7 @@ function engStep(){
   const q=E.list[E.i];
   const Q=document.getElementById('engQ');
   Q.innerHTML=(q.pic?'<div class="pic">'+q.pic+'</div>':'')+(q.tap?'<div class="pic">'+BODY(null,1)+'</div>':'')+(q.sent?'<div class="sent">'+q.sent+'</div>':'')+(q.ru?'<div class="ru"></div>':'')+
-    (q.spell?'<div class="slots">'+q.spell.split('').map(()=>'<i></i>').join('')+'</div>':'')+(q.listen||q.tap||q.sayFirst?'<button class="ear" aria-label="Послушать ещё раз"><img src="../img/ic/speaker.webp" alt=""></button>':'');
+    (q.spell?'<div class="slots">'+q.spell.split('').map(()=>'<i></i>').join('')+'</div>':'')+(q.listen||q.tap||q.sayFirst?'<button class="ear" aria-label="Послушать ещё раз"><img src="img/ic/speaker.webp" alt=""></button>':'');
   {const ear=Q.querySelector('.ear');if(ear)ear.onclick=()=>speakEn(q.say)}
   if(q.ru)Q.querySelector('.ru').textContent=typo(q.ru);
   document.getElementById('engRule').textContent='';
@@ -2711,7 +2902,7 @@ function gFix(q,c){
 function gLine(q,c){
   const st=q.step||1,box=c.box;box.className='gl';box.innerHTML='';let lo=Math.min(q.a,q.ans);for(let k=0;k<2&&lo-st>=0;k++)lo-=st;const hi=lo+10*st;
   if(c.Q){c.Q.innerHTML='<div class="sent"></div>';c.Q.querySelector('.sent').textContent=q.a+' '+(q.op>0?'+':'−')+' '+q.b*st+' = ?'}
-  const fr=G_EL('img','gl-frog');fr.src='../img/en/frog.webp';fr.alt='Лягушка';box.appendChild(fr);
+  const fr=G_EL('img','gl-frog');fr.src='img/en/frog.webp';fr.alt='Лягушка';box.appendChild(fr);
   const tk=G_EL('div','gl-ticks');box.appendChild(tk);const pos=n=>((n-lo)/st+.5)/11*100+'%';fr.style.left=pos(q.a);
   let done=false;
   for(let n=lo;n<=hi;n+=st){const b=G_EL('button','gl-t');b.textContent=n;
@@ -2838,7 +3029,7 @@ const MATH_GEN={
   mMoney:()=>{const v=pick([['1 р.','100 к.'],['1 р. 20 к.','120 к.'],['2 р.','200 к.'],['1 р. 5 к.','105 к.'],['1 р. 50 к.','150 к.']]);const n=parseInt(v[1]);return {t:'choose',ask:'Сколько это копеек? Помни: в рубле сто копеек.',show:v[0]+' = ? к.',opts:mOpts(n,[-10,10,-50,50]),r:MATH_OK_R.money}}
 };
 /* задача со схемой-отрезками: сначала выбрать действие, потом ответ */
-const M_WHO=[['Ух','Ух',['жёлудь','жёлудя','жёлудей']],['Топа','Топы',['машинка','машинки','машинок']],['Мила','Милы',['наклейка','наклейки','наклеек']],['Саша','Саши',['кубик','кубика','кубиков']]];
+const M_WHO=[['Ух','Ух',['жёлудь','жёлудя','жёлудей']],['Топа','Топы',['машинка','машинки','машинок']],['Алиса','Алисы',['наклейка','наклейки','наклеек']],['Тима','Тимы',['кубик','кубика','кубиков']]];
 function mTaskGen(max){
   const w=pick(M_WHO),o=pick(M_WHO.filter(x=>x!==w)),k=pick(['total','left','more','less','diff']),N=n=>n+' '+plural(n,w[2]);let a,b,text,ok,bad,ans,bar;
   if(k==='total'){a=MR(3,max/2);b=MR(2,max/2);text='У '+w[1]+' было '+N(a)+'. Подарили ещё '+b+'. Сколько стало?';ok=a+' + '+b;bad=a+' − '+b;ans=a+b;bar={k:'total',a,b}}
@@ -2863,7 +3054,7 @@ function gTens(q,c){const box=c.box;box.className='gt';box.innerHTML='';const d=
   box.appendChild(row);const ok=G_EL('button','btn gt-ok');ok.textContent='Готово';box.appendChild(ok);
   ok.onclick=()=>{if(D===d&&U===u){ok.disabled=true;rd.textContent=D+' дес. '+U+' ед. = '+q.goal;c.win()}else{ruShake(area);c.miss();if(c.say)c.say(D!==d?'Посчитай пучки: сколько десятков в числе?':'Пучков верно! А сколько отдельных палочек?')}}}
 function gTrain(q,c){const box=c.box;box.className='gtr';box.innerHTML='';if(c.Q)c.Q.innerHTML='';
-  const row=G_EL('div','gtr-row');row.innerHTML='<img class="gtr-loco" src="../img/toys/train.webp" alt="">';const gaps=[];
+  const row=G_EL('div','gtr-row');row.innerHTML='<img class="gtr-loco" src="img/toys/train.webp" alt="">';const gaps=[];
   q.seq.forEach((v,i)=>{const w=G_EL('div','gtr-w');if(q.hide.includes(i)){w.classList.add('gap');w.textContent='?';gaps.push([i,w])}else w.textContent=v;row.appendChild(w)});box.appendChild(row);
   gaps.sort((a,b)=>a[0]-b[0]);const vals=gaps.map(g=>q.seq[g[0]]);const ex=[];while(ex.length<2){const v=vals[0]+pick([-11,-2,2,11,5]);if(v>0&&!vals.includes(v)&&!ex.includes(v))ex.push(v)}
   mGapFill(box,vals,gaps.map(g=>g[1]),c,ex)}
@@ -3016,7 +3207,7 @@ const MATH_TH_CHECK={1:{t:['Через десяток: сначала до де�
 function lessonTheory(){if(LESSON.subj==='ru'){const L=LESSONS.ru.list[LESSON.i];return L&&RU_TH[L.n]||null}return mathTheory()}
 function mathTheory(){if(LESSON.subj!=='math')return null;const L=LESSONS.math.list[LESSON.i];if(!L)return null;return L.n==='Проверь себя'?MATH_TH_CHECK[L.sec]:MATH_TH[L.n]}
 function showTheory(){const T=lessonTheory();if(!T)return;const L=LESSONS[LESSON.subj].list[LESSON.i];
-  const c=dnModal('<div class="th"><img class="th-owl" src="../img/uh-book.webp" alt=""><h2></h2><ul></ul><div class="th-ex"><b>Пример</b></div><div class="row" style="justify-content:center;gap:10px;margin-top:14px"><button class="btn soft">🔊 Послушать</button><button class="btn">Понятно!</button></div></div>');
+  const c=dnModal('<div class="th"><img class="th-owl" src="belarusian-assets/ukh-reading.svg" alt=""><h2></h2><ul></ul><div class="th-ex"><b>Пример</b></div><div class="row" style="justify-content:center;gap:10px;margin-top:14px"><button class="btn soft">🔊 Послушать</button><button class="btn">Понятно!</button></div></div>');
   c.querySelector('h2').textContent=typo(L.n);const ul=c.querySelector('ul');T.t.forEach(x=>{const li=document.createElement('li');li.textContent=typo(x);ul.appendChild(li)});
   const ex=c.querySelector('.th-ex');T.ex.forEach(x=>{const d=document.createElement('div');d.textContent=x;ex.appendChild(d)});
   const [ear,ok]=c.querySelectorAll('.row .btn');ear.onclick=()=>speak(T.t.join(' '),'uh');ok.onclick=()=>document.getElementById('dnModal').classList.remove('on')}
@@ -3295,7 +3486,7 @@ const RU_P={
   consMid:[['лодка','лотка','лодочка'],['ложка','лошка','ложечка'],['берёзка','берёска','берёза'],['флажки','флашки','флажок'],['дубки','дупки','дубок'],['сказка','скаска','сказочка'],['шубка','шупка','шуба'],['рыбка','рыпка','рыба'],['кружка','крушка','кружечка'],['ягодка','яготка','ягода']],
   endMark:[['Как тебя зовут','?'],['Ура, мы победили','!'],['Сегодня идёт снег','.'],['Где живёт ёжик','?'],['Какой чудесный день','!'],['Кот спит на диване','.'],['Ты пойдёшь гулять','?'],['Осторожно, горячо','!'],['Мама печёт пирог','.'],['Почему небо голубое','?']],
   title:[['Наступила осень. Листья пожелтели и опали. Птицы улетают на юг.','Осень',['Лето','Мой кот']],['У Миши есть щенок Дружок. Он любит играть с мячом. Вечером Дружок спит у кровати.','Мой щенок',['В лесу','Зимние забавы']],['Выпал первый снег. Дети слепили снеговика. Они весело катались на санках.','Зимние забавы',['Осенний лес','Мой щенок']],['Ёжик живёт в лесу. Днём он спит, а ночью ищет еду. Зимой ёжик спит в норке.','Ёжик',['Белка','Весна']]],
-  text:[['Наступила весна.','Растаял снег.','Прилетели птицы.'],['Утром Мила проснулась.','Она умылась и позавтракала.','Потом пошла в школу.'],['Топа взял ведёрко.','Он пошёл в сад.','Там он полил цветы.'],['Ух нашла жёлудь.','Она отнесла его в дупло.','Зимой у Ух будет угощение.']]
+  text:[['Наступила весна.','Растаял снег.','Прилетели птицы.'],['Утром Алиса проснулась.','Она умылась и позавтракала.','Потом пошла в школу.'],['Топа взял ведёрко.','Он пошёл в сад.','Там он полил цветы.'],['Ух нашла жёлудь.','Она отнесла его в дупло.','Зимой у Ух будет угощение.']]
 };
 const RU_ENDS={m:'ый',f:'ая',n:'ое'};const RU_ADJ=(s,g)=>s+RU_ENDS[g];
 Object.assign(RU_GEN,{
@@ -3355,7 +3546,7 @@ LESSONS.ru.list.push(
 const RU_TH={
  'Жи-ши, ча-ща, чу-щу':{t:['Жи-ши пиши с буквой и.','Ча-ща пиши с буквой а.','Чу-щу пиши с буквой у.'],ex:['ужи, камыши','дача, роща','чудо, щука']},
  'Чк-чн и звонкие на конце':{t:['Сочетания чк, чн, щн пишутся без мягкого знака.','Парный согласный на конце проверяй: измени слово, чтобы после него был гласный.'],ex:['ручка, речной','дуб — дубы']},
- 'Большая буква':{t:['С большой буквы пишут имена, фамилии, отчества.','Клички животных, названия городов, рек, стран.'],ex:['Мила, кот Барсик','Минск, река Неман']},
+ 'Большая буква':{t:['С большой буквы пишут имена, фамилии, отчества.','Клички животных, названия городов, рек, стран.'],ex:['Алиса, кот Барсик','Минск, река Неман']},
  'Кто? Что? Какой? Что делает?':{t:['Кто? — про живых, что? — про неживое.','Какой? — признак предмета.','Что делает? — действие.'],ex:['кошка (кто?)','красный (какой?)','бежит (что делает?)']},
  'Слоги и перенос':{t:['В слове столько слогов, сколько гласных.','Переносим по слогам.'],ex:['ма-ши-на — 3 слога']},
  'Безударные гласные':{t:['Безударная гласная — «опасное» место.','Измени слово, чтобы гласная стала ударной.'],ex:['вода — вОды','зима — зИмы']},
@@ -3404,14 +3595,14 @@ Object.assign(RU_P,{
   syn:[['смелый','храбрый',['трусливый','быстрый']],['весёлый','радостный',['грустный','тихий']],['большой','огромный',['маленький','тёплый']],['бежать','мчаться',['стоять','петь']],['грустный','печальный',['весёлый','громкий']],['говорить','рассказывать',['молчать','прыгать']]],
   ant:[['большой','маленький',['огромный','красный']],['день','ночь',['утро','солнце']],['горячий','холодный',['тёплый','вкусный']],['высокий','низкий',['длинный','новый']],['весёлый','грустный',['радостный','быстрый']],['открыть','закрыть',['отпереть','взять']],['друг','враг',['приятель','брат']]],
   num:[['кот','коты'],['книга','книги'],['стол','столы'],['мяч','мячи'],['окно','окна'],['дом','дома'],['ёж','ежи'],['лист','листья'],['ребёнок','дети'],['стул','стулья']],
-  cap:[['кот Мурзик','кот мурзик'],['река Неман','река неман'],['город Минск','город минск'],['девочка Мила','девочка мила'],['пёс Шарик','пёс шарик'],['улица Садовая','улица садовая']],
+  cap:[['кот Мурзик','кот мурзик'],['река Неман','река неман'],['город Минск','город минск'],['девочка Алиса','девочка алиса'],['пёс Шарик','пёс шарик'],['улица Садовая','улица садовая']],
   adjPick:[['лимон (какой?)','кислый',['быстрый','громкий']],['снег (какой?)','белый',['сладкий','кислый']],['лиса (какая?)','хитрая',['деревянная','круглая']],['солнце (какое?)','яркое',['мокрое','колючее']],['ёжик (какой?)','колючий',['пушистый','прозрачный']],['мёд (какой?)','сладкий',['горький','квадратный']]],
   verbPick:[['собака (что делает?)','лает',['мяукает','летает']],['птица (что делает?)','летит',['ползёт','мычит']],['корова (что делает?)','мычит',['лает','плавает']],['рыба (что делает?)','плавает',['летает','поёт']],['змея (что делает?)','ползёт',['прыгает','чирикает']],['лягушка (что делает?)','квакает',['хрюкает','летает']]],
   prepOk:['в лесу','на столе','под ёлкой','к маме','из дома','у реки','за домом','по дороге','с папой','над рекой'],prepBad:['влесу','настоле','подёлкой','кмаме','издома','уреки','задомом','подороге','спапой','надрекой'],
   kin:[['гора','горка','горе'],['вода','водичка','водитель'],['лиса','лисёнок','лист'],['море','морской','мороз'],['сад','садовник','сало'],['дом','домик','дым'],['кот','котёнок','кошелёк'],['рыба','рыбак','рябина']],
   consOk:['лодка','ложка','берёзка','флажки','дубки','сказка','шубка','рыбка','кружка','ягодка','гриб','снег','глаз','хлеб'],consBad:['лотка','лошка','берёска','флашки','дупки','скаска','шупка','рыпка','крушка','яготка','грип','снек','глас','хлеп'],
   isSent:[['Кот спит на тёплом диване.','Да'],['кот диван тёплый спать','Нет'],['Дети пошли в лес за грибами.','Да'],['лес грибы дети идти','Нет'],['Утром выпал первый снег.','Да'],['снег утро первый падать','Нет']],
-  textMore:[['Летом мы поехали к бабушке.','Мы купались в речке.','Вечером пили чай с вареньем.'],['Белка нашла орех.','Она спрятала его в дупле.','Зимой белка съела орех.'],['Саша построил башню.','Потом башня упала.','Саша засмеялся и построил новую.'],['Пошёл дождь.','Мы взяли зонтики.','Дома мы сушили обувь.']]
+  textMore:[['Летом мы поехали к бабушке.','Мы купались в речке.','Вечером пили чай с вареньем.'],['Белка нашла орех.','Она спрятала его в дупле.','Зимой белка съела орех.'],['Тима построил башню.','Потом башня упала.','Тима засмеялся и построил новую.'],['Пошёл дождь.','Мы взяли зонтики.','Дома мы сушили обувь.']]
 });
 Object.assign(RU_GEN,{
   rOral:()=>{const v=pick(RU_P.oral);return {t:'choose',ask:'Это устная или письменная речь?',show:v[0],opts:[v[1],v[1]==='Устная'?'Письменная':'Устная'],small:1,r:'Устную речь мы слышим и говорим, письменную — пишем и читаем.'}},
@@ -3506,7 +3697,7 @@ function MATH_ORDER(){const L=LESSONS.math.list,r=[];MATH_SEC_ORDER.forEach(s=>{
 
 /* ---------- «Кругосветка Топы»: курс английского на полгода (часть 1 — остров «Привет», 06.11.2026) ---------- */
 /* неделя = 3 остановки + тест недели; остров = 4 недели + экзамен острова. Дальше — только после сданного теста (до 2 ошибок на 10). */
-const TI=(img,fit)=>'<img class="art photo'+(fit?' fit':'')+'" src="../img/'+img+'.webp" alt="">';
+const TI=(img,fit)=>'<img class="art photo'+(fit?' fit':'')+'" src="img/'+img+'.webp" alt="">';
 const NUMW=['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
 const NUMR=['один','два','три','четыре','пять','шесть','семь','восемь','девять','десять','одиннадцать','двенадцать','тринадцать','четырнадцать','пятнадцать','шестнадцать','семнадцать','восемнадцать','девятнадцать','двадцать'];
 const TRIP=[
@@ -3580,7 +3771,7 @@ function tripState(ii){const D=T().done,I=TRIP[ii];
   if(!D[(ii-1)+'-exam'])return 'exam';if(!I.weeks)return 'fill';if(tripLeft(ii)>0)return 'time';return 'pay'}
 function tripLeftTxt(ii){const ms=tripLeft(ii),d=Math.ceil(ms/864e5),h=Math.ceil(ms/36e5);
   return d>1?'через '+d+' '+plural(d,['день','дня','дней']):'через '+h+' '+plural(h,['час','часа','часов'])}
-
+/* таймер «дни : часы : минуты : секунды» на плашке острова (07.11.2026, просьба родителя), тикает раз в секунду */
 function tripClock(ii){const t=Math.max(0,Math.floor(tripLeft(ii)/1000)),z=n=>String(n).padStart(2,'0'),d=Math.floor(t/86400),h=Math.floor(t%86400/3600),m=Math.floor(t%3600/60),sc=t%60;
   return '<span class="tclk-t">Откроется через</span><span class="tclk">'+[[d,'дн'],[z(h),'ч'],[z(m),'мин'],[z(sc),'сек']].map(([v,l])=>'<i><b>'+v+'</b><small>'+l+'</small></i>').join('<em>:</em>')+'</span>'}
 let tripTick=null;
@@ -3597,7 +3788,7 @@ function tripOpen(ii,wi,si){const D=T().done;
   if(wi>0)return !!D[tripKey(ii,wi-1,3)];return true}
 function tripExamOpen(ii){const I=TRIP[ii];return !!(I.weeks&&I.weeks.length===4&&T().done[tripKey(ii,3,3)])}
 /* яркая карта (06.11.2026): море, острова на маршруте, кораблик с Топой, туман над закрытыми; остров изнутри — тропинка с пристанями */
-/* art — заглушка, пока нет острова из Gemini; когда появится ../img/trip/isl-N.webp — поставить real:1 и art:'trip/isl-N' */
+/* art — заглушка, пока нет острова из Gemini; когда появится img/trip/isl-N.webp — поставить real:1 и art:'trip/isl-N' */
 const TRIP_LOOK=[{x:30,y:88,g1:'#a6e35a',g2:'#4fb34f',f:'#ff5d8f',art:'trip/isl-1',real:1},{x:71,y:75,g1:'#ffffff',g2:'#cfe8ff',f:'#5fb7ff',art:'trip/isl-2',real:1},{x:58,y:56,g1:'#ffd6a5',g2:'#ff9f68',f:'#ff8a3d',art:'trip/isl-3',real:1},
   {x:22,y:40,g1:'#e6ccff',g2:'#b892ff',f:'#9b5de5',art:'trip/isl-4',real:1},{x:68,y:26,g1:'#b7f0a0',g2:'#3fb35f',f:'#2f9a5a',art:'trip/isl-5',real:1},{x:28,y:11,g1:'#cfe9ff',g2:'#7fb8ff',f:'#3a78e8',art:'trip/isl-6',real:1}];
 /* тропа по острову (в % от картинки): 4 ряда снизу вверх змейкой, последняя точка — экзамен */
@@ -3626,17 +3817,17 @@ function renderTrip(){if(previewTripOrigin!=="home"||previewTripEntered)tripPain
   const D=T().done,box=document.getElementById('tripMap'),bub=document.getElementById('tripSay');if(bub)bub.remove();box.innerHTML='';
   const stamps=Object.keys(D).filter(k=>/-3$/.test(k)).length,flags=Object.keys(D).filter(k=>/-exam$/.test(k)).length;
   const top=document.createElement('div');top.className='ttop';
-  top.innerHTML=(tripView!==null?'<button class="tpill tback">← Карта</button>':'<span></span>')+'<button class="tpill tpass"><img src="../img/trip/passport.webp" alt="">Паспорт <b>'+stamps+' / 24</b></button>';
+  top.innerHTML=(tripView!==null?'<button class="tpill tback">← Карта</button>':'<span></span>')+'<button class="tpill tpass"><img src="img/trip/passport.webp" alt="">Паспорт <b>'+stamps+' / 24</b></button>';
   box.appendChild(top);top.querySelector('.tpass').onclick=tripPassport;if(tripView!==null)top.querySelector('.tback').onclick=()=>{tripView=null;renderTrip()};
   if(bub){bub.classList.add('tbub');box.appendChild(bub)}
   if(tripView===null)tripWorld(box,D);else tripIsle(box,D,tripView);
   box.appendChild(tripGoBtn());
   if(bub){box.appendChild(bub);if(!bub._t){bub._t=1;bub.addEventListener('click',e=>{if(bub.classList.contains('min')){e.stopPropagation();tripBubShow()}},true)}}
   box.classList.toggle('isle',tripView!==null);
-  if(tripView===null)say('trip',stamps?'Капитан, продолжаем кругосветку! Жми «Плыть дальше» или открой остров.':'Капитан, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
+  if(tripView===null)say('trip',stamps?'Капитан Алиса, продолжаем кругосветку! Жми «Плыть дальше» или открой остров.':'Капитан Алиса, поплыли в кругосветку! Я хочу выучить английский, а ты мне поможешь. Начнём с острова Привет!');
 }
 /* на широком экране карта горизонтальная: острова волной слева направо */
-
+/* острова в свободном порядке (06.11.2026, просьба родителя) */
 const TRIP_WIDE=[[9,74],[24,34],[40,70],[55,28],[71,62],[88,28]];
 function tripPos(ii){const w=innerWidth>=1100;return w?{x:TRIP_WIDE[ii][0],y:TRIP_WIDE[ii][1]}:{x:TRIP_LOOK[ii].x,y:TRIP_LOOK[ii].y}}
 function tripWorld(box,D){
@@ -3647,7 +3838,7 @@ function tripWorld(box,D){
   let boatAt=0;
   TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],st=tripState(ii),ready=st==='open',fog=st==='exam'||st==='fill';if(ready)boatAt=ii;
     const P=tripPos(ii),e=document.createElement('button');e.className='tisl'+(ready?'':' locked')+(L.real?' real':'')+(D[ii+'-exam']?' won':'');e.style.left=P.x+'%';e.style.top=P.y+'%';e.style.setProperty('--g1',L.g1);e.style.setProperty('--g2',L.g2);e.style.setProperty('--f',L.f);
-    e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="../img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<img class="tflagimg" src="../img/trip/flag-'+(ii+1)+'.webp" alt="">':'')+
+    e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<img class="tflagimg" src="img/trip/flag-'+(ii+1)+'.webp" alt="">':'')+
       (st==='time'?'<b class="tbadge time" data-ii="'+ii+'"></b>':st==='pay'?'<b class="tbadge pay"></b>':'')+(!fog?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
     e.querySelector('.tname').textContent=I.n;
     const bd=e.querySelector('.tbadge');if(bd){if(st==='time'){bd.innerHTML=tripClock(ii);tripTickStart()}else bd.textContent='Вход '+tripPrice(ii)+' ⭐'}
@@ -3657,7 +3848,7 @@ function tripWorld(box,D){
       say('trip',st==='fill'?'Этот остров ещё в тумане. Скоро я приплыву туда с новыми словами!':'Этот остров в тумане! Сдай экзамен острова «'+TRIP[ii-1].n+'», и туман разлетится.')};
     sea.appendChild(e)});
   const BP=tripPos(boatAt),bt=document.createElement('div');bt.className='tboat';bt.style.left=(wide?BP.x+9:BP.x+(BP.x<50?26:-26))+'%';bt.style.top=(wide?BP.y+12:BP.y+2)+'%';
-  bt.innerHTML='<img class="tboatimg" src="../img/trip/boat.webp" alt="Топа на кораблике">';sea.appendChild(bt);
+  bt.innerHTML='<img class="tboatimg" src="img/trip/boat.webp" alt="Топа на кораблике">';sea.appendChild(bt);
   box.appendChild(sea);
   if((previewTripOrigin!=="home"||previewTripEntered)&&T().reveal!==undefined){const k=T().reveal;delete T().reveal;save();const el=sea.querySelectorAll('.tisl')[k];if(el){el.classList.add('reveal');tripSnd('fan')}}
 }
@@ -3666,11 +3857,11 @@ function tripIsle(box,D,ii){
   const I=TRIP[ii],L=TRIP_LOOK[ii],v=document.createElement('div');v.className='tisle big';v.style.setProperty('--g1',L.g1);v.style.setProperty('--f',L.f);
   v.innerHTML='<div class="tisle-sky"><b class="ttitle"></b><div class="tstick"></div></div><div class="ttrail"></div>';v.querySelector('.ttitle').textContent=I.n;
   const st=v.querySelector('.tstick');I.weeks.forEach((W,wi)=>{const ok=!!D[tripKey(ii,wi,3)],s=document.createElement('span');s.className=ok?'on':'';s.style.setProperty('--r',((wi%2?1:-1)*(3+wi))+'deg');
-    s.innerHTML=ok?'<img src="../img/'+((TRIP_STICK[ii]||[])[wi]||'en/happy')+'.webp" alt="">':'<em>'+(wi+1)+'</em>';s.title='Наклейка недели «'+W.t+'»';st.appendChild(s)});
+    s.innerHTML=ok?'<img src="img/'+((TRIP_STICK[ii]||[])[wi]||'en/happy')+'.webp" alt="">':'<em>'+(wi+1)+'</em>';s.title='Наклейка недели «'+W.t+'»';st.appendChild(s)});
   /* остров на весь экран: тропа из 4 рядов (неделя = 3 остановки + подарок-тест), наверху экзамен */
   const tr=v.querySelector('.ttrail');let cur=false;tr.className='tbig';
   const land=document.createElement('div');land.className='tbig-in';
-  const pic=document.createElement('img');pic.className='tbig-pic';pic.alt='';pic.src='../img/'+L.art+(L.real?'-big':'')+'.webp';pic.onload=()=>land.style.setProperty('--ar',pic.naturalWidth/pic.naturalHeight);land.appendChild(pic);
+  const pic=document.createElement('img');pic.className='tbig-pic';pic.alt='';pic.src='img/'+L.art+(L.real?'-big':'')+'.webp';pic.onload=()=>land.style.setProperty('--ar',pic.naturalWidth/pic.naturalHeight);land.appendChild(pic);
   const PTS=TRIP_PATH,NS='http://www.w3.org/2000/svg',svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 100 100');svg.setAttribute('preserveAspectRatio','none');svg.classList.add('tbig-path');
   const all=[];I.weeks.forEach((W,wi)=>{for(let si=0;si<4;si++)all.push(PTS[wi*4+si])});all.push(PTS[16]);
   const pl=document.createElementNS(NS,'polyline');pl.setAttribute('points',all.map(q=>q.join(',')).join(' '));svg.appendChild(pl);land.appendChild(svg);
@@ -3679,11 +3870,11 @@ function tripIsle(box,D,ii){
     const lg=document.createElement('div');lg.style.setProperty('--wc',col);lg.innerHTML='<i></i><small>Неделя '+(wi+1)+'</small><b></b>';lg.querySelector('b').textContent=typo(W.t);leg.appendChild(lg);
     for(let si=0;si<4;si++){const k=tripKey(ii,wi,si),ok=tripOpen(ii,wi,si),b=document.createElement('button'),q=PTS[wi*4+si];
       b.className='tpier'+(si===3?' tchest':'')+(D[k]?' done':ok?'':' off');b.style.left=q[0]+'%';b.style.top=q[1]+'%';b.style.setProperty('--wc',col);
-      b.innerHTML=si===3?'<img src="../img/trip/'+(D[k]?'chest-open':'chest')+'.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label','Неделя '+(wi+1)+': '+(si===3?'тест недели':'остановка '+(si+1)));
+      b.innerHTML=si===3?'<img src="img/trip/'+(D[k]?'chest-open':'chest')+'.webp" alt="">':'<span>'+(si+1)+'</span>';b.setAttribute('aria-label','Неделя '+(wi+1)+': '+(si===3?'тест недели':'остановка '+(si+1)));
       if(ok&&!D[k]&&!cur){cur=true;b.classList.add('now')}
       b.onclick=()=>{if(!ok){say('trip',si===3?'Сначала пройди три остановки этой недели!':'Сначала пройди предыдущую остановку!');return}tripSnd('go');startTripStop(ii,wi,si)};land.appendChild(b)}});
   const eo=tripExamOpen(ii),ex=document.createElement('button'),q=PTS[16];ex.className='tpier texam-pin'+(D[ii+'-exam']?' done':eo?'':' off');ex.style.left=q[0]+'%';ex.style.top=q[1]+'%';
-  ex.innerHTML='<img src="../img/trip/'+(D[ii+'-exam']?'chest-open':'chest')+'.webp" alt=""><span>Экзамен</span>';ex.setAttribute('aria-label','Экзамен острова');
+  ex.innerHTML='<img src="img/trip/'+(D[ii+'-exam']?'chest-open':'chest')+'.webp" alt=""><span>Экзамен</span>';ex.setAttribute('aria-label','Экзамен острова');
   if(eo&&!D[ii+'-exam']&&!cur)ex.classList.add('now');
   ex.onclick=()=>{if(!eo){say('trip','Экзамен откроется, когда сдашь тесты всех четырёх недель!');return}tripSnd('go');startTripStop(ii,'exam')};land.appendChild(ex);
   tr.appendChild(land);tr.appendChild(leg);
@@ -3691,14 +3882,14 @@ function tripIsle(box,D,ii){
   say('trip','Это '+I.n+'! Пройди остановки по порядку, а в конце каждой недели — тест. Наклейки собираются наверху!');
 }
 function tripPassport(){const D=T().done,c=document.getElementById('stepCard');
-  document.getElementById('scImg').src='../img/trip/passport.webp';document.getElementById('scTitle').textContent='Паспорт путешественника';
+  document.getElementById('scImg').src='img/trip/passport.webp';document.getElementById('scTitle').textContent='Паспорт путешественника';
   const p=document.getElementById('scText');p.innerHTML='';const g=document.createElement('div');g.className='tpgrid';
-  TRIP.forEach((I,ii)=>{const r=document.createElement('div');r.className='tprow';r.innerHTML='<img class="tpflagimg'+(D[ii+'-exam']?' on':'')+'" src="../img/trip/flag-'+(ii+1)+'.webp" alt="">';
+  TRIP.forEach((I,ii)=>{const r=document.createElement('div');r.className='tprow';r.innerHTML='<img class="tpflagimg'+(D[ii+'-exam']?' on':'')+'" src="img/trip/flag-'+(ii+1)+'.webp" alt="">';
     for(let wi=0;wi<4;wi++){const s=document.createElement('i');s.className='tpst'+(D[tripKey(ii,wi,3)]?' on':'');r.appendChild(s)}g.appendChild(r)});
   p.appendChild(g);document.getElementById('scBtn').style.display='none';document.getElementById('scClose').textContent='Закрыть';c.classList.add('on')}
 /* звуки без файлов: тихие колокольчики */
 let tripAC=null;
-function tripSnd(k){try{tripAC=tripAC||new (window.AudioContext||window.webkitAudioContext)();const A=tripAC,t=A.currentTime;
+function tripSnd(k){if(window.TopouhAudio?.get().effects===false)return;try{tripAC=tripAC||new (window.AudioContext||window.webkitAudioContext)();const A=tripAC,t=A.currentTime;
   const N={ok:[[880,0],[1320,.09]],no:[[260,0],[200,.1]],go:[[660,0],[990,.07]],stamp:[[120,0],[784,.12],[1046,.22],[1568,.34]],fan:[[523,0],[659,.12],[784,.24],[1046,.38]]}[k]||[];
   N.forEach(([f,d])=>{const o=A.createOscillator(),g=A.createGain();o.type=k==='no'?'triangle':'sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(k==='stamp'&&!d?.25:.12,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+.35);o.connect(g);g.connect(A.destination);o.start(t+d);o.stop(t+d+.4)})}catch(e){}}
 let TR=null;
@@ -3722,7 +3913,7 @@ function tripStep(){
   say('tripL',(q.again?'Это задание было трудным. Попробуем ещё раз! ':'')+TRIP_ASK[q.k]);q.missed=false;
   const miss=()=>{tripSnd('no');if(!q.missed){q.missed=true;TR.miss++;if(!TR.test&&TR.extra<2){TR.list.push(Object.assign({},q,{again:1}));TR.extra++;document.getElementById('tripProg').innerHTML=TR.list.map((_,k)=>'<i class="'+(k<TR.i?'done':'')+'"></i>').join('')}}say('tripL',pick(B_OOPS))};
   const win=()=>{tripSnd('ok');rl.textContent=q.ru?typo(q.say+' — '+q.ru):'';say('tripL',pick(B_OK));cheer();if(q.say)setTimeout(()=>speakEn(q.say),400);nx.style.display='flex'};
-  const ear=t=>'<button class="ear" aria-label="Послушать ещё раз"><img src="../img/ic/speaker.webp" alt=""></button>';
+  const ear=t=>'<button class="ear" aria-label="Послушать ещё раз"><img src="img/ic/speaker.webp" alt=""></button>';
   if(G_KIND[q.k])return G_KIND[q.k](q,{Q,box,miss,win,rule:t=>{rl.textContent=typo(t)},say:t=>say('tripL',t),snd:tripSnd});
   if(q.k==='memory')return tripMemory(q,Q,box,miss,win);
   if(q.k==='build'){Q.innerHTML='<div class="ru"></div>';Q.querySelector('.ru').textContent=typo(q.ru);
@@ -3783,16 +3974,14 @@ const ITEMS=[
   {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="wardrobe-assets/wizard.svg" alt="" style="height:44px">',p:140},
   {k:'crown',slot:'head',n:'Корона',ic:'<img src="wardrobe-assets/crown.svg" alt="" style="height:44px">',p:150}
 ];
-
 /* своя фраза для вещи, если картинка особенная */
-const REVEAL_ITEM_SAY={scarf:'Какой тёплый шарф! Теперь мне не страшна никакая зима.',crown:'Корона! Теперь я настоящая королева совушек. А ты — моя принцесса, Мила!',butterfly:'Ой, бабочка! Она светится! Теперь у меня есть подружка.',glasses:'В очках я выгляжу очень умной! Теперь проверю все-все буквы.',book:'Моя собственная книжка! Почитаешь мне её вечером, Мила?',pencil:'Волшебный карандаш! Теперь я напишу записку без единой ошибки. Ну, почти…',medal:'Настоящая медаль! Я так горжусь! А ты, Мила, — моя чемпионка!',bow:'Ой, какой бантик! Теперь я совсем как ты, Мила!',shades:'Йо! Самая крутая совушка в городе. Класс!',bowtie:'Смотри, какая я нарядная! Совсем как настоящая учительница.',cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
+const REVEAL_ITEM_SAY={scarf:'Какой тёплый шарф! Теперь мне не страшна никакая зима.',crown:'Корона! Теперь я настоящая королева совушек. А ты — моя принцесса, Алиса!',butterfly:'Ой, бабочка! Она светится! Теперь у меня есть подружка.',glasses:'В очках я выгляжу очень умной! Теперь проверю все-все буквы.',book:'Моя собственная книжка! Почитаешь мне её вечером, Алиса?',pencil:'Волшебный карандаш! Теперь я напишу записку без единой ошибки. Ну, почти…',medal:'Настоящая медаль! Я так горжусь! А ты, Алиса, — моя чемпионка!',bow:'Ой, какой бантик! Теперь я совсем как ты, Алиса!',shades:'Йо! Самая крутая совушка в городе. Класс!',bowtie:'Смотри, какая я нарядная! Совсем как настоящая учительница.',cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
 const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самая нарядная совушка на свете!'];
 /* wardrobe-vector-v1: preserve item image, fit it to the current Ух */
 function fitWardrobeUkh(owl){
   const pose=owl.querySelector('image.pose');
   if(!pose)return;
-  pose.setAttribute('href','wardrobe-assets/ukh.svg');
-  for(const [k,v] of Object.entries({x:-80,y:-100,width:160,height:188}))pose.setAttribute(k,String(v));
+  pose.setAttribute('href','belarusian-assets/wardrobe-ukh.svg');
   // Fitting coordinates are based on the canonical viewBox and the current placed image.
   const x=Number(pose.getAttribute('x')),y=Number(pose.getAttribute('y'));
   const w=Number(pose.getAttribute('width')),h=Number(pose.getAttribute('height'));
@@ -3812,7 +4001,6 @@ function fitWardrobeUkh(owl){
   for(const [key,[rx,ry,rw,rh,rotate]] of Object.entries(fit)){
     const im=owl.querySelector('.acc-'+key+' image');
     if(!im)continue;
-    im.setAttribute('href','wardrobe-assets/'+key+'.svg');
     const a=left+(rx+80)*scale,b=top+(ry+86)*scale,iw=rw*scale,ih=rh*scale;
     for(const [k,v] of Object.entries({x:a,y:b,width:iw,height:ih}))im.setAttribute(k,String(v));
     if(rotate)im.setAttribute('transform','rotate('+rotate+' '+(a+iw/2)+' '+(b+ih/2)+')');
@@ -3843,7 +4031,7 @@ function showReveal(it){
   setTimeout(()=>speak(t,'uh'),400);
 }
 const CELE=['Молодец!','Ура! Получилось!','Ты супер!','Вот это да!','Умница!'];
-function celebrate(text,img){document.getElementById('celeImg').src='../img/'+(img||'uh-star')+'.webp';document.getElementById('celeTitle').textContent=pick(CELE);
+function celebrate(text,img,vector){const mascots={'uh-star':MASCOT_SVG.star,'uh-book':MASCOT_SVG.book,'uh-pointer':MASCOT_SVG.pointer,'uh-hello':MASCOT_SVG.hello,'topa-hello':MASCOT_SVG.topa};document.getElementById('celeImg').src=vector||mascots[img||'uh-star']||('img/'+img+'.webp');document.getElementById('celeTitle').textContent=pick(CELE);
   document.getElementById('celeText').textContent=typo(text||'Задание выполнено!');document.getElementById('cele').classList.add('on')}
 function closeCele(){document.getElementById('cele').classList.remove('on')}
 function closeReveal(){document.getElementById('reveal').classList.remove('on')}
@@ -3880,7 +4068,7 @@ function draggable(el,o){
     const toggle=()=>{S.wear[it.slot]=on?null:it.k;say('shop',on?'Сниму пока.':'Красота!');save();dress();cheer();renderShop()};
     draggable(b,{targets:()=>[document.getElementById('owlShop')],drop:()=>{S.wear[it.slot]=it.k;say('shop',pick(['Красота!','Ух ты, как мне идёт!','Спасибо! Я самая нарядная!']));save();dress();cheer();renderShop();return false},tap:toggle});M.appendChild(b)});
   const PA=document.getElementById('paints');PA.innerHTML=mine.length?'':'<div class="empty" style="color:var(--ink2)">Купи вещь — и появится раскраска с Ух в ней!</div>';
-  mine.forEach(it=>{const b=document.createElement('button');b.innerHTML='<img src="../img/color/'+it.k+'.png" alt="">';b.title='Раскрасить: '+it.n;b.onclick=()=>openPaint(it.k);PA.appendChild(b)});
+  mine.forEach(it=>{const b=document.createElement('button');b.innerHTML='<img src="img/color/'+it.k+'.png" alt="">';b.title='Раскрасить: '+it.n;b.onclick=()=>openPaint(it.k);PA.appendChild(b)});
 
   const L=document.getElementById('shopList');L.innerHTML='';
   const rest=ITEMS.filter(it=>!S.owned.includes(it.k));
@@ -3905,7 +4093,18 @@ function saveMode(){
   S.mode=document.getElementById('modeIn').value;S.backDate=document.getElementById('backIn').value;S.mission=null;save();dress();
   const t=document.createElement('div');t.className='toast';t.textContent='Сохранено';document.body.appendChild(t);setTimeout(()=>t.remove(),1400);
 }
+function paintParentAudio(){
+  const api=window.TopouhAudio;
+  if(!api)return;
+  const p=api.get();
+  for(const [id,k] of [['parentMusic','music'],['parentEffects','effects']]){
+    const b=document.getElementById(id);
+    if(b){b.checked=p[k];b.onchange=()=>api.set(k,b.checked)}
+  }
+}
+window.addEventListener('topouh-audio-change',paintParentAudio);
 function renderParent(){
+  paintParentAudio();
   document.getElementById('modeIn').value=mode();document.getElementById('backIn').value=S.backDate||'';
   document.getElementById('topicIn').value=S.topic||'';renderVoices();checkPersist();renderSync();
   const PP=document.getElementById('parentPend'),pl=S.pending||[];
@@ -3915,7 +4114,7 @@ function renderParent(){
    M.innerHTML=m.length?'':'<div class="entry">Пока ошибок не было.</div>';
    m.forEach(([r,n])=>{const d=document.createElement('div');d.className='entry';d.textContent=r+' — ошибок: '+n;M.appendChild(d)})}
   const L=document.getElementById('diaryList');
-  L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Вечером Ух расспросит Милу о&nbsp;школе.</div>';
+  L.innerHTML=S.diary.length?'':'<div class="entry">Пока пусто. Вечером Ух расспросит Алису о&nbsp;школе.</div>';
   S.diary.slice(0,60).forEach(e=>{const d=document.createElement('div');d.className='entry';d.innerHTML='<small></small><q></q><div></div>';
     d.children[0].textContent=e.d.split('-').reverse().join('.');d.children[1].textContent=e.q;d.children[2].textContent=e.a;L.appendChild(d)});
 }
@@ -3926,23 +4125,45 @@ try{sessionStorage.setItem(PREVIEW_VIEWER,'club');const u=new URL(location.href)
 /* Preview-only, exact host/iframe bridge. No URL or payload is executable. */
 const previewClub=document.getElementById('previewClub');
 const previewMessageType='topouh-phase1:route';
+window.topouhPlayGreeting=(source,i)=>{
+  if(previewClub.hidden||source!==previewClub.contentWindow||!Number.isSafeInteger(i))return;
+  const entry=window.TopouhGreetings?.phrases[i];
+  if(entry)speak(entry.text,'uh',entry.tone);
+};
 const previewRoutes=Object.freeze({
   trip:()=>{openTrip(false,'club');document.getElementById('backBtn').focus()},
-  smart:()=>openSmart(),
-  reading:()=>openSubject('read'),
-  paintings:()=>openPaints(),
-  diary:()=>openDnev(),
-  wardrobe:()=>go('shop'),
-  'lesson-today':()=>{const l=dayLesson();if(l.done)openSubject(l.k);else startToday()},
-  math:()=>openSubject('math'),
-  russian:()=>openSubject('ru'),
-  english:()=>openSubject('en'),
-  belarusian:()=>{if(previewBelarusianExists)location.assign('belarusian.html');else tellClub('unavailable')},
-  catalogue:()=>{if(previewCatalogueExists)location.assign('lessons.html')}
+  smart:()=>openClubCatalogue(),
+  today:()=>topNavToday(),
+  reading:()=>topNavOpen('reading'),
+  'reading-course':()=>openClubCatalogue('reading'),
+  paintings:()=>topNavOpen('paintings'),
+  wardrobe:()=>topNavOpen('wardrobe'),
+  diary:()=>topNavOpen('diary'),
+  parent:()=>openParent(),
+  'lesson-today':()=>openClubDayStep('lesson',true),
+  'plan-lesson':()=>openClubDayStep('lesson'),
+  'plan-help':()=>openClubDayStep('help'),
+  'plan-talk':()=>openClubDayStep('talk'),
+  'plan-gift':()=>openClubDayStep('gift'),
+  'plan-mission':()=>openClubDayStep('mission'),
+  'plan-hw':()=>openClubDayStep('hw'),
+  'plan-mom':()=>openClubDayStep('mom'),
+  math:()=>openClubCatalogue('math'),
+  russian:()=>openClubCatalogue('ru'),
+  english:()=>openClubCatalogue('en'),
+  belarusian:()=>{if(previewBelarusianExists&&previewCatalogueExists)openClubCatalogue('be');else if(previewBelarusianExists)openBe();else tellClub('unavailable')},
+  catalogue:()=>openClubCatalogue()
 });
 const previewBelarusianExists=true;
 const previewCatalogueExists=true;
+const clubCourses=Object.freeze({be:'lessons.html?course=be',math:'lessons.html?course=math',ru:'lessons.html?course=ru',reading:'lessons.html?course=reading',en:'lessons.html?course=en'});
+function openClubCatalogue(id){
+  if(!previewCatalogueExists)return;
+  if(id!==undefined){if(Object.hasOwn(clubCourses,id))showAudioCatalogue(new URL(clubCourses[id],location.href));return}
+  showAudioCatalogue(new URL('lessons.html',location.href));
+}
 function previewHomeVisibility(on){
+  if(on)hideAudioCatalogue();
   previewClub.hidden=!on;
   document.querySelector('.wrap').inert=on;
   const sky=document.getElementById('sky');if(sky)sky.hidden=on;
@@ -3954,11 +4175,57 @@ function tellClub(action,extra={}){
   if(!previewClub.contentWindow||!/^https?:$/.test(location.protocol))return;
   previewClub.contentWindow.postMessage({type:'topouh-phase1:state',action,...extra},location.origin);
 }
+/* topouh-club-day-plan-v1 */
+let clubPlanOverlay=null;
+function openClubDayStep(key,fromHero=false){
+  if(clubPlanOverlay)return;
+  const step=pathSteps().find(s=>s.k===key);
+  if(!step||step.lock||step.done){
+    if(step&&step.done&&key==='lesson'&&fromHero){
+      const subject=dayLesson().k;
+      if(subject==='read')topNavOpen('reading');else openClubCatalogue(subject);
+    }
+    else sendClubSnapshot();
+    return;
+  }
+  if(key==='lesson'){
+    startToday(true);
+  }else if(key==='gift'||key==='mission'||key==='mom'){
+    const overlay=document.getElementById(key==='gift'?'cele':'stepCard');
+    clubPlanOverlay=overlay;
+    previewClub.inert=true;
+    overlay.classList.add('club-plan-overlay');
+    step.go();
+    if(overlay.classList.contains('on')){
+      overlay.querySelector(key==='gift'?'button':'#scClose')?.focus();
+    }else{
+      finishClubPlanOverlay(key,overlay);
+      return;
+    }
+    const observer=new MutationObserver(()=>{
+      if(!overlay.classList.contains('on')){
+        observer.disconnect();finishClubPlanOverlay(key,overlay);
+      }
+    });
+    observer.observe(overlay,{attributes:true,attributeFilter:['class']});
+    sendClubSnapshot();
+    return;
+  }else step.go();
+  if(!previewClub.hidden)return;
+  const routeHeading=key==='help'?'help-title':key==='talk'?'talkTitle':'backBtn';
+  document.getElementById(routeHeading).focus({preventScroll:true});
+}
+function finishClubPlanOverlay(key,overlay){
+  overlay.classList.remove('club-plan-overlay');
+  clubPlanOverlay=null;previewClub.inert=false;
+  if(!previewClub.hidden){sendClubSnapshot();tellClub('focus-plan',{key})}
+}
 function sendClubSnapshot(){
-  const d=S.dayL&&S.dayL.d===today()?S.dayL:null;
+  const plan=pathSteps().map(s=>({key:s.k,title:s.t,note:s.p,done:!!s.done,locked:!!s.lock,stars:s.k==='talk'?8-talkRewardClaims(today()):s.star}));
+  const d=dayLesson();
   const section=d&&LESSONS[d.k],daily=section&&section.list[d.i];
   const dayStars=S.day&&S.day.d===today()?S.day.n:0;
-  tellClub('snapshot',{dayStars,lesson:daily?daily.n:'Урок дня',subject:section?section.name:'',done:!!(d&&d.done),lessonStars:d?lessonPrize(d.k+d.i):0});
+  tellClub('snapshot',{dayStars,lesson:daily?daily.n:'Урок дня',subject:section?section.name:'',done:!!(d&&d.done),lessonStars:d?lessonPrize(d.k+d.i):0,plan});
 }
 function focusClubTrip(){requestAnimationFrame(()=>tellClub('focus-trip'))}
 previewClub.addEventListener('load',()=>{if(!previewClub.hidden)sendClubSnapshot()});
@@ -3971,12 +4238,248 @@ window.addEventListener('message',event=>{
   previewRoutes[d.destination]();
 });
 
+
+/* Topouh Belarusian v2 host */
+const beFrame=document.getElementById('beFrame');
+const beLessonId=x=>typeof x==='string'&&/^be-(0[1-9]|[1-3]\d|4[0-2])$/.test(x);
+const beFlowState='topouhBeFlow';
+let beVisible=false, beShop=false, beLesson='', beFrameKey=null, beBackPending=false;
+function beRoute(){
+  const q=new URL(location.href).searchParams;
+  return {section:q.get('section'),lesson:beLessonId(q.get('lesson'))?q.get('lesson'):''};
+}
+function beUrl(section, mode, canBack=false){
+  if(mode==='none')return;
+  const u=new URL(location.href),before=u.href;
+  if(section){for(const k of ['catalogue','course','module','view'])u.searchParams.delete(k);u.searchParams.set('section',section);}
+  else u.searchParams.delete('section');
+  if(section&&beLesson)u.searchParams.set('lesson',beLesson);
+  else u.searchParams.delete('lesson');
+  const old=history.state, saved=old&&typeof old==='object'?old:{};
+  if(mode==='push'&&before!==u.href)history.pushState({...saved,[beFlowState]:canBack},'',u);
+  else if(mode==='replace')history.replaceState({...saved,[beFlowState]:canBack},'',u);
+}
+function beEarned(){
+  const bucket=S.beRewards;
+  return bucket&&typeof bucket==='object'&&!Array.isArray(bucket)?
+    Object.keys(bucket).filter(k=>beLessonId(k)&&bucket[k]===true).sort():[];
+}
+function beSend(action, extras={}){
+  if(!beVisible||beFrame.hidden||!beFrame.contentWindow||!/^https?:$/.test(location.protocol))return;
+  beFrame.contentWindow.postMessage({type:'topouh-be:state',stars:Number.isFinite(S.stars)?S.stars:0,
+    earned:beEarned(),action,...extras},location.origin);
+}
+function beControls(on){
+  beVisible=on;
+  beFrame.hidden=!on;
+  document.querySelector('.wrap').inert=on;
+  if(on){
+    previewClub.hidden=true;
+    document.getElementById('sky').hidden=true;
+    document.getElementById('tabs').hidden=true;
+    document.documentElement.classList.add('preview-club-home');
+  }
+}
+function ensureBeFrame(lesson){
+  if(beFrameKey===lesson)return;
+  const u=new URL('belarusian.html',location.href);
+  if(lesson)u.searchParams.set('lesson',lesson);
+  beFrameKey=lesson;
+  beFrame.src=u.href;
+}
+function openBe(lesson='',mode='push'){
+  beShop=false;beBackPending=false;beLesson=beLessonId(lesson)?lesson:'';
+  go('home');ensureBeFrame(beLesson);beControls(true);beUrl('belarusian',mode);
+  requestAnimationFrame(()=>{if(beVisible){beFrame.focus();beSend('snapshot')}});
+}
+function closeBe(mode='replace'){
+  beShop=false;beBackPending=false;beControls(false);beLesson='';
+  go('home');beUrl('',mode);
+  requestAnimationFrame(()=>tellClub('focus-belarusian'));
+}
+function beEnterShop(mode='push'){
+  beShop=true;beBackPending=false;beControls(false);
+  go('shop');beUrl('belarusian-shop',mode,mode==='push');
+  document.getElementById('backBtn').focus();
+}
+function beShopBack(){
+  if(beBackPending)return;
+  if(beRoute().section==='belarusian-shop'&&history.state?.[beFlowState]===true){
+    beBackPending=true;history.back();return;
+  }
+  openBe(beLesson,'replace');
+}
+/* topouh-belarusian-dashboard-v1 */
+function beCatalogueDestination(id){
+  if(!beLessonId(id))return clubCourses.be;
+  const ordinal=Number(id.slice(3));
+  const module=ordinal<=14?'base':ordinal<=28?'review':'apply';
+  return clubCourses.be+'&module='+module;
+}
+function beOpenCatalogue(){
+  if(!previewCatalogueExists){openBe('','replace');return}
+  // When «Наступная тэма» advances inside the frame, its validated study anchor
+  // is newer than the parent’s original deep link. No route comes from the message.
+  let id=beLesson;
+  try{
+    const u=new URL(beFrame.contentWindow.location.href);
+    if(u.origin===location.origin&&u.pathname===new URL('belarusian.html',location.href).pathname){
+      const current=u.hash.slice(1);
+      if(beLessonId(current))id=current;
+    }
+  }catch(_){}
+  // Replace the study deep link, avoiding a browser-Back loop to the just-closed frame.
+  showAudioCatalogue(new URL(beCatalogueDestination(id),location.href),'replace');
+}
+function beRequest(event){
+  const d=event.data;
+  if(!beVisible||beFrame.hidden||!/^https?:$/.test(location.protocol)||
+    event.source!==beFrame.contentWindow||event.origin!==location.origin||
+    !d||Object.getPrototypeOf(d)!==Object.prototype||!Object.hasOwn(d,'type')||!Object.hasOwn(d,'action')||
+    d.type!=='topouh-be:request')return;
+  const keys=Object.keys(d);
+  if(d.action==='complete'){
+    if(keys.length!==3||!Object.hasOwn(d,'lesson')||!beLessonId(d.lesson))return;
+    const known=beEarned();
+    let delta=0;
+    const ordinal=Number(d.lesson.slice(3));
+    const previous='be-'+String(ordinal-1).padStart(2,'0');
+    const unlocked=ordinal===1||known.includes(previous);
+    if(unlocked&&!known.includes(d.lesson)){
+      S.beRewards=Object.fromEntries(known.map(k=>[k,true]));
+      // Claim first: addStars uses the existing save and daily counter in the same event tick.
+      S.beRewards[d.lesson]=true;
+      addStars(3,'за беларускую мову');
+      delta=3;
+    }
+    beSend('awarded',{lesson:d.lesson,delta});return;
+  }
+  if(keys.length!==2)return;
+  if(d.action==='ready')beSend('snapshot');
+  else if(d.action==='home')closeBe();
+  else if(d.action==='catalogue')beOpenCatalogue();
+  else if(d.action==='shop')beEnterShop();
+}
+window.addEventListener('message',beRequest);
+beFrame.addEventListener('load',()=>beSend('snapshot'));
+window.addEventListener('popstate',()=>{
+  beBackPending=false;
+  const r=beRoute();
+  if(r.section==='belarusian')openBe(r.lesson,'none');
+  else if(r.section==='belarusian-shop'){beLesson=r.lesson;beEnterShop('none')}
+  else if(beVisible||beShop)closeBe('none');
+});
+function beInit(){
+  const r=beRoute();
+  if(r.section==='belarusian')openBe(r.lesson,'none');
+  else if(r.section==='belarusian-shop'){beLesson=r.lesson;beEnterShop('none')}
+}
+
+
+/* topouh-top-nav-v1 */
+const topNavViews=Object.freeze({reading:'lessons',paintings:'pbook',wardrobe:'shop',diary:'dnev'});
+const topNavRender=Object.freeze({reading:()=>openSubject('read'),paintings:()=>openPaints(),wardrobe:()=>go('shop'),diary:()=>openDnev()});
+const topNavHistory='topouhNavFlow';
+let topNavActive='',topNavPending=false;
+function topNavView(){
+  const q=new URL(location.href).searchParams,v=q.get('view');
+  return !q.has('section')&&v&&Object.hasOwn(topNavViews,v)?v:'';
+}
+function topNavShow(v){
+  topNavActive=v;
+  topNavRender[v]();
+  if(v!=='reading'){
+    const title=document.querySelector('#'+topNavViews[v]+' h1');
+    if(title){title.tabIndex=-1;title.focus({preventScroll:true})}
+  }
+}
+function topNavOpen(v){
+  if(!Object.hasOwn(topNavViews,v))return;
+  const u=new URL(location.href);
+  if(u.searchParams.has('section'))return;
+  if(topNavView()!==v){
+    u.searchParams.set('view',v);u.hash='';
+    history.pushState({...history.state,[topNavHistory]:true},'',u);
+  }
+  topNavShow(v);
+}
+function topNavToday(mode='push'){
+  const u=new URL(location.href);
+  if(u.searchParams.has('section'))return;
+  if(u.searchParams.has('view')){
+    u.searchParams.delete('view');u.hash='';
+    const state={...history.state,[topNavHistory]:false};
+    if(mode==='replace')history.replaceState(state,'',u);
+    else history.pushState(state,'',u);
+  }
+  topNavActive='';go('home');tellClub('focus-today');
+}
+function topNavBack(c){
+  const v=topNavView();
+  if(!v||topNavViews[v]!==c||(v==='reading'&&LESSON.subj!=='read'))return false;
+  if(topNavPending)return true;
+  if(history.state?.[topNavHistory]===true){topNavPending=true;history.back()}
+  else topNavToday('replace');
+  return true;
+}
+function topNavSync(){
+  topNavPending=false;
+  const v=topNavView();
+  if(v)topNavShow(v);
+  else if(topNavActive){
+    topNavActive='';
+    if(!new URL(location.href).searchParams.has('section')){go('home');tellClub('focus-today')}
+  }
+}
+window.addEventListener('popstate',topNavSync);
+
+/* Persistent audio owner; pages with their own renderers remain independent. */
+const catalogueFrame=document.getElementById('catalogueFrame');
+const audioRouteIds=new Set(['be','math','ru','reading','en','logic','money','story','world','safety','art','lab','code','team','invent','games','maps','garden']);
+function hideAudioCatalogue(){
+ if(!catalogueFrame.hidden)catalogueFrame.hidden=true;
+}
+function audioCatalogueURL(){
+ const p=new URL(location.href).searchParams;
+ if(p.get('catalogue')!=='1'||p.has('section'))return null;
+ const u=new URL('lessons.html',location.href);
+ const c=p.get('course'),m=p.get('module');
+ if(audioRouteIds.has(c)){u.searchParams.set('course',c);if(/^(base|review|apply|tools|puzzles|projects|next-[1-6]|eng-[a-z0-9-]{1,47})$/.test(m||''))u.searchParams.set('module',m);}
+ return u;
+}
+function showAudioCatalogue(u,mode='push'){
+ if(beVisible||beShop)closeBe('none');
+ const v=new URL('index.html',location.href);v.search=u.search;v.searchParams.set('catalogue','1');
+ if(mode!=='none'&&location.href!==v.href)history[mode==='replace'?'replaceState':'pushState']({},'',v);
+ previewClub.hidden=true;beFrame.hidden=true;
+ document.querySelector('.wrap').inert=true;
+ document.getElementById('sky').hidden=true;document.getElementById('tabs').hidden=true;
+ document.documentElement.classList.add('preview-club-home');
+ let now='';try{now=catalogueFrame.contentWindow.location.href;}catch(_){}
+ if(now!==u.href){if(!now||now==='about:blank'){catalogueFrame.src=u.href;}else{catalogueFrame.contentWindow.location.replace(u.href);}}
+ catalogueFrame.hidden=false;catalogueFrame.focus();
+}
+function dropAudioCatalogue(){
+ if(!audioCatalogueURL()&&catalogueFrame.hidden)return;
+ hideAudioCatalogue();
+ const u=new URL('index.html',location.href);history.pushState({},'',u);
+}
+window.TopouhAudioNav=Object.freeze({
+ home(){dropAudioCatalogue();if(beVisible||beShop){closeBe();return;}topNavToday();},
+ view(v){if(!Object.hasOwn(topNavViews,v))return;if(!catalogueFrame.hidden){hideAudioCatalogue();const u=new URL('index.html',location.href);u.searchParams.set('view',v);history.pushState({[topNavHistory]:true},'',u);topNavShow(v);return;}if(beVisible||beShop)closeBe();topNavOpen(v);},
+ belarusian(id){if(beLessonId(id)&&!catalogueFrame.hidden){hideAudioCatalogue();openBe(id,'push');}}
+});
+window.addEventListener('popstate',()=>{
+ const u=audioCatalogueURL();if(u)showAudioCatalogue(u,'none');
+ else if(!catalogueFrame.hidden){hideAudioCatalogue();if(!beVisible&&!beShop&&!topNavView())go('home');}
+});
 /* ---------- старт ---------- */
 (function(){
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
-  mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlSmart',true);mountOwl('owlLessons',true);mountOwl('owlLessonsT',true,'babyTpl');mountOwl('owlMath',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlTrip',true,'babyTpl');mountOwl('owlTripL',true,'babyTpl');mountOwl('owlShop');
-  typoDom(document.body);setStars();renderHome();if(new URL(location.href).searchParams.get('view')==='wardrobe')go('shop');showPhoto();cloudInit();previewHomeVisibility(true);
+  mountOwl('owlHome');mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlSmart',true);mountOwl('owlLessons',true);mountOwl('owlLessonsT',true,'babyTpl');mountOwl('owlMath',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlTrip',true,'babyTpl');mountOwl('owlTripL',true,'babyTpl');mountOwl('owlShop');
+  typoDom(document.body);setStars();renderHome();showPhoto();cloudInit();previewHomeVisibility(true);beInit();topNavSync();
+  const audioURL=audioCatalogueURL();if(audioURL)showAudioCatalogue(audioURL,'none');
 })();
 </script>
 </body>

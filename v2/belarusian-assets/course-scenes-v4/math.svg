@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 640 340" font-family="DejaVu Sans, sans-serif" width="640" height="340" role="img" aria-label="Математика">
+  <defs>
+    <clipPath id="tile-0">
+      <rect width="640" height="340" rx="34"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#tile-0)" id="background">
+    <rect x="0" y="0" width="640" height="340" rx="0" fill="#fbebcb"/>
+    <path d="M0 246q182 17 336 0t304-14v108H0Z" fill="#eedbc2"/>
+    <rect x="23" y="103" width="68" height="119" rx="29" fill="#f3dbbc"/>
+    <rect x="424" y="68" width="163" height="141" rx="25" fill="#d98d70"/>
+    <rect x="431" y="74" width="151" height="128" rx="18" fill="#47726c"/>
+    <text x="453" y="125" fill="#fff1cc" font-family="DejaVu Sans, sans-serif" font-size="28" font-weight="700">4 + 3</text>
+    <path d="M452 154h49m13 0h43" fill="none" stroke="#d4e8bc" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="458" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="474" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="490" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="506" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="522" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="538" cy="175" r="5" fill="#e0c260"/>
+    <circle cx="554" cy="175" r="5" fill="#e0c260"/>
+    <rect x="414" y="233" width="185" height="16" rx="6" fill="#b68664"/>
+    <rect x="434" y="247" width="13" height="66" rx="5" fill="#c49675"/>
+    <rect x="561" y="247" width="13" height="66" rx="5" fill="#c49675"/>
+    <g transform="rotate(-9 446 213)">
+      <rect x="430" y="193" width="34" height="39" rx="7" fill="#da9478"/>
+      <text x="439" y="221" fill="#334452" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">1</text>
+    </g>
+    <g transform="rotate(7 496 216)">
+      <rect x="480" y="196" width="34" height="39" rx="7" fill="#edbe68"/>
+      <text x="489" y="224" fill="#334452" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">2</text>
+    </g>
+    <g transform="rotate(-5 547 207)">
+      <rect x="531" y="187" width="34" height="39" rx="7" fill="#a9c28f"/>
+      <text x="540" y="215" fill="#334452" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="700">3</text>
+    </g>
+    <ellipse cx="272.0" cy="288" rx="92" ry="11" fill="#4b6459" opacity=".14"/>
+    <g id="owl" transform="translate(150 45)">
+      <g id="tail">
+        <path fill="#07889b" d="M65 191q-10 3-24-3-12-4-16 0-1 8 12 13-8 2-3 8 14 8 35 3z"/>
+      </g>
+      <g id="wing-back">
+        <path fill="#07889b" d="M171 127q23 10 52 13 19-1 15 10-4 7-23 9 12 3 11 8-3 6-22 3 6 7-3 8-14 2-24-5z"/>
+        <path fill="#117789" d="M187 154q16 2 32-5-8 11-29 14m-3 0q11 4 20 3-4 7-19 4"/>
+      </g>
+      <g id="body">
+        <path fill="#07889b" d="M56 161q5-15 4-34-5-53 36-68 25-11 54 0 31 16 34 63l-2 57q-2 32-27 40-31 14-72 4-33-8-31-32z"/>
+        <path fill="#10a2b1" d="M80 110q-1-21 16-34 21-15 40 8 5-20 20-17 26 5 27 44 4 46-6 75-11 33-51 32-28-1-38-33-9-30-8-75z"/>
+        <path fill="#9ddce5" d="M110 167q11-25 36-33 19-6 32 13 7 13-1 35-11 35-43 38-21 2-30-13z"/>
+        <path fill="none" d="M148 146v5m14-7 2 6m9 3 1 6m-9 12-1 6m1 11-2 6" stroke="#63b3bf" stroke-width="2.7" stroke-linecap="round"/>
+      </g>
+      <g id="crest">
+        <path fill="#07889b" d="M76 77q-17 6-23-5-1-4 5-3-11-11-7-18 5-6 19 7-3-8 2-6 7 3 11 17zM143 65q-9-11-9-21 1-5 5 0-5-17 2-16 9 1 12 16 5-8 7 1 2 13-11 23z"/>
+      </g>
+      <g id="face">
+        <path fill="#117789" d="M93 84q1-5 7-6 4 1 0 5-4 5-7 1zm59-15q8-4 10 2-3 4-10 1z"/>
+        <g id="eye-left">
+          <ellipse cx="111" cy="100" rx="17" ry="17" fill="#f4efd2" transform="rotate(-6 111 100)"/>
+          <g id="pupil-left">
+            <ellipse cx="118" cy="101" rx="7" ry="7" fill="#10201a" transform="rotate(0 118 101)"/>
+            <ellipse cx="120" cy="99" rx="1.7" ry="1.7" fill="#f4efd2" transform="rotate(0 120 99)"/>
+          </g>
+        </g>
+        <g id="eye-right">
+          <ellipse cx="157" cy="92" rx="13" ry="16" fill="#f4efd2" transform="rotate(-6 157 92)"/>
+          <g id="pupil-right">
+            <ellipse cx="154" cy="95" rx="6.8" ry="6.8" fill="#10201a" transform="rotate(0 154 95)"/><ellipse cx="156" cy="93" rx="1.7" ry="1.7" fill="#f4efd2" />
+          </g>
+        </g>
+        <g id="cheeks">
+          <ellipse cx="104" cy="125" rx="9" ry="6" fill="#ef718c" transform="rotate(-9 104 125)"/>
+          <ellipse cx="172" cy="112" rx="9" ry="6" fill="#ef718c" transform="rotate(-27 172 112)"/>
+        </g>
+        <g id="beak">
+          <path fill="#b87627" d="M134 106q5-9 11-5 7 5 2 13l-3 5q-8-2-10-9z"/>
+          <path fill="#d9962d" d="M134 106q7-10 13-4 4 3 2 7-4 4-15-3z"/>
+        </g>
+      </g>
+      <g id="wing-front">
+        <path fill="#117789" d="M80 134q10-1 23 12 18 11 51 8 15-1 15 8-2 7-17 11 10 3 7 9-6 7-22 4 4 8-3 10-16 3-34-6-24-10-28-29-4-18 8-27z"/>
+        <path fill="#07889b" d="M83 135q6 0 18 9 18 12 52 12 15 0 14 6-3 8-20 10 14 7 8 11-8 4-25 0 9 9 1 11-15 2-33-7-19-9-24-27-3-16 9-25z"/>
+        <path fill="none" d="m104 166 4 2m10 11 5 2m7-17h5m-38 14 4 3" stroke="#1d9faf" stroke-width="2.7" stroke-linecap="round"/>
+      </g>
+      <g id="feet">
+        <g id="foot-left" transform="translate(127 215) ">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+        <g id="foot-right" transform="translate(187 202) rotate(13)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

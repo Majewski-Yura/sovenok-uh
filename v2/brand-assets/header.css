@@ -1,0 +1,66 @@
+/* Topouh shared header. All assets are same-origin and vector-only. */
+header .topouh-ident {
+  display:inline-flex;flex:none;align-items:center;justify-content:flex-start;
+  gap:clamp(5px,1vw,13px);min-height:44px;padding:0;border:0;background:transparent;
+  line-height:1;text-decoration:none;color:#192136;border-radius:6px;
+}
+header .topouh-ident .topouh-word {
+  inline-size:clamp(88px,12.6vw,159px);block-size:auto!important;
+  aspect-ratio:160/45;display:block;max-inline-size:100%;object-fit:contain;
+}
+header .topouh-ident .topouh-star {
+  color:var(--topouh-star-color,#6542b0);display:block;flex:none;
+  inline-size:clamp(22px,2.7vw,34px);block-size:clamp(22px,2.7vw,34px);
+}
+header .topouh-player {
+  display:inline-flex;flex:none;align-items:center;gap:7px;min-height:44px;
+  padding:0;color:#192136;white-space:nowrap;font-size:.88rem;font-weight:800;
+}
+header button#meBtn.topouh-player {
+  background:none;border:0;inline-size:auto;block-size:auto;overflow:visible;border-radius:25px;
+}
+header .topouh-player-photo {
+  display:grid;place-items:center;width:33px;height:33px;border-radius:50%;
+  flex:none;background:#dcf5d6;color:#273e25;font-size:15px;font-weight:850;
+  border:1px solid #b3d9b0;object-fit:cover;
+}
+header .topouh-player-copy{line-height:1}
+header .topouh-shared-controls{margin-inline-start:auto;display:inline-flex;align-items:center;flex:none;gap:6px}
+header .topouh-shared-controls .soundbar{display:inline-flex;margin:0;gap:6px;flex-wrap:nowrap;order:0;width:auto}
+header .topouh-shared-controls .topouh-tool {
+  inline-size:44px;block-size:44px;min-height:44px;flex:none;display:grid;place-items:center;
+  background:#fffdf8;border:1px solid #d7c9eb;border-radius:13px;color:#392b68;padding:0;
+}
+header .topouh-tool > svg{display:block;width:21px;height:21px;pointer-events:none}
+header .topouh-tool[aria-pressed="true"]{color:#412286;background:#eee3ff;border-color:#997cc8}
+header .topouh-tool[aria-pressed="false"] .topouh-mute-line{display:block}
+header .topouh-tool[aria-pressed="true"] .topouh-mute-line{display:none}
+header :is(.topouh-ident,.topouh-tool,.topouh-player):focus-visible{outline:2px solid #50369d;outline-offset:3px}
+header .topouh-tool:hover{border-color:#866ba9}
+header .topouh-shared-controls .sr-status:not(:empty){
+  position:absolute;right:10px;top:100%;z-index:8;padding:5px 9px;background:#fff9f1;
+  color:#392b68;max-width:min(260px,80vw);border-radius:7px;border:1px solid #ddd1e8;
+}
+header :is(.topouh-lessons-brand, .topouh-lessons-brand:before){content:none}
+body:has(.topouh-club-head) header .acct{display:flex;align-items:center;gap:8px;margin-inline-start:auto}
+body:has(.topouh-native-head) header .topouh-player{margin-inline-start:auto}
+@media(max-width:899px){
+  body:has(.topouh-club-head) header .acct .coin{display:none}
+}
+@media(max-width:620px){
+  header .topouh-ident {gap:5px}
+  header .topouh-player {gap:4px;font-size:.76rem}
+  header .topouh-player-photo{width:29px;height:29px;font-size:13px}
+  header .topouh-shared-controls,header .topouh-shared-controls .soundbar{gap:4px}
+  body:has(.topouh-lesson-head)>header>small{display:none}
+  body:has(.topouh-lesson-head)>header{padding-inline:10px;gap:5px}
+  body:has(.topouh-club-head) .topouh-club-head{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 8px
+  }
+  body:has(.topouh-club-head) .topouh-club-head nav{order:3;grid-column:1/-1;margin-top:4px}
+  body:has(.topouh-native-head) .top-label{display:none}
+}
+@media(max-width:340px){
+  header .topouh-word{inline-size:78px}
+  header .topouh-shared-controls .topouh-tool{inline-size:40px}
+}

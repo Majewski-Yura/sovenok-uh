@@ -67,7 +67,7 @@
   const names = ['Лиловая','Розовая','Мятная','Медовая','Голубая','Малиновая'];
   const shellGame = {
     id:'find-shells',title:'Ракушки на отливе',category:'find',accent:'#b78ce9',
-    description:'Запомни две уютные ракушки, под которыми спрятались морские звёзды.',
+    description:'Запомни две ракушки, под которыми спрятались морские звёзды.',
     mount(p, ctx) {
       const {panel,grid,label,live}=setup(p,ctx,'tgf-shell','Две морские звезды прячутся под ракушками. Запомни их места, затем накрой звёзды. Можно смотреть сколько угодно.');
       const order=shuffle([0,1,2,3,4,5],ctx.rng);
@@ -98,7 +98,7 @@
           b.setAttribute('aria-label',names[c]+' ракушка'+(visible?', под ней звезда':''));
           b.dataset.open=String(visible);
           b.setAttribute('aria-disabled',String(phase!=='play'||found.has(i)));
-          art(b,visible?star:shell,colour[c]);
+          art(b,shell+(visible?'<g transform="translate(37 13) scale(.54)">'+star+'</g>':''),colour[c]);
         });
       };
       const action=add(ctx,panel,'Накрыть ракушками',()=>{

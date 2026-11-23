@@ -1,0 +1,105 @@
+:root{--ink:#192136;--muted:#4b5063;--line:#d7d2cf;--paper:#fffaf2;--lilac:#cbbbfd;--green:#e3f4bf;--lime:#dafa74;--coral:#fbd1c1;--button:#392787;--warn:#fff1dc;--teal:#235c46}
+body{font:16px/1.42 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(50rem 24rem at 88% 18px,#fff3dc 0,transparent 78%),var(--paper);color:var(--ink)}
+body>header{min-height:70px;border-bottom:1px solid #ddd1c7;background:var(--paper);padding:11px clamp(22px,5vw,76px);gap:11px;position:relative}
+body>header>strong{font-size:23px;letter-spacing:-.045em;font-weight:950;white-space:nowrap}
+body>header>strong:before{content:"";display:inline-block;width:16px;height:16px;margin-right:8px;background:var(--ink);vertical-align:0;border-radius:3px;clip-path:polygon(1% 24%,28% 28%,42% 0,55% 28%,86% 8%,77% 43%,100% 60%,71% 64%,62% 96%,44% 76%,17% 98%,23% 67%,0 57%)}
+body>header>small{background:#eee5ff;color:#31235c;font-size:11px;padding:7px 10px;letter-spacing:.065em;text-transform:uppercase;box-shadow:none}
+body>header>a{text-decoration:none;border:1px solid #d7cbc6;padding:7px 12px;border-radius:9px;font-weight:800;font-size:14px;background:#fffdf8;white-space:nowrap}
+body>header>a:hover{border-color:#59458b}
+.soundbar{margin-left:auto;gap:5px}.soundbar button{font-size:12px;min-height:34px;border-radius:8px;background:#fffdf8;padding:5px 7px}
+.soundbar .sr-status:not(:empty){max-width:120px}
+main#app{width:min(100%,1440px);max-width:none;margin:auto;padding:25px clamp(21px,4vw,58px) 68px}
+main#app h1,main#app h2{font-weight:930;letter-spacing:-.058em;line-height:.99;text-wrap:balance}
+.hero,.paper{animation:none}
+main#app .hero{isolation:isolate;position:relative;overflow:hidden;background:var(--lime);border:1px solid #c8e164;border-radius:19px;padding:clamp(24px,4vw,53px);margin:0 0 18px;min-height:253px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+main#app .hero h1{max-width:calc(100% - min(34%,300px));font-size:clamp(40px,6.2vw,84px);z-index:2;position:relative}
+main#app .hero p{margin-top:16px;max-width:min(calc(100% - 28%),67ch);font-weight:670;line-height:1.4;position:relative;z-index:2}
+main#app[data-club-view=list] .hero{background:var(--club-theme,var(--lilac));border-color:#dfd2de;min-height:206px}
+main#app[data-club-view=list] .hero h1{font-size:clamp(36px,5.1vw,67px)}
+.club-kicker{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:920;letter-spacing:.12em;text-transform:uppercase;margin:0 0 13px;position:relative;z-index:2}
+.club-kicker::before{content:"";width:10px;height:10px;background:currentColor;transform:rotate(-12deg);clip-path:polygon(47% 0,60% 34%,100% 42%,68% 59%,66% 100%,43% 68%,8% 87%,25% 58%,0 31%,36% 36%)}
+.club-art{position:absolute;inset:0 0 0 auto;width:min(35%,430px);min-width:200px;pointer-events:none;z-index:0;overflow:hidden}
+.club-art::before{content:"";position:absolute;right:-1.4%;top:9%;width:83%;height:88%;border-radius:49% 51% 50% 50%/55% 46% 54% 45%;transform:rotate(-18deg);background:rgba(255,250,242,.55)}
+.club-art::after{content:"";position:absolute;right:7%;top:15%;width:69%;height:80%;transform:rotate(-13deg);border:1.4px dotted #3326528c;border-radius:48%}
+.club-art img{position:absolute;width:min(73%,300px);height:90%;object-fit:contain;right:10%;bottom:0;z-index:1;transform:rotate(-6deg)}
+.club-art .club-spark{position:absolute;display:block;width:21px;height:21px;z-index:2;background:#3a3171;clip-path:polygon(52% 0,62% 33%,92% 28%,75% 52%,100% 70%,63% 74%,51% 100%,41% 72%,9% 83%,22% 59%,0 45%,34% 40%);transform:rotate(-17deg)}
+.club-art .club-spark-a{left:17%;top:20%}.club-art .club-spark-b{right:4%;top:44%;width:13px;height:13px}.club-art .club-spark-c{left:13%;bottom:12%;width:10px;height:10px}
+.club-plaque{margin:0 0 9px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:12px;font-weight:850;letter-spacing:.08em;text-transform:uppercase}
+.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+main#app .courseCard,main#app .lessonCard{border-color:#dcd3c9;border-radius:12px;position:relative;overflow-wrap:anywhere;box-shadow:0 2px 0 #ede5dd;text-align:left;transition:transform .16s,border-color .16s,box-shadow .16s}
+main#app .courseCard{min-height:128px;padding:12px 13px 11px;background:#fffdf9;display:grid;align-content:space-between;justify-content:stretch;grid-template-columns:minmax(0,1fr) max-content;column-gap:7px;row-gap:3px}
+main#app .courseCard strong{grid-column:1/-1;font-size:clamp(14px,1.55vw,20px);line-height:1.05;letter-spacing:-.035em}
+main#app .courseCard .cardNote{grid-column:1/-1;font-size:12px;line-height:1.2}
+.club-card-glyph{display:grid;place-items:center;min-width:35px;height:30px;width:fit-content;padding:0 6px;background:var(--club-tint,#e4daff);border-radius:7px;font-size:16px;font-weight:930;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
+.club-card-go{align-self:start;justify-self:end;font-weight:800;font-size:18px}
+main#app .courseCard:hover,main#app .lessonCard:hover{transform:translateY(-2px);border-color:#9e8dbe;box-shadow:0 5px 0 #e7deec}
+main#app[data-club-view=list] .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+main#app .lessonCard{min-height:107px;background:#fffdf9;padding:14px 13px 12px;border-left:4px solid var(--club-theme,#cbbbfd);justify-content:flex-start;gap:6px}
+main#app .lessonCard strong{font-size:17px;line-height:1.16;letter-spacing:-.015em}
+main#app .lessonCard .cardNote{font-size:13px;line-height:1.28;color:#4a5162}
+.crumbs{margin-bottom:13px;gap:6px}
+.routeB{border-radius:9px;font-size:13px;font-weight:800;padding:6px 10px;min-height:34px;border-color:#dbcec7;background:#fffdf8}
+.lessonPage{max-width:1105px}
+main#app[data-club-view=intro] .lessonPage,main#app[data-club-view=result] .lessonPage{padding:clamp(22px,3.6vw,45px);position:relative;isolation:isolate;overflow:hidden;background:#eadfff;border:1px solid #d9c7ed;border-radius:19px}
+main#app[data-club-view=result] .lessonPage{background:#ebf3c7;border-color:#d2de9d}
+main#app[data-club-view=intro] .lessonPage h1,main#app[data-club-view=result] .lessonPage h1{font-size:clamp(37px,5.7vw,75px);max-width:71%;position:relative;z-index:2}
+main#app[data-club-view=intro] .paper,main#app[data-club-view=result] .paper{width:min(78%,720px);z-index:2;position:relative;background:#fffdf8;border-color:#e0d5dc;border-radius:12px}
+main#app .paper{box-shadow:0 3px 0 #eee6dd;line-height:1.45;padding:clamp(17px,3.5vw,32px);background:#fffdf8}
+main#app[data-club-view=intro] .paper>p:first-child{font-size:18px;font-weight:850}
+main#app[data-club-view=task] .lessonPage{display:grid;grid-template-columns:minmax(0,1fr) minmax(224px,304px);column-gap:17px;align-items:start}
+main#app[data-club-view=task] .lessonPage>h2,.club-step-kicker,.bar{grid-column:1/-1}
+main#app[data-club-view=task] .lessonPage>h2{font-size:clamp(30px,4.6vw,58px)}
+main#app[data-club-view=task] .paper{grid-column:1;grid-row:4;border-radius:15px;min-height:270px;margin:0;min-width:0}
+main#app[data-club-view=task] .reading{grid-column:2;grid-row:4;background:#ece5fc;border:1px solid #e1d2f6;border-radius:12px;padding:15px;min-width:0;overflow-wrap:anywhere}
+main#app[data-club-view=task] .reading summary{font-size:15px;font-weight:850}
+main#app[data-club-view=task] .reading p{font-size:14px;color:#342952}
+main#app[data-club-view=task] .club-step-kicker{display:flex;justify-content:space-between;margin-bottom:8px}
+.bar{margin:12px 0 14px;gap:5px}.bar span{height:5px;background:#eadfda}.bar span.done{background:#39866d}.bar span.now{background:#8066c5}
+.paper legend{font-size:clamp(17px,2.2vw,27px);letter-spacing:-.022em;line-height:1.31}
+.answers{gap:8px}.choice{position:relative;min-height:57px;border-radius:10px;font-size:15px;font-weight:730;padding:9px 33px 9px 11px;background:#f9f5fd;border-color:#dfd4eb}
+.choice.wrong{background:#fff0dc;border-color:#b86832}.choice.right{background:#e3f4bf;border-color:#3e7656}
+.choice.wrong:after,.choice.right:after{content:"×";position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:21px;font-weight:900;color:#8d3d23}
+.choice.right:after{content:"✓";color:#216744}
+.comment{min-height:41px;background:#f8f4e8;border-radius:8px;font-size:14px;font-weight:680;padding:8px 10px}
+.comment:empty{min-height:1px;padding:0;background:transparent}
+.primary,.secondary{border-radius:8px;font-weight:850;min-height:42px;padding:8px 12px;font-size:14px}
+.toolrow{margin-top:12px}.source{color:#5a5668;font-size:12px}
+main#app[data-club-view=result] h2{font-size:clamp(21px,3.8vw,43px)}
+.result-pill{border-radius:7px;font-size:17px;font-weight:900;background:var(--lime)}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){
+ body>header{gap:8px;justify-content:flex-start}.soundbar{order:4;margin-left:0;width:100%}
+ main#app[data-club-view=list] .grid,.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ main#app .hero{min-height:215px}.club-art img{right:5%}
+ main#app[data-club-view=task] .lessonPage{display:block}
+ main#app[data-club-view=task] .reading{margin-bottom:10px}
+}
+@media(max-width:460px){
+ main#app{padding-inline:14px}.grid{gap:7px}
+ main#app .hero{padding:20px;min-height:185px}
+ main#app .hero h1{font-size:35px;max-width:78%}
+ main#app .hero p{font-size:13px;max-width:72%}
+ .club-art{width:31%;min-width:0}.club-art img{right:-2%;width:104%}
+ .club-art .club-spark-a,.club-art .club-spark-c{display:none}
+ main#app[data-club-view=intro] .paper,main#app[data-club-view=result] .paper{width:100%}
+ main#app[data-club-view=intro] .club-art,main#app[data-club-view=result] .club-art{opacity:.56;height:125px}
+ main#app[data-club-view=intro] .lessonPage h1,main#app[data-club-view=result] .lessonPage h1{max-width:82%}
+ main#app .lessonCard{padding:9px;overflow-wrap:anywhere}
+ .choice{font-size:16px}
+}
+@media(prefers-reduced-motion:no-preference){.choice.right{animation:club-correct .24s ease-out both}}
+@media(prefers-reduced-motion:reduce){.bar span,.choice.right{animation:none!important} main#app .courseCard:hover,main#app .lessonCard:hover{transform:none}}
+@keyframes club-correct{0%{box-shadow:0 0 0 0 #5a915c40}100%{box-shadow:0 0 0 5px #5a915c00}}
+main#app .hero .club-progress-label{width:fit-content;margin-top:12px;border:1px solid #303d3233;background:#fffcf5dc;font-size:13px;border-radius:7px;padding:5px 8px;font-weight:900}
+.club-recommended{z-index:2;position:relative;margin-top:8px;min-height:43px;max-width:75%;font-size:14px;font-weight:830;border:0;color:#fff;background:#392787;padding:7px 11px;border-radius:8px;text-align:left}
+main#app .courseCard .club-card-status{grid-column:1/-1;font-size:12px;font-weight:880;line-height:1.1;margin-top:5px}
+.club-card-status::after{content:"";display:block;margin-top:4px;border-radius:5px;height:4px;background:linear-gradient(90deg,#52886b var(--club-fill,0%),#efebe6 var(--club-fill,0%));}
+.club-lesson-status{font-size:11px;line-height:1.2;color:#514663;border-radius:5px;background:#f1ebf8;padding:4px 6px;font-weight:850}
+.club-lesson-status[data-complete=true]{background:#dfefbd;color:#245a41}
+main#app .lessonCard[data-club-stage=locked]{background:#f3eee7;border-color:#e1d8cf;opacity:.76;cursor:default;transform:none;box-shadow:none}
+main#app .lessonCard[data-club-stage=current]{border-left-color:#51765b}
+main#app .lessonCard[data-club-stage=current] .club-lesson-status{background:#e6f1bf;color:#274d42}
+main#app .lessonCard[data-club-stage=locked] .club-lesson-status{background:#e8e2da;color:#4b4650}
+main#app[data-club-view=task] .lessonPage[data-stage=exam] .bar span.now{background:#6339a4}
+main#app[data-club-view=task] .exam-reading{font-size:14px;color:#33264d}
+.exam-intro-note{margin-top:13px;color:#45465a;font-size:14px}

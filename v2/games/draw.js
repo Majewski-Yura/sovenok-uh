@@ -77,7 +77,7 @@ function gamePatch(p,ctx) {
 }
 root.push(...[
  {id:'mirror-mosaic',title:'Дорисуй отражение',category:'draw',accent:'#d9e8db',description:'Узор по ту сторону зеркала.',mount:gameMirror},
- {id:'stamp-garden',title:'Сад из штампов',category:'draw',accent:'#dfeacd',description:'Своя открытка из листьев и цветов.',mount:gameGarden},
+ {id:'stamp-garden',title:'Сад из штампов',category:'draw',accent:'#dfeacd',description:'Укрась открытку тремя разными штампами.',mount:gameGarden},
  {id:'owl-patch',title:'Нашивка для Ух',category:'draw',accent:'#eadff1',description:'Три значка в нужном порядке.',mount:gamePatch}
 ]);
 })();

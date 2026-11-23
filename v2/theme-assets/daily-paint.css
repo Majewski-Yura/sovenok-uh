@@ -1,0 +1,122 @@
+/* Colouring catalogue and workshop. Keep the original canvas and live controls. */
+#pbook,#paint {
+  --cs-ink:#192136;
+  --cs-muted:#47566e;
+  --cs-line:#dce3eb;
+  --cs-paper:#fff;
+  --cs-tint:#eee6fb;
+  --cs-tint-2:#f5f1fc;
+  --cs-accent:#62489b;
+}
+#pbook > .cs-head {
+  min-height:clamp(158px,24vw,276px);
+  padding:clamp(24px,5vw,62px);
+  border:0;
+  border-radius:clamp(24px,3.5vw,40px);
+}
+#pbook > .cs-head h1 {letter-spacing:-.036em}
+#pbook > .cs-head p {max-width:43ch;font-weight:580}
+#pbook > .cs-head::after {
+  top:-26%;right:-4%;width:clamp(132px,31vw,382px);
+  opacity:1;background:#e4d8f8;border:0;box-shadow:none;
+  border-radius:47% 53% 59% 41%;transform:rotate(-21deg);
+}
+#pbook #pbookSay {
+  background:#f5f1fc;
+  border-color:#e9dff7;
+  border-radius:18px;
+  padding:10px 14px;
+}
+#pbook > .cs-shelf {
+  margin-block:clamp(14px,2.3vw,25px);
+  border-radius:clamp(19px,2.7vw,28px);
+  padding:clamp(15px,3vw,34px);
+}
+#pbook > .cs-shelf h2 {letter-spacing:-.021em}
+#pbook :is(#myPaints,#paintShop) {
+  grid-template-columns:repeat(auto-fill,minmax(min(100%,154px),1fr));
+  gap:clamp(10px,1.6vw,18px);
+}
+#pbook :is(#myPaints,#paintShop) > button {
+  display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;
+  min-height:0;
+  padding:9px 9px 13px;
+  border-radius:17px;
+  border-color:#e0e4ed;
+  box-shadow:none;
+  font-family:inherit;
+  text-align:left;
+}
+#pbook :is(#myPaints,#paintShop) > button img {
+  aspect-ratio:1.16;max-height:none;border-radius:11px;
+  background:#f4effb;image-rendering:auto;
+}
+#pbook :is(#myPaints,#paintShop) > button:nth-child(3n + 2) img {background:#edf5e8}
+#pbook :is(#myPaints,#paintShop) > button:nth-child(3n) img {background:#edf4fb}
+#pbook #myPaints button span {margin:0;padding-inline:3px;overflow-wrap:anywhere}
+#pbook #paintShop button b {padding-inline:3px;overflow-wrap:anywhere}
+#pbook #paintShop button span {
+  align-self:flex-start;
+  margin-top:auto;background:#f6ebcf;color:#51432b;
+  font-weight:800;white-space:nowrap;
+}
+#pbook #paintShop button.lock {background:#faf9fc;border-color:#c7bfd9}
+#pbook #paintShop button.lock span {background:#eeedf2;color:#4c4a59}
+#pbook #myPaints button.gift {border-color:#a8c693}
+#pbook :is(#myPaints,#paintShop) > button:is(:hover,:focus-visible) {
+  border-color:#846db4;
+  transform:none;
+}
+#pbook :is(#myPaints,#paintShop) .empty {background:#f5f4f8;padding:14px 16px}
+#paint.on {gap:clamp(14px,2.5vw,28px)}
+#paint > .cs-head {border:0;border-radius:24px;background:#eee6fb}
+#paint > .cs-head::after {right:-2%;top:-38%;opacity:1;background:#e2d6f8;border:0;box-shadow:none}
+#paint > .cs-head h1 {letter-spacing:-.026em}
+#paint > .paint-wrap {
+  width:min(100%,640px);border-radius:clamp(16px,2.3vw,26px);box-shadow:none;
+}
+#paint > .cs-tools {
+  background:#f8f7fc;border-color:#e7e2f1;
+  border-radius:clamp(18px,2.6vw,26px);
+}
+#paint .cs-tool-label {font-size:.76rem;margin-bottom:9px}
+#paint #ptools > button,#paint #ptools .psizes button {background:#fff;border-color:#d7d3e3}
+#paint #ptools > button.on,#paint #ptools .psizes button.on {background:#ebe1fa;border-color:#836bb5}
+#paint #ptools button,#paint .cs-tools .btn {min-height:44px;border-radius:13px}
+#paint #palette {gap:10px;margin-block:3px 19px}
+#paint #palette button {width:44px;height:44px;box-shadow:0 0 0 1px #a5a6b5}
+#paint #palette button.on {box-shadow:0 0 0 2px #4b367f,0 0 0 4px #ddd0f6}
+#paint .cs-tools .row {justify-content:flex-start}
+#paint .cs-tools .row .btn {padding-inline:11px;background:#192136;border-color:#192136}
+#paint .cs-tools .row .btn.soft {background:#fff;border-color:#d7d3e3;color:#26344b}
+#paint .cs-tools .row .btn:hover {background:#382e58;color:#fff}
+#paint .cs-tools .row .btn.soft:hover {background:#eee6fa;color:#192136}
+@media (min-width:880px) {
+  #paint.on {grid-template-columns:minmax(0,1.55fr) minmax(298px,1fr)}
+  #paint.on > .paint-wrap {justify-self:end}
+  #paint.on > .cs-tools {width:min(100%,400px)}
+}
+@media (max-width:575px) {
+  #pbook :is(#myPaints,#paintShop) {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:359px) {
+  #pbook :is(#myPaints,#paintShop) {grid-template-columns:1fr}
+}
+
+/* The painter has a separate column so she never overlaps the heading. */
+:is(#pbook,#paint) > .cs-head-painter {
+  display:grid;grid-template-columns:minmax(0,1fr) clamp(83px,24vw,266px);
+  align-items:center;gap:clamp(9px,2.7vw,36px);
+}
+#pbook > .cs-head-painter {padding-block:clamp(15px,3.45vw,38px)}
+#paint > .cs-head-painter {grid-template-columns:minmax(0,1fr) clamp(76px,13vw,134px);padding-block:12px}
+.cs-painter-copy {min-width:0;display:grid;gap:6px}
+:is(#pbook,#paint) .cs-painter-mascot {display:block;width:100%;height:auto;max-width:100%;justify-self:end;transform:rotate(-3deg);animation:cs-painter-sway 6s ease-in-out infinite}
+#pbook .cs-painter-mascot {margin-block:-10px}
+@keyframes cs-painter-sway {0%,85%,100%{transform:rotate(-3deg)}92%{transform:rotate(1deg)}}
+@media(max-width:520px){
+  #pbook > .cs-head-painter {grid-template-columns:minmax(0,1fr) clamp(60px,21vw,103px);padding-inline:clamp(16px,4.5vw,24px)}
+  #pbook > .cs-head-painter h1 {font-size:clamp(25px,8.2vw,41px)}
+  #paint > .cs-head-painter h1 {font-size:clamp(24px,6.6vw,31px)}
+}
+@media(prefers-reduced-motion:reduce){:is(#pbook,#paint) .cs-painter-mascot {animation:none}}

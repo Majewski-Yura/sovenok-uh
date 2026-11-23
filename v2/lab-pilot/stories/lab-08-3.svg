@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" role="img" aria-labelledby="scene-title"><title id="scene-title">Записки о поиске</title><defs><clipPath id="frame"><rect width="640" height="380" rx="24"/></clipPath></defs><g clip-path="url(#frame)"><rect x="0" y="0" width="640" height="380" rx="4" fill="#e2ecf0" stroke="none" stroke-width="2"/><rect x="457" y="41" width="111" height="106" rx="10" fill="#c0d6d8" stroke="none" stroke-width="2"/><rect x="465" y="49" width="95" height="90" rx="6" fill="#f4e8ce" stroke="none" stroke-width="2"/><path d="M479 111q25-22 50-14l19-22m-60-7h28" fill="none" stroke="#90adb4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="548" cy="74" r="5" fill="#90adb4"/><path d="M0 250q125-10 269-3 186 8 371-7v140H0z" fill="#c0d6d8" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 246q130-94 286-74 160-12 289 71l31 137H0z" fill="#d3bda8" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 315q134-23 302-13 178 11 320-6m-571 40q117-22 231-16" fill="none" stroke="#b0927e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(7 130) scale(0.77 0.77)"><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="owl">
+      <g id="tail">
+        <path fill="#07889b" d="M55 194q-13 0-16 8-3 6 17 4-6 7 0 10 8 1 18-7z"/>
+      </g>
+      <g id="body">
+        <path fill="#188897" d="M59 125q-13-48 17-70 26-20 59-13 38 7 49 52 13 46-10 91-16 29-50 34-34 10-55-14-17-27-10-80z"/>
+        <path fill="#10a2b1" d="M75 96q-2-20 15-31 19-13 42 13 2-17 17-21 26-5 39 49 11 48-16 79-21 29-51 29-35-3-44-46-6-35-2-72z"/>
+        <path fill="#9ddce5" d="M98 148q22-30 54-17 24 8 23 35-13 43-48 46-21 3-28-17z"/>
+      </g>
+      <g id="crest">
+        <path fill="#07889b" d="M63 72q-13 2-16-6-1-3 5-3-15-8-13-14 4-4 17 2-3-6 2-5 7 1 16 12zm80-23q-3-8-3-18 0-8 6 0 4-15 9-15 8 3 6 20 5-9 7-3 1 10-11 20z"/>
+      </g>
+      <g id="face">
+        <path fill="#117789" d="M88 74q7-8 12-5 1 4-9 7-4 0-3-2zm61-15q7-3 11 2 0 5-10 2z"/>
+        <g id="eye-left">
+          <ellipse cx="106" cy="95" rx="17" ry="18" fill="#f4efd2" transform="rotate(-6 106 95)"/>
+          <g id="pupil-left">
+            <ellipse cx="114" cy="101" rx="7.8" ry="7.8" fill="#10201a" transform="rotate(0 114 101)"/>
+            <ellipse cx="116" cy="99" rx="1.7" ry="1.7" fill="#f4efd2" transform="rotate(0 116 99)"/>
+          </g>
+        </g>
+        <g id="eye-right">
+          <ellipse cx="156" cy="82" rx="15" ry="18" fill="#f4efd2" transform="rotate(-6 156 82)"/>
+          <g id="pupil-right">
+            <ellipse cx="160" cy="89" rx="7.8" ry="7.8" fill="#10201a" transform="rotate(0 160 89)"/><ellipse cx="162" cy="87" rx="1.7" ry="1.7" fill="#f4efd2" />
+          </g>
+        </g>
+        <g id="cheeks">
+          <ellipse cx="97" cy="123" rx="9" ry="6" fill="#ef718c" transform="rotate(0 97 123)"/>
+          <ellipse cx="173" cy="104" rx="9" ry="6" fill="#ef718c" transform="rotate(-24 173 104)"/>
+        </g>
+        <g id="beak">
+          <path fill="#b87627" d="M131 100q5-9 11-5 7 5 2 13l-3 5q-8-2-10-9z"/>
+          <path fill="#d9962d" d="M131 100q7-10 13-4 4 3 2 7-4 4-15-3z"/>
+        </g>
+      </g>
+      <g id="wing-back">
+        <path fill="#07889b" d="M207 165q16-4 19 3 5 11-8 17-10 5-23-2z"/>
+      </g>
+      <g id="books">
+        <path fill="#466681" d="M129 166l56-9 40 5q8 8-2 17l-50 16-43-12z"/>
+        <path fill="#f4e6c6" d="m133 171 36 8q9 5 3 9l-40-8z"/>
+        <path fill="#c95d3c" d="M134 151l70-11 21 9q5 7-3 15l-48 14-41-13z"/>
+        <path fill="#f4e6c6" d="m136 157 36 7q8 4 3 9l-37-9z"/>
+        <path fill="#dd9b41" d="M130 139l55-16 34 11q9 5 2 14l-49 14-42-10z"/>
+        <path fill="#f7e5bb" d="m131 142 36 6q8 4 4 10l-42-9z"/>
+        <path fill="#6f9e43" d="M132 124l55-11 34 9q6 6 0 13l-47 14-44-12z"/>
+        <path fill="#f7e5bb" d="m134 127 37 7q7 3 2 9l-41-8z"/>
+        <path fill="none" d="M187 130q1 8 0 13m29-19q4 5 2 10" stroke="#a3bd62" stroke-width="2.8" stroke-linecap="round"/>
+      </g>
+      <g id="wing-front">
+        <path fill="#117789" d="M70 134q10-7 23 6 18 16 51 17 21 1 22 6 1 9-16 13l11 3q-2 10-23 9l-15-3q6 7 1 10-15 3-36-14-18-16-18-47z"/>
+        <path fill="#07889b" d="M72 135q11-4 23 8 19 16 50 16 17 1 18 5-2 8-17 11 13 4 11 7-7 7-27 2l-12-4q9 11 3 13-15 1-34-16-16-15-15-42z"/>
+      </g>
+      <g id="holding-grip">
+        <path fill="#188897" d="M225 168q5 12-10 17-10 3-16-1 2-7 8-10 11-3 18-6z"/>
+        <path fill="none" d="M205 180q1-4 4-5m6 5 2-5" stroke="#126f80" stroke-width="2.8" stroke-linecap="round"/>
+      </g>
+      <g id="feet">
+        <g id="foot-left" transform="translate(89 227) rotate(-68) scale(.9)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+        <g id="foot-right" transform="translate(166 219) rotate(53) scale(.92)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+      </g>
+    </g>
+  </g><g transform="translate(312.0 290) rotate(-5)"><path d="M-92.47087378640776 -48.5h187.94174757281553l3 101h-188.94174757281553z" fill="#baa38d" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="-94.47087378640776" y="-52.5" width="188.94174757281553" height="105" rx="5" fill="#fff1d5" stroke="none" stroke-width="2"/><path d="M-84.47087378640776 -45.5h168.94174757281553" fill="none" stroke="#e4d7b9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></g><text x="312.0" y="262" font-family="DejaVu Sans,sans-serif" font-size="13" text-anchor="middle" fill="#34485b">Два показа</text><g transform="translate(264.7645631067961 295) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><rect x="-12" y="-15" width="24" height="30" rx="4" fill="#34485b" stroke="#a49589" stroke-width="2"/><path d="M-7 6h14m-10-13h6" fill="none" stroke="#fff2d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Показ 1</text></g><g transform="translate(359.2354368932039 295) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><rect x="-12" y="-15" width="24" height="30" rx="4" fill="#34485b" stroke="#a49589" stroke-width="2"/><path d="M-7 6h14m-10-13h6" fill="none" stroke="#fff2d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Показ 2</text></g><g transform="translate(520.0 244) rotate(4)"><path d="M-92.47087378640776 -48.5h187.94174757281553l3 101h-188.94174757281553z" fill="#baa38d" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="-94.47087378640776" y="-52.5" width="188.94174757281553" height="105" rx="5" fill="#f7eee1" stroke="none" stroke-width="2"/><path d="M-84.47087378640776 -45.5h168.94174757281553" fill="none" stroke="#e4d7b9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></g><text x="520.0" y="216" font-family="DejaVu Sans,sans-serif" font-size="13" text-anchor="middle" fill="#34485b">Новые условия</text><g transform="translate(472.7645631067961 249) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><path d="M-15 15v-20a15 15 0 0 1 30 0v20z" fill="#34485b" stroke="#725e58" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7" cy="4" r="2" fill="#ecd19a"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Другая комната</text></g><g transform="translate(567.2354368932039 249) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><text x="0" y="8" font-family="DejaVu Sans,sans-serif" font-size="22" text-anchor="middle" fill="#34485b">?</text></g></g></g></svg>

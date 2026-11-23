@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" role="img" aria-labelledby="scene-title"><title id="scene-title">Характеристики одного рисунка</title><defs><clipPath id="frame"><rect width="640" height="380" rx="24"/></clipPath></defs><g clip-path="url(#frame)"><rect x="0" y="0" width="640" height="380" rx="4" fill="#efe2ce" stroke="none" stroke-width="2"/><rect x="457" y="41" width="111" height="106" rx="10" fill="#dab89f" stroke="none" stroke-width="2"/><rect x="465" y="49" width="95" height="90" rx="6" fill="#f4e8ce" stroke="none" stroke-width="2"/><path d="M479 111q25-22 50-14l19-22m-60-7h28" fill="none" stroke="#c38e78" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="548" cy="74" r="5" fill="#c38e78"/><path d="M0 250q125-10 269-3 186 8 371-7v140H0z" fill="#dab89f" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 246q130-94 286-74 160-12 289 71l31 137H0z" fill="#d6b19a" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 315q134-23 302-13 178 11 320-6m-571 40q117-22 231-16" fill="none" stroke="#b0927e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(-25 130) scale(0.77 0.77)"><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="owl">
+      <g id="body">
+        <path fill="#198997" d="M86 148q-1-58 10-77 18-25 58-24 47 0 59 38 10 20 9 63 2 44-17 55H93q-15-19-7-55z"/>
+        <path fill="#12a0ad" d="M98 98q11-32 35-29 16 1 24 17 15-20 33-15 20 5 26 31l3 40q-13 26-31 41l-70-1q-19-11-23-36z"/>
+        <path fill="#9ddce5" d="M117 155q21-18 42-17 29-2 50 17l-30 30h-42z"/>
+      </g>
+      <g id="crest">
+        <path fill="#188997" d="M121 56q-11 6-23-4-8-6-4-14l4 1q-8-13-3-20 5-5 13 8 5-6 10 1 5 9 3 28zm69-2q-1-16 6-26 5-7 9-1 11-13 14-8 6 6-3 19 9 0 3 8-8 13-25 14z"/>
+      </g>
+      <g id="face">
+        <path fill="#117789" d="M119 80q5-7 12-5 5 4-5 8-8 2-7-3zm67-3q10-2 11 4-1 4-9 1-4-3-2-5z"/>
+        <g id="eye-left">
+          <ellipse cx="128" cy="105" rx="18" ry="20" fill="#f4efd2" transform="rotate(-6 128 105)"/>
+          <g id="pupil-left">
+            <ellipse cx="135" cy="115" rx="8" ry="8" fill="#10201a" transform="rotate(0 135 115)"/>
+            <ellipse cx="137" cy="113" rx="1.7" ry="1.7" fill="#f4efd2" transform="rotate(0 137 113)"/>
+          </g>
+        </g>
+        <g id="eye-right">
+          <ellipse cx="184" cy="105" rx="18" ry="20" fill="#f4efd2" transform="rotate(-6 184 105)"/>
+          <g id="pupil-right">
+            <ellipse cx="180" cy="115" rx="8" ry="8" fill="#10201a" transform="rotate(0 180 115)"/><ellipse cx="182" cy="113" rx="1.7" ry="1.7" fill="#f4efd2" />
+          </g>
+        </g>
+        <g id="cheeks">
+          <ellipse cx="113" cy="133" rx="9" ry="6" fill="#ef718c" transform="rotate(15 113 133)"/>
+          <ellipse cx="200" cy="133" rx="9" ry="6" fill="#ef718c" transform="rotate(-15 200 133)"/>
+        </g>
+        <g id="beak">
+          <path fill="#b87627" d="M150 119q5-9 11-5 7 5 2 13l-3 5q-8-2-10-9z"/>
+          <path fill="#d9962d" d="M150 119q7-10 13-4 4 3 2 7-4 4-15-3z"/>
+        </g>
+      </g>
+      <g id="glasses">
+        <path fill="none" d="M87 103q-5-15 8-9l8 5m111 0 8-5q12-6 8 9m-82 9q8-7 16 0" stroke="#304351" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="126" cy="108" rx="24" ry="24" fill="none" stroke="#365665" stroke-width="4.3"/>
+        <ellipse cx="185" cy="108" rx="24" ry="24" fill="none" stroke="#365665" stroke-width="4.3"/>
+      </g>
+      <g id="book">
+        <path fill="#f7efcd" d="M86 154l12-15q38 10 58 31 21-21 63-31l11 15-14 46H97z"/>
+        <path fill="none" d="M96 144q44 11 60 28 16-17 64-28m-126 5q46 11 62 26 17-15 68-26" stroke="#d6c598" stroke-width="1.8" stroke-linecap="round"/>
+        <path fill="#466983" d="M85 151q40 8 71 27 32-18 72-27l-8 66q-31 4-59 18l-9 1q-29-14-59-19z"/>
+        <path fill="#315877" d="M147 174l9 4 9-4v59q-9 6-17 1z"/>
+      </g>
+      <g id="wing-front">
+        <path fill="#138797" d="M85 143q-12 15-13 36-3 20 15 25 11 4 13-2 2-4-6-7 10 1 9-4-1-6-13-10 11 1 14-5 0-5-13-11-6-6-6-22z"/>
+        <path fill="none" d="M91 174q13 3 14 8 0 6-9 7 9 4 6 9-5 4-11 0" stroke="#126a7a" stroke-width="2.3" stroke-linecap="round"/>
+      </g>
+      <g id="wing-back">
+        <path fill="#138797" d="M224 143q16 15 17 32 2 23-14 28-11 5-13 0-1-5 6-8-9 1-10-4 0-6 11-11-11 1-13-5-1-6 13-12 6-6 3-20z"/>
+        <path fill="none" d="M224 175q-13 2-15 8t10 6q-8 5-5 8 3 4 8 1" stroke="#126a7a" stroke-width="2.3" stroke-linecap="round"/>
+      </g>
+      <g id="feet">
+        <g id="foot-left" transform="translate(117 214) rotate(-17)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+        <g id="foot-right" transform="translate(197 214) scale(-1 1) rotate(-17)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+      </g>
+    </g>
+  </g><g transform="translate(312.0 290) rotate(-5)"><path d="M-92.47087378640776 -48.5h187.94174757281553l3 101h-188.94174757281553z" fill="#baa38d" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="-94.47087378640776" y="-52.5" width="188.94174757281553" height="105" rx="5" fill="#fff1d5" stroke="none" stroke-width="2"/><path d="M-84.47087378640776 -45.5h168.94174757281553" fill="none" stroke="#e4d7b9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></g><text x="312.0" y="262" font-family="DejaVu Sans,sans-serif" font-size="13" text-anchor="middle" fill="#34485b">Исходная карточка</text><g transform="translate(264.7645631067961 295) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><rect x="-18" y="-6" width="36" height="12" rx="2" fill="#34485b" stroke="#a49589" stroke-width="2"/></g></g><g transform="translate(359.2354368932039 295) scale(1.12)"><g transform="translate(0.0 0) scale(1)"><path d="M0-15 4-5 15-4 7 3 9 14 0 8-9 14-7 3-15-4-4-5z" fill="#88b7d9" stroke="#9c7b53" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(520.0 244) rotate(4)"><path d="M-92.47087378640776 -48.5h187.94174757281553l3 101h-188.94174757281553z" fill="#baa38d" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="-94.47087378640776" y="-52.5" width="188.94174757281553" height="105" rx="5" fill="#f7eee1" stroke="none" stroke-width="2"/><path d="M-84.47087378640776 -45.5h168.94174757281553" fill="none" stroke="#e4d7b9" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></g><text x="520.0" y="216" font-family="DejaVu Sans,sans-serif" font-size="13" text-anchor="middle" fill="#34485b">Параметры для записи</text><g transform="translate(449.1468446601942 252) scale(0.8964225411566061)"><g transform="translate(0.0 0) scale(1)"><path d="M-14 9 9-14l5 6L-9 14l-8 2z" fill="#e5ad64" stroke="#57636a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m-13 8 5 5-9 3z" fill="#e9d6b0" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Цвет</text></g><g transform="translate(496.38228155339806 252) scale(0.8964225411566061)"><g transform="translate(0.0 0) scale(1)"><path d="M-17 10 9-15l8 8-26 25z" fill="#edca8c" stroke="#786757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m4-9 3 3m-9 4 3 3m-10 3 3 3" fill="none" stroke="#786757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Размер</text></g><g transform="translate(543.6177184466019 252) scale(0.8964225411566061)"><g transform="translate(0.0 0) scale(1)"><circle cx="0" cy="0" r="4" fill="#34485b"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Положение</text></g><g transform="translate(590.8531553398059 252) scale(0.8964225411566061)"><g transform="translate(0.0 0) scale(1)"><path d="M-18 0h36" fill="none" stroke="#34485b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g><text x="0" y="23" font-family="DejaVu Sans,sans-serif" font-size="10" text-anchor="middle" fill="#34485b">Толщина линии</text></g></g></svg>

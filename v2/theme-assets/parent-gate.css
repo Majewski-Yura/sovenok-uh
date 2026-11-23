@@ -1,0 +1,38 @@
+#pinModal{
+  --gate-text:#272242;--gate-muted:#625981;--gate-accent:#6544bc;--gate-border:#e7dff7;
+  background:rgba(31,23,58,.42);
+  backdrop-filter:blur(4px);
+  padding: max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
+  overflow:auto;
+}
+#pinModal [data-parent-gate]{
+  box-sizing:border-box;width:min(100%,384px);max-width:none;max-height:100%;
+  overflow:auto;border:1px solid var(--gate-border);border-radius:26px;padding:clamp(14px,4vw,24px);
+  background:#fff;color:var(--gate-text);box-shadow:0 24px 80px #20163840;text-align:left;
+}
+#pinModal .parent-gate-heading{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px}
+#pinModal .parent-gate-lock{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;color:#6343b8;background:#eee6fd}
+#pinModal .parent-gate-kicker{display:block;color:var(--gate-accent);font-size:.72rem;font-weight:800;letter-spacing:.04em}
+#pinModal #pinTitle{font-size:clamp(1.06rem,4vw,1.28rem);line-height:1.18;font-weight:850;margin:4px 0 0;overflow-wrap:break-word}
+#pinModal .parent-gate-close{width:44px;height:44px;border:0;border-radius:15px;display:grid;place-items:center;background:#f7f3fc;color:var(--gate-text);padding:0}
+#pinModal #pinHint{margin:20px 0 10px;color:var(--gate-text);font-size:1.06rem;font-weight:750}
+#pinModal .parent-gate-answer{
+  display:flex;justify-content:space-between;align-items:center;min-height:46px;padding:0 12px;
+  border:1px solid #ded0f8;border-radius:12px;background:#f7f3ff;color:var(--gate-muted);font-weight:750;font-size:.88rem;
+}
+#pinModal #pinDots{margin:0;padding:0;background:transparent;border:0;border-radius:0;color:var(--gate-text);font-size:1.5rem;line-height:1.25;font-weight:850;letter-spacing:.09em;min-height:0}
+#pinModal #pinPad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:12px}
+#pinModal #pinPad button{
+  display:grid;place-items:center;height:clamp(44px,9vh,52px);width:100%;padding:0;
+  border:1px solid #e8e0f6;border-radius:13px;background:#f8f5fe;color:var(--gate-text);
+  font-family:inherit;font-size:1.18rem;line-height:1;font-weight:850;box-shadow:none;cursor:pointer;
+}
+#pinModal #pinPad button.ok{background:var(--gate-accent);color:#fff;border-color:var(--gate-accent);font-size:1.35rem}
+#pinModal :is(button,#pinTitle):focus-visible{outline:3px solid #5032a3;outline-offset:2px}
+#pinModal [hidden]{display:none!important}
+@media(hover:hover){
+  #pinModal #pinPad button:not(.ok):hover,#pinModal .parent-gate-close:hover{background:#efe7fb}
+  #pinModal #pinPad button.ok:hover{background:#5332a7}
+}
+@media(max-width:350px){#pinModal .parent-gate-heading{gap:8px}#pinModal .parent-gate-lock{width:40px;height:40px}}
+@media(prefers-reduced-motion:reduce){#pinModal .pin-shake{animation:none}}

@@ -16,5 +16,3 @@ header .topouh-balance-label{
 }
 /* The embedded Belarusian lesson already has a live wallet button. */
 header:has(#wallet:not([hidden])) .topouh-star-balance{display:none}
-@media(max-width:899px){header .acct:has(.topouh-star-balance){display:flex;gap:5px}}
-@media(max-width:620px){header .acct:has(.topouh-star-balance)>.avatar,header .acct:has(.topouh-star-balance)>span:last-child:not(.topouh-star-balance){display:none}}

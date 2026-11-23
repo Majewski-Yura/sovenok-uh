@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" role="img" aria-labelledby="title"><title id="title">Ух рассматривает дверь и три точки рядом</title>
+<defs><clipPath id="labframe"><rect width="640" height="380" rx="26"/></clipPath></defs>
+<g clip-path="url(#labframe)">
+<rect width="640" height="380" fill="#f2e4cd"/>
+<path d="M0 276q126-11 237 3 171 15 403-17v118H0z" fill="#c9d8ae"/>
+<path d="M0 323q121-14 250 4 105 15 227-3 102-14 163-7v63H0z" fill="#dce4bb"/>
+<path d="M315 380q18-42 51-64l34-15h133q47 18 107 55v24z" fill="#ead6ae"/>
+<path d="M347 356q30-20 66-32m158 2 45 24" fill="none" stroke="#d6bd92" stroke-width="3" stroke-linecap="round"/>
+<g id="workshop-wall">
+ <path d="M250 87q37-51 98-58 86-10 169 12 31 8 51 37l15 218H258z" fill="#f7d5ba"/>
+ <path d="M241 90q18-44 57-59 110-39 227 7 31 13 56 44l-21 14q-29-34-74-44-116-25-202 19-13 10-22 29z" fill="#cf8b71"/>
+ <path d="M259 292h326v10H259z" fill="#cfa98c"/>
+ <path d="M279 161h30m-24-13h17m231 101h26m-23-12h19" fill="none" stroke="#dba992" stroke-width="3" stroke-linecap="round"/>
+</g>
+<g id="lab-door">
+ <path d="M330 287V140q0-34 25-53 23-17 49-17 30 0 54 21 23 20 23 49v147z" fill="#c08265"/>
+ <path d="M342 286V141q0-27 21-45 18-15 42-15 26 0 45 18 17 17 17 43v144z" fill="#4d6f69"/>
+ <path d="M343 286V141q0-24 16-39l66-9v193z" fill="#7eaa94"/>
+ <path d="M353 272V146q0-19 12-31l48-8v165z" fill="#9fc1a0" stroke="#66927d" stroke-width="3"/>
+ <path d="M360 188h48m-24-72v70" fill="none" stroke="#66927d" stroke-width="3"/>
+ <path d="M353 192h58v61h-58z" fill="#91b393"/>
+ <path d="M405 213h12" stroke="#f7d6ab" stroke-width="5" stroke-linecap="round"/>
+ <path d="M325 288h161l14 13H312z" fill="#9c7867"/>
+</g>
+<g id="lab-dots" fill="#314253"><circle cx="512" cy="161" r="8"/><circle cx="537" cy="161" r="8"/><circle cx="562" cy="161" r="8"/></g>
+<path d="M43 244q17-17 49-7 16-19 42-5 19-21 48-20 30 1 54 34z" fill="#c4d3a4"/>
+<ellipse cx="183" cy="309" rx="82" ry="13" fill="#a9ba8d"/>
+<g transform="translate(76 95) scale(.88)"><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="owl">
+      <g id="wing-back" transform="rotate(28 170 124)">
+        <path fill="#07889b" d="M168 107q17-11 23-29 4-11 8-12 11 3 8 23 6-10 11-6 5 6-2 16 8-3 10 3 0 14-12 22 7-2 6 4-4 15-33 29l-13 2z"/>
+        <path fill="none" d="M173 112q10-9 18-14 5-1 5 4 3 4 0 7 8-4 6 3l-3 7q7-3 5 4l-3 5q5 0 3 5l-5 7" stroke="#0b7184" stroke-width="2.5" stroke-linecap="round"/>
+        <path fill="none" d="m185 114 4-5" stroke="#25a2b2" stroke-width="2.5" stroke-linecap="round"/>
+      </g>
+      <g id="body">
+        <path fill="#07889b" d="M45 111q2-32 27-47 28-19 55-10 45 13 55 61l4 40q-4 36-28 58-21 18-61 15-43-3-58-20-18-22-7-44 6-20 13-53z"/>
+        <path fill="#0ba4b5" d="M54 116q-2-25 11-34 24-13 44 6 3-20 22-23 28 0 44 47 15 45 3 71-13 33-43 40-34 10-55-5-16-11-18-34-2-35-8-68z"/>
+        <path fill="#9ddce5" d="M90 174q10-34 39-40 28-6 40 18 10 19 4 41-9 27-39 33-27 5-41-14-11-15-3-38z"/>
+        <path fill="none" d="M102 158l-2 7m16-9v8m13-8 2 8m15-15 3 7m9-11 4 5m-3 11 2 7m-18 2 1 8m-17-4 2 7m-20-8v8m11 10 2 7m15-14 1 8m17-15v7" stroke="#63b3bf" stroke-width="2.7" stroke-linecap="round"/>
+      </g>
+      <g id="crest">
+        <path fill="#07889b" d="M64 80q-13 11-29 6-6-3 0-5-15-3-12-10 3-6 18 0-5-6 0-6 7 0 19 9zm63-24q-4-9-1-18 3-7 7-1 5-17 10-15 7 3 3 19 5-5 7-1 0 10-16 18z"/>
+      </g>
+      <g id="face">
+        <path fill="#117789" d="M66 87q6-7 10-5 1 4-5 8-5 3-5-3zm57-23q8-5 13-1 3 5-7 5-5 0-6-4z"/>
+        <g id="eye-left">
+          <ellipse cx="85" cy="108" rx="17" ry="19" fill="#f4efd2" transform="rotate(-6 85 108)"/>
+          <g id="pupil-left">
+            <ellipse cx="92" cy="108" rx="7.5" ry="7.5" fill="#10201a" transform="rotate(0 92 108)"/>
+            <ellipse cx="94" cy="106" rx="1.7" ry="1.7" fill="#f4efd2" transform="rotate(0 94 106)"/>
+          </g>
+        </g>
+        <g id="eye-right">
+          <ellipse cx="135" cy="91" rx="17" ry="18" fill="#f4efd2" transform="rotate(-6 135 91)"/>
+          <g id="pupil-right">
+            <ellipse cx="141" cy="91" rx="7.5" ry="7.5" fill="#10201a" transform="rotate(0 141 91)"/><ellipse cx="143" cy="89" rx="1.7" ry="1.7" fill="#f4efd2" />
+          </g>
+        </g>
+        <g id="cheeks">
+          <ellipse cx="80" cy="138" rx="9" ry="6" fill="#ef718c" transform="rotate(-10 80 138)"/>
+          <ellipse cx="157" cy="110" rx="9" ry="6" fill="#ef718c" transform="rotate(-26 157 110)"/>
+        </g>
+        <g id="beak">
+          <path fill="#b87627" d="M109 111q5-9 11-5 7 5 2 13l-3 5q-8-2-10-9z"/>
+          <path fill="#d9962d" d="M109 111q7-10 13-4 4 3 2 7-4 4-15-3z"/>
+        </g>
+      </g>
+      <g id="wing-front">
+        <path fill="#07889b" d="M45 136q-19 23-17 40-1 18 11 27 4 3 5 0 6 10 13 7 2 5 8 3 5-1 3-9-5-10-6-29-1-30-17-39z"/>
+        <path fill="none" d="M38 178q1 17 7 25m3-22q3 21 10 27m0-23q3 16 6 20" stroke="#0c7587" stroke-width="2.3" stroke-linecap="round"/>
+      </g>
+      <g id="feet">
+        <g id="foot-left" transform="translate(98 234) rotate(63) scale(.84)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+        <g id="foot-right" transform="translate(146 231) rotate(69) scale(.84)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+      </g>
+    </g>
+  </g>
+<path d="M33 328q9-15 14-1l3-18 8 19m506-6q5-19 13-8l4 11m-302-4q7-18 11-2l6-7" fill="none" stroke="#99b47d" stroke-width="3" stroke-linecap="round"/>
+</g></svg>

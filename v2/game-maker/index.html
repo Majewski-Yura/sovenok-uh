@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="referrer" content="no-referrer">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; media-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+ <title>Сделай свою игру · Топоух</title>
+ <link rel="stylesheet" href="style.css?v=club-design-22">
+<link rel="stylesheet" href="../brand-assets/header.css"><link rel="stylesheet" href="../theme-assets/course-shell.css"><link rel="stylesheet" href="../audio-settings/sound.css"><script src="../audio-settings/sound.js"></script>
+<link rel="stylesheet" href="../brand-assets/star-balance.css"><script defer src="../brand-assets/star-balance.js"></script>
+</head>
+<body>
+<header class="topouh-course-head" data-course="maker">
+ <a class="topouh-ident" href="../index.html" aria-label="Топоух, на главную">
+  <svg class="topouh-star" viewBox="0 0 37 37" aria-hidden="true" focusable="false"><use href="../brand-assets/stars.svg#code"/></svg>
+  <img class="topouh-word" src="../brand-assets/wordmark.svg" width="160" height="45" alt="">
+ </a>
+ <span class="topouh-course-context">Сделай свою игру</span>
+ <div class="topouh-shared-controls"><a class="topouh-tool" href="../index.html?catalogue=1" aria-label="Все уроки" title="Все уроки"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></a></div>
+ <span class="topouh-star-balance" role="status"><span class="topouh-balance-star" aria-hidden="true">★</span><span class="topouh-balance-label">Звёзды: </span><b data-topouh-star-count>0</b></span><button type="button" class="topouh-player"><span class="topouh-player-photo" aria-hidden="true">А</span><span class="topouh-player-copy">Алиса</span></button>
+</header>
+
+<main class="maker" id="maker-main">
+ <div class="maker-context">
+  <nav aria-label="Раздел"><a href="../index.html?catalogue=1">Все предметы</a><span aria-current="page">Вне школы</span></nav>
+  <span class="save" id="save" role="status" aria-live="polite">Черновик на этом устройстве</span>
+ </div>
+ <header class="maker-hero">
+  <p class="eyebrow">МАСТЕРСКАЯ ТВОЕЙ ИГРЫ</p>
+  <h1>Сделай свою игру</h1>
+  <p>Придумай мир и правила. На игровом поле можно сразу проверить, как всё работает.</p>
+ </header>
+ <ol class="timeline" id="timeline" aria-label="Шесть шагов мастерской"></ol>
+ <div class="maker-workspace">
+  <section class="maker-workbox" aria-labelledby="stage-title">
+   <div class="maker-stage-meta">
+    <div class="maker-step-tag" id="stage-tag"></div>
+    <p id="maker-checked" class="maker-completed" hidden>Игра пройдена</p>
+   </div>
+   <h2 id="stage-title" tabindex="-1"></h2>
+   <p id="stage-intro"></p>
+   <div id="choices"></div>
+   <p id="local-tip" class="tip" role="status" aria-live="polite"></p>
+   <div class="actions"><button type="button" id="prev" class="soft">Назад</button><button type="button" id="next" class="primary">Дальше</button></div>
+  </section>
+  <section id="preview" class="preview" data-theme="forest" aria-labelledby="preview-title">
+   <header class="boardhead">
+    <div><p class="eyebrow" id="mode-label">ЖИВОЕ ПРЕВЬЮ</p><h2 id="preview-title">Твоё игровое поле</h2></div>
+    <button type="button" id="run" class="light">Проверить в игре</button>
+   </header>
+   <div class="chips" aria-label="Состояние игры"><span id="star-count"></span><span id="clock" hidden></span></div>
+   <div id="board" class="board" role="group" aria-label="Поле игры" aria-describedby="board-status" tabindex="-1"></div>
+   <p id="board-status" class="boardstatus" role="status" aria-live="polite"></p>
+   <div class="directions" id="directions" role="group" aria-label="Движение по полю" hidden><button type="button" data-move="ArrowUp" aria-label="Вверх">↑</button><button type="button" data-move="ArrowLeft" aria-label="Влево">←</button><button type="button" data-move="ArrowDown" aria-label="Вниз">↓</button><button type="button" data-move="ArrowRight" aria-label="Вправо">→</button></div>
+   <div id="outcome" class="outcome" hidden><h3 id="outcome-title" tabindex="-1"></h3><p id="outcome-note"></p><button type="button" id="replay" class="primary">Сыграть ещё раз</button></div>
+  </section>
+ </div>
+</main>
+<script src="model.js"></script><script src="app.js?v=club-design-22"></script>
+</body>
+</html>

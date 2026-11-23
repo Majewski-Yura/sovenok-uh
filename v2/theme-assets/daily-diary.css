@@ -1,0 +1,61 @@
+/* White and pastel lesson design, scoped to Diary and its two existing dialogs. */
+#dnev,#dnModal{--dd-ink:#192136;--dd-muted:#4e5971;--dd-line:#dce3eb;--dd-focus:#6746a3;--dd-lav:#f2ebfb;--dd-mint:#eff8e9;--dd-peach:#fff0e8;--dd-paper:#fff;color:var(--dd-ink)}
+#dnev #dnBox{width:100%;min-width:0;max-width:1480px;margin-inline:auto}
+#dnev .dn-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:clamp(16px,3vw,42px);padding:clamp(18px,3vw,42px);border:1px solid var(--dd-line);border-radius:clamp(22px,3vw,37px);background:var(--dd-lav);color:var(--dd-ink)}
+#dnev .dn-week{text-align:left;flex:1 1 250px;min-width:0}
+#dnev .dn-week h1{font-size:clamp(2.45rem,6.1vw,4.65rem);letter-spacing:-.03em}
+#dnev .dn-kicker{margin:0 0 8px;color:#594778;font-size:.81rem;font-weight:850;letter-spacing:.035em}
+#dnev .dn-week-sub{margin:6px 0 0;color:var(--dd-muted);line-height:1.48;font-weight:650}
+#dnev .dn-weeknav{min-width:0;display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:6px;align-items:center;padding:6px;border:1px solid #ded3ee;border-radius:17px;background:#fff}
+#dnev .dn-range{min-width:0;text-align:center;color:var(--dd-ink);font-size:clamp(.82rem,1.3vw,1rem);font-weight:800;line-height:1.3;padding-inline:4px}
+#dnev .dn-arr,#dnev .dn-arr:hover{border:1px solid var(--dd-line);border-radius:12px;box-shadow:none;background:#faf7fd;color:#563d7f;min-width:44px;min-height:44px;font-size:1.73rem;line-height:1}
+#dnev .dn-arr:hover{background:#ede4f8;border-color:#b6a0ce}
+#dnev .dn-tools{display:flex;justify-content:flex-end;align-items:center;flex-wrap:wrap;gap:8px;margin:clamp(17px,2.5vw,26px) 0 14px}
+#dnev .dn-section-title{color:var(--dd-ink);font-size:clamp(1.27rem,2.5vw,2rem);font-weight:900;margin-inline-end:auto;line-height:1.12}
+#dnev .dn-tools .btn{min-height:44px;padding:7px 14px;border:1px solid #d6cce4;border-radius:13px;background:#fff;color:#4b3971;font-size:.9rem;font-weight:800}
+#dnev .dn-tools .btn:hover{background:var(--dd-lav);border-color:#b6a0ce}
+#dnev #dnBox .dn-book{gap:clamp(10px,1.55vw,20px);grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+#dnev .dn-book .dn-page,#dnev .dn-book .dn-page:first-child{display:contents}
+#dnev .dn-book .dn-day{min-height:126px;padding:clamp(13px,1.45vw,20px);border:1px solid var(--dd-line);border-radius:19px;display:flex;flex-direction:column;background:var(--dd-paper);min-width:0}
+#dnev .dn-book .dn-day.today{border:1.5px solid #a78abf;background:#fcf9ff;box-shadow:inset 4px 0 #bea6db}
+#dnev .dn-day .dn-dh{display:flex;align-items:center;justify-content:flex-start;gap:5px 11px;flex-wrap:wrap;color:var(--dd-ink)}
+#dnev .dn-day .dn-dh b,#dnev .dn-day.today .dn-dh b{font-size:clamp(1.04rem,1.65vw,1.42rem);font-weight:850;padding:0;background:none;color:var(--dd-ink);box-shadow:none}
+#dnev .dn-day .dn-dh time{color:var(--dd-muted);font-size:.87rem;font-weight:750}
+#dnev .dn-day .dn-dh .dn-today-tag{margin-inline-start:auto;background:#efe5f8;border:1px solid #e1d1ee;color:#563d7f;border-radius:999px;padding:4px 9px;font-size:.74rem;font-weight:850;line-height:1.2}
+#dnev .dn-day .dn-rest{color:#3d644d;background:var(--dd-mint);border-radius:10px;text-align:left;padding:6px 11px}
+#dnev .dn-empty{color:var(--dd-muted);font-size:.83rem;margin:6px 0 0}
+#dnev .dn-day .dn-rows{margin:7px 0 3px;min-width:0}
+#dnev .dn-day .dn-row{grid-template-columns:14px minmax(0,1fr);grid-template-areas:'n s' 'n t' 'n a';gap:3px 9px;padding:5px 0;margin:0;border-top:1px solid #e8e8ef;min-height:44px;color:var(--dd-ink)}
+#dnev .dn-day .dn-row:has(.dn-act:empty){grid-template-areas:'n s';}
+#dnev .dn-day .dn-row i{grid-area:n;color:#59677d;padding-top:11px}
+#dnev .dn-day .dn-s{grid-area:s;text-align:left;min-height:38px;padding:4px 0;background:transparent;border:0;font-size:.93rem;line-height:1.3;color:#293657;overflow-wrap:anywhere}
+#dnev .dn-day .dn-s:hover{text-decoration:underline;text-underline-offset:3px}
+#dnev .dn-day .dn-t,#dnev .dn-day .dn-row.ok .dn-t{grid-area:t;color:var(--dd-ink);font:600 .95rem/1.44 system-ui,sans-serif;padding:0;word-break:normal;overflow-wrap:anywhere}
+#dnev .dn-day .dn-act{grid-area:a;flex-wrap:wrap;justify-content:flex-start;margin:2px 0 4px;gap:7px}
+#dnev .dn-day .dn-act:empty{display:none}
+#dnev .dn-day :is(.dn-go,.dn-ok,.dn-add){border:1px solid #d4c9e4;box-shadow:none;background:var(--dd-lav);color:#4b3971;border-radius:10px;min-height:44px;padding:7px 11px;font-size:.83rem;font-weight:800;width:auto;line-height:1.2}
+#dnev .dn-day .dn-go{background:#edf3fe;color:#334d76;border-color:#ccd8ee}
+#dnev .dn-day .dn-ok[data-status=done]{background:var(--dd-mint);color:#326348;border-color:#c9debf}
+#dnev .dn-day .dn-ok[data-status=pending]{background:#fff3df;color:#734e1d;border-color:#efdcba}
+#dnev .dn-day .dn-add{align-self:flex-start;display:inline-flex;align-items:center;margin:5px 0 0;background:#fff}
+#dnev .dn-day :is(.dn-go,.dn-ok,.dn-add):hover{border-color:#9a7fba;filter:brightness(.97)}
+#dnev .dn-tip{text-align:left;color:var(--dd-muted);background:#f8f5fc;border:1px solid #e6def1;border-radius:14px;padding:10px 14px;font-size:.9rem}
+#dnModal #dnCard{background:#fff;border:1px solid var(--dd-line);border-radius:24px;box-shadow:0 18px 46px #22144427;max-height:calc(100dvh - 22px);max-width:min(96vw,580px);overflow:auto}
+#dnModal #dnCard :is(h2,.dn-lbl){color:var(--dd-ink)!important}
+#dnModal #dnCard :is(input,textarea){background:#faf8ff;border-color:#d9cde7;min-height:44px;font:600 .96rem/1.5 system-ui,sans-serif;color:var(--dd-ink)}
+#dnModal #dnCard .dn-ta{min-height:90px}
+#dnModal #dnCard :is(.chip,.btn,.dn-sl li button){min-height:44px;box-shadow:none}
+#dnModal #dnCard .dn-sl li button{min-width:44px}
+#dnModal #dnCard .chip.on{background:var(--dd-lav);color:#4b3971;border-color:#bda8d2}
+#dnModal #dnCard .row .btn:not(.soft){background:#192136;color:#fff;border-color:#192136}
+#dnModal #dnCard .row .btn.soft{background:#fff;color:#4b3971;border-color:#d6cce4}
+#dnev :is(button,.dn-dh b):focus-visible,#dnModal :is(button,input,textarea):focus-visible{outline:3px solid var(--dd-focus);outline-offset:3px}
+@media(min-width:1140px){#dnev #dnBox .dn-book{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:660px){
+ #dnev #dnBox .dn-book{grid-template-columns:minmax(0,1fr)}
+ #dnev .dn-head{gap:12px}
+ #dnev .dn-weeknav{width:100%;max-width:440px}
+ #dnev .dn-section-title{width:100%;margin-inline-end:0}
+ #dnev .dn-tools{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){#dnev button,#dnModal button{transition:none;animation:none}}

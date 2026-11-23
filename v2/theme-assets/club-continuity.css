@@ -1,0 +1,63 @@
+/* Bring remaining main-router screens into the Club palette without
+   changing component states, game colors, or the approved home composition. */
+html[data-topouh-white-canvas]{
+  --tu-text:#192136;--tu-muted:#566178;--tu-line:#dee3ed;
+  --tu-accent:#573994;--tu-soft:#f5f0ff;--tu-mint:#ecf8df;
+  --tu-shadow:0 5px 20px rgba(33,38,68,.065);
+}
+html[data-topouh-white-canvas] .wrap:has(.screen.on:not(#home)){
+  --bg:#fff;--bg2:#fff;--ink:var(--tu-text);--ink2:var(--tu-muted);
+  --line:var(--tu-line);--shadow:var(--tu-shadow);
+  --gold2:#fff4d5;--cream:#f2edfe;
+  color:var(--tu-text);
+}
+html[data-topouh-white-canvas] .screen:not(#home){letter-spacing:normal}
+.screen:not(#home) :is(.bubble,.card,.task,.chk,.story,.idea,.paint-wrap,.pshop button,.ptools>button,textarea) {
+  border-width:1px;box-shadow:var(--tu-shadow);
+}
+.screen:not(#home) :is(.card,.task,.chk,.pshop button):hover:not(:disabled){
+  border-color:#876db5;
+}
+.screen:not(#home) :is(.card,.task,.chk,.item,.btn,.chip,.gc button):focus-visible,
+.topouh-main-head :is(.back,.topouh-player):focus-visible {
+  outline:3px solid #7654b2;outline-offset:3px;
+}
+.screen:not(#home) .btn:not(.soft){
+  background:var(--tu-accent);color:#fff;font-size:1rem;min-height:44px;
+  border-radius:12px;box-shadow:none;
+}
+.screen:not(#home) .btn.soft,.topouh-main-head .back{
+  background:#fff;color:var(--tu-text);min-height:44px;
+  border:1px solid #cfd7e5;box-shadow:none;
+}
+.screen:not(#home) .btn.soft:hover:not(:disabled),.topouh-main-head .back:hover{background:var(--tu-soft)}
+.screen:not(#home) :is(.card.done,.chk.on) {background:var(--tu-mint);border-color:#9bc285}
+#smart .cards,#lessons #lessonList {gap:clamp(12px,2vw,24px)}
+#smart .cards .card p{display:block}
+#smart .cards .card{background:#f5f0ff}
+#smart .cards .card:nth-child(2n){background:#f0f9e5}
+#smart .cards .card:nth-child(3n){background:#edf5ff}
+#parent .bubble,#dnev .dn-day,#pbook .cs-shelf,#paint .cs-tools{background:#fff}
+#dnModal .dn-card{background:#fff}
+#dnev .dn-day.today{background:#f5efff}
+#talk textarea{background:#fff}
+#trip:not(.prototype) .tgo:focus-visible,#tripL .tgo:focus-visible{outline:3px solid #56308a;outline-offset:3px}
+@media(max-width:500px){
+  .screen:not(#home) .bubble{font-size:1rem}
+  #smart .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #smart .cards .card .ic img{height:80px!important}
+  #smart .cards .card .ic{height:82px}
+}
+/* The route artwork remains the task; the passport and actions use Club chrome. */
+#trip :is(.tpill,.tgo),#tripL :is(.tpill,.tgo){
+  border:1px solid #d2c6e9;min-height:44px;border-radius:14px;box-shadow:var(--tu-shadow);
+}
+#trip :is(.tgo,.tpass),#tripL :is(.tgo,.tpass){
+  background:#573994;color:#fff;
+}
+#trip .tgo:active,#tripL .tgo:active{box-shadow:none}
+#trip .tgo small,#tripL .tgo small{opacity:1;color:#f0eaff}
+#trip .tbub{border:1px solid #d2c6e9;box-shadow:var(--tu-shadow)}
+#shop .item{border-width:1px}
+#shop .item:not(.on){background:#fff}
+#shop .item:hover:not(:disabled){border-color:#876db5}

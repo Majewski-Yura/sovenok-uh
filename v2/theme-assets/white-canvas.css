@@ -1,0 +1,10 @@
+/*
+ * Match the Club's white page canvas across the four documents.
+ * The legacy story/lesson and dashboard files select html/body by active view.
+ * Only these two page surfaces are overridden; do not change shared --paper/--bg
+ * tokens (they also color cards, notebook panels and illustrations).
+ */
+html[data-topouh-white-canvas],
+html[data-topouh-white-canvas] > body {
+  background: #fff !important;
+}

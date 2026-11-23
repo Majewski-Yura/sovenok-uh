@@ -1,0 +1,62 @@
+/* Evening conversation: only the main router's #talk screen. */
+#talk { --eve-ink:#26243c; --eve-muted:#5b566f; --eve-night:#5a4483; --eve-lilac:#ebe2ff; --eve-line:#ddd0f1; color:var(--eve-ink); }
+#talk.on { display:block; }
+#talk .talk-layout { width:min(100%,1360px); margin:clamp(16px,3vw,38px) auto 0; display:grid; grid-template-columns:minmax(0,1.18fr) minmax(0,.82fr); gap:clamp(16px,3vw,38px); align-items:start; }
+#talk .talk-heading { display:block; grid-column:1/-1; margin:0; }
+#talk .talk-kicker { margin:0 0 .56rem; font-size:.875rem; color:#604a82; letter-spacing:.09em; font-weight:800; }
+#talk .talk-heading h1 { margin:0; font-size:clamp(2rem,4.7vw,4.55rem); line-height:1.03; letter-spacing:-.028em; font-weight:900; }
+#talk .talk-heading p:last-child { margin:.62rem 0 0; color:var(--eve-muted); font-size:clamp(1rem,1.45vw,1.21rem); line-height:1.5; font-weight:650; }
+#talk .talk-work { align-self:stretch; background:#f8f4ff; border:1px solid var(--eve-line); border-radius:clamp(20px,3vw,38px); padding:clamp(14px,2.8vw,36px); min-width:0; }
+#talk .talk-step { display:flex; align-items:center; justify-content:space-between; gap:6px 14px; flex-wrap:wrap; margin-bottom:clamp(11px,2vw,19px); }
+#talk .talk-step p { align-self:center; margin:0; min-height:31px; display:flex; align-items:center; border-radius:999px; padding:.3rem .68rem; background:#eadef9; color:#513d76; font-size:.875rem; font-weight:800; }
+#talk #talkProg { display:flex; gap:6px; width:clamp(66px,15vw,152px); flex:none; margin:0; }
+#talk #talkProg i { display:block; flex:1 1 auto; width:auto; min-width:0; height:6px; border:0; border-radius:999px; background:#dbceef; }
+#talk #talkProg i.done { background:#7856ad; }
+#talk #talkSay { position:relative; inset:auto; transform:none; display:flex; flex-direction:row-reverse; align-items:flex-start; justify-content:space-between; text-align:left; width:100%; max-width:none; margin:0; min-width:0; min-height:70px; background:#fff; color:var(--eve-ink); border:1px solid var(--eve-line); padding:clamp(12px,2.25vw,24px); border-radius:clamp(14px,1.9vw,24px); gap:9px; box-shadow:none; }
+#talk #talkSay::before,#talk #talkSay::after { display:none; }
+#talk .talk-question-copy { min-width:0; flex:1; }
+#talk .talk-question-copy p { color:#654f87; font-size:.875rem; margin:0 0 .46rem; font-weight:780; line-height:1.35; }
+#talk .talk-question-copy span { display:block; font-size:clamp(1.08rem,1.95vw,1.55rem); line-height:1.43; font-weight:800; overflow-wrap:anywhere; }
+#talk #talkSay .say { flex:0 0 44px; position:static; inset:auto; width:44px; height:44px; padding:0; border:1px solid #dac9f1; background:#f6efff; border-radius:50%; }
+#talk #talkSay .say img { width:25px; height:25px; }
+#talk #talkInput { width:100%; display:flex; flex-direction:column; align-items:stretch; gap:.58rem; margin-top:clamp(16px,2vw,26px); }
+#talk #talkInput label { color:var(--eve-ink); font-weight:830; font-size:1rem; }
+#talk #talkText { display:block; min-height:100px; width:100%; max-width:none; font:inherit; font-size:1.03rem; line-height:1.45; padding:.7rem .85rem; margin:0; background:#fff; color:var(--eve-ink); border:1px solid #bdaed9; border-radius:16px; box-shadow:none; }
+#talk #talkText::placeholder { color:#6c6279; }
+#talk #talkInputNote { margin:.05rem 0 0; color:var(--eve-muted); font-size:.89rem; font-weight:650; line-height:1.45; }
+#talk #talkChips { display:flex; justify-content:flex-start; align-items:start; flex-wrap:wrap; gap:7px; margin:0; }
+#talk #talkChips .chip { background:#f0e8ff; color:#4a3b68; border:1px solid #d5c4ed; min-height:44px; border-radius:999px; padding:.4rem .75rem; margin:0; box-shadow:none; font-size:.94rem; line-height:1.3; text-align:start; white-space:normal; }
+#talk #talkChips .chip:hover { background:#e6d8f9; }
+#talk #talkInput .row { width:100%; display:flex; justify-content:flex-end; margin:.15rem 0 0; }
+#talk #talkEnd { align-items:center; justify-content:space-between; flex-wrap:wrap; width:100%; margin:1rem 0 0; gap:10px; }
+#talk .talk-end-note { margin:0; color:#476448; background:#edf5df; border-radius:999px; padding:.5rem .7rem; font-weight:750; font-size:.875rem; }
+#talk :is(#talkNextBtn,#talkDoneBtn) { min-height:47px; padding:.65rem 1.13rem; background:#563e84; color:#fff; border-radius:14px; box-shadow:none; }
+#talk :is(#talkNextBtn,#talkDoneBtn):hover:not(:disabled) { background:#65499a; }
+#talk #talkNextBtn:disabled { background:#e6dcef; color:#665775; opacity:1; cursor:wait; }
+#talk :is(button,textarea,h1):focus-visible { outline:3px solid #7051ac; outline-offset:3px; }
+
+#talk .talk-art { isolation:isolate; position:relative; display:grid; place-items:end center; width:100%; min-height:clamp(335px,39vw,527px); border:1px solid #dcd0ef; border-radius:clamp(20px,3vw,38px); overflow:hidden; background:#f1eafa; }
+#talk .talk-art::before { content:""; position:absolute; inset:auto -8% 0; height:28%; z-index:-1; border-radius:63% 53% 0 0; background:#e5d9f1; }
+#talk .talk-art::after { content:""; position:absolute; inset:auto 30% 11%; height:7%; z-index:-1; border-radius:50%; background:#6e5c8b26; }
+#talk .talk-window { position:absolute; z-index:-1; inset:11% 22% auto 21%; height:63%; border:clamp(4px,.6vw,8px) solid #fff7f4; border-radius:120px 120px 23px 23px; background:linear-gradient(160deg,#ac9ac6,#797aa7 75%); box-shadow:0 2px 0 #bda6d6; overflow:hidden; }
+#talk .talk-window::before { content:""; position:absolute; top:20%; left:25%; width:clamp(38px,5.7vw,73px); aspect-ratio:1; border-radius:50%; box-shadow:-12px 9px 0 0 #fff0be; transform:rotate(-16deg); }
+#talk .talk-window::after { content:""; position:absolute; left:0; bottom:12%; width:100%; height:4px; background:#fff7f4; opacity:.85; }
+#talk .talk-window i { position:absolute; width:16px; aspect-ratio:1; background:#f8e7c2; clip-path:polygon(50% 0,61% 38%,100% 50%,61% 62%,50% 100%,38% 62%,0 50%,38% 38%); }
+#talk .talk-window i:nth-child(1) { top:36%; left:57%; }
+#talk .talk-window i:nth-child(2) { top:52%; left:70%; width:12px; }
+#talk .talk-window i:nth-child(3) { top:19%; left:66%; width:9px; }
+#talk #owlTalk { position:relative; display:grid; justify-items:center; align-items:end; z-index:1; width:100%; min-width:0; padding-bottom:clamp(13px,3vw,30px); }
+#talk #owlTalk > img { display:block; width:min(58%,248px); height:auto; transform:rotate(-4deg); transform-origin:50% 82%; user-select:none; animation:eve-listen 7s ease-in-out infinite; }
+
+@keyframes eve-listen { 0%, 81%, 100% { transform:rotate(-4deg); } 90% { transform:rotate(-6deg); } }
+
+@media (max-width:760px) {
+ #talk .talk-layout { grid-template-columns:minmax(0,1fr); gap:12px; }
+ #talk .talk-heading { grid-column:auto; }
+ #talk .talk-art { grid-row:2; min-height:clamp(150px,33vw,220px); }
+ #talk .talk-window { inset:8% 27% auto 28%; height:72%; border-radius:70px 70px 15px 15px; }
+ #talk #owlTalk { padding-bottom:10px; }
+ #talk #owlTalk > img { width:min(32%,132px); }
+ #talk #talkInput .row button { flex:1 1 100%; }
+}
+@media (prefers-reduced-motion:reduce) { #talk, #talk #owlTalk * { animation:none!important; scroll-behavior:auto!important; } }

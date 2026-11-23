@@ -1,0 +1,47 @@
+/* Course entrances, in the same airy palette and silhouette as the Belarusian studio. */
+main#app:is([data-club-view=catalogue],[data-club-view=list]){width:min(100%,1600px);padding:clamp(23px,4vw,63px) clamp(18px,4.7vw,75px) 65px}
+main#app[data-club-view=catalogue] .hero,main#app[data-club-view=list] .hero{background:#cbbbfd;border:0;border-radius:clamp(25px,3.8vw,52px);padding:clamp(25px,5vw,70px);min-height:clamp(285px,29vw,408px);margin-bottom:35px}
+main#app[data-club-view=list] .hero h1,main#app[data-club-view=catalogue] .hero h1{font-size:clamp(38px,5.3vw,79px);font-weight:900;line-height:1.03;letter-spacing:-.025em;max-width:min(63%,15ch);overflow-wrap:anywhere}
+main#app:is([data-club-view=list],[data-club-view=catalogue]) .hero p:not(.club-progress-label){font-size:clamp(16px,1.4vw,20px);font-weight:550;max-width:min(61%,44ch)}
+main#app .hero .club-progress-label{border-radius:999px;background:#f7f0ff;color:#3f315f;font-size:.9rem;font-weight:800;border-color:#997fcb}
+.club-recommended{min-height:48px;font-size:1rem;background:#192136;border-radius:999px;padding:11px 18px}
+.club-recommended:hover{background:#3d315d}
+.club-plaque{font-size:.9rem;margin:13px 0 18px;color:#49435e}
+.club-art{width:min(43%,620px)}
+.club-art::before{background:#f0e5ff;right:8%;width:76%;height:76%;top:14%}
+.club-art::after{border-color:#fff9e8;width:78%;height:74%;border-style:dashed;right:9%;top:13%;transform:rotate(12deg)}
+.club-art img{width:77%;height:96%;right:8%;max-width:355px}
+main#app:is([data-club-view=catalogue],[data-club-view=list]) .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(13px,1.7vw,24px)}
+main#app .courseCard,main#app .lessonCard{isolation:isolate;border:1px solid #23274322;border-radius:clamp(19px,2.5vw,28px);padding:clamp(17px,2vw,25px);min-height:173px;box-shadow:none;gap:9px;color:#192136}
+main#app .lessonCard{background:var(--lesson-tint,#e7f8af);padding-right:clamp(47px,5.9vw,80px)}
+main#app .courseCard{background:var(--club-tint,#e7f8af)}
+main#app .lessonCard:is(:hover,:focus-visible):not(:disabled),main#app .courseCard:is(:hover,:focus-visible){border-color:#7861ae;box-shadow:0 6px 0 #19213625;transform:translateY(-4px)}
+main#app .lessonCard[data-club-stage=current]{border-color:#22264065}
+main#app .lessonCard[data-club-stage=locked]{background:#f3eee5;border-color:#ddd4c7;opacity:1}
+main#app .lessonCard[data-club-stage=done]{background:#e7f8af}
+main#app .lessonCard strong,main#app .courseCard strong{line-height:1.12;font-size:clamp(17px,1.9vw,27px);letter-spacing:-.012em;font-weight:850}
+main#app .lessonCard .cardNote,main#app .courseCard .cardNote{line-height:1.38;font-size:.94rem;color:#454659}
+.club-card-glyph{padding:4px 10px;border-radius:999px;background:#fffdf8cc;font-size:1rem}
+.club-card-go{padding-right:2px}
+.club-lesson-status{border-radius:999px;background:#fffdedac;color:#283448;padding:5px 9px;font-size:.83rem}
+main#app .courseCard .club-card-status{background:transparent;border-radius:0;padding:0;color:#283448;font-variant-numeric:tabular-nums}
+.club-card-status::after{margin-top:6px}
+main#app .lessonCard .club-lesson-status{align-self:start;margin-top:auto;background:#fffdf8a9;color:#46445c}
+.ls-card-star{position:absolute;top:18px;right:15px;width:clamp(23px,4vw,44px);height:auto;fill:#fff7dc;stroke:#27263b;stroke-width:1;transform:rotate(-10deg)}
+main#app .lessonCard[data-club-stage=locked] .ls-card-star{opacity:.43}
+main#app .lessonCard[data-club-stage=done] .ls-card-star{fill:#f9cb65}
+@media(max-width:800px){main#app:is([data-club-view=catalogue],[data-club-view=list]) .grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){
+ main#app:is([data-club-view=list],[data-club-view=catalogue]) .hero h1,main#app:is([data-club-view=list],[data-club-view=catalogue]) .hero p:not(.club-progress-label){max-width:100%}
+ main#app:is([data-club-view=list],[data-club-view=catalogue]) .hero{min-height:0;padding:26px 22px 165px}
+ .hero .club-art{left:0;top:auto;bottom:0;width:100%;height:155px}
+ .hero .club-art img{right:15%;width:60%;height:100%}
+ .hero .club-art::before{right:19%;width:53%}
+ .hero .club-art::after{right:17%;width:55%}
+ .club-recommended{max-width:100%}
+ .ls-card-star{top:14px;right:10px}
+}
+@media(max-width:400px){main#app:is([data-club-view=catalogue],[data-club-view=list]) .grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){main#app .lessonCard:is(:hover,:focus-visible):not(:disabled),main#app .courseCard:is(:hover,:focus-visible){transform:none}}
+
+main#app .workshop-entrance{text-decoration:none;text-align:left;cursor:pointer}

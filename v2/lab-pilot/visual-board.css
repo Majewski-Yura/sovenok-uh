@@ -1,0 +1,111 @@
+/* Visual board, local task draft; scoped to .tvb-lab. */
+.tvb-lab {
+  --tvb-ink:#182f2b;--tvb-muted:#435e58;--tvb-line:#b4d3c9;--tvb-deep:#205d50;
+  --tvb-paper:#f1faf5;--tvb-card:#fff;--tvb-mint:#daf3e3;--tvb-highlight:#b8ead1;
+  position:relative;min-width:0;color:var(--tvb-ink);
+}
+.tvb-lab *, .tvb-lab *::before,.tvb-lab *::after {box-sizing:border-box}
+.tvb-sr,.tvb-live {
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.tvb-lab .tvb-instruction {margin:0 0 13px;color:var(--tvb-muted);font-size:.94rem;line-height:1.5}
+.tvb-lab .tvb-body {display:grid;gap:12px}
+.tvb-lab :is(.tvb-bank,.tvb-target,.tvb-solution) {
+  min-width:0;margin:0;border:1px solid var(--tvb-line);border-radius:20px;
+  padding:clamp(10px,1.9vw,19px);background:var(--tvb-paper);
+}
+.tvb-lab .tvb-label {font-size:1rem;font-weight:850;color:var(--tvb-ink);margin:0 0 10px}
+.tvb-lab .tvb-bank-cards {display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.tvb-lab .tvb-card {
+  --tvb-hit:#e9fbf1;
+  appearance:none;display:flex;align-items:center;gap:8px;min-height:51px;min-width:0;max-width:100%;
+  padding:7px 11px;border:1px solid var(--tvb-line);background:var(--tvb-card);border-radius:13px;
+  font:inherit;font-size:.91rem;font-weight:760;text-align:left;color:var(--tvb-ink);
+  transition:background-color .16s,border-color .16s;cursor:pointer;
+}
+.tvb-lab .tvb-card:is(:hover,[aria-pressed="true"]):not(:disabled){background:var(--tvb-hit);border-color:var(--tvb-deep)}
+.tvb-lab .tvb-card[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--tvb-deep)}
+.tvb-lab .tvb-card[draggable="true"]{cursor:grab}
+.tvb-lab .tvb-card[draggable="true"]:active{cursor:grabbing}
+.tvb-lab .tvb-card:disabled{opacity:1;cursor:default}
+.tvb-lab .tvb-card-label{min-width:0;overflow-wrap:anywhere}
+.tvb-lab .tvb-card:not(:disabled){touch-action:none;user-select:none;-webkit-user-select:none}
+.tvb-lab .tvb-card > *{pointer-events:none}
+.tvb-lab .tvb-icon {flex:0 0 auto;display:block;width:38px;height:38px;color:var(--tvb-deep)}
+.tvb-lab .tvb-slots {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,128px),1fr));gap:8px;min-width:0}
+.tvb-lab .tvb-slots.tvb-one {grid-template-columns:minmax(0,1fr)}
+.tvb-lab .tvb-slot {min-width:0;min-height:95px;display:flex;flex-direction:column;gap:5px;align-items:stretch;padding:5px;
+  border:1px dashed #7baa98;border-radius:14px;background:#fff}
+.tvb-lab .tvb-slot .tvb-card {padding:5px;border-radius:9px;gap:4px;font-size:.84rem}
+.tvb-lab .tvb-slot .tvb-icon {width:27px;height:27px}
+.tvb-lab .tvb-one .tvb-slot .tvb-card{align-self:flex-start;min-height:44px;padding-inline:10px}
+.tvb-lab :is(.tvb-slot-button,.tvb-return) {
+  appearance:none;min-height:44px;border:0;border-radius:9px;background:var(--tvb-mint);color:var(--tvb-deep);
+  font:inherit;font-size:.87rem;font-weight:820;cursor:pointer;
+}
+.tvb-lab .tvb-slot-button{width:100%;padding:6px}
+.tvb-lab .tvb-slot-button:disabled,.tvb-lab .tvb-return:disabled{color:var(--tvb-muted);background:#eff5f1;cursor:default}
+.tvb-lab .tvb-return {padding-inline:12px;margin-top:10px}
+.tvb-lab :is(.tvb-card,.tvb-slot-button,.tvb-return):focus-visible{outline:3px solid #18564a;outline-offset:2px}
+.tvb-lab .tvb-slot-detail,.tvb-lab .tvb-empty{padding:5px;margin:0;font-size:.82rem;color:var(--tvb-muted);overflow-wrap:anywhere;font-weight:650}
+.tvb-lab .tvb-drop-highlight{background:var(--tvb-highlight)}
+.tvb-lab .tvb-target.tvb-drop-highlight .tvb-slot,.tvb-lab .tvb-slot.tvb-drop-highlight{border-color:var(--tvb-deep);background:#edfbf3}
+.tvb-lab .tvb-solution{background:var(--tvb-mint)}
+.tvb-lab .tvb-solution :is(ol,ul){margin:0;padding-inline-start:1.4rem}
+.tvb-lab .tvb-solution li+li{margin-top:3px}
+@media(max-width:430px) {
+  .tvb-lab .tvb-slots:not(.tvb-one){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tvb-lab .tvb-card {gap:5px;padding-inline:7px}
+  .tvb-lab .tvb-icon{width:30px;height:30px}
+}
+@media(prefers-reduced-motion:reduce){.tvb-lab .tvb-card{transition:none}}
+
+/* Move a visual card in the viewport without changing hit-testing or board layout. */
+@media (hover:hover) and (pointer:fine) {
+  .tvb-lab .tvb-card:not(:disabled) {cursor:grab}
+  .tvb-lab .tvb-card:not(:disabled):active {cursor:grabbing}
+}
+.tvb-lab .tvb-card.tvb-is-dragging {opacity:.30}
+.tvb-lab.tvb-drag-ghost {
+  position:fixed;inset:0 auto auto 0;z-index:2147483647;
+  min-width:0;min-height:0;max-width:none;max-height:none;margin:0;padding:0;border:0;
+  background:none;box-shadow:none;pointer-events:none!important;
+}
+.tvb-lab.tvb-drag-ghost * {pointer-events:none!important}
+.tvb-lab.tvb-drag-ghost .tvb-card {
+  box-sizing:border-box;width:100%;height:100%;margin:0;opacity:1;scale:none;
+  background:#f2fff7;border-color:#2b8064;box-shadow:0 9px 21px #174b4160;
+}
+.tvb-lab.tvb-drag-ghost.tvb-slot .tvb-card {min-height:0;padding:5px;border-radius:9px;gap:4px;font-size:.84rem}
+
+/* All workable destinations get the same dashed outline; none gives away the answer. */
+.tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready,
+.tvb-lab .tvb-pick-target.tvb-drop-ready .tvb-slot {
+  outline:2px dashed var(--tvb-deep);outline-offset:-3px;background-color:#eef8f5;
+}
+.tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready.tvb-drop-highlight,
+.tvb-lab .tvb-pick-target.tvb-drop-ready.tvb-drop-highlight .tvb-slot {
+  outline-width:3px;outline-offset:-3px;background-color:var(--tvb-highlight);
+}
+@media(forced-colors:active){
+ .tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready,.tvb-lab .tvb-pick-target.tvb-drop-ready .tvb-slot{outline-color:ButtonText}
+ .tvb-lab .tvb-drop-ready.tvb-drop-highlight,.tvb-lab .tvb-pick-target.tvb-drop-ready.tvb-drop-highlight .tvb-slot{outline-color:Highlight}
+}
+
+
+/* High-contrast guides start on pointerdown, without giving away a correct answer. */
+.tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready,
+.tvb-lab .tvb-pick-target.tvb-drop-ready .tvb-slot{
+ outline:3px dashed #4d55a5;outline-offset:-4px;background-color:#ebebff;
+}
+.tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready.tvb-drop-highlight,
+.tvb-lab .tvb-pick-target.tvb-drop-ready.tvb-drop-highlight .tvb-slot{
+ outline:4px dashed #1a654a;outline-offset:-4px;background-color:#c9f2df;
+}
+.tvb-lab .tvb-slot{min-height:106px}
+.tvb-lab .tvb-pick-target .tvb-slot{min-height:104px}
+@media(forced-colors:active){
+ .tvb-lab :is(.tvb-slot,.tvb-bank).tvb-drop-ready,.tvb-lab .tvb-pick-target.tvb-drop-ready .tvb-slot{outline-color:ButtonText}
+ .tvb-lab .tvb-drop-ready.tvb-drop-highlight,.tvb-lab .tvb-pick-target.tvb-drop-ready.tvb-drop-highlight .tvb-slot{outline-color:Highlight}
+}

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" role="img" aria-labelledby="scene-title"><title id="scene-title">Ух записывает, что обе звезды заметили</title><defs><clipPath id="frame"><rect width="640" height="380" rx="26"/></clipPath></defs><g clip-path="url(#frame)"><rect x="0" y="0" width="640" height="380" rx="0" fill="#f4e4d5" stroke="none" stroke-width="2"/><path d="M0 296q120-13 255 1 178 17 385-12v95H0Z" fill="#eed4c1" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 321c170-10 344 28 640-11" fill="none" stroke="#d4ac98" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="435" y="39" width="139" height="105" rx="11" fill="#dfbea8" stroke="none" stroke-width="2"/><rect x="444" y="48" width="121" height="86" rx="8" fill="#ffedcd" stroke="none" stroke-width="2"/><path d="M445 119q44-26 76-9 21-18 43-30v53H445Z" fill="#ddbaa6" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="527" cy="76" rx="16" ry="16" fill="#e8bb77" opacity="1"/><g transform="translate(40 260) rotate(0) scale(0.7)"><path d="M0 54Q9 18 30 2M7 42q-8-22-19-25m24 9Q5 8 4 2m17 15q16-13 29-11" fill="none" stroke="#729b83" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 23Q13 3 30 0q5 14-11 23Zm-6 12Q-6 18-11 20q-4 17 24 15Zm12-10Q35 5 49 8q0 14-24 17Z" fill="#b7d0b1" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(584 268) rotate(0) scale(0.65)"><path d="M0 54Q9 18 30 2M7 42q-8-22-19-25m24 9Q5 8 4 2m17 15q16-13 29-11" fill="none" stroke="#729b83" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 23Q13 3 30 0q5 14-11 23Zm-6 12Q-6 18-11 20q-4 17 24 15Zm12-10Q35 5 49 8q0 14-24 17Z" fill="#d5bd8f" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(305 105) rotate(-7) scale(1)"><rect x="0" y="0" width="118" height="107" rx="6" fill="#fff3d8" stroke="#bfaa93" stroke-width="2"/><g transform="translate(24 56) rotate(0) scale(0.84)"><path d="M0-18 5-6 19-6 9 3 12 17 0 10-12 17-9 3-19-6-5-6Z" fill="#e0af59" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></g><g transform="translate(450 114) rotate(6) scale(1)"><rect x="0" y="0" width="118" height="107" rx="6" fill="#fff3d8" stroke="#bfaa93" stroke-width="2"/><g transform="translate(60 56) rotate(0) scale(0.84)"><path d="M0-18 5-6 19-6 9 3 12 17 0 10-12 17-9 3-19-6-5-6Z" fill="#e0af59" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></g><path d="M235 268H604q17 0 21 14l15 56H204l17-58q4-12 14-12Z" fill="#d8ac90" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M204 338H640v15H204Z" fill="#b17d68" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M232 353h14v36h-14zm377 0h14v36h-14Z" fill="#ac806b" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M242 297q75-6 119 0m96 24q81 3 166-6" fill="none" stroke="#c8957b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(269 256) rotate(-2) scale(1)"><rect x="-5" y="2" width="304" height="92" rx="12" fill="#9988a5" stroke="none" stroke-width="2"/><rect x="0" y="0" width="294" height="87" rx="9" fill="#fff3d8" stroke="#d0ad92" stroke-width="2"/><path d="M147.0 5v77" fill="none" stroke="#c9ad90" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 24h123.0m26 0h119.0" fill="none" stroke="#e4d0ad" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 44h123.0m26 0h119.0" fill="none" stroke="#e4d0ad" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 64h123.0m26 0h119.0" fill="none" stroke="#e4d0ad" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><text x="73.5" y="29" fill="#414752" text-anchor="middle" font-size="15" font-family="DejaVu Sans, sans-serif" font-weight="700">У края</text><text x="73.5" y="54" fill="#414752" text-anchor="middle" font-size="15" font-family="DejaVu Sans, sans-serif" font-weight="700">Заметили</text><text x="220.5" y="29" fill="#414752" text-anchor="middle" font-size="15" font-family="DejaVu Sans, sans-serif" font-weight="700">В центре</text><text x="220.5" y="54" fill="#414752" text-anchor="middle" font-size="15" font-family="DejaVu Sans, sans-serif" font-weight="700">Заметили</text></g><g transform="translate(530 323) rotate(8) scale(1)"><path d="M0 0h74l12 5-12 5H0Z" fill="#e0af59" stroke="#aa815f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="0" y="0" width="10" height="10" rx="2" fill="#d28075" stroke="none" stroke-width="2"/><path d="m74 0 12 5-12 5z" fill="#fff3d8" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m82 4 4 1-4 2z" fill="#414752" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><ellipse cx="126" cy="330" rx="85" ry="11" fill="#807b66" opacity="0.18"/><g transform="translate(-139 76) rotate(0) scale(0.92)"><g xmlns="http://www.w3.org/2000/svg" id="ukh-owl">
+        <g id="ukh-tail" data-origin="261 228">
+          <path fill="#087e91" d="M256 244c-18-3-26-12-28-22 17 3 27 9 37 20z" />
+        </g>
+        <g id="ukh-feet" fill="#d69239">
+          <path id="ukh-foot-left" d="M277 267c3 0 6 3 8 11 5 1 14 4 14 8-1 4-6 5-10 1-2 4-8 1-11-1-4 2-10 1-9-2 1-4 5-5 9-6z" />
+          <path id="ukh-foot-right" d="M323 264c3-2 6-1 8 1l3 10c4-1 8 1 10 5 2 4-3 6-8 3-4 4-9 1-12-2-5 1-10 1-9-2 1-3 5-5 9-5z" />
+        </g>
+        <g id="ukh-back-wing" data-origin="340 141">
+          <path fill="#147e8e" d="M337 130c20 1 45 14 56 31 7 13 1 34-11 43-13 13-30 10-47 18l-10-25z" />
+        </g>
+        <g id="ukh-body">
+          <path fill="#0b91a2" d="M231 150c5-21 20-39 46-48 24-9 42-4 57 8 15 13 20 31 24 52 6 24 6 52-6 76-9 20-25 32-48 36-29 8-52-1-62-22-14-26-16-69-11-102z" />
+          <path id="ukh-face-plumage" fill="#0aa6b8" d="M239 147c8-13 21-16 34-12 9 3 15-2 21-11 9-13 24-16 37-7 15 10 18 32 17 50-3 19-16 34-36 39-21 9-53 6-65-10-11-14-15-34-8-49z" />
+          <path id="ukh-breast" fill="#a6e0e5" d="M271 214c7-23 25-33 44-35 17-1 33 10 38 25 5 20-7 49-25 59-14 8-38 13-50 4-11-8-14-35-7-53z" />
+          <path id="ukh-feather-marks" d="M284 203l-2 8m16-12 2 9m14-11 3 7m15-13 3 8m6 5 3 8m-65 14-1 8m14-16 1 7m15-9 3 8m15-10 3 8m-42 13 1 7m29-14 1 6" fill="none" stroke="#66b4c2" stroke-width="2.8" stroke-linecap="round" />
+        </g>
+        <g id="ukh-crest">
+          <path id="ukh-crest-top" data-origin="311 98" fill="#0e8c9e" d="M306 103c-4-4-12-15-10-23 1-4 5-3 8 3 0-9 2-20 7-20 5 0 7 8 7 16 4-4 8-1 6 5-2 9-6 17-11 21z" />
+          <path id="ukh-crest-side" data-origin="238 134" fill="#0a8396" d="M245 134c-13-4-21-17-26-14-4 1-2 6 0 8-7-4-15-4-16 0-1 6 7 9 15 10-5 2-5 6 0 8 8 2 19-2 26-8z" />
+        </g>
+        <g id="ukh-face">
+          <path id="ukh-eyebrows" d="M249 145q2-7 8-9m45-27q7-3 13 0" stroke="#096b7d" stroke-width="4" stroke-linecap="round" fill="none" />
+          <g id="ukh-eye-left" data-origin="269 154">
+            <ellipse cx="269.5" cy="155.5" rx="18.7" ry="19.2" fill="#f2f0d8" transform="rotate(-7 269.5 155.5)" />
+            <g id="ukh-pupil-left" data-origin="277 155">
+              <circle cx="277" cy="155" r="7.7" fill="#111f16" />
+              <circle cx="279" cy="152" r="1.8" fill="#ffffef" />
+            </g>
+          </g>
+          <g id="ukh-eye-right" data-origin="317 132">
+            <ellipse cx="317" cy="132" rx="16.8" ry="18" fill="#f4f1dc" transform="rotate(-12 317 132)" />
+            <g id="ukh-pupil-right" data-origin="311 136">
+              <circle cx="311.3" cy="136.8" r="7.1" fill="#142318" />
+              <circle cx="313.6" cy="134" r="1.3" fill="#ffffef" />
+            </g>
+          </g>
+          <g id="ukh-cheeks" fill="#ed6c94">
+            <ellipse cx="268" cy="185" rx="9.8" ry="7" transform="rotate(-19 268 185)" />
+            <ellipse cx="337" cy="149.5" rx="8.5" ry="6.4" transform="rotate(-30 337 149.5)" />
+          </g>
+          <g id="ukh-beak" data-origin="301 155">
+            <path fill="#b07034" d="M293 155c0-6 7-9 12-5 5 3 2 12-1 15-5 3-11-3-11-10z" />
+            <path fill="#d69c42" d="M293 156c0-7 9-10 13-5 3 3 0 8-2 9-5 0-8-1-11-4z" />
+            <path d="M296 158q5 4 9 3" fill="none" stroke="#96542d" stroke-width="1.4" stroke-linecap="round" />
+          </g>
+        </g>
+        <g id="ukh-resting-wing" data-origin="238 189">
+          <path fill="#0b7288" d="M237 184c13-11 23 8 23 25 0 16-4 42-12 47-6 7-15-3-19-14-6-17-5-44 8-58z" />
+          <path fill="#118396" d="M237 186c10-9 18 6 19 17 2 19-2 46-10 50-8 4-15-8-17-19-3-15-1-37 8-48z" />
+        </g>
+        <g id="ukh-thinking-wing" data-origin="369 176">
+          <path fill="#0b6e83" d="M360 193c-2-8-15-10-14-16 0-4 5-4 10-2-8-5-14-11-11-16 3-4 10 0 15 2-7-5-14-11-13-15 0-4 3-7 8-6-10-2-18-6-15-11 4-5 17 1 27 7 13 6 23 11 27 25 4 16-1 30-13 39-7 6-14 8-21 9z" />
+          <path fill="#148698" d="M362 188c-1-7-13-10-13-14 0-4 8-2 15 3-6-6-18-14-17-17 2-5 13 0 20 4-7-7-18-13-17-17 1-6 13 0 20 4-5-6-18-9-20-14-1-4 5-5 10-1 12 5 25 13 30 23 7 16-1 33-12 40-8 5-14 6-17 4z" />
+        </g>
+      </g>
+    </g></g></svg>

@@ -1,0 +1,33 @@
+/* White page / home palette, softened for dense course grids.
+ * Larger feature/hero art, progress indicators, choices and feedback stay unchanged.
+ */
+html[data-topouh-white-canvas] :is(main#app .courseCard,main#app .lessonCard) {
+  border-color:#dce3eb;
+}
+html[data-topouh-white-canvas] main#app .courseCard {
+  background:color-mix(in srgb,var(--club-tint,#e7f8af) 34%,#fff);
+}
+html[data-topouh-white-canvas] main#app .lessonCard {
+  background:color-mix(in srgb,var(--lesson-tint,#e7f8af) 34%,#fff);
+}
+html[data-topouh-white-canvas] main#app .lessonCard[data-club-stage=current] {border-color:#8eab9a}
+html[data-topouh-white-canvas] main#app .lessonCard[data-club-stage=done] {background:#f0f8df;border-color:#d3dfbc}
+html[data-topouh-white-canvas] main#app .lessonCard[data-club-stage=locked] {background:#f6f7f9;border-color:#e1e4e8}
+html[data-topouh-white-canvas] main#app :is(.courseCard,.lessonCard):is(:hover,:focus-visible):not(:disabled) {border-color:#846db4}
+html[data-topouh-white-canvas] #app .math-dashboard :is(.math-progress,.math-sidebar,.math-module-topics) {background:#fff}
+html[data-topouh-white-canvas] #app .math-dashboard .math-module {
+  background:color-mix(in srgb,var(--math-tint,var(--math-base)) 37%,#fff);
+  border-color:#dce3eb;
+}
+html[data-topouh-white-canvas] #app .math-dashboard .math-module:is(:hover,:focus-visible):not(:disabled) {border-color:#846db4}
+html[data-topouh-white-canvas] :is(
+  #app .ls-workspace:not(.ls-result) > .ls-paper,
+  #app[data-club-view=task] .lessonPage .paper
+) {background:#fff;border-color:#dce3eb}
+html[data-topouh-white-canvas][lang=be] .workspace:not(.result) > .paper {background:#fff;border-color:#dce3eb}
+html[data-topouh-white-canvas][lang=be] .lesson-grid .lesson-card:not(:disabled) {
+  background:color-mix(in srgb,var(--card,#e7f8af) 34%,#fff);
+  border-color:#dce3eb;
+}
+html[data-topouh-white-canvas][lang=be] .lesson-grid .lesson-card:disabled {background:#f6f7f9;border-color:#e1e4e8}
+html[data-topouh-white-canvas][lang=be] .lesson-grid .lesson-card:is(:hover,:focus-visible):not(:disabled) {border-color:#846db4}

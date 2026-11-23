@@ -1,0 +1,57 @@
+/* Match the catalogue canvas, cards and controls; no changes to lesson engines. */
+html[data-topouh-white-canvas] {--sl-ink:#192136;--sl-muted:#516078;--sl-line:#dce3eb;--sl-violet:#6542b0;--sl-width:1600px}
+:is(.topouh-be-page,.lab-try-page) > .topouh-study-shell{max-width:var(--sl-width);margin-inline:auto;width:100%;min-height:76px;display:flex;align-items:center;justify-content:flex-start;gap:clamp(12px,2.4vw,30px);padding:12px clamp(22px,4.7vw,82px);border-bottom:1px solid var(--sl-line);background:#fff;color:var(--sl-ink)}
+.topouh-study-shell :is(.top-label,.topouh-shell-context){font:750 .88rem/1.25 system-ui,sans-serif;letter-spacing:0;text-transform:none;color:var(--sl-muted)}
+:is(.topouh-be-page,.lab-try-page)> .topouh-study-footer{margin:0 auto;max-width:var(--sl-width);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px clamp(22px,4.7vw,82px);border-top:1px solid var(--sl-line);font-size:.86rem;color:var(--sl-muted)}
+.topouh-study-footer b{color:var(--sl-violet)}
+.topouh-be-page>.topouh-study-shell .topouh-player{margin:0}
+.topouh-be-page>.topouh-study-shell .topouh-shared-controls{min-width:0}
+.topouh-be-page>.topouh-study-shell .wallet{min-height:44px;min-width:44px;border-color:#c9d9b0;background:#f0f8df;color:var(--sl-ink);padding:6px 13px}
+.topouh-be-page>.topouh-study-shell .wallet:hover{background:#e7f3cd;border-color:#94ab78}
+.topouh-be-page #studio{--line:var(--sl-line)}
+.topouh-be-page #studio .hero{background:#f2ecfb}
+.topouh-be-page #studio .hero .scene{background:transparent}
+.topouh-be-page #studio :is(.paper,.scene,.bubble,.lesson-card){border-color:var(--sl-line)}
+.topouh-be-page #studio .bubble{background:#fff1e9;border:1px solid #eedbd0}
+.topouh-be-page #studio :is(.label,.eyebrow){color:#56467b}
+.topouh-be-page #studio .lesson-card:not(:disabled){box-shadow:none}
+.topouh-be-page #studio .lesson-card.earned:not(:disabled){border-color:#c6d9ae}
+.topouh-be-page #studio .result .paper{background:#f0f8df}
+.topouh-be-page #studio :is(.paper h1,.paper h2,.module-head h2){letter-spacing:-.025em}
+.topouh-be-page #studio :is(.primary,.soft,.ghost){box-shadow:none}
+.topouh-be-page #studio .primary:not(:disabled){background:var(--sl-ink);color:#fff}
+.topouh-be-page #studio .primary:not(:disabled):hover{background:#383052}
+.topouh-be-page #studio :is(.token,.bin):not(:disabled){min-height:48px}
+.lab-try-page{--topouh-star-color:#3f817c;background:#fff;color:var(--sl-ink)}
+.lab-try-page .lab-try-main{max-width:var(--sl-width);padding:clamp(18px,4vw,54px) clamp(22px,4.7vw,82px) 54px}
+.lab-try-page .lab-try-layout{grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(16px,3vw,42px)}
+.lab-try-page .lab-try-paper{border:1px solid var(--sl-line);background:#fff;border-radius:clamp(22px,3vw,34px);padding:clamp(18px,3.4vw,38px)}
+.lab-try-page .lab-try-intro{max-width:820px}
+.lab-try-page .lab-try-paper h1{font-weight:890;font-size:clamp(32px,4.7vw,60px);letter-spacing:-.027em}
+.lab-try-page .lab-try-kicker{color:#536985}
+.lab-try-page .lab-try-paper .lab-try-fact{background:#f2effb;border-color:#e5ddf3;padding:clamp(12px,2vw,18px)}
+.lab-try-page .lab-try-paper .lab-try-fact+.lab-try-fact{background:#eff8ec;border-color:#dbebd6}
+.lab-try-page .lab-try-fact h2{color:#334264}
+.lab-try-page .lab-try-paper small{color:var(--sl-muted)}
+.lab-try-page .lab-try-primary{background:var(--sl-ink);color:white;border-color:var(--sl-ink);min-height:48px}
+.lab-try-page .lab-try-primary:hover:not(:disabled){background:#383052}
+.lab-try-page .lab-try-primary:disabled{background:#f0f2f6;border-color:#dce3eb;color:#56637a}
+.lab-try-page :is(.lab-try-back,.lab-try-secondary,.lab-try-links a){background:#fff;border-color:#d3ccdf;color:#46366c;font-weight:750;text-decoration:none;box-shadow:none}
+.lab-try-page :is(.lab-try-back,.lab-try-secondary,.lab-try-links a):hover,.lab-try-page .lab-try-links [aria-current=page]{background:#f1ebfb;border-color:#a994c8;color:#3c2a68}
+.lab-try-page .lab-try-scene{display:grid;gap:12px;align-items:start;min-width:0;border:1px solid var(--sl-line);border-radius:clamp(22px,3vw,34px);background:#fff;padding:clamp(12px,2vw,22px)}
+.lab-try-page .lab-try-scene .ls-lab-story{margin:0;min-width:0}
+.lab-try-page .lab-try-scene :is(.ls-lab-story img,.ls-lab-story svg){width:100%;height:auto;max-height:250px;object-fit:contain;border-radius:17px}
+.lab-try-page .lab-try-feedback[data-state=correct]{background:#eff8df;border:1px solid #dce7c8}
+.lab-try-page .lab-try-feedback[data-state=retry]{background:#fff2db;border:1px solid #f0dfbf}
+@media(max-width:760px){
+ .lab-try-page .lab-try-layout{grid-template-columns:minmax(0,1fr);gap:14px}
+ :is(.topouh-be-page,.lab-try-page) > .topouh-study-shell{gap:8px;padding-inline:clamp(10px,2.8vw,24px);min-height:64px}
+ .lab-try-page .topouh-study-shell>.topouh-shell-context{display:none}
+ .lab-try-page .lab-try-main{padding-inline:clamp(12px,3.5vw,26px)}
+}
+@media(max-width:450px){
+ .topouh-be-page>.topouh-study-shell .wallet{padding:6px 9px}
+ .topouh-be-page>.topouh-study-shell .wallet span{font-size:.74rem}
+ .topouh-be-page>.topouh-study-shell .topouh-player-copy{display:none}
+ .lab-try-page .lab-try-back{font-size:.86rem;padding-inline:11px}
+}

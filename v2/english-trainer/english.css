@@ -1,0 +1,17 @@
+.eng-vocab{padding:16px;border:1px solid #c9d7ed;background:#f1f6ff;border-radius:20px;margin:1rem 0}
+.eng-vocab h3{margin:0}.eng-vocab p{margin:.35rem 0 .65rem;line-height:1.4}
+.eng-vocab-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem}
+.eng-vocab-card{display:grid;justify-items:start;align-content:start;min-width:0;padding:.65rem;border-radius:12px;background:#fff}
+.eng-vocab-card svg,.eng-stimulus svg{width:64px;height:64px}.eng-vocab-card b{overflow-wrap:anywhere}
+.eng-vocab-card p{font-size:.87rem;color:#435669}
+.eng-listen{border:1px solid #8199c2;border-radius:99px;font-weight:700;color:#263e69;padding:.45em .68em;background:#f6fbff;cursor:pointer}
+.eng-listen:focus-visible,.eng-stage summary:focus-visible{outline:3px solid #1f498d;outline-offset:3px}
+.eng-stimulus{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.8rem 0;padding:.8rem;background:#f2eeff;border-radius:14px}
+.eng-stimulus svg{width:80px;height:80px}.eng-speech-status:empty{display:none}.eng-speech-status{font-size:.88rem}
+.eng-read,.eng-transcript{font-weight:800;letter-spacing:.015em;margin:.25em}
+.eng-stage{border-radius:17px;background:#f1f4f9;margin:.7rem 0;padding:.65rem .85rem}
+.eng-stage summary{font-weight:850;cursor:pointer;padding:.55rem;line-height:1.4}
+.eng-stage .math-modules{margin:.5rem 0}
+.eng-module-icon{width:43px;height:43px;margin-bottom:4px}
+.eng-lesson-mode{font-weight:800}
+@media (max-width:550px){.eng-vocab-grid{grid-template-columns:1fr}.eng-vocab-card{display:grid;grid-template-columns:50px 1fr;align-items:center;gap:5px}.eng-vocab-card svg{grid-row:span 2;width:44px;height:44px}}

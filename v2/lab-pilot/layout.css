@@ -1,0 +1,8 @@
+.lesson-studio .ls-workspace.ls-lab-single{grid-template-columns:minmax(0,1fr)}
+.lesson-studio .ls-lab-single .ls-paper{width:min(100%,62rem);margin-inline:auto}
+.lesson-studio .ls-lab-single .ls-sider[hidden]{display:none}
+.lesson-studio .ls-workspace.ls-lab-workspace{grid-template-columns:minmax(0,.9fr) minmax(0,1.24fr);align-items:start}
+.lesson-studio .ls-lab-workspace .ls-sider{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:.8rem}
+.lesson-studio .ls-lab-task-scene{position:relative;min-width:0}
+.lesson-studio .ls-lab-workspace .ls-bubble{padding:14px 18px;font-size:.92rem}
+@media(max-width:760px){.lesson-studio .ls-workspace.ls-lab-workspace{grid-template-columns:minmax(0,1fr)}}

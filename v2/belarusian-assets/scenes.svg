@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Original Club paper-cut scenes; the transparent upper-right is reserved for Ух. -->
+  <symbol id="scene-letters" viewBox="0 0 520 310">
+    <path d="M0 262Q78 251 143 266q64 15 118 6 132-35 259-8v46H0Z" fill="#dafa74"/>
+    <path d="M0 288q72-16 151 0t130 22H0Z" fill="#cbbbfd"/>
+    <path d="M45 227C18 186 33 130 80 112c39-15 93-1 114 45 24 53-6 87-49 97-41 10-76 9-100-27Z" fill="#cbbbfd"/>
+    <path d="m77 181 24-33 24 38 35 7-27 28 5 31-35-13-29 15 3-36-24-21Z" fill="#fffaf2"/>
+    <path d="m103 169 32 38-19 17-24-28-19 7-7-16Z" fill="#fbd1c1" transform="rotate(12 101 195)"/>
+    <path d="m155 84 4 11 12 3-11 4-4 11-4-11-11-4 11-3Zm45 87 3 8 8 3-8 3-4 8-2-8-8-3 8-3Z" fill="#192136"/>
+    <path d="M26 242q-7 5-12 1m163 17 14 6 15-6" fill="none" stroke="#192136" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="115" cy="92" r="4.3" fill="#192136"/><circle cx="221" cy="235" r="4" fill="#fbd1c1"/>
+  </symbol>
+  <symbol id="scene-forest" viewBox="0 0 520 310">
+    <path d="M0 239q92-60 174 9 48 32 90 20 136-28 256-9v51H0Z" fill="#cbbbfd"/>
+    <path d="M0 276q84-38 166-7 126 40 207 41H0Z" fill="#dafa74"/>
+    <path d="M24 173c3-43 46-65 83-42 21 13 21 55 12 73-16 28-50 41-72 19-14-13-26-29-23-50Z" fill="#fbd1c1"/>
+    <path d="M41 260c-4-18-3-36 0-47m0 29-10-8m10-4 9-8M94 267c1-13 1-38 4-54m-3 26 11-9" fill="none" stroke="#192136" stroke-width="3" stroke-linecap="round"/>
+    <path d="M82 238q-9-24 9-46 28-35 37-33 7 21-6 43-12 23-40 36Z" fill="#7ead68"/>
+    <path d="M124 270q-3-24 4-37m-3 21 8-10" fill="none" stroke="#192136" stroke-width="3" stroke-linecap="round"/>
+    <path d="M134 247c-7-21 9-35 31-37 3 17-7 35-31 37Z" fill="#fffaf2"/>
+    <path d="m156 123 3 8 9 3-9 4-3 9-4-9-9-4 9-3Z" fill="#192136"/>
+    <circle cx="191" cy="205" r="4" fill="#192136"/>
+  </symbol>
+  <symbol id="scene-workshop" viewBox="0 0 520 310">
+    <path d="M0 271q68-38 157-10 101 39 211 7 80-10 152 8v34H0Z" fill="#dafa74"/>
+    <path d="M24 226C5 180 45 117 95 111c46-5 94 24 101 66 9 49-24 79-67 83-46 6-95-13-105-34Z" fill="#fbd1c1"/>
+    <path d="M52 193l36-42 74 15-35 46Z" fill="#cbbbfd"/>
+    <path d="M47 202l37-43 76 15-37 45Z" fill="#fffaf2"/>
+    <path d="M43 211l36-44 75 17-38 44Z" fill="#192136"/>
+    <path d="M62 204l53 13 18-23-53-12Z" fill="#dafa74"/>
+    <path d="M154 222l44-42 9 7-43 43-11 3Z" fill="#e68b76"/>
+    <path d="m154 222-3 12 12-4Z" fill="#192136"/>
+    <path d="m179 128 4 11 10 3-11 4-4 11-3-11-11-4 11-3Z" fill="#192136"/>
+    <circle cx="124" cy="132" r="4" fill="#192136"/>
+  </symbol>
+  <symbol id="scene-mail" viewBox="0 0 520 310">
+    <path d="M0 273q74-27 172-11 113 35 182 11 98-14 166-3v40H0Z" fill="#cbbbfd"/>
+    <path d="M0 297q82-25 145-10l69 23H0Z" fill="#dafa74"/>
+    <path d="M47 226c-15-28-7-64 15-86 32-33 102-34 131 7 26 37 11 83-25 101-36 20-101 16-121-22Z" fill="#dafa74"/>
+    <g transform="rotate(-12 125 188)">
+      <rect x="67" y="153" width="115" height="77" rx="12" fill="#192136"/>
+      <rect x="70" y="150" width="115" height="77" rx="12" fill="#fffaf2"/>
+      <path d="M77 158l51 37 49-37m-98 60 30-24m68 24-28-23" fill="none" stroke="#a492ca" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="128" cy="194" r="11.5" fill="#fbd1c1"/>
+    </g>
+    <path d="m139 102 4 10 10 3-11 4-3 11-4-11-10-4 10-3Z" fill="#192136"/>
+    <path d="M28 207q-12 2-9 8 2 4 13 3m8 4q-13 5-10 10 3 5 15 0" fill="none" stroke="#192136" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="209" cy="126" r="4" fill="#fbd1c1"/>
+  </symbol>
+  <symbol id="scene-story" viewBox="0 0 520 310">
+    <path d="M0 268q105-40 198 3 70 26 134 8 82-20 188-7v38H0Z" fill="#dafa74"/>
+    <path d="M0 298q94-17 196 12H0Z" fill="#fbd1c1"/>
+    <path d="M36 207c-8-47 32-81 85-82 42-1 85 30 83 69-1 44-45 67-89 68-42 0-73-18-79-55Z" fill="#cbbbfd"/>
+    <path d="M50 180q46-16 76 14 34-26 73-16l-8 60q-30-10-64 11-27-23-68-12Z" fill="#192136"/>
+    <path d="M48 173q46-16 78 14 34-25 73-15l-8 57q-30-9-64 11-27-22-68-11Z" fill="#fffaf2"/>
+    <path d="M126 187v51M70 189q26-4 43 8m-40 4q22-3 37 7m28-11q19-11 42-9m-42 22q20-13 40-10" fill="none" stroke="#a492ca" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="m105 94 4 10 11 3-12 4-3 10-4-10-10-4 10-3Z" fill="#192136"/>
+    <path d="m157 120 3 8 9 3-9 3-3 9-3-9-9-3 9-3Z" fill="#fbd1c1"/>
+    <circle cx="182" cy="105" r="3.5" fill="#192136"/>
+  </symbol>
+</svg>

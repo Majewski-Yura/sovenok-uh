@@ -1,0 +1,24 @@
+/* Lessons document only: keep released illustrations and subject tints.
+   Align the remaining lesson surfaces to the white catalogue and keep feedback
+   semantic: amber for retry, mint for a correct answer or completed topic. */
+html[data-topouh-white-canvas] #app .lesson-studio .ls-paper {
+  border-color:#dce3eb;
+}
+html[data-topouh-white-canvas] #app .lesson-studio .ls-result > .ls-paper {
+  background:#f4f9eb;
+  border-color:#d3dfbc;
+}
+html[data-topouh-white-canvas] #app .lesson-studio :is(.ls-result-note,.ls-source,.ls-mission) {
+  color:#485670;
+}
+#app .lesson-studio .ls-meter i:not(.ls-passed):not(.ls-current) {
+  background:#e5e9f1;
+}
+#app .lesson-studio .ls-feedback:not(:empty) {
+  background:#fff5df;
+  border-color:#e2c891;
+}
+#app .lesson-studio .ls-feedback.ls-good:not(:empty) {
+  background:#eef7df;
+  border-color:#aac690;
+}

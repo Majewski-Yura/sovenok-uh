@@ -1,0 +1,14 @@
+
+.math-dashboard .math-feature.math-feature-with-scene{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.math-dashboard .math-feature-art.topouh-course-scenery::before,.math-dashboard .math-feature-art.topouh-course-scenery::after,.math-dashboard .topouh-course-scenery .math-star{display:none}
+.math-dashboard .math-feature-art.topouh-course-scenery img{aspect-ratio:auto;height:auto;border-radius:20px;max-height:unset}
+.lesson-studio .ls-scene.topouh-course-scenery{align-self:start;min-height:0;border-radius:26px;background:transparent;aspect-ratio:1.7}
+.topouh-lesson-scenery{width:100%;height:100%;object-fit:cover;display:block}
+.be-hero .scene.topouh-course-scenery,.episode .scene.topouh-course-scenery{display:grid;place-items:center}
+.scene.topouh-course-scenery .topouh-belarusian-scenery{width:100%;max-height:340px;display:block;object-fit:contain}
+@media(max-width:720px){.math-dashboard .math-feature.math-feature-with-scene{grid-template-columns:minmax(0,1fr)}.math-dashboard .math-feature-art.topouh-course-scenery img{max-height:220px}}
+
+.math-dashboard .math-module[data-kind="part-1"],.math-dashboard .math-module[data-kind="tools"]{--math-tint:var(--math-base)}
+.math-dashboard .math-module[data-kind="part-2"],.math-dashboard .math-module[data-kind="puzzles"]{--math-tint:var(--math-review)}
+.math-dashboard .math-module[data-kind="part-3"],.math-dashboard .math-module[data-kind="projects"]{--math-tint:var(--math-apply)}
+.math-dashboard .math-module[data-kind="part-4"]{--math-tint:#dbeaf8}

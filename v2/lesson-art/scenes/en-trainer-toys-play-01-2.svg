@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" width="640" height="380" role="img" aria-labelledby="scene-title"><title id="scene-title">&#1058;&#1086;&#1087;&#1072;: &#1057;&#1090;&#1086;&#1083; &#1089; &#1087;&#1086;&#1076;&#1072;&#1088;&#1082;&#1086;&#1084;</title><defs><clipPath id="edge"><rect width="640" height="380" rx="24"/></clipPath></defs><g clip-path="url(#edge)"><g id="scenery"><rect x="0" y="0" width="640" height="380" rx="0" fill="#e9f5ed"/><path d="M0 286Q153 278 320 284T640 280V380H0Z" fill="#d5e7d5"/><path d="M0 293Q210 283 640 290" fill="none" stroke="#b6d1b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="60" y="55" width="124" height="106" rx="13" fill="#b6d1b2"/><rect x="66" y="61" width="112" height="94" rx="9" fill="#fffcf3"/><path d="M80 111q8-12 13 0" fill="none" stroke="#d5e7d5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M95 121q8-12 13 0" fill="none" stroke="#eeb792" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M110 90q8-12 13 0" fill="none" stroke="#d5e7d5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M125 100q8-12 13 0" fill="none" stroke="#eeb792" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M140 110q8-12 13 0" fill="none" stroke="#d5e7d5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="43" y="176" width="154" height="7" rx="3" fill="#b6d1b2"/><g transform="translate(169 159)"><path d="M0 0Q-9-25-4-50M0 0Q2-23 16-35" fill="none" stroke="#7b9d8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M-4-27Q-31-27-26-45Q-9-45-4-27M-4-37Q-15-56-3-60Q6-52-4-37M5-18Q8-38 27-35Q24-20 5-18" fill="#7b9d8d"/><path d="M-14-3H15L10 19H-9Z" fill="#eeb792"/><rect x="-17" y="-6" width="35" height="7" rx="3" fill="#eeb792"/></g><g transform="translate(592 263)"><path d="M0 0Q-9-25-4-50M0 0Q2-23 16-35" fill="none" stroke="#7b9d8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M-4-27Q-31-27-26-45Q-9-45-4-27M-4-37Q-15-56-3-60Q6-52-4-37M5-18Q8-38 27-35Q24-20 5-18" fill="#7b9d8d"/><path d="M-14-3H15L10 19H-9Z" fill="#eeb792"/><rect x="-17" y="-6" width="35" height="7" rx="3" fill="#eeb792"/></g><ellipse cx="215.89999999999998" cy="76.97" rx="2" ry="2" fill="#b6d1b2"/><ellipse cx="110.1" cy="140.16" rx="5" ry="5" fill="#eeb792"/><ellipse cx="330.9" cy="143.70999999999998" rx="5" ry="5" fill="#b6d1b2"/><ellipse cx="537.9" cy="150.81" rx="5" ry="5" fill="#eeb792"/></g><ellipse cx="320" cy="339" rx="258" ry="23" fill="#e9f5ed"/><ellipse cx="459" cy="327" rx="87" ry="11" fill="#b6d1b2"/><path d="M44 240H288l26 30H20Z" fill="#b6d1b2" stroke="#7b9d8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="270" width="294" height="15" rx="5" fill="#7b9d8d"/><path d="M39 285l-6 34m260 -34l6 34" fill="none" stroke="#7b9d8d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><g id="task-props" transform="translate(59 96) rotate(4 110 90)"><ellipse cx="110" cy="155" rx="86" ry="8" fill="#62586d29" stroke="none" stroke-width="2"/><path d="M24 120q5-8 14-8h149q8 0 12 8l14 31H10Z" fill="#deb3a1" stroke="#bc8f73" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 151h203v9H10Z" fill="#bc8f73" stroke="#bc8f73" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 160h9v14h-9zm161 0h9v14h-9z" fill="#bc8f73" stroke="#bc8f73" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><rect x="47" y="79" width="66" height="63" rx="5" fill="#dea18e" stroke="#bc8f73" stroke-width="2.1"/><rect x="43" y="74" width="74" height="14" rx="4" fill="#e6b6a0" stroke="#bc8f73" stroke-width="2.1"/><path d="M78 74v66m3-65q-22-23-33-17-10 12 33 17 12-26 28-21 16 10-28 21" fill="none" stroke="#b6a4cf" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M164 81v45" fill="none" stroke="#bc8f73" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="164" cy="59" rx="19" ry="24" fill="#e8bd71" stroke="#bc8f73" stroke-width="2"/></g><g id="character" transform="translate(545 331) scale(-1.34 1.34) translate(-335 -277)"><g id="dragon">
+        <g id="dragon-tail" data-origin="389 247">
+          <path fill="#a8b954" d="M388 236c-13 7-29 11-53 7 6 13 33 20 54 16 10-2 12-15-1-23z" />
+          <path fill="#91aa40" d="M389 239c-12 6-37 10-53 4 2 10 30 15 44 9 5-2 4 3 6 5 5-1 8-7 8-10z" />
+          <g id="dragon-tail-spikes" fill="#e8a44f">
+            <path d="M340 244q2-5 5-6 3 0 3 6zm10 1q3-7 7-8 3 1 3 7z" />
+          </g>
+        </g>
+        <g id="dragon-back-foot" data-origin="421 246">
+          <path fill="#758e39" d="M437 244c7 2 7 10 5 13 7-1 8 4 3 6l-7 5-6 2-9-6c-2-4 5-18 14-20z" />
+        </g>
+        <g id="dragon-back-arm" data-origin="424 220">
+          <path fill="#718d39" d="M428 212c11 2 16 0 22-3 4-4 9-3 12 1 3 4 4 10-3 14-9 5-24 9-35 4z" />
+        </g>
+        <g id="dragon-crest" data-origin="388 175" fill="#ee9e4b">
+          <path d="M372 169q-5-4-2-8 4-4 9 0zm7-9q-3-13 3-13 7 0 12 8zm16-8q-1-11 5-11 7 0 12 13zm24 0q12 0 17 10-9-5-17-4z" />
+          <path d="M371 184c-5 2-4 8 1 11l8-12zm-1-8c-4-4-2-10 2-11l8 4z" fill="#f4a64d" />
+        </g>
+        <g id="dragon-backpack" data-origin="387 214">
+          <path fill="#aa642c" d="M375 194c5 0 12 6 12 17l-2 20c-5 9-16 10-24 6-7-5-5-18-2-27 3-8 9-14 16-16z" />
+          <path fill="#e68d37" d="M375 196c4-1 8 5 9 13v19c-4 10-17 10-22 5-5-5-3-14 0-23 2-7 7-12 13-14z" />
+          <path fill="#f3a444" d="M363 216q-7 6-8 12 0 7 8 8 8 2 12-7l2-6z" />
+          <path d="M363 223q6 5 12-1m-11-17q5-7 11-5" stroke="#a35e29" stroke-width="1.7" fill="none" stroke-linecap="round" />
+        </g>
+        <g id="dragon-body">
+          <path fill="#8caa45" d="M382 204c11-10 31-10 46-2 9 7 13 26 8 39-4 11-18 16-31 17-10 0-25-7-28-17-5-13-3-27 5-37z" />
+          <path id="dragon-belly" fill="#c3d654" d="M403 225c4-8 11-13 20-13 14 2 16 15 13 28-2 12-9 18-21 17-10-1-15-9-14-21 0-4 0-7 2-11z" />
+        </g>
+        <g id="dragon-front-foot" data-origin="392 252">
+          <path fill="#78943b" d="M384 246c9-3 18 1 17 8-1 5-5 9-8 12 4 4 5 9-1 11-7 0-14-3-17-8-1-3 3-7 5-12 1-5 0-8 4-11z" />
+          <path d="m385 269 1 6m5-5 2 5" fill="none" stroke="#627d33" stroke-width="1.5" stroke-linecap="round" />
+        </g>
+        <g id="dragon-head" data-origin="407 196">
+          <path fill="#91ad4b" d="M376 165c11-14 29-19 43-14 13 3 21 13 24 23 2 4 7 6 7 12-1 14-13 22-29 25-16 3-43 1-51-13-4-9-1-26 6-33z" />
+          <path id="dragon-muzzle" fill="#97b451" d="M413 186c7-9 20-10 28-10 9 2 10 8 7 16-4 10-21 15-34 12-10-2-13-11-1-18z" />
+          <g id="dragon-eyebrows" fill="#648536">
+            <path d="M394 166q3-4 8-3 2 2-1 3l-7 2z" />
+            <path d="M426 158q4-2 8 2l-1 2-7-1z" />
+          </g>
+          <g id="dragon-eye-left" data-origin="404 180">
+            <ellipse cx="404" cy="179.5" rx="9.9" ry="10.5" transform="rotate(-13 404 179.5)" fill="#faebbf" />
+            <g id="dragon-pupil-left" data-origin="408 181">
+              <circle cx="407.5" cy="181" r="5.3" fill="#3d3621" />
+              <circle cx="406.2" cy="179.5" r="1.5" fill="#fff5cf" />
+            </g>
+          </g>
+          <g id="dragon-eye-right" data-origin="431.5 173.5">
+            <ellipse cx="431.5" cy="173.5" rx="7.7" ry="9.1" fill="#faedc8" />
+            <g id="dragon-pupil-right" data-origin="433.5 176">
+              <circle cx="433.5" cy="175.5" r="5" fill="#3a3420" />
+              <circle cx="432.3" cy="174" r="1.4" fill="#fff6d2" />
+            </g>
+          </g>
+          <g id="dragon-cheeks" fill="#dc7778">
+            <ellipse cx="397.5" cy="194.3" rx="5.8" ry="4.3" />
+            <ellipse cx="442" cy="184.3" rx="4.8" ry="3.4" transform="rotate(-15 442 184.3)" />
+          </g>
+          <g id="dragon-mouth" data-origin="424 197">
+            <path d="M408 195q14 12 29-3" fill="none" stroke="#4b5428" stroke-width="2" stroke-linecap="round" />
+            <path d="M407 197l2-3" fill="none" stroke="#627338" stroke-width="1.6" stroke-linecap="round" />
+          </g>
+          <circle cx="423.3" cy="189.5" r="1.3" fill="#657c38" />
+          <circle cx="430" cy="188" r="1" fill="#657c38" />
+        </g>
+        <g id="dragon-backpack-strap">
+          <path d="M372 205c8-6 24-1 28 16" fill="none" stroke="#dd8836" stroke-width="4" stroke-linecap="round" />
+        </g>
+        <g id="dragon-front-arm" data-origin="381 225">
+          <path fill="#668939" d="M376 212c8-8 18 0 19 11 0 4 5 5 10 8 5 2 8 7 5 10-2 2-8 3-12 1-7-1-16-4-20-10-4-5-7-14-2-20z" />
+          <path fill="#8ca94b" d="M377 212c8-6 15 1 16 9 0 5 3 8 10 10 4 1 8 5 6 7-3 5-11 2-17 0-7-2-14-6-17-13-2-5-1-11 2-13z" />
+        </g>
+        </g>
+    </g></g></svg>

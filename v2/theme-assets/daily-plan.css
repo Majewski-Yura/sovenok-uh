@@ -1,0 +1,20 @@
+/* Match the two daily activity entries to their destination screens. */
+.rail .day-steps > button.row:is([data-plan-key="help"],[data-plan-key="talk"]) {
+  min-height:48px;
+  border-radius:11px;
+  gap:9px;
+  padding-inline:6px;
+}
+.rail .day-steps [data-plan-key="help"] .num,
+.rail .day-steps [data-plan-key="talk"] .num {
+  width:28px;height:28px;display:grid;place-items:center;border-radius:9px;
+  font-size:0;color:transparent;background:#e9f5dc;
+}
+.rail .day-steps [data-plan-key="talk"] .num{background:#e9e3fd}
+.rail .day-steps [data-plan-key="help"] .num::before,
+.rail .day-steps [data-plan-key="talk"] .num::before{
+  content:"";display:block;width:18px;height:18px;
+  background:center/contain no-repeat url("../img/ic/dustpan.webp");
+}
+.rail .day-steps [data-plan-key="talk"] .num::before{background-image:url("../img/kruzhka.webp")}
+.rail .day-steps :is([data-plan-key="help"],[data-plan-key="talk"]):not(:disabled):hover{background:#f6f1ff}

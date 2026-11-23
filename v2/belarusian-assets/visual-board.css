@@ -1,0 +1,76 @@
+/* Visual board, local task draft; scoped to .tvb. */
+.tvb {
+  --tvb-ink:#182f2b;--tvb-muted:#435e58;--tvb-line:#b4d3c9;--tvb-deep:#205d50;
+  --tvb-paper:#f1faf5;--tvb-card:#fff;--tvb-mint:#daf3e3;--tvb-highlight:#b8ead1;
+  position:relative;min-width:0;color:var(--tvb-ink);
+}
+.tvb *, .tvb *::before,.tvb *::after {box-sizing:border-box}
+.tvb-sr,.tvb-live {
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.tvb .tvb-instruction {margin:0 0 13px;color:var(--tvb-muted);font-size:.94rem;line-height:1.5}
+.tvb .tvb-body {display:grid;gap:12px}
+.tvb :is(.tvb-bank,.tvb-target,.tvb-solution) {
+  min-width:0;margin:0;border:1px solid var(--tvb-line);border-radius:20px;
+  padding:clamp(10px,1.9vw,19px);background:var(--tvb-paper);
+}
+.tvb .tvb-label {font-size:1rem;font-weight:850;color:var(--tvb-ink);margin:0 0 10px}
+.tvb .tvb-bank-cards {display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}
+.tvb .tvb-card {
+  --tvb-hit:#e9fbf1;
+  appearance:none;display:flex;align-items:center;gap:8px;min-height:51px;min-width:0;max-width:100%;
+  padding:7px 11px;border:1px solid var(--tvb-line);background:var(--tvb-card);border-radius:13px;
+  font:inherit;font-size:.91rem;font-weight:760;text-align:left;color:var(--tvb-ink);
+  transition:background-color .16s,border-color .16s;cursor:pointer;
+}
+.tvb .tvb-card:is(:hover,[aria-pressed="true"]):not(:disabled){background:var(--tvb-hit);border-color:var(--tvb-deep)}
+.tvb .tvb-card[aria-pressed="true"]{box-shadow:inset 0 0 0 1px var(--tvb-deep)}
+.tvb .tvb-card[draggable="true"]{cursor:grab}
+.tvb .tvb-card[draggable="true"]:active{cursor:grabbing}
+.tvb .tvb-card:disabled{opacity:1;cursor:default}
+.tvb .tvb-card-label{min-width:0;overflow-wrap:anywhere}
+.tvb .tvb-icon {flex:0 0 auto;display:block;width:38px;height:38px;color:var(--tvb-deep)}
+.tvb .tvb-slots {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,128px),1fr));gap:8px;min-width:0}
+.tvb .tvb-slots.tvb-one {grid-template-columns:minmax(0,1fr)}
+.tvb .tvb-slot {min-width:0;min-height:95px;display:flex;flex-direction:column;gap:5px;align-items:stretch;padding:5px;
+  border:1px dashed #7baa98;border-radius:14px;background:#fff}
+.tvb .tvb-slot .tvb-card {padding:5px;border-radius:9px;gap:4px;font-size:.84rem}
+.tvb .tvb-slot .tvb-icon {width:27px;height:27px}
+.tvb :is(.tvb-slot-button,.tvb-return) {
+  appearance:none;min-height:44px;border:0;border-radius:9px;background:var(--tvb-mint);color:var(--tvb-deep);
+  font:inherit;font-size:.87rem;font-weight:820;cursor:pointer;
+}
+.tvb .tvb-slot-button{width:100%;padding:6px}
+.tvb .tvb-slot-button:disabled,.tvb .tvb-return:disabled{color:var(--tvb-muted);background:#eff5f1;cursor:default}
+.tvb .tvb-return {padding-inline:12px;margin-top:10px}
+.tvb :is(.tvb-card,.tvb-slot-button,.tvb-return):focus-visible{outline:3px solid #18564a;outline-offset:2px}
+.tvb .tvb-slot-detail,.tvb .tvb-empty{padding:5px;margin:0;font-size:.82rem;color:var(--tvb-muted);overflow-wrap:anywhere;font-weight:650}
+.tvb .tvb-drop-highlight{background:var(--tvb-highlight)}
+.tvb .tvb-solution{background:var(--tvb-mint)}
+.tvb .tvb-solution :is(ol,ul){margin:0;padding-inline-start:1.4rem}
+.tvb .tvb-solution li+li{margin-top:3px}
+@media(max-width:430px) {
+  .tvb .tvb-slots:not(.tvb-one){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tvb .tvb-card {gap:5px;padding-inline:7px}
+  .tvb .tvb-icon{width:30px;height:30px}
+}
+@media(prefers-reduced-motion:reduce){.tvb .tvb-card{transition:none}}
+
+/* Move a visual card in the viewport without changing hit-testing or board layout. */
+@media (hover:hover) and (pointer:fine) {
+  .tvb .tvb-card:not(:disabled) {cursor:grab}
+  .tvb .tvb-card:not(:disabled):active {cursor:grabbing}
+}
+.tvb .tvb-card.tvb-is-dragging {opacity:.30}
+.tvb.tvb-drag-ghost {
+  position:fixed;inset:0 auto auto 0;z-index:2147483647;
+  min-width:0;min-height:0;max-width:none;max-height:none;margin:0;padding:0;border:0;
+  background:none;box-shadow:none;pointer-events:none!important;
+}
+.tvb.tvb-drag-ghost * {pointer-events:none!important}
+.tvb.tvb-drag-ghost .tvb-card {
+  box-sizing:border-box;width:100%;height:100%;margin:0;opacity:1;scale:none;
+  background:#f2fff7;border-color:#2b8064;box-shadow:0 9px 21px #174b4160;
+}
+.tvb.tvb-drag-ghost.tvb-slot .tvb-card {min-height:0;padding:5px;border-radius:9px;gap:4px;font-size:.84rem}

@@ -1,0 +1,26 @@
+.lab-try-card{padding:clamp(14px,2.8vw,26px);margin-block:22px;background:#f2faf7;border:1px solid #d2e5dd;border-radius:24px;color:#192136}
+.lab-try-card h2{margin:0 0 6px}.lab-try-card p{margin:0 0 12px}
+.lab-try-links{display:flex;gap:9px;flex-wrap:wrap}
+.lab-try-links a,.lab-try-back{display:inline-flex;align-items:center;min-height:44px;padding:7px 14px;border:1px solid #bfd7ce;border-radius:12px;background:#fff;color:#215b48;font-weight:750;text-decoration:none}
+.lab-try-links a:hover,.lab-try-links a[aria-current=page],.lab-try-back:hover{background:#e8f5ee;border-color:#63927f}
+.lab-try-page{margin:0;background:#fff;color:#192136;font:17px/1.55 system-ui,sans-serif}
+.lab-try-page *{box-sizing:border-box}.lab-try-page [hidden]{display:none!important}
+.lab-try-head{display:flex;justify-content:space-between;align-items:center;gap:14px;max-width:1410px;padding:15px clamp(15px,4vw,55px);margin:auto;border-bottom:1px solid #e7ebe9}
+.lab-try-head img{display:block;max-width:100%;object-fit:contain}
+.lab-try-main{max-width:1410px;padding:clamp(14px,4vw,54px);margin:auto}
+.lab-try-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:clamp(12px,3.2vw,36px);align-items:start}
+.lab-try-paper{border:1px solid #dbe4e2;background:#fff;border-radius:30px;padding:clamp(20px,4vw,43px)}
+.lab-try-intro{max-width:760px;margin-inline:auto}.lab-try-paper h1{margin:.12em 0 .5em;line-height:1.06;font-size:clamp(32px,5vw,54px);letter-spacing:-.035em}
+.lab-try-kicker{margin:0;color:#266650;letter-spacing:.09em;font-size:.75rem;font-weight:850}
+.lab-try-fact{background:#eef6ff;border:1px solid #dfebf6;border-radius:18px;padding:13px 17px;margin-bottom:10px}
+.lab-try-fact+.lab-try-fact{background:#f2edfd;border-color:#e9e2f7}
+.lab-try-fact h2{margin:0 0 3px;font-size:1.02rem}.lab-try-fact p{margin:0}.lab-try-paper small{display:block;margin:13px 0;color:#43595a}
+.lab-try-actions{display:flex;gap:8px;flex-wrap:wrap}.lab-try-page button{font:inherit;cursor:pointer}
+.lab-try-primary,.lab-try-secondary{min-height:44px;padding:9px 16px;border-radius:999px;border:1px solid #27654f;font-weight:800!important}
+.lab-try-primary{background:#27654f;color:white}.lab-try-primary:disabled{background:#e5ece9;color:#516561;border-color:#dce6e1;cursor:default}
+.lab-try-secondary{background:#fff;color:#27654f}.lab-try-page :is(a,button):focus-visible{outline:3px solid #5741a3;outline-offset:3px}
+.lab-try-scene{min-width:0}.lab-try-feedback:empty{display:none}.lab-try-feedback{padding:10px 14px;border-radius:14px;background:#fff5d8}.lab-try-feedback[data-state=correct]{background:#e7f6ed}
+@media(max-width:760px){.lab-try-layout{grid-template-columns:minmax(0,1fr)}.lab-try-layout .lab-try-paper{grid-row:1}.lab-try-head img{width:108px}}
+
+.lab-try-scene .ls-lab-story{margin:0 0 12px;display:grid;justify-items:center}
+.lab-try-scene .ls-lab-story img{display:block;width:auto;height:auto;max-width:100%;max-height:180px;border-radius:20px}

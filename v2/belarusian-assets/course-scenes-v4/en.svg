@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" font-family="DejaVu Sans, sans-serif" width="640" height="340" role="img" aria-labelledby="scene-title">
+  <title id="scene-title">Ух и Топа с компасом и картой в Великобритании</title>
+  <defs>
+    <clipPath id="tile-6">
+      <rect width="640" height="340" rx="34" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#tile-6)" id="scene">
+    <g id="scenery">
+      <rect x="0" y="0" width="640" height="340" rx="0" fill="#eaf0df" id="sky" />
+      <path d="M0 232Q104 178 281 221t359-20v139H0Z" fill="#c6d9d2" id="meadow-distant" />
+      <path d="M0 296q112-22 225 4 103 21 209-16 87-29 206-3v59H0Z" fill="#b6ccbb" id="meadow-mid" />
+      <g transform="translate(43 107) scale(1.32)" id="cloud-left">
+        <path d="M0 32Q-4 16 18 15 23-4 45 5 55-7 71 5q10 8 6 16 21-5 29 11Z" fill="#fff3db" />
+      </g>
+      <g transform="translate(453 67) scale(1.28)" id="cloud-right">
+        <path d="M0 32Q-4 16 18 15 23-4 45 5 55-7 71 5q10 8 6 16 21-5 29 11Z" fill="#fff3db" />
+      </g>
+      <circle cx="514" cy="127" r="38" fill="#f0d294" id="sun" />
+      <path d="M0 284q120-70 254-28 109 28 234-10 87-17 152 6v88H0Z" fill="#d3dcd0" id="path" />
+      <path d="M0 310q93-37 217-20 124 26 221-10 98-16 202 8v52H0Z" fill="#dfe3b6" id="meadow-foreground" />
+      <rect x="513" y="132" width="36" height="112" rx="5" fill="#c7a596" id="clock-tower" />
+      <path d="M507 134l23-35 25 35Z" fill="#ad8d87" id="clock-tower-roof" />
+      <circle cx="531" cy="156" r="11" fill="#fff0d3" id="clock-face" />
+      <path d="M531 150v6l5 3" fill="none" stroke="#8e7773" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="clock-hands" />
+      <rect x="543" y="185" width="48" height="59" rx="3" fill="#d4b39b" id="town-building-low" />
+      <rect x="580" y="170" width="32" height="74" rx="4" fill="#bfa4a4" id="town-building-high" />
+      <path d="M450 116v99" fill="none" stroke="#8e9792" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" id="flag-pole" />
+      <rect x="452" y="116" width="63" height="36" rx="3" fill="#587996" id="uk-flag-blue" />
+      <path d="M453 117l60 34m0-34-60 34" fill="none" stroke="#f6e5d9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" id="uk-flag-saltire" />
+      <path d="M484 117v34m-30-17h58" fill="none" stroke="#f6e5d9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" id="uk-flag-cross-white" />
+      <path d="M484 117v34m-30-17h58" fill="none" stroke="#d5817a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" id="uk-flag-cross-red" />
+      <g transform="translate(378 247) scale(0.77)" id="open-map">
+        <path d="M0 5Q28-3 46 11 65-3 91 4l-4 55q-25-8-41 4-17-12-42-4Z" fill="#8799a7" />
+        <path d="M2 2Q27-4 46 8 66-4 88 1l-4 52q-24-6-38 6-15-12-39-5Z" fill="#ffeccb" />
+        <path d="M46 11v41M12 21q12-3 25 3m-24 9q12-3 24 2m18-9q15-7 23-4m-23 14q13-7 22-4" fill="none" stroke="#8799a7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+      <ellipse cx="285.0" cy="267" rx="92" ry="11" fill="#4b6459" opacity=".14" id="owl-shadow" />
+      <ellipse cx="415" cy="300" rx="92" ry="11" fill="#65745f" opacity=".14" id="dragon-shadow" />
+    </g>
+    <g id="characters">
+      <g id="owl">
+        <g id="owl-tail" data-origin="248 212">
+          <path fill="#0a869a" d="M250 202c-10 1-24 2-32 6-4 2-3 5 4 7-5 0-10 2-10 5 3 3 8 4 16 3-6 4-4 7 1 7 8 0 16-3 25-7z" />
+        </g>
+        <g id="owl-feet" fill="#d79837">
+          <path id="owl-foot-left" d="M255 243c4-2 10 0 12 3 0 4-1 7 2 9 3 1 6 2 6 5-3 3-9 3-13 1-3-3-4-8-7-11-1-2-1-5 0-7z" />
+          <path id="owl-foot-right" d="M303 243c4-3 8 0 8 5-1 2 2 3 5 3 2 2 3 6 0 6-6 0-9-3-17-2-3 0-4-3-2-5 1-2 5-3 6-7z" />
+        </g>
+        <g id="owl-body">
+          <path fill="#0a91a6" d="M236 208c9-16 24-39 30-51 15-24 35-36 52-32 19 5 34 24 36 43 4 24-8 44-23 56-15 13-41 20-61 21-24 2-45-17-34-37z" />
+          <path id="owl-belly" fill="#a3dce3" d="M336 206c10-2 12 1 4 10-16 20-45 34-66 26 6-13 15-23 23-28 10-6 26-10 39-8z" />
+          <path id="owl-belly-feather-marks" d="M325 212l-5 4m-2 9-5 4m-7-5-5 4m1 10-4 3m20-6-5 3" stroke="#64b8c7" stroke-width="2.5" fill="none" stroke-linecap="round" />
+          <path id="owl-face-plumage" fill="#0ba7b9" d="M310 158c4-11 14-14 22-14 16 1 23 15 22 28 1 16-6 30-14 34-17-3-27-1-38 4 0-20 2-39 8-52z" />
+        </g>
+        <g id="owl-crest" fill="#087b91">
+          <path id="owl-crest-left" data-origin="321 132" d="M326 134c-9 4-20-4-19-11-1-1 1-2 3-2-3-5-3-11 0-12 3-2 7 3 9 7 0-3 2-5 4-4 4 2 4 13 3 22z" />
+          <path id="owl-crest-right" data-origin="340 134" d="M339 136c-5-3-8-8-8-14 2-3 4 1 5 3-1-6 2-9 5-7 5 4 6 12 2 19z" />
+        </g>
+        <g id="owl-near-wing" data-origin="293 181">
+          <path fill="#086e84" d="M296 178c7 9 4 23-5 35-5 5-12 11-20 13-17 4-27-2-21-8-14 4-23-3-10-10-6 0-5-6 3-12 6-4 12-5 17-7-5-2-5-4-2-7 7-6 29-10 38-4z" />
+          <path fill="#07869d" d="M295 179c9 6 6 22-3 31-9 8-16 14-29 14-8 0-12-3-6-7-10 2-23 0-17-6 4-3 9-5 15-6-10 0-11-4-4-8 6-4 15-6 19-8-6 0-9-2-5-5 8-6 21-8 30-5z" />
+          <path d="m269 204 4-2m15-10 4-4m-14 26 5-3" stroke="#0aa5b7" stroke-width="2.6" fill="none" stroke-linecap="round" />
+        </g>
+        <g id="owl-face">
+          <path id="owl-brow" d="M338 157q3-2 7 1" stroke="#08798b" fill="none" stroke-linecap="round" stroke-width="3" />
+          <g id="owl-eye" data-origin="337 175">
+            <ellipse cx="337" cy="174.5" rx="12.7" ry="14" transform="rotate(8 337 174.5)" fill="#f5f1d6" />
+            <g id="owl-pupil" data-origin="342 180">
+              <circle cx="341.5" cy="179.5" r="6.2" fill="#17251b" />
+              <circle cx="342.2" cy="178.1" r="1.6" fill="#ffffef" />
+            </g>
+          </g>
+          <ellipse id="owl-cheek" cx="321.5" cy="188" rx="7" ry="5.1" transform="rotate(26 321.5 188)" fill="#ee7195" />
+          <g id="owl-beak" data-origin="350 193">
+            <path fill="#a5753a" d="M350 188q6-5 9 1l2 6c1 4-4 2-6 0l-2 4-4-4z" />
+            <path fill="#dfa034" d="M350 189q5-6 9 1l2 5-4 1-8-4z" />
+          </g>
+        </g>
+      </g>
+      <g id="dragon">
+        <g id="dragon-tail" data-origin="389 247">
+          <path fill="#a8b954" d="M388 236c-13 7-29 11-53 7 6 13 33 20 54 16 10-2 12-15-1-23z" />
+          <path fill="#91aa40" d="M389 239c-12 6-37 10-53 4 2 10 30 15 44 9 5-2 4 3 6 5 5-1 8-7 8-10z" />
+          <g id="dragon-tail-spikes" fill="#e8a44f">
+            <path d="M340 244q2-5 5-6 3 0 3 6zm10 1q3-7 7-8 3 1 3 7z" />
+          </g>
+        </g>
+        <g id="dragon-back-foot" data-origin="421 246">
+          <path fill="#758e39" d="M437 244c7 2 7 10 5 13 7-1 8 4 3 6l-7 5-6 2-9-6c-2-4 5-18 14-20z" />
+        </g>
+        <g id="dragon-back-arm" data-origin="424 220">
+          <path fill="#718d39" d="M428 212c11 2 16 0 22-3 4-4 9-3 12 1 3 4 4 10-3 14-9 5-24 9-35 4z" />
+        </g>
+        <g id="dragon-crest" data-origin="388 175" fill="#ee9e4b">
+          <path d="M372 169q-5-4-2-8 4-4 9 0zm7-9q-3-13 3-13 7 0 12 8zm16-8q-1-11 5-11 7 0 12 13zm24 0q12 0 17 10-9-5-17-4z" />
+          <path d="M371 184c-5 2-4 8 1 11l8-12zm-1-8c-4-4-2-10 2-11l8 4z" fill="#f4a64d" />
+        </g>
+        <g id="dragon-backpack" data-origin="387 214">
+          <path fill="#aa642c" d="M375 194c5 0 12 6 12 17l-2 20c-5 9-16 10-24 6-7-5-5-18-2-27 3-8 9-14 16-16z" />
+          <path fill="#e68d37" d="M375 196c4-1 8 5 9 13v19c-4 10-17 10-22 5-5-5-3-14 0-23 2-7 7-12 13-14z" />
+          <path fill="#f3a444" d="M363 216q-7 6-8 12 0 7 8 8 8 2 12-7l2-6z" />
+          <path d="M363 223q6 5 12-1m-11-17q5-7 11-5" stroke="#a35e29" stroke-width="1.7" fill="none" stroke-linecap="round" />
+        </g>
+        <g id="dragon-body">
+          <path fill="#8caa45" d="M382 204c11-10 31-10 46-2 9 7 13 26 8 39-4 11-18 16-31 17-10 0-25-7-28-17-5-13-3-27 5-37z" />
+          <path id="dragon-belly" fill="#c3d654" d="M403 225c4-8 11-13 20-13 14 2 16 15 13 28-2 12-9 18-21 17-10-1-15-9-14-21 0-4 0-7 2-11z" />
+        </g>
+        <g id="dragon-front-foot" data-origin="392 252">
+          <path fill="#78943b" d="M384 246c9-3 18 1 17 8-1 5-5 9-8 12 4 4 5 9-1 11-7 0-14-3-17-8-1-3 3-7 5-12 1-5 0-8 4-11z" />
+          <path d="m385 269 1 6m5-5 2 5" fill="none" stroke="#627d33" stroke-width="1.5" stroke-linecap="round" />
+        </g>
+        <g id="dragon-head" data-origin="407 196">
+          <path fill="#91ad4b" d="M376 165c11-14 29-19 43-14 13 3 21 13 24 23 2 4 7 6 7 12-1 14-13 22-29 25-16 3-43 1-51-13-4-9-1-26 6-33z" />
+          <path id="dragon-muzzle" fill="#97b451" d="M413 186c7-9 20-10 28-10 9 2 10 8 7 16-4 10-21 15-34 12-10-2-13-11-1-18z" />
+          <g id="dragon-eyebrows" fill="#648536">
+            <path d="M394 166q3-4 8-3 2 2-1 3l-7 2z" />
+            <path d="M426 158q4-2 8 2l-1 2-7-1z" />
+          </g>
+          <g id="dragon-eye-left" data-origin="404 180">
+            <ellipse cx="404" cy="179.5" rx="9.9" ry="10.5" transform="rotate(-13 404 179.5)" fill="#faebbf" />
+            <g id="dragon-pupil-left" data-origin="408 181">
+              <circle cx="407.5" cy="181" r="5.3" fill="#3d3621" />
+              <circle cx="406.2" cy="179.5" r="1.5" fill="#fff5cf" />
+            </g>
+          </g>
+          <g id="dragon-eye-right" data-origin="431.5 173.5">
+            <ellipse cx="431.5" cy="173.5" rx="7.7" ry="9.1" fill="#faedc8" />
+            <g id="dragon-pupil-right" data-origin="433.5 176">
+              <circle cx="433.5" cy="175.5" r="5" fill="#3a3420" />
+              <circle cx="432.3" cy="174" r="1.4" fill="#fff6d2" />
+            </g>
+          </g>
+          <g id="dragon-cheeks" fill="#dc7778">
+            <ellipse cx="397.5" cy="194.3" rx="5.8" ry="4.3" />
+            <ellipse cx="442" cy="184.3" rx="4.8" ry="3.4" transform="rotate(-15 442 184.3)" />
+          </g>
+          <g id="dragon-mouth" data-origin="424 197">
+            <path d="M408 195q14 12 29-3" fill="none" stroke="#4b5428" stroke-width="2" stroke-linecap="round" />
+            <path d="M407 197l2-3" fill="none" stroke="#627338" stroke-width="1.6" stroke-linecap="round" />
+          </g>
+          <circle cx="423.3" cy="189.5" r="1.3" fill="#657c38" />
+          <circle cx="430" cy="188" r="1" fill="#657c38" />
+        </g>
+        <g id="dragon-backpack-strap">
+          <path d="M372 205c8-6 24-1 28 16" fill="none" stroke="#dd8836" stroke-width="4" stroke-linecap="round" />
+        </g>
+        <g id="dragon-front-arm" data-origin="381 225">
+          <path fill="#668939" d="M376 212c8-8 18 0 19 11 0 4 5 5 10 8 5 2 8 7 5 10-2 2-8 3-12 1-7-1-16-4-20-10-4-5-7-14-2-20z" />
+          <path fill="#8ca94b" d="M377 212c8-6 15 1 16 9 0 5 3 8 10 10 4 1 8 5 6 7-3 5-11 2-17 0-7-2-14-6-17-13-2-5-1-11 2-13z" />
+        </g>
+        <g id="dragon-compass" data-origin="457 214">
+          <g transform="rotate(27 456 215)">
+            <circle cx="456" cy="197.7" r="4.4" fill="#f4e4bc" stroke="#887e6e" stroke-width="2" />
+            <ellipse cx="456" cy="215" rx="11.5" ry="14" fill="#746c60" />
+            <ellipse cx="456" cy="214.8" rx="8.8" ry="11.2" fill="#f9ebc7" />
+            <path d="M456 207l2.7 8-2.7 0-2.7 0Z" fill="#d7746d" />
+            <path d="M456 223l-2.7-8h5.4Z" fill="#68a3a1" />
+            <circle cx="456" cy="215" r="1.35" fill="#77796b" />
+          </g>
+          <path fill="#69893d" d="M465 214q5-2 5 1 1 3-3 5 2 0 2 3-2 3-6 4l-6 1 3-4q3-4 5-10z" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

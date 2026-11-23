@@ -1,0 +1,26 @@
+.workshop-catalogue-head{grid-column:1/-1;padding:26px 0 6px;border-top:1px solid #ded7ca;margin-top:16px}
+main#app .workshop-catalogue-head h2{font-size:clamp(27px,3.6vw,47px);letter-spacing:-.027em;margin:0 0 7px}
+.workshop-catalogue-head p{color:#51566a;font-size:1rem}
+#app[data-course-dash=logic]{--math-lavender:#dcea9f;--math-pill:#eef6ce}
+#app[data-course-dash=money]{--math-lavender:#f1d99b;--math-pill:#fff0c6}
+#app[data-course-dash=story]{--math-lavender:#f3ccdf;--math-pill:#fae6ef}
+.lesson-studio .workbench{border:1px solid #ded7ca;border-radius:18px;padding:13px 15px;background:#fffdf8;color:#192136}
+.lesson-studio .workbench summary{cursor:pointer;font-weight:850}
+.lesson-studio .workbench p{font-size:.91rem;margin:8px 0}
+.lesson-studio .workbench :is(button,output){font-size:.86rem}
+.workbench-pattern{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:9px 0 11px}
+.workbench-tile{border:1px solid #c1b5d6;border-radius:10px;min-height:39px;background:#fff}
+.lesson-studio .workbench .workbench-tile{font-size:1.5rem;line-height:1;color:#412e77}
+.workbench-tile[data-shape="1"]{background:#e4f5b1}
+.workbench-tile[data-shape="2"]{background:#fce0cc}
+.workbench-tile[data-shape="3"]{background:#e4dafa}
+.workbench-tokens{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;margin:10px 0}
+.workbench-token{background:#eee8dc;border:1px solid #ded5c5;width:100%;max-width:24px;aspect-ratio:1;border-radius:50%}
+.workbench-token[data-on=true]{background:#f9ce56;border-color:#946e1c}
+.workbench-buttons{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.workbench button.ls-ghost{min-height:40px;padding:5px 9px}
+.workbench button:disabled{opacity:.6}
+.workbench-story{padding-inline-start:22px}
+.workbench-story li{margin:7px 0;padding:4px;border-bottom:1px solid #e9e2d7;font-size:.87rem}
+.workbench-story li button{margin:5px 0}
+@media(max-width:700px){.lesson-studio .workbench{grid-column:1/-1}}

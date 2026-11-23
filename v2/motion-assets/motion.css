@@ -1,0 +1,57 @@
+/* Individual translate/scale do not replace app transforms, including hover. */
+@media (prefers-reduced-motion:no-preference) {
+  #today > .layout[data-tp-depth] { --tp-rate:.85px; padding-bottom:clamp(12px,2vw,26px) }
+  #today > .layout[data-tp-depth] > .feature {translate:0 clamp(0px,calc(var(--tp-depth,0) * .15 * var(--tp-rate)),44px)}
+  #today > .layout[data-tp-depth] > .rail {translate:0 clamp(0px,calc(var(--tp-depth,0) * .034 * var(--tp-rate)),10px)}
+  #today > .layout[data-tp-depth] > .editor-read {translate:0 clamp(0px,calc(var(--tp-depth,0) * .082 * var(--tp-rate)),24px)}
+  #today:has(> .layout[data-tp-depth]) .hero-orbit {translate:0 clamp(-49px,calc(var(--tp-depth,0) * -.185px),0px)}
+  #today:has(> .layout[data-tp-depth]) .hero-doodles {translate:0 clamp(-38px,calc(var(--tp-depth,0) * -.13px),0px)}
+  #today:has(> .layout[data-tp-depth]) .hero-doodles .sticker { animation:tp-card-arrive .48s ease-out both }
+  #today > .layout[data-tp-depth] > .feature .card-mark {translate:0 clamp(-18px,calc(var(--tp-depth,0) * -.055px),0px)}
+  #today > .layout[data-tp-depth] > .editor-read .card-mark {translate:0 clamp(-24px,calc(var(--tp-depth,0) * -.09px),0px)}
+  @media (max-width:899px) { #today > .layout[data-tp-depth] {--tp-rate:.52px} }
+  @media (max-width:550px) {
+    #today > .layout[data-tp-depth] {--tp-rate:.32px}
+    #today > .layout[data-tp-depth] > .feature {translate:0 clamp(0px,calc(var(--tp-depth,0) * .045px),8px)}
+    #today > .layout[data-tp-depth] > .rail {translate:0 clamp(0px,calc(var(--tp-depth,0) * .018px),4px)}
+    #today > .layout[data-tp-depth] > .editor-read {translate:0 clamp(0px,calc(var(--tp-depth,0) * .045px),8px)}
+  }
+
+  .math-feature-art > img, .math-progress, .screen.on > .stage > .owl,
+  .screen.on :is(.talk-top,.reader-image,.paint-wrap), #story img, .ls-paper > h2, .ls-scene > :is(.ls-mascot,.topouh-lesson-scenery),
+  html[lang=be] :is(.hero,.paper) > h1 {animation:tp-card-arrive .42s cubic-bezier(.2,.75,.25,1) both}
+  .math-progress {animation-delay:55ms}
+  .math-module,.math-topic,.math-cta,.courseCard,.lessonCard,.tvb-card,.tvb-slot-button,html[lang=be] .token {
+    transition:scale .19s cubic-bezier(.2,.8,.25,1);
+  }
+  @media (hover:hover) and (pointer:fine) {
+    :is(.math-module,.math-topic,.math-cta,.courseCard,.lessonCard,.tvb-card,.tvb-slot-button,html[lang=be] .token):not(:disabled):hover {scale:1.025}
+  }
+  :is(.math-module,.math-topic,.math-cta,.courseCard,.lessonCard,.tvb-card,.tvb-slot-button,html[lang=be] .token):not(:disabled):active {scale:.975}
+  .ls-feedback:not(:empty) > b,html[lang=be] .feedback:not(:empty) > b {display:inline-block;animation:tp-feedback-arrive .32s ease-out both}
+  :is(.ls-good,html[lang=be] .feedback.good) > b {animation:tp-good .48s cubic-bezier(.18,.83,.28,1.15) both}
+  @keyframes tp-card-arrive {from {translate:0 12px;opacity:.58} to {translate:0 0;opacity:1}}
+  @keyframes tp-feedback-arrive {from {translate:0 5px;opacity:.64} to {translate:0 0;opacity:1}}
+  @keyframes tp-good {from {scale:.90;opacity:.65} 58% {scale:1.05} to {scale:1;opacity:1}}
+}
+/* Existing artwork animations can remain present for everyone as a static frame. */
+@media (prefers-reduced-motion:reduce) {
+  #today :is(.topa-spark,.topa-wave,.sticker,.card-mark,.hero-doodles,.hero-orbit) {animation:none!important}
+}
+
+/* Desktop cards travel roughly a third of their own height, at three speeds.
+   Keep enough space below them to avoid covering the subject links. */
+@media (min-width: 900px) and (prefers-reduced-motion:no-preference) {
+  #today > .layout[data-tp-depth] {
+    padding-bottom: calc(clamp(12px,2vw,26px) + var(--tp-card-travel, 0px));
+  }
+  #today > .layout[data-tp-depth] > .feature {
+    translate: 0 calc(var(--tp-day-progress, 0) * 38%);
+  }
+  #today > .layout[data-tp-depth] > .rail {
+    translate: 0 calc(var(--tp-plan-progress, 0) * 30%);
+  }
+  #today > .layout[data-tp-depth] > .editor-read {
+    translate: 0 calc(var(--tp-story-progress, 0) * 35%);
+  }
+}
