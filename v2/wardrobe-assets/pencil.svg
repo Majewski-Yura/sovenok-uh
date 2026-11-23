@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="195" height="260" viewBox="0 0 195 260" role="img" aria-labelledby="art-title">
+<title id="art-title">Волшебный карандаш</title>
+<g id="sparkles" fill="#ffd76b"><path d="M26 163q3 14 12 14-11 2-12 13-3-10-13-12 11-3 13-15Zm151 31q2 11 11 13-10 2-12 12-1-9-10-12 8-2 11-13ZM42 217q2 11 11 12-9 2-11 13-2-11-13-11 10-3 13-14Z"/><circle cx="17" cy="205" r="3"/><circle cx="161" cy="229" r="4"/><circle cx="38" cy="150" r="2"/></g>
+<g id="pencil" transform="rotate(13 96 127)">
+<g id="wood-and-lead"><path d="M58 187h75l-25 60q-12 17-25-1Z" fill="#e6a763" stroke="#a87442" stroke-width="3"/><path d="M85 237q12-7 23 0l-8 14q-5 5-10-2Z" fill="#704635"/></g>
+<g id="barrel"><path d="M58 82h76v110q-19 21-39 3-23 16-37-3Z" fill="#f7ae39" stroke="#c87a38" stroke-width="3"/><path d="M66 85h44v105q-17 18-44 4Z" fill="#ffcb55"/><path d="M69 95v49" fill="none" stroke="#ffe28a" stroke-width="7" stroke-linecap="round"/></g>
+<g id="face"><ellipse cx="79" cy="132" rx="14" ry="17" fill="#fff7dc"/><ellipse cx="115" cy="132" rx="15" ry="17" fill="#fff7dc"/><ellipse cx="81" cy="134" rx="10" ry="11" fill="#503547"/><ellipse cx="114" cy="134" rx="10" ry="11" fill="#503547"/><circle cx="77.5" cy="129" r="4" fill="white"/><circle cx="111" cy="129" r="4" fill="white"/><path d="M92 151q7 9 13 0" fill="none" stroke="#633a40" stroke-width="3" stroke-linecap="round"/><ellipse cx="68" cy="150" rx="7" ry="4" fill="#f38e72"/><ellipse cx="125" cy="150" rx="6" ry="4" fill="#f38e72"/></g>
+<g id="ferrule"><rect x="55" y="53" width="82" height="36" rx="8" fill="#b29696" stroke="#8f696e" stroke-width="3"/><path d="M62 61h68m-65 18h65" stroke="#f7dabc" stroke-width="5" stroke-linecap="round"/></g><path id="eraser" d="M57 53V40q0-28 38-28 40 0 40 30v11Z" fill="#f68d9e" stroke="#b95d77" stroke-width="3"/>
+<g id="hat" transform="translate(24 -1)"><path d="M65 32q2-15 15-26 14-12 36-8 15 2 19 15-12-5-17-1-4 5-5 23Z" fill="#735185" stroke="#5a3d68" stroke-width="2.5"/><path d="M67 26q21 8 49 2l-2 8q-23 7-47-3Z" fill="#e5a350"/><ellipse cx="92" cy="35" rx="34" ry="5" fill="#745083"/><path d="M96 7l2 5 5 1-5 2-1 5-2-5-5-1 5-2Z" fill="#ffdb83"/></g></g>
+</svg>

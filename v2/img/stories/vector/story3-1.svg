@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="scene-title">
+<title id="scene-title">Топа утром сидит на кровати и не хочет идти в садик</title>
+<defs><clipPath id="scene-bounds"><rect width="960" height="560" rx="36"/></clipPath></defs>
+<g clip-path="url(#scene-bounds)"><rect width="960" height="560" fill="#f6dff5"/><path d="M0 432Q421 413 960 426V560H0Z" fill="#ffe5b1"/><path d="M0 455Q440 441 960 451" fill="none" stroke="#f3cd92" stroke-width="4"/><path d="M44 510H126m656 23h102M611 476h53" stroke="#f5d598" stroke-width="5" stroke-linecap="round"/><g id="window"><rect x="637" y="53" width="251" height="254" rx="61" fill="#e4c5f0"/><rect x="652" y="60" width="238" height="230" rx="50" fill="#c9e8ff" stroke="#fff4dd" stroke-width="13"/><circle cx="815" cy="121" r="30" fill="#ffce63"/><path d="M660 216q42-55 86 0 44-41 90 11 20-26 45-23v56q-1 24-37 26H700q-35 0-40-34z" fill="#c5dfad"/><path d="M769 66v222m-113-87h231" stroke="#fff4dd" stroke-width="9"/><path d="M638 298h266" stroke="#fffbeb" stroke-width="17" stroke-linecap="round"/></g><g id="bed"><rect x="77" y="222" width="48" height="246" rx="18" fill="#8e6ca9"/><path d="M120 355H651Q679 355 679 388V455H116Z" fill="#aa8bc5"/><path d="M124 390H655q23 0 23 25v25H124Z" fill="#80669c"/><path d="M148 443v32m473-32v32" stroke="#80669c" stroke-width="15" stroke-linecap="round"/><path d="M122 328Q143 281 270 317L277 383H117Z" fill="#fff2e7"/></g><g id="topa-hesitates"><g transform="translate(233.69396 142.69060) scale(0.35033557)">
+
+
+<g id="topa-hesitates-tail" data-pivot="278 616">
+  <g id="topa-hesitates-tail-spikes"><path fill="#f5a246" d="M52 605q10-27 24-28 13 1 19 30l11 18-54-1Z"/><path fill="#f8bc45" d="M107 610q8-39 23-40 14-1 32 29l19 18-74 12Z"/><path fill="#f8a13d" d="M164 601q-9-49 5-58 15-3 50 9l27 11-31 52-46 17Z"/><path fill="#f69e41" d="M214 542q-22-20-23-47 2-17 56-18l33-7-14 68-53 28Z"/></g>
+  <path fill="#cdd84e" d="M31 612c46 50 107 64 174 55l75-34 24 53c-39 17-77 20-106 19-59-2-112-25-151-64-8-8-16-18-16-29Z"/>
+  <path fill="#89a64a" d="M255 467c-17 76-46 111-99 128-42 14-79 10-102 3-9-3-19-3-23 3-6 10 9 30 28 43 61 41 132 38 197 10 10 0 24 23 28 43l53-71-23-119Z"/>
+</g>
+<g transform="rotate(53 585 446)" id="topa-hesitates-arm-wave" data-pivot="585 446">
+  <path fill="#6b8634" d="M560 396c33 7 62-10 82-31 4-8 2-26 9-30 5-3 10 5 14 9 9-7 21-24 29-22 6 0 7 9 9 16 8-6 20-9 23-4 2 5-3 16-5 25 8-6 15-3 16 2 2 6-5 15-8 20-18 59-68 101-133 116-26 0-45-12-56-46Z"/>
+</g>
+<g id="topa-hesitates-leg-back" data-pivot="518 651">
+  <path fill="#6d8837" d="M457 637q53-19 112-6c6 26 0 56-4 83 11 7 17 20 22 29 3 11-19 17-42 18-25 1-56 2-75-4-17-6-18-10-21-34l-3-70Z"/>
+  <path fill="#5b7530" d="M547 747c6 0 9 7 7 12l-9 1c-3-5-3-10 2-13Zm20-5c6 1 11 8 10 13l-9 3c-4-5-6-13-1-16Z"/>
+</g>
+<g id="topa-hesitates-leg-front" data-pivot="333 656">
+  <path fill="#89a64a" d="M273 646c76-25 119-14 139 28l-9 64c9 9 17 18 19 26 4 10-18 14-42 16-35 2-74-3-89-14-8-6-6-19-8-41Z"/>
+  <path fill="#5b7530" d="M374 761c6 0 15 6 16 15l-11 3c-6-3-11-12-5-18Zm29-6c6-1 14 8 15 15l-11 4c-4-2-10-16-4-19Z"/>
+</g>
+<g id="topa-hesitates-back-spikes" data-pivot="264 440">
+  <path fill="#f6a142" d="M244 480c-26-16-35-44-22-58 11-15 26-24 50-34l37 42-16 52-33 21Z"/>
+  <path fill="#f9a141" d="M263 374c-20-4-44-16-56-26-16-15-1-42 31-66l63 36 6 49-36 24Z"/>
+  <path fill="#f69e3e" d="M245 277c-29-14-56-37-56-56 0-20 35-39 62-40l53 35-16 58-34 23Z"/>
+</g>
+<g id="topa-hesitates-body" data-pivot="430 601">
+  <path fill="#89a64a" d="M260 371c43-28 227-57 300 10 23 20 30 61 40 100 12 52 12 104-15 148-28 46-101 76-180 77-67 1-128-16-152-50-25-36-28-100-13-152 12-41 27-78 20-133Z"/>
+  <ellipse id="topa-hesitates-belly" cx="486" cy="556" rx="103" ry="123" transform="rotate(15 486 556)" fill="#cbd94c"/>
+</g>
+<g id="topa-hesitates-arm-front" data-pivot="298 443">
+  <path fill="#668334" d="M299 435c-13 5-33 37-46 71-12 32-14 72-3 94-4 5-3 11 1 12 4 0 10-4 12-3 3 4 0 16 8 18 5 0 9-11 13-11 4 0 11 10 15 10 6 0 8-11 9-15 6 1 18-4 20-14 4 5 9 9 11 4 2-6 0-15-2-22 2-28 15-63 29-85 4-6-1-8-6-3-14 14-25 48-34 77-8 26-19 40-39 38-28-2-36-28-32-56 5-37 20-72 44-103 7-8 6-14 0-12Z"/>
+  <path fill="#89a64a" d="M294 439c22-14 52 10 69 47-27 36-30 82-53 109-11 13-26 16-38 8-26-15-22-51-14-79 8-29 19-58 36-85Z"/>
+</g>
+<g transform="rotate(13 402 389)" id="topa-hesitates-head" data-pivot="402 389">
+  <g id="topa-hesitates-head-crest" data-pivot="333 129"><path fill="#f9a241" d="M263 173c-11-16-19-40-13-67 5-25 38-20 63-6l40 18-27 45-52 32Z"/><path fill="#f7c632" d="M336 112c-1-22 0-50 13-68 9-12 18-9 30-5 24 7 49 46 47 68l12 17-104 17Z"/></g>
+  <path fill="#89a64a" d="M258 390c-18-43-31-87-21-134 13-64 47-120 100-146 26-12 61-14 89-2 0-6-2-14-6-25 54-9 109 14 141 55 23 29 30 55 44 84 8 11 29 22 34 57 9 49-31 93-65 121-42 34-122 56-191 36-61-16-100-3-125-46Z"/>
+  <g id="topa-hesitates-eyebrows" fill="#5d772f"><path d="M324 184c7-11 26-21 35-17 7 4 6 10-1 15-11 8-24 16-32 15-6-1-8-6-2-13Z"/><path d="M506 135c4-12 25-10 36-5 10 6 9 12-1 15-14 3-36-1-35-10Z"/></g>
+  <g id="topa-hesitates-eye-left" data-pivot="377 261"><ellipse cx="377" cy="261" rx="53" ry="55" transform="rotate(10 377 261)" fill="#f5ebc8"/><g transform="translate(-4 12)" id="topa-hesitates-pupil-left" data-pivot="380 270"><ellipse cx="380" cy="270" rx="31" ry="31" fill="#301c12"/><circle cx="365" cy="261" r="9" fill="#fff4d8"/></g></g>
+  <g id="topa-hesitates-eye-right" data-pivot="540 217"><ellipse cx="540" cy="217" rx="44" ry="49" transform="rotate(-19 540 217)" fill="#f5ebc8"/><g transform="translate(-8 10)" id="topa-hesitates-pupil-right" data-pivot="530 229"><ellipse cx="530" cy="229" rx="29" ry="31" transform="rotate(-18 530 229)" fill="#301c12"/><circle cx="516" cy="220" r="8" fill="#fff4d8"/></g></g>
+  <g id="topa-hesitates-cheeks" fill="#e56b70"><ellipse cx="344" cy="348" rx="35" ry="25" transform="rotate(-6 344 348)"/><ellipse cx="596" cy="278" rx="30" ry="23" transform="rotate(-18 596 278)"/></g>
+  <g id="topa-hesitates-nostrils" fill="#607936"><ellipse cx="473" cy="298" rx="9" ry="6" transform="rotate(43 473 298)"/><ellipse cx="513" cy="287" rx="8" ry="6" transform="rotate(-59 513 287)"/></g>
+  <path id="topa-hesitates-smile" d="M410 351q41-39 111-20" fill="none" stroke="#372511" stroke-width="6" stroke-linecap="round" data-pivot="477 354"/>
+</g>
+</g></g><g id="quilt"><path d="M140 382q99-40 201-9 103 36 279-2 29 4 32 26l-4 32H140Z" fill="#c0b1f8"/><path d="M141 397q116-35 215-6 115 33 260-4" fill="none" stroke="#dfd7fe" stroke-width="7" stroke-linecap="round"/><path d="M199 403l16 12m128-13 12 14m175-11 15 11" stroke="#eee9fe" stroke-width="6" stroke-linecap="round"/></g><g id="slippers" fill="#f69a92"><path d="M548 489q37-22 70 5l-1 14h-81q-5-9 12-19Z"/><path d="M638 505q37-19 67 7l-4 12h-72q-7-10 9-19Z"/></g></g>
+</svg>

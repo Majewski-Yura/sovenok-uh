@@ -1,0 +1,7 @@
+.public-paint-hero{box-sizing:border-box;width:100%;margin:0 auto 20px;padding:clamp(16px,4.2vw,50px);border-radius:32px;background:#eee6fa;color:#192136;display:grid;grid-template-columns:minmax(0,1fr) clamp(78px,23vw,238px);align-items:center;gap:clamp(8px,3vw,35px);text-align:left}
+#paint>.public-paint-hero{grid-template-columns:minmax(0,1fr) clamp(66px,14vw,128px);padding-block:12px}
+.public-paint-hero small{font:800 .78rem/1.3 system-ui;color:#614695;letter-spacing:.08em;text-transform:uppercase}
+.public-paint-hero h1{margin:.18em 0 .23em;font:900 clamp(25px,6vw,72px)/1.05 system-ui;letter-spacing:-.03em}
+#paint>.public-paint-hero h1{font-size:clamp(21px,4.4vw,43px)}
+.public-paint-hero p{margin:0;font-weight:650;color:#465673}
+.public-paint-hero img{width:100%;height:auto}

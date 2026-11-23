@@ -1,0 +1,11 @@
+:root {--paper:#fff;--ink:#192136;--muted:#4d5a72;--line:#e4dfee;--lilac:#eadefb;--button:#563e84}
+body {background:#fff}
+main {max-width:1500px;margin:auto}
+main .hero {background:#f0e8fb;border:0;border-radius:clamp(20px,3vw,38px)}
+main .courseCard,main .lessonCard,main .paper {box-shadow:none;background:#fff;border-color:#e4def0;border-radius:21px}
+main .courseCard:nth-of-type(4n+1){background:#f5effc}
+main .courseCard:nth-of-type(4n+2){background:#edf8f0}
+main .courseCard:nth-of-type(4n+3){background:#edf5fc}
+main .courseCard:nth-of-type(4n+4){background:#fff4e9}
+main .lessonPage .paper{background:#fbf9ff}
+main :is(.courseCard,.lessonCard,.choice):focus-visible{outline:3px solid #6b50a0;outline-offset:3px}

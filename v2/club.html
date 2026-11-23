@@ -247,8 +247,9 @@ dialog.trip-map{box-sizing:border-box;width:min(1120px,94vw);max-width:none;max-
 .hero-ukh-art .topa-wave { transform-box:view-box; transform-origin:619px 436px; }
 .hero-ukh-art .topa-pupils {transform:translate(clamp(-7px,calc(var(--look-x,0px) * 1.4),7px),clamp(-6px,calc(var(--look-y,0px) * 1.4),6px))}
 @media(prefers-reduced-motion:reduce){.hero-ukh-art .topa-pupils{transform:none}}
-</style></head><body><div class="club-paper">
-<header><a class="brand" href="#today"><svg viewBox="0 0 96 96" aria-hidden="true"><path fill="#162030" d="M13 13l24 12a42 42 0 0 1 22 0l24-12-2 30a35 35 0 1 1-66 0z"/><circle cx="34" cy="49" r="13" fill="#dafa74"/><circle cx="62" cy="49" r="13" fill="#dafa74"/><circle cx="34" cy="49" r="5" fill="#162030"/><circle cx="62" cy="49" r="5" fill="#162030"/><path fill="#fff" d="M43 61h10l-5 6z"/></svg>Топоух<span>.</span></a><nav aria-label="Разделы"><a aria-current="page" href="#today">Сегодня</a><a href="#subjects" data-route="smart">Уроки</a><a href="#subjects" data-demo="Чтение" data-route="reading">Чтение</a><a href="#today" data-demo="Раскраски" data-route="paintings">Раскраски</a><a href="#today" data-demo="Дневник" data-route="diary">Дневник</a></nav><div class="acct"><span class="coin">★ &nbsp; 0 / 50</span><span class="avatar" aria-hidden="true">А</span><span>Мила</span></div></header>
+</style><link rel="stylesheet" href="brand-assets/star-balance.css"><script defer src="brand-assets/star-balance.js"></script>
+</head><body><div class="club-paper">
+<header><a class="brand" href="#today"><svg viewBox="0 0 96 96" aria-hidden="true"><path fill="#162030" d="M13 13l24 12a42 42 0 0 1 22 0l24-12-2 30a35 35 0 1 1-66 0z"/><circle cx="34" cy="49" r="13" fill="#dafa74"/><circle cx="62" cy="49" r="13" fill="#dafa74"/><circle cx="34" cy="49" r="5" fill="#162030"/><circle cx="62" cy="49" r="5" fill="#162030"/><path fill="#fff" d="M43 61h10l-5 6z"/></svg>Топоух<span>.</span></a><nav aria-label="Разделы"><a aria-current="page" href="#today">Сегодня</a><a href="#subjects" data-route="smart">Уроки</a><a href="#subjects" data-demo="Чтение" data-route="reading">Чтение</a><a href="#today" data-demo="Раскраски" data-route="paintings">Раскраски</a><a href="index.html?view=wardrobe" data-route="wardrobe">Гардероб</a><a href="#today" data-demo="Дневник" data-route="diary">Дневник</a></nav><div class="acct"><span class="topouh-star-balance" role="status"><span class="topouh-balance-star" aria-hidden="true">★</span><span class="topouh-balance-label">Звёзды: </span><b data-topouh-star-count>0</b></span><span class="avatar" aria-hidden="true">А</span><span>Мила</span></div></header>
 <main id="today"><section class="editorial-hero" aria-labelledby="hero-title"><button class="trip-badge" type="button" id="trip-open" data-route="trip" aria-label="Кругосветка Топы: открыть карту"><svg class="trip-ring-letters" viewBox="0 0 136 136" aria-hidden="true"><path id="trip-title-ring" d="M68 68m-56 0a56 56 0 1 1 112 0a56 56 0 1 1-112 0" fill="none"/><text><textPath href="#trip-title-ring" textLength="351">КРУГОСВЕТКА ТОПЫ • КРУГОСВЕТКА ТОПЫ • </textPath></text></svg><span class="trip-coin" aria-hidden="true"><svg class="trip-mini-flag" viewBox="0 0 60 30" aria-hidden="true"><defs><clipPath id="uk-mini-flag-shape"><rect width="60" height="30" rx="2.5"/></clipPath><clipPath id="uk-mini-diagonals"><path d="M30 15H0V0ZM30 15V0H60ZM30 15H60V30ZM30 15V30H0Z"/></clipPath></defs><g clip-path="url(#uk-mini-flag-shape)"><rect width="60" height="30" fill="#012169"/><path d="m0 0 60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="m0 0 60 30m0-30L0 30" stroke="#C8102E" stroke-width="4" clip-path="url(#uk-mini-diagonals)"/><path d="M0 15h60M30 0v30" stroke="#fff" stroke-width="10"/><path d="M0 15h60M30 0v30" stroke="#C8102E" stroke-width="6"/></g></svg><span class="trip-mini-dragon"><svg viewBox="0 0 768 819" aria-hidden="true" focusable="false" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
 <title id="trip-art-topa-title">Дракончик Топа машет рукой</title>
 <desc>Векторный персонаж с подвижными группами: хвост, лапы, руки, голова, гребень и зрачки.</desc>
@@ -468,7 +469,7 @@ for(const btn of document.querySelectorAll('[data-play]'))btn.addEventListener('
 (()=>{
   if(parent===window||!/^https?:$/.test(location.protocol))return;
   const trip=document.getElementById('trip-open'),daily=document.querySelector('.feature');
-  const allowed=new Set(['trip','smart','reading','paintings','diary','lesson-today','math','russian','english','belarusian','catalogue']);
+  const allowed=new Set(['trip','smart','reading','paintings','wardrobe','diary','lesson-today','math','russian','english','belarusian','catalogue']);
   for(const control of document.querySelectorAll('[data-route]'))control.addEventListener('click', e=>{
     e.preventDefault();
     const destination=control.dataset.route;
@@ -488,7 +489,6 @@ for(const btn of document.querySelectorAll('[data-play]'))btn.addEventListener('
       daily.querySelector('p').textContent=(d.subject?d.subject+' · ':'')+(d.done?'Урок уже пройден':(d.lessonStars?'★ '+d.lessonStars+' за урок и ':'')+'+2 бонус дня');
       const node=daily.querySelector('.button').firstChild;
       if(node&&node.nodeType===Node.TEXT_NODE)node.textContent=d.done?'✓ Готово ':'Начать урок ';
-      document.querySelector('.acct .coin').textContent='★ '+(Number.isFinite(d.dayStars)?d.dayStars:0)+' / 50';
     }
   });
 })();

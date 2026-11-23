@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 129" width="320" height="129" role="img" aria-labelledby="title">
+<title id="title">Круглые коричневые очки</title>
+<g id="temples" fill="none" stroke-linecap="round"><path d="M14 43c42 2 101 3 143 11m148-11c-43 2-101 3-143 11M20 105c38-36 77-51 117-57m162 57c-38-36-77-51-117-57" stroke="#643820" stroke-width="12"/><path d="M17 43c36 1 73 3 103 6m184-6c-36 1-74 3-104 6" stroke="#a06539" stroke-width="3"/></g>
+<g id="bridge"><path d="M136 45q24-18 48 0" fill="none" stroke="#5f321e" stroke-width="14" stroke-linecap="round"/><path d="M138 42q22-14 44 0" fill="none" stroke="#b77b4a" stroke-width="3" stroke-linecap="round"/></g>
+<g id="frame" fill="none"><path d="M4 42h23m266 0h23" stroke="#643820" stroke-width="13" stroke-linecap="round"/><ellipse cx="80" cy="66" rx="60" ry="59" stroke="#623620" stroke-width="10"/><ellipse cx="240" cy="66" rx="60" ry="59" stroke="#623620" stroke-width="10"/><path d="M23 59c2-24 20-46 45-49 21-4 40 3 53 17m63 31c2-23 20-45 45-48 21-4 40 3 53 17" stroke="#aa6f42" stroke-width="3.5" stroke-linecap="round"/></g>
+</svg>

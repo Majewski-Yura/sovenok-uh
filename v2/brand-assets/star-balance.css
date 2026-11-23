@@ -1,0 +1,20 @@
+header .topouh-star-balance {
+ display:inline-flex;align-items:center;justify-content:center;gap:.29rem;
+ flex:none;min-inline-size:3.35rem;min-block-size:2.05rem;
+ padding:.23rem .53rem;color:#68400d;background:#fff5d7;border:1px solid #edcb69;
+ border-radius:999px;font:800 .95rem/1 system-ui,sans-serif;
+ font-variant-numeric:tabular-nums;white-space:nowrap;box-sizing:border-box;
+}
+header .topouh-star-balance .topouh-balance-star{color:#a0600f;font-size:1.12em}
+header .topouh-balance-label{
+ position:absolute;inline-size:1px;block-size:1px;padding:0;margin:-1px;
+ overflow:hidden;clip-path:inset(50%);white-space:nowrap;
+}
+@media(max-width:620px) {
+ header .topouh-star-balance{min-inline-size:2.55rem;min-block-size:1.8rem;padding:.22rem .35rem;font-size:.84rem;gap:.21rem}
+ header .topouh-player-copy{display:none}
+}
+/* The embedded Belarusian lesson already has a live wallet button. */
+header:has(#wallet:not([hidden])) .topouh-star-balance{display:none}
+@media(max-width:899px){header .acct:has(.topouh-star-balance){display:flex;gap:5px}}
+@media(max-width:620px){header .acct:has(.topouh-star-balance)>.avatar,header .acct:has(.topouh-star-balance)>span:last-child:not(.topouh-star-balance){display:none}}

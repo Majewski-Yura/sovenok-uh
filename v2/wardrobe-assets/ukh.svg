@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="ukh-title ukh-desc">
+<title id="ukh-title">Совушка Ух</title>
+<desc id="ukh-desc">Синяя совушка Ух; машущее крыло, второе крыло, веки, белки, зрачки, лапы и хохолок разнесены по редактируемым группам.</desc>
+<!-- Порядок групп соответствует глубине. Оси для анимации относительно viewBox:
+правое машущее крыло 741,504; крыло с книгой 282,530; левый белок 398,413; правый белок 578,352.
+Контур меняется непосредственно при редактировании SVG. Скрытая подложка не нужна для анимации. -->
+<g id="background-reference" inkscape:groupmode="layer" inkscape:label="00 · Скрытый фон" display="none" aria-hidden="true"><rect width="1024" height="1024" fill="#f6efdd"/></g>
+<g id="feet" inkscape:groupmode="layer" inkscape:label="01 · Лапки" aria-label="Лапы">
+  <g id="foot-left" inkscape:label="Левая лапа" aria-label="Левая лапа">
+   <path fill="#d49639" d="M424 845c8-1 16-1 23-3v34c14 4 34 6 47 11 11 4 15 11 7 17-4 4-17 0-29-2 9 5 18 12 12 19-7 8-21-2-33-9-8-4-16-10-23-13-9 1-22 8-30 4-10-5 0-13 10-17l15-5z"/>
+  </g>
+  <g id="foot-right" inkscape:label="Правая лапа" aria-label="Правая лапа">
+   <path fill="#d69737" d="M590 827c7-4 16-5 23-7l-1 37c17 2 37 3 50 9 10 5 12 12 5 16-6 3-18-1-30-1 9 5 18 11 14 17-6 9-23-1-33-7-11-4-18-9-25-11-8 0-24 9-28 1-6-9 9-15 17-18l7-4z"/>
+  </g>
+</g>
+<g id="wing-wave" inkscape:groupmode="layer" inkscape:label="02 · Машущее крыло" aria-label="Машущее крыло справа">
+  <path fill="#118b9e" d="M694 426c24-15 44-32 63-55 22-28 30-48 41-77 7-20 17-34 29-28 19 10 24 55 10 91 12-12 21-30 34-29 17 1 20 39-7 84 14-8 22-12 29-6 12 10 9 44-34 92l-5 4c14-6 22-4 21 9-1 26-31 56-65 77-36 23-62 28-86 29l-52-139z"/>
+  <path d="M768 382q20-22 30-3c9 15-1 33-9 47 13-10 23-20 30-9 6 10-1 25-9 37 12-11 17-7 20 1 3 11-2 25-17 36 15-7 22 2 22 12-1 13-7 22-17 31" fill="none" stroke="#115b73" stroke-width="8.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <g id="wing-wave-markings" fill="none" stroke="#38a7b9" stroke-linecap="round">
+    <path d="M773 409q-9 14-21 25m34 28q-9 9-19 16m19 40q-8 4-16 5m35 24q-7 10-17 15" stroke-width="7"/>
+  </g>
+</g>
+<g id="crest" inkscape:groupmode="layer" inkscape:label="03 · Хохолок" aria-label="Хохолок">
+  <g id="crest-left" inkscape:label="Левый пучок" aria-label="Левый пучок">
+   <path fill="#12899c" d="M309 313c-10-16-29-36-54-50-16-9-24-7-23 2 1 5 5 10 9 18-19-10-43-18-56-12-18 8-13 23 0 34 12 10 25 14 40 17-10 1-18 3-19 9-5 12 17 17 30 16 25-1 51-9 76-18z"/>
+  </g>
+  <g id="crest-top" inkscape:label="Верхний пучок" aria-label="Верхний пучок">
+   <path fill="#11899b" d="M552 235c-10-33-17-63-5-83 9-15 18-1 21 12 7-19 14-40 27-51 10-8 16-1 21 9 8 18 5 41-3 60 10-11 22-15 26-7 5 12-7 32-17 43-12 13-25 21-44 31z"/>
+  </g>
+</g>
+<g id="body" inkscape:groupmode="layer" inkscape:label="04 · Туловище" aria-label="Туловище и голова">
+ <path id="lower-left-body" fill="#118a9a" d="M396 792c6-10 36-13 66-10l17 45c-4 21-22 35-43 35-24 0-39-14-44-36-5-15-2-26 4-34z"/>
+ <path id="lower-right-body" fill="#118b9b" d="M570 787c18-8 53-7 77 0-6 30-18 53-41 56-17 3-31-2-38-13-8-12-9-31 2-43z"/>
+ <path id="body-silhouette" fill="#118b9d" d="M255 526c-9-43-6-97 2-135 7-34 23-61 46-88 28-34 63-54 98-68 38-15 89-25 132-16 36 7 69 17 97 43 46 43 74 107 93 178 16 57 26 112 26 162 0 89-25 140-63 175-50 48-131 64-196 63-70 1-130-11-173-44-35-26-56-70-64-118-9-50 7-100 2-152z"/>
+ <path id="face-and-front" fill="#1aaabc" d="M305 523c-17-31-27-68-20-106 6-33 22-65 47-88 22-21 49-30 71-26 33 4 59 18 80 40-1-22 6-44 18-60 15-21 38-38 61-38 26-2 49 6 68 21 46 42 74 105 93 174 16 57 26 112 26 162 0 89-25 140-63 175-50 48-131 64-196 63-64 0-122-10-164-39-23-19-41-55-50-83-15-47-18-122 29-195z"/>
+ <g id="forehead-feathers" fill="none" stroke="#105a72" stroke-linecap="round" aria-label="Пёрышки на лбу">
+   <path d="m368 276 20 6m14-27 12 9m25-20 9 17m27-23-2 19m38-25-10 16m-67 37 9 11m24-11 4 18" stroke-width="7"/>
+ </g>
+ <g id="belly" inkscape:label="Светлый живот" aria-label="Светлый живот">
+  <path fill="#a5e2e9" d="M418 607c19-40 50-66 84-84 30-15 72-23 100-18 43 7 76 29 97 66 25 43 25 86 13 129-12 47-45 83-77 104-33 21-90 35-130 34-47-1-82-20-99-54-20-41-21-105 12-177z"/>
+  <g id="belly-feathers" fill="none" stroke="#69afbc" stroke-linecap="round" stroke-width="8.5">
+    <path d="M570 539q5 8 8 17m36 0q7 10 10 24m35-37q10 7 16 17m-223 37q-6 11-6 24m60-33q-1 15 1 28m48-30q6 13 9 29m94-18q6 11 9 26m-66 5q3 13 4 27m-67-8q2 16 8 29m-69-26q-2 14-1 28m165-6q3 16 0 28m55-46v14m-117 30q2 13 0 26m-62-4q2 10 5 22m95 5q-3 8-10 16m67-29q-1 6-6 12m-121 35q-1 8-5 19"/>
+  </g>
+ </g>
+ <path id="side-highlights" d="M713 502q4 6 6 15m-6 32q4 7 5 15m12 44q1 6 0 14" fill="none" stroke="#a1e0e7" stroke-width="7.3" stroke-linecap="round"/>
+</g>
+<g id="face" inkscape:groupmode="layer" inkscape:label="05 · Лицо" aria-label="Лицо">
+ <g id="brows" inkscape:label="Брови" aria-label="Брови">
+  <path id="brow-left" d="M323 340c5-9 15-19 24-22 9-4 15 0 11 8-4 9-16 20-25 25-9 4-15-1-10-11z" fill="#10586b"/>
+  <path id="brow-right" d="M541 255c8-5 22-7 35-4 10 2 11 12 3 15-9 4-26 3-35 0-6-1-7-8-3-11z" fill="#115969"/>
+ </g>
+ <g id="eye-left" inkscape:label="Левый глаз" aria-label="Левый глаз">
+  <path id="left-eye-white" d="M332 416c-3-34 26-67 60-69 35-3 67 24 71 61 4 36-21 71-57 74-35 4-71-25-74-66z" fill="#f8f1df"/>
+  <g id="left-pupil" inkscape:label="Левый зрачок и блик" aria-label="Левый зрачок и блик">
+   <path d="M396 408c1-16 14-27 29-26 16 0 28 13 27 29 0 15-12 28-28 28-15 0-29-13-28-31z" fill="#060504"/>
+   <circle cx="433" cy="398" r="8" fill="#f9f3e0"/>
+  </g>
+ </g>
+ <g id="eye-right" inkscape:label="Правый глаз" aria-label="Правый глаз">
+  <path id="right-eye-white" d="M517 349c0-33 28-63 60-62 35 1 62 28 62 64 0 34-26 65-61 65-36-1-63-31-61-67z" fill="#f8f2e0"/>
+  <g id="right-pupil" inkscape:label="Правый зрачок и блик" aria-label="Правый зрачок и блик">
+   <path d="M571 349c1-15 13-27 28-27 15 0 28 12 28 27 0 17-12 30-28 30-15 0-28-13-28-30z" fill="#060504"/>
+   <circle cx="608" cy="338" r="8" fill="#faf4e1"/>
+  </g>
+ </g>
+ <g id="cheeks" fill="#ee607f" aria-label="Румянец">
+  <path id="cheek-left" d="M342 511c10-17 38-25 57-15 17 9 20 27 3 40-15 11-37 12-52 3-9-6-13-17-8-28z"/>
+  <path id="cheek-right" d="M627 421c3-20 24-35 44-34 17 1 26 17 18 33-8 19-31 29-49 22-10-4-15-11-13-21z"/>
+ </g>
+ <g id="beak" inkscape:label="Клюв" aria-label="Клюв">
+  <path id="beak-lower" d="M484 430c4-4 35 3 44 9-1 14-1 30-9 30-15 1-30-14-37-27-3-6-2-9 2-12z" fill="#db8b1c"/>
+  <path id="mouth" d="M487 435c5 2 27 4 36 10-1 9-1 16-7 14-11-3-21-9-29-24z" fill="#983426"/>
+  <path id="beak-upper" d="M483 427c5-15 16-25 29-25 15 0 23 13 24 28 2 11 0 18-8 17l-42-10c-5-1-6-4-3-10z" fill="#e49115"/>
+ </g>
+</g>
+<g id="wing-book" inkscape:groupmode="layer" inkscape:label="07 · Крыло у книги" aria-label="Второе крыло">
+ <path d="M255 525c-14 15-31 43-42 71-22 53-25 102-7 145 6 17 21 43 38 47 4 1 7 0 10-4 13 20 32 37 46 33 5-1 9-5 12-12 15 14 34 25 51 22 15-1 13-14 4-29-21-34-32-62-38-97-6-34-6-60 1-91 9-42 3-66-20-95-13-16-43-10-55 10z" fill="#118b9d"/>
+ <g id="wing-book-feathers" fill="none" stroke="#399fb2" stroke-linecap="round">
+   <path d="M261 557q-6 5-10 14m43 4q-4 8-5 16m-22 14q-4 11-4 24m-27-17q-3 8-5 17m67 1v16m-33 7q-2 10 2 23m-26 3q-1 10 3 22m-32-62q-2 7-2 19m88 33q1 13 7 21" stroke-width="7"/>
+ </g>
+ <path id="wing-book-tips" d="M239 730c4 24 10 43 20 62 13 19 26 27 38 25 8-1 12-6 13-12m-26-67c6 34 24 72 42 81 18 9 35 11 42 3" fill="none" stroke="#145c74" stroke-linecap="round" stroke-linejoin="round" stroke-width="8.2"/>
+</g>
+</svg>

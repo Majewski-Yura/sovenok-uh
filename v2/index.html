@@ -866,6 +866,9 @@ html.preview-club-home{overflow:hidden}
 }
 
 </style>
+<link rel="stylesheet" href="wardrobe-assets/wardrobe-studio.css">
+<link rel="stylesheet" href="brand-assets/star-balance.css"><script defer src="brand-assets/star-balance.js"></script>
+<link rel="stylesheet" href="paint-assets/paint-hero.css">
 </head>
 <body>
 <div class="sky" id="sky"></div>
@@ -902,7 +905,7 @@ html.preview-club-home{overflow:hidden}
     <div class="logo"><img src="../img/uh-hello.webp" alt="" style="height:34px"><img src="../img/topa-hello.webp" alt="" style="height:34px;margin-left:-6px">Топоух</div>
     <div style="display:flex;gap:8px;align-items:center">
       <button class="back" id="backBtn" style="display:none" onclick="goBack()">←<span class="bk-t"> Назад</span></button>
-      <div class="stars">⭐ <b id="starN">0</b></div>
+      <span class="topouh-star-balance stars" role="status"><span class="topouh-balance-star" aria-hidden="true">★</span><span class="topouh-balance-label">Звёзды: </span><b id="starN" data-topouh-star-count>0</b></span>
       <button class="me" id="meBtn" aria-label="Мила" onclick="meClick()"><svg viewBox="0 0 100 100">
         <defs><clipPath id="meClip"><circle cx="50" cy="50" r="50"/></clipPath></defs>
         <g clip-path="url(#meClip)">
@@ -1039,6 +1042,7 @@ html.preview-club-home{overflow:hidden}
 
   <!-- РАСКРАСКА -->
   <section class="screen" id="paint">
+<div class="public-paint-hero"><div><small>Творческая мастерская</small><h1>Твоя раскраска</h1><p>Залей цветом целую область или нарисуй кистью.</p></div><img src="paint-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024"></div>
     <div class="paint-wrap"><canvas id="paintCv" width="800" height="993"></canvas><img id="paintImg" class="pline" alt=""></div>
     <div class="ptools" id="ptools">
       <button data-t="fill" class="on" onclick="pTool('fill')">🪣 Заливка</button>
@@ -1137,6 +1141,7 @@ html.preview-club-home{overflow:hidden}
   <!-- МАГАЗИН -->
   <!-- РАСКРАСКИ (06.11.2026, решение родителя): только раскраски — мои (за вещи и купленные) и магазин раскрасок; вещей здесь нет -->
   <section class="screen" id="pbook">
+<div class="public-paint-hero"><div><small>Творческая мастерская</small><h1>Раскраски</h1><p>Открой любимую раскраску или выбери новую в магазине.</p></div><img src="paint-assets/ukh-paint.svg" alt="Ух с кистью и палитрой" width="1024" height="1024"></div>
     <div class="bubble" id="pbookSay" style="margin:6px auto 0"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
     <h3 class="shelf-h">Мои раскраски</h3>
     <div class="paints" id="myPaints"></div>
@@ -1144,17 +1149,34 @@ html.preview-club-home{overflow:hidden}
     <div class="pshop" id="paintShop"></div>
   </section>
 
-  <section class="screen" id="shop">
-    <div class="stage">
-      <div id="owlShop"></div>
-      <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+  <section class="screen" id="shop" data-wardrobe-studio="public-v2" aria-labelledby="wardrobe-title">
+    <div class="wardrobe-heading">
+      <p class="wardrobe-kicker">КЛУБ · НАГРАДЫ</p>
+      <h1 id="wardrobe-title" tabindex="-1">Гардероб Ух</h1>
+      <p>Примеряй наряды, покупай вещи за звёзды и открывай раскраски.</p>
     </div>
-    <h3 class="shelf-h">Мои вещи</h3>
-    <div class="shelf" id="myShelf"></div>
-    <h3 class="shelf-h">🎨 Раскраски за купленные вещи</h3>
-    <div class="paints" id="paints"></div>
-    <h3 class="shelf-h">Магазин</h3>
-    <div class="shop" id="shopList"></div>
+    <div class="wardrobe-workspace">
+      <section class="stage wardrobe-stage" aria-labelledby="wardrobe-stage-title">
+        <h2 id="wardrobe-stage-title">Примерочная</h2>
+        <div id="owlShop"></div>
+        <div class="bubble" id="shopSay"><button class="say" aria-label="Послушать"><img src="../img/ic/speaker.webp" alt=""></button><span></span></div>
+      </section>
+      <div class="wardrobe-side">
+        <section class="wardrobe-panel" aria-labelledby="wardrobe-owned-title">
+          <h2 id="wardrobe-owned-title">Мои вещи</h2>
+          <div class="shelf" id="myShelf"></div>
+        </section>
+        <section class="wardrobe-panel" aria-labelledby="wardrobe-paints-title">
+          <h2 id="wardrobe-paints-title">Раскраски за купленные вещи</h2>
+          <div class="paints" id="paints"></div>
+        </section>
+      </div>
+    </div>
+    <section class="wardrobe-store" aria-labelledby="wardrobe-store-title">
+      <h2 id="wardrobe-store-title">Магазин</h2>
+      <p class="wardrobe-note">Выбери вещь, если хватает звёзд.</p>
+      <div class="shop" id="shopList"></div>
+    </section>
   </section>
 
   <!-- РОДИТЕЛЯМ -->
@@ -1359,6 +1381,7 @@ function setPose(id,name){const svg=owls[id];if(!svg)return;const im=svg.querySe
 function flashStar(id,back){const svg=owls[id];if(!svg||id==='owlShop')return;setPose(id,'star');svg._pt=setTimeout(()=>setPose(id,back),1700)}
 function dress(){
   Object.values(owls).forEach(svg=>{
+    if(svg===owls.owlShop)fitWardrobeUkh(svg);
     svg.querySelectorAll('.acc').forEach(a=>a.style.display='none');
     const w=Object.values(S.wear);
     w.forEach(k=>{if(k){const a=svg.querySelector('.acc-'+k);if(a)a.style.display='block'}});
@@ -1380,7 +1403,7 @@ function say(screen,text,silent){
   const t=typo(text);b.querySelector('span').textContent=t;if(screen==='trip')tripBubShow();b.querySelector('.say').onclick=()=>speak(t,(screen==='eng'||screen==='trip'||screen==='tripL'||(screen==='lessons'&&LESSON.subj==='en'))?'baby':'uh');
 }
 function current(){return 'owl'+document.querySelector('.screen.on').id.replace(/^./,c=>c.toUpperCase())}
-function setStars(){document.getElementById('starN').textContent=S.stars;const b=document.getElementById('dayBar');if(b){const n=S.day&&S.day.d===today()?S.day.n:0;b.innerHTML='Сегодня: '+n+' из 50 ⭐<i><b style="width:'+Math.min(100,n*2)+'%"></b></i>'}}
+function setStars(){document.getElementById('starN').textContent=S.stars;window.dispatchEvent(new CustomEvent('topouh:star-balance',{detail:S.stars}));const b=document.getElementById('dayBar');if(b){const n=S.day&&S.day.d===today()?S.day.n:0;b.innerHTML='Сегодня: '+n+' из 50 ⭐<i><b style="width:'+Math.min(100,n*2)+'%"></b></i>'}}
 function addStars(n,why){
   if(!S.day||S.day.d!==today())S.day={d:today(),n:0};S.day.n+=n;
   S.stars+=n;save();setStars();flashStar(current());
@@ -1999,10 +2022,10 @@ function openSubject(k){const L=LESSONS[k];LESSON.subj=k;go('lessons');
   const box=document.getElementById('lessonList');box.innerHTML='';box.classList.toggle('mlist',k==='math'||k==='ru');box.classList.toggle('tu-read-library',k==='read');const done=S.lessonsDone||{};let num=0;if(k==='math'||k==='ru'){renderChapters(k,box,done);return}
   if(k==='read'){
     const head=document.createElement('h2');head.className='tu-library-title';head.textContent='Истории Ух и Топы';box.append(head);
-    const covers=['st-flashlight','st-pie','st-hedgehog'];
+    const covers=['story1-6','story2-5','story3-5'];
     L.list.forEach((x,i)=>{
       const key=k+i,b=document.createElement('button');b.type='button';b.className='tu-story-card'+(done[key]?' done':'');
-      const art=document.createElement('img');art.className='tu-story-cover';art.alt='';art.src='../img/stories/'+covers[i]+'.webp';
+      const art=document.createElement('img');art.className='tu-story-cover';art.alt='';art.src='img/stories/vector/'+covers[i]+'.svg';
       const m=document.createElement('span');m.className='tu-story-meta';
       m.innerHTML='<small></small><strong></strong><span class="tu-story-description"></span><span class="tu-story-footer"></span>';
       m.querySelector('small').textContent='История '+(i+1);
@@ -2100,33 +2123,33 @@ function mathStep(){
 
 /* ---------- чтение: истории про Ух и Топу ---------- */
 const STORIES=[{title:'Ух и Топа: один трудный день',pages:[
-  {pic:['uh-hello','topa-hello'],t:'Совушка Ух жила в дупле на старом дубе. А вместе с ней жил её младший братик — динозаврик Топа. Да-да, сова и динозаврик. Так бывает, если очень любишь друг друга.'},
-  {pic:['topa-shirt'],t:'Утром Топа решил одеться сам. Он натянул носок на лапу, а футболку надел задом наперёд. «Не получается!» — захныкал Топа. Ух не стала смеяться. «Давай вместе, — сказала она. — Сначала носочки, потом футболку картинкой вперёд». И у Топы получилось!'},
-  {pic:['uh-book'],t:'Потом Ух села читать любимую книжку. А Топа подкрался и — хвать! — утащил книжку. Ух хотела рассердиться. Но она подумала: «Топа просто хочет со мной поиграть».'},
-  {pic:['topa-book'],t:'«Давай я тебе почитаю», — предложила Ух. Топа сразу притих, сел рядом и слушал так внимательно, что даже перестал махать хвостом.'},
-  {pic:['topa-blocks'],t:'После обеда Топа строил башню из кубиков. Башня — бух! — и упала. Топа заплакал. Ух обняла его крылом: «Ничего страшного. Даже у больших сов башни падают. Попробуем ещё раз?» Вторая башня вышла выше первой!'},
-  {pic:['stories/st-flashlight'],t:'Вечером стало темно, и Топа испугался. «Там кто-то есть!» — шептал он. Ух включила фонарик: «Смотри, это просто твоя шляпа на стуле». И Топа засмеялся.'},
-  {pic:['topa-hello','uh-hello'],t:'Перед сном Топа сказал: «Ух, ты самая лучшая сестра на свете!» А Ух подумала, что быть старшей сестрой немножко трудно, но очень-очень радостно. Конец.'}],
+  {pic:['stories/vector/story1-1'],t:'Совушка Ух жила в дупле на старом дубе. А вместе с ней жил её младший братик — дракончик Топа. Да-да, сова и дракончик. Так бывает, если очень любишь друг друга.'},
+  {pic:['stories/vector/story1-2'],t:'Утром Топа решил одеться сам. Он натянул носок на лапу, а футболку надел задом наперёд. «Не получается!» — захныкал Топа. Ух не стала смеяться. «Давай вместе, — сказала она. — Сначала носочки, потом футболку картинкой вперёд». И у Топы получилось!'},
+  {pic:['stories/vector/story1-3'],t:'Потом Ух села читать любимую книжку. А Топа подкрался и — хвать! — утащил книжку. Ух хотела рассердиться. Но она подумала: «Топа просто хочет со мной поиграть».'},
+  {pic:['stories/vector/story1-4'],t:'«Давай я тебе почитаю», — предложила Ух. Топа сразу притих, сел рядом и слушал так внимательно, что даже перестал махать хвостом.'},
+  {pic:['stories/vector/story1-5'],t:'После обеда Топа строил башню из кубиков. Башня — бух! — и упала. Топа заплакал. Ух обняла его крылом: «Ничего страшного. Даже у больших сов башни падают. Попробуем ещё раз?» Вторая башня вышла выше первой!'},
+  {pic:['stories/vector/story1-6'],t:'Вечером стало темно, и Топа испугался. «Там кто-то есть!» — шептал он. Ух включила фонарик: «Смотри, это просто твоя шляпа на стуле». И Топа засмеялся.'},
+  {pic:['stories/vector/story1-7'],t:'Перед сном Топа сказал: «Ух, ты самая лучшая сестра на свете!» А Ух подумала, что быть старшей сестрой немножко трудно, но очень-очень радостно. Конец.'}],
   quiz:[
   {q:'Почему Топа утащил книжку?',a:'Хотел поиграть с Ух',o:['Хотел поиграть с Ух','Хотел её порвать','Сам умел читать']},
   {q:'Что сделала Ух, когда башня упала?',a:'Обняла и предложила ещё раз',o:['Обняла и предложила ещё раз','Посмеялась над Топой','Ушла спать']},
   {q:'Чего испугался Топа вечером?',a:'Шляпы на стуле',o:['Шляпы на стуле','Большой кошки','Грозы за окном']}]},
  {title:'Пирог для мамы',pages:[
-  {pic:['uh-hello','topa-hello'],t:'У мамы-совы скоро праздник. Ух решила испечь ей пирог. «Я тоже хочу печь!» — закричал Топа и побежал за фартуком.'},
-  {pic:['uh-book'],t:'Ух открыла книгу с рецептами. «Нам нужно три яйца, два стакана муки и много ягод», — прочитала она. Топа считал вслух: «Раз, два, три!»'},
-  {pic:['topa-strawberry'],t:'Топа так старался, что съел почти все ягоды. «Ой! — испугался он. — Что же теперь будет?» Ух улыбнулась: «Ничего, в саду растёт ещё малина. Пойдём соберём вместе».'},
-  {pic:['stories/st-flour'],t:'Потом Топа уронил пакет с мукой. Мука разлетелась белым облаком, и Топа стал похож на снеговика! Ух не ругалась. Она дала братику веник, и они вместе всё убрали.'},
-  {pic:['stories/st-pie'],t:'Наконец пирог испёкся — румяный и пахучий. Когда мама пришла домой, Ух и Топа крикнули: «С праздником!» Мама обняла их обоих. «Это самый вкусный пирог на свете», — сказала она. Конец.'}],
+  {pic:['stories/vector/story2-1'],t:'У мамы-совы скоро праздник. Ух решила испечь ей пирог. «Я тоже хочу печь!» — закричал Топа и побежал за фартуком.'},
+  {pic:['stories/vector/story2-2'],t:'Ух открыла книгу с рецептами. «Нам нужно три яйца, два стакана муки и много ягод», — прочитала она. Топа считал вслух: «Раз, два, три!»'},
+  {pic:['stories/vector/story2-3'],t:'Топа так старался, что съел почти все ягоды. «Ой! — испугался он. — Что же теперь будет?» Ух улыбнулась: «Ничего, в саду растёт ещё малина. Пойдём соберём вместе».'},
+  {pic:['stories/vector/story2-4'],t:'Потом Топа уронил пакет с мукой. Мука разлетелась белым облаком, и Топа стал похож на снеговика! Ух не ругалась. Она дала братику веник, и они вместе всё убрали.'},
+  {pic:['stories/vector/story2-5'],t:'Наконец пирог испёкся — румяный и пахучий. Когда мама пришла домой, Ух и Топа крикнули: «С праздником!» Мама обняла их обоих. «Это самый вкусный пирог на свете», — сказала она. Конец.'}],
   quiz:[
   {q:'Что Топа съел почти целиком?',a:'Ягоды',o:['Ягоды','Муку','Яйца']},
   {q:'Что сделала Ух, когда Топа рассыпал муку?',a:'Дала веник, и они убрали вместе',o:['Дала веник, и они убрали вместе','Сильно рассердилась','Ушла гулять']},
   {q:'Для кого пекли пирог?',a:'Для мамы',o:['Для мамы','Для бабушки','Для соседа']}]},
  {title:'Топа идёт в садик',pages:[
-  {pic:['stories/st-sad'],t:'Утром Топа сидел на кровати и не хотел вставать. «Я не пойду в садик, — сказал он. — Там скучно, и я там никого не знаю».'},
-  {pic:['uh-hello'],t:'Ух села рядом. «А я тоже раньше боялась учиться, — сказала она. — А потом поняла: каждый день там узнаёшь что-то новое. Это как открывать маленький секрет».'},
-  {pic:['uh-pointer'],t:'«Какой секрет?» — спросил Топа. «Например, почему листья жёлтые. Или как пишется буква Ж. Или сколько будет два и два!» Топа задумался: про букву Ж он ничего не знал.'},
-  {pic:['stories/st-feather'],t:'Ух сняла своё пёрышко и дала его Топе. «Это пёрышко на смелость. Если станет грустно, держи его в лапке». Топа спрятал пёрышко в кармашек.'},
-  {pic:['stories/st-hedgehog'],t:'Вечером Топа вбежал домой. «Ух! Я нашёл друга! Его зовут ёжик Шуня. А ещё я узнал, что у ежей очень много иголок!» Ух засмеялась: «Вот видишь. Завтра расскажешь мне ещё один секрет». Конец.'}],
+  {pic:['stories/vector/story3-1'],t:'Утром Топа сидел на кровати и не хотел вставать. «Я не пойду в садик, — сказал он. — Там скучно, и я там никого не знаю».'},
+  {pic:['stories/vector/story3-2'],t:'Ух села рядом. «А я тоже раньше боялась учиться, — сказала она. — А потом поняла: каждый день там узнаёшь что-то новое. Это как открывать маленький секрет».'},
+  {pic:['stories/vector/story3-3'],t:'«Какой секрет?» — спросил Топа. «Например, почему листья жёлтые. Или как пишется буква Ж. Или сколько будет два и два!» Топа задумался: про букву Ж он ничего не знал.'},
+  {pic:['stories/vector/story3-4'],t:'Ух сняла своё пёрышко и дала его Топе. «Это пёрышко на смелость. Если станет грустно, держи его в лапке». Топа спрятал пёрышко в кармашек.'},
+  {pic:['stories/vector/story3-5'],t:'Вечером Топа вбежал домой. «Ух! Я нашёл друга! Его зовут ёжик Шуня. А ещё я узнал, что у ежей очень много иголок!» Ух засмеялась: «Вот видишь. Завтра расскажешь мне ещё один секрет». Конец.'}],
   quiz:[
   {q:'Почему Топа не хотел идти в садик?',a:'Думал, что там скучно',o:['Думал, что там скучно','Хотел спать весь день','Потерял ботинок']},
   {q:'Что Ух дала Топе с собой?',a:'Пёрышко на смелость',o:['Пёрышко на смелость','Конфету','Свою книжку']},
@@ -2145,16 +2168,16 @@ function readShow(){
   document.getElementById('readProg').innerHTML=Array.from({length:n},(_,k)=>'<i class="'+(k<i?'done':'')+'"></i>').join('');
   const P=document.getElementById('storyPic'),T=document.getElementById('storyText'),O=document.getElementById('storyOpts'),nx=document.getElementById('readNext'),al=document.getElementById('readAloud');
   O.innerHTML='';const hr=O.parentNode.querySelector('.hint-row');if(hr)hr.remove();nx.style.display='';al.style.display='';
-  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="../img/'+k+'.webp" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
+  if(i<st.pages.length){const pg=st.pages[i];P.innerHTML=pg.pic.map(k=>'<img src="'+(k.startsWith('stories/vector/')?'img/'+k+'.svg':'../img/'+k+'.webp')+'" alt=""'+(k.startsWith('stories/')?' class="scene"':'')+'>').join('');
     T.innerHTML='<p style="margin:0"></p>';T.querySelector('p').textContent=typo(pg.t);
     al.onclick=()=>speak(typo(pg.t),'uh');nx.textContent=i===pages-1?'К вопросам →':'Дальше →';nx.onclick=()=>{RD.i++;readShow();if(RD.i===pages)document.querySelector('#storyOpts button')?.focus()};return}
   const qi=i-st.pages.length;
-  if(qi<st.quiz.length){const q=st.quiz[qi];P.innerHTML='<img src="../img/uh-pointer.webp" alt="">';T.innerHTML='<p style="margin:0;text-align:center;font-weight:900"></p>';T.querySelector('p').textContent=typo(q.q);
+  if(qi<st.quiz.length){const q=st.quiz[qi];P.innerHTML='<img src="games/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center;font-weight:900"></p>';T.querySelector('p').textContent=typo(q.q);
     al.onclick=()=>speak(q.q,'uh');nx.style.display='none';let done=false;
     shuffle(q.o).forEach(o=>{const b=document.createElement('button');b.className='opt';b.textContent=o;
       b.onclick=()=>{if(done||b.classList.contains('no'))return;if(o===q.a){done=true;b.classList.add('yes');speak(pick(['Правильно! Ты внимательно читала!','Точно! Так и было!']),'uh');setTimeout(()=>{if(RD===activeReader&&document.getElementById('read').classList.contains('on')){RD.i++;readShow()}},1300)}else{b.classList.add('no');speak('Хм, давай вспомним ещё разок.','uh')}};O.appendChild(b)});
     hintBtn(O,()=>{if(dropWrong(O,t=>t===q.a))speak('Я убрала один неправильный ответ! Выбирай из двух.','uh')});return}
-  P.innerHTML='<img src="../img/uh-star.webp" alt="">';T.innerHTML='<p style="margin:0;text-align:center"></p>';T.querySelector('p').textContent=typo('Спасибо, что прочитала! А ты тоже помогаешь своему братику Саше?');
+  P.innerHTML='<img src="games/ukh.svg" alt="">';T.innerHTML='<p style="margin:0;text-align:center"></p>';T.querySelector('p').textContent=typo('Спасибо, что прочитала! А ты тоже помогаешь своему братику Саше?');
   al.onclick=()=>speak('Спасибо, что прочитала! А ты тоже помогаешь своему братику Саше?','uh');
   S.diary.unshift({d:today(),q:'Чтение',a:'Прочитала историю «'+st.title+'»'});save();lessonDone();lessonReward('за чтение');celebrate('Ты прочитала целую историю! Это здорово.','uh-book');
   nx.textContent='К историям';nx.onclick=()=>openSubject('read');
@@ -3744,42 +3767,76 @@ function tripEnAll(){const r=new Set(NUMW);TRIP.forEach(I=>(I.weeks||[]).forEach
 
 /* ---------- гардероб ---------- */
 const ITEMS=[
-  {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="../img/kolpak.webp" alt="" style="height:44px">',p:50},
-  {k:'bow',slot:'head',n:'Бантик',ic:'<img src="../img/bantik.webp" alt="" style="height:44px">',p:50},
-  {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="../img/ochki.webp" alt="" style="height:30px">',p:80},
-  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="../img/sharf.webp" alt="" style="height:44px">',p:80},
-  {k:'bowtie',slot:'neck',n:'Галстук-бабочка',ic:'<img src="../img/babochka.webp" alt="" style="height:36px">',p:60},
-  {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="../img/karandash.webp" alt="" style="height:48px">',p:60},
-  {k:'butterfly',slot:'pet',n:'Бабочка-подружка',ic:'<img src="../img/babochka-podruzhka.webp" alt="" style="height:44px">',p:90},
-  {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="../img/sharik.webp" alt="" style="height:48px">',p:80},
-  {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="../img/knizhka.webp" alt="" style="height:40px">',p:100},
-  {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="../img/venok.webp" alt="" style="height:36px">',p:100},
-  {k:'shades',slot:'face',n:'Тёмные очки',ic:'<img src="../img/temnye-ochki.webp" alt="" style="height:30px">',p:100},
-  {k:'phones',slot:'head',n:'Наушники',ic:'<img src="../img/naushniki.webp" alt="" style="height:40px">',p:120},
-  {k:'medal',slot:'neck',n:'Медаль',ic:'<img src="../img/medal.webp" alt="" style="height:44px">',p:120},
-  {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="../img/shlyapa.webp" alt="" style="height:44px">',p:140},
-  {k:'crown',slot:'head',n:'Корона',ic:'<img src="../img/korona.webp" alt="" style="height:44px">',p:150}
+  {k:'cap',slot:'head',n:'Ночной колпак',ic:'<img src="wardrobe-assets/cap.svg" alt="" style="height:44px">',p:50},
+  {k:'bow',slot:'head',n:'Бантик',ic:'<img src="wardrobe-assets/bow.svg" alt="" style="height:44px">',p:50},
+  {k:'glasses',slot:'face',n:'Очки умника',ic:'<img src="wardrobe-assets/glasses.svg" alt="" style="height:30px">',p:80},
+  {k:'scarf',slot:'neck',n:'Тёплый шарф',ic:'<img src="wardrobe-assets/scarf.svg" alt="" style="height:44px">',p:80},
+  {k:'bowtie',slot:'neck',n:'Галстук-бабочка',ic:'<img src="wardrobe-assets/bowtie.svg" alt="" style="height:36px">',p:60},
+  {k:'pencil',slot:'hands',n:'Волшебный карандаш',ic:'<img src="wardrobe-assets/pencil.svg" alt="" style="height:48px">',p:60},
+  {k:'butterfly',slot:'pet',n:'Бабочка-подружка',ic:'<img src="wardrobe-assets/butterfly.svg" alt="" style="height:44px">',p:90},
+  {k:'balloon',slot:'hands',n:'Воздушный шарик',ic:'<img src="wardrobe-assets/balloon.svg" alt="" style="height:48px">',p:80},
+  {k:'book',slot:'hands',n:'Своя книжка',ic:'<img src="wardrobe-assets/book.svg" alt="" style="height:40px">',p:100},
+  {k:'wreath',slot:'head',n:'Венок из цветов',ic:'<img src="wardrobe-assets/wreath.svg" alt="" style="height:36px">',p:100},
+  {k:'shades',slot:'face',n:'Тёмные очки',ic:'<img src="wardrobe-assets/shades.svg" alt="" style="height:30px">',p:100},
+  {k:'phones',slot:'head',n:'Наушники',ic:'<img src="wardrobe-assets/phones.svg" alt="" style="height:40px">',p:120},
+  {k:'medal',slot:'neck',n:'Медаль',ic:'<img src="wardrobe-assets/medal.svg" alt="" style="height:44px">',p:120},
+  {k:'wizard',slot:'head',n:'Шляпа волшебника',ic:'<img src="wardrobe-assets/wizard.svg" alt="" style="height:44px">',p:140},
+  {k:'crown',slot:'head',n:'Корона',ic:'<img src="wardrobe-assets/crown.svg" alt="" style="height:44px">',p:150}
 ];
 
-/* вещи, для которых уже есть готовая картинка ../img/reveal/<k>.webp */
-const REVEAL_HAVE=['wizard','phones','wreath','balloon','cap','bowtie','shades','bow','medal','pencil','book','glasses','crown','butterfly','scarf'];
 /* своя фраза для вещи, если картинка особенная */
 const REVEAL_ITEM_SAY={scarf:'Какой тёплый шарф! Теперь мне не страшна никакая зима.',crown:'Корона! Теперь я настоящая королева совушек. А ты — моя принцесса, Мила!',butterfly:'Ой, бабочка! Она светится! Теперь у меня есть подружка.',glasses:'В очках я выгляжу очень умной! Теперь проверю все-все буквы.',book:'Моя собственная книжка! Почитаешь мне её вечером, Мила?',pencil:'Волшебный карандаш! Теперь я напишу записку без единой ошибки. Ну, почти…',medal:'Настоящая медаль! Я так горжусь! А ты, Мила, — моя чемпионка!',bow:'Ой, какой бантик! Теперь я совсем как ты, Мила!',shades:'Йо! Самая крутая совушка в городе. Класс!',bowtie:'Смотри, какая я нарядная! Совсем как настоящая учительница.',cap:'А-а-ах… Какой уютный колпак. Теперь я точно высплюсь!'};
 const REVEAL_SAY=['Ух ты! Посмотри, как мне идёт!','Ну как я тебе? Красиво?','Спасибо! Я самая нарядная совушка на свете!'];
+/* wardrobe-vector-v1: preserve item image, fit it to the current Ух */
+function fitWardrobeUkh(owl){
+  const pose=owl.querySelector('image.pose');
+  if(!pose)return;
+  pose.setAttribute('href','wardrobe-assets/ukh.svg');
+  for(const [k,v] of Object.entries({x:-80,y:-100,width:160,height:188}))pose.setAttribute(k,String(v));
+  // Fitting coordinates are based on the canonical viewBox and the current placed image.
+  const x=Number(pose.getAttribute('x')),y=Number(pose.getAttribute('y'));
+  const w=Number(pose.getAttribute('width')),h=Number(pose.getAttribute('height'));
+  const span=Math.min(w,h),scale=span/160;
+  if(!Number.isFinite(scale)||!(scale>0))return;
+  const left=x+(w-span)/2,top=y+(h-span)/2;
+  const fit={
+    glasses:[-31,-38,57,23,-16],shades:[-32,-39,60,23,-16],
+    cap:[-41,-115,77,72,1],wizard:[-38,-111,76,63,2],
+    crown:[-20,-94,52,48,-7],wreath:[-39,-74,76,41,-11],
+    phones:[-41,-68,87,53,-13],bow:[15,-62,28,22,14],
+    butterfly:[-64,-78,37,37,0],scarf:[-41,-11,80,51,-6],
+    bowtie:[-18,-5,39,23,-6],medal:[-20,-5,42,40,-6],
+    balloon:[-67,-82,37,80,-9],pencil:[-54,-8,32,47,-18],
+    book:[-44,8,53,48,-13]
+  };
+  for(const [key,[rx,ry,rw,rh,rotate]] of Object.entries(fit)){
+    const im=owl.querySelector('.acc-'+key+' image');
+    if(!im)continue;
+    im.setAttribute('href','wardrobe-assets/'+key+'.svg');
+    const a=left+(rx+80)*scale,b=top+(ry+86)*scale,iw=rw*scale,ih=rh*scale;
+    for(const [k,v] of Object.entries({x:a,y:b,width:iw,height:ih}))im.setAttribute(k,String(v));
+    if(rotate)im.setAttribute('transform','rotate('+rotate+' '+(a+iw/2)+' '+(b+ih/2)+')');
+    else im.removeAttribute('transform');
+  }
+}
 function revealOwl(k){
-  const svg=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
-  svg.classList.remove('small');svg.style.animation='none';
-  svg.querySelector('image.pose').setAttribute('href','../img/uh-hello.webp');
-  svg.querySelectorAll('.acc').forEach(a=>a.style.display=a.classList.contains('acc-'+k)?'block':'none');
-  return svg;
+  const owl=document.getElementById('owlTpl').content.firstElementChild.cloneNode(true);
+  owl.classList.remove('small');owl.classList.add('wardrobe-reveal-owl');
+  owl.style.animation='none';
+  owl.style.marginTop='0';
+  owl.setAttribute('viewBox','-96 -127 192 212');
+  owl.setAttribute('role','img');
+  // Avoid an SVG gradient ID collision with other mounted owl instances.
+  const shadow=owl.querySelector('#uhShadow');
+  if(shadow){shadow.id='wardrobeRevealShadow';owl.querySelectorAll('[fill="url(#uhShadow)"]').forEach(e=>e.setAttribute('fill','url(#wardrobeRevealShadow)'))}
+  fitWardrobeUkh(owl);
+  owl.querySelectorAll('.acc').forEach(a=>a.style.display=a.classList.contains('acc-'+k)?'block':'none');
+  return owl;
 }
 function showReveal(it){
-  const pic=document.getElementById('rvPic');pic.innerHTML='';
-  if(!REVEAL_HAVE.includes(it.k)){pic.appendChild(revealOwl(it.k))}else{
-  const img=new Image();img.alt='Ух: '+it.n;
-  img.onload=()=>{pic.innerHTML='';pic.appendChild(img)};
-  img.onerror=()=>{pic.innerHTML='';pic.appendChild(revealOwl(it.k))};
-  img.src='../img/reveal/'+it.k+'.webp';}
+  const pic=document.getElementById('rvPic');
+  const dressed=revealOwl(it.k);dressed.setAttribute('aria-label','Совёнок Ух: '+it.n);
+  pic.replaceChildren(dressed);
   document.getElementById('rvTitle').textContent=typo('Обновка: '+it.n.toLowerCase()+'!');
   const t=REVEAL_ITEM_SAY[it.k]||pick(REVEAL_SAY);document.getElementById('rvSay').textContent=typo(t);
   document.getElementById('reveal').classList.add('on');
@@ -3875,6 +3932,7 @@ const previewRoutes=Object.freeze({
   reading:()=>openSubject('read'),
   paintings:()=>openPaints(),
   diary:()=>openDnev(),
+  wardrobe:()=>go('shop'),
   'lesson-today':()=>{const l=dayLesson();if(l.done)openSubject(l.k);else startToday()},
   math:()=>openSubject('math'),
   russian:()=>openSubject('ru'),
@@ -3918,7 +3976,7 @@ window.addEventListener('message',event=>{
   const sky=document.getElementById('sky');
   for(let i=0;i<40;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*60+'%';s.style.animationDelay=Math.random()*3+'s';sky.appendChild(s)}
   mountOwl('owlHome');mountOwl('owlTalk',true);mountOwl('owlGame',true);mountOwl('owlHelp',true);mountOwl('owlSmart',true);mountOwl('owlLessons',true);mountOwl('owlLessonsT',true,'babyTpl');mountOwl('owlMath',true);mountOwl('owlEng',true,'babyTpl');mountOwl('owlTrip',true,'babyTpl');mountOwl('owlTripL',true,'babyTpl');mountOwl('owlShop');
-  typoDom(document.body);setStars();renderHome();showPhoto();cloudInit();previewHomeVisibility(true);
+  typoDom(document.body);setStars();renderHome();if(new URL(location.href).searchParams.get('view')==='wardrobe')go('shop');showPhoto();cloudInit();previewHomeVisibility(true);
 })();
 </script>
 </body>

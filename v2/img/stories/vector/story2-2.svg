@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="450" viewBox="0 0 720 450" role="img" aria-labelledby="story-title"><title id="story-title">Открываем книгу с рецептом</title><g id="kitchen-wall"><rect x="0" y="0" width="720" height="450" rx="0" fill="#fbf0da" stroke="none" stroke-width="0"/><path d="M0 299q229-12 451 3 168 8 269-11v159H0Z" fill="#e9cbb0" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 295h720" fill="none" stroke="#d7ac91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g><g id="window"><rect x="52" y="56" width="182" height="150" rx="23" fill="#fff9e8" stroke="none" stroke-width="0"/><rect x="63" y="67" width="159" height="123" rx="14" fill="#abd3de" stroke="none" stroke-width="0"/><circle cx="170" cy="105" r="21" fill="#eec787" stroke="none" stroke-width="0"/><path d="M63 163q35-37 72-3 39-42 87-9v39H63Z" fill="#a4bc94" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M142 67v123m-79-62h159" fill="none" stroke="#fff9e8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g><g id="shelves"><rect x="535" y="70" width="158" height="126" rx="17" fill="#f3e1ca" stroke="none" stroke-width="0"/><path d="M550 123h129m-129 55h129" fill="none" stroke="#dfbb96" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="562" y="87" width="23" height="35" rx="5" fill="#efb4a6" stroke="none" stroke-width="0"/><rect x="590" y="91" width="25" height="31" rx="5" fill="#abd0ad" stroke="none" stroke-width="0"/><rect x="627" y="99" width="30" height="23" rx="4" fill="#cfbfe5" stroke="none" stroke-width="0"/><rect x="563" y="142" width="38" height="35" rx="5" fill="#e8b18b" stroke="none" stroke-width="0"/><rect x="619" y="146" width="26" height="31" rx="6" fill="#a7cbd9" stroke="none" stroke-width="0"/></g><g id="character-shadows"><ellipse cx="145" cy="383" rx="101" ry="10" fill="#d0b198"/><ellipse cx="535" cy="388" rx="87" ry="10" fill="#d0b198"/></g><g id="owl-and-book" transform="translate(41 111) scale(1.17)"><g xmlns="http://www.w3.org/2000/svg" id="owl">
+      <g id="body">
+        <path fill="#198997" d="M86 148q-1-58 10-77 18-25 58-24 47 0 59 38 10 20 9 63 2 44-17 55H93q-15-19-7-55z"/>
+        <path fill="#12a0ad" d="M98 98q11-32 35-29 16 1 24 17 15-20 33-15 20 5 26 31l3 40q-13 26-31 41l-70-1q-19-11-23-36z"/>
+        <path fill="#9ddce5" d="M117 155q21-18 42-17 29-2 50 17l-30 30h-42z"/>
+      </g>
+      <g id="crest">
+        <path fill="#188997" d="M121 56q-11 6-23-4-8-6-4-14l4 1q-8-13-3-20 5-5 13 8 5-6 10 1 5 9 3 28zm69-2q-1-16 6-26 5-7 9-1 11-13 14-8 6 6-3 19 9 0 3 8-8 13-25 14z"/>
+      </g>
+      <g id="face">
+        <path fill="#117789" d="M119 80q5-7 12-5 5 4-5 8-8 2-7-3zm67-3q10-2 11 4-1 4-9 1-4-3-2-5z"/>
+        <g id="eye-left">
+          <ellipse cx="128" cy="105" rx="18" ry="20" fill="#f4efd2" transform="rotate(-6 128 105)"/>
+          <g id="pupil-left">
+            <ellipse cx="135" cy="115" rx="8" ry="8" fill="#10201a" transform="rotate(0 135 115)"/>
+            <ellipse cx="137" cy="113" rx="1.7" ry="1.7" fill="#f4efd2" transform="rotate(0 137 113)"/>
+          </g>
+        </g>
+        <g id="eye-right">
+          <ellipse cx="184" cy="105" rx="18" ry="20" fill="#f4efd2" transform="rotate(-6 184 105)"/>
+          <g id="pupil-right">
+            <ellipse cx="180" cy="115" rx="8" ry="8" fill="#10201a" transform="rotate(0 180 115)"/>
+          </g>
+        </g>
+        <g id="cheeks">
+          <ellipse cx="113" cy="133" rx="9" ry="6" fill="#ef718c" transform="rotate(15 113 133)"/>
+          <ellipse cx="200" cy="133" rx="9" ry="6" fill="#ef718c" transform="rotate(-15 200 133)"/>
+        </g>
+        <g id="beak">
+          <path fill="#b87627" d="M150 119q5-9 11-5 7 5 2 13l-3 5q-8-2-10-9z"/>
+          <path fill="#d9962d" d="M150 119q7-10 13-4 4 3 2 7-4 4-15-3z"/>
+        </g>
+      </g>
+      <g id="glasses">
+        <path fill="none" d="M87 103q-5-15 8-9l8 5m111 0 8-5q12-6 8 9m-82 9q8-7 16 0" stroke="#304351" stroke-width="3" stroke-linecap="round"/>
+        <ellipse cx="126" cy="108" rx="24" ry="24" fill="none" stroke="#365665" stroke-width="4.3"/>
+        <ellipse cx="185" cy="108" rx="24" ry="24" fill="none" stroke="#365665" stroke-width="4.3"/>
+      </g>
+      <g id="book">
+        <path fill="#f7efcd" d="M86 154l12-15q38 10 58 31 21-21 63-31l11 15-14 46H97z"/>
+        <path fill="none" d="M96 144q44 11 60 28 16-17 64-28m-126 5q46 11 62 26 17-15 68-26" stroke="#d6c598" stroke-width="1.8" stroke-linecap="round"/>
+        <path fill="#466983" d="M85 151q40 8 71 27 32-18 72-27l-8 66q-31 4-59 18l-9 1q-29-14-59-19z"/>
+        <path fill="#315877" d="M147 174l9 4 9-4v59q-9 6-17 1z"/>
+      </g>
+      <g id="wing-front">
+        <path fill="#138797" d="M85 143q-12 15-13 36-3 20 15 25 11 4 13-2 2-4-6-7 10 1 9-4-1-6-13-10 11 1 14-5 0-5-13-11-6-6-6-22z"/>
+        <path fill="none" d="M91 174q13 3 14 8 0 6-9 7 9 4 6 9-5 4-11 0" stroke="#126a7a" stroke-width="2.3" stroke-linecap="round"/>
+      </g>
+      <g id="wing-back">
+        <path fill="#138797" d="M224 143q16 15 17 32 2 23-14 28-11 5-13 0-1-5 6-8-9 1-10-4 0-6 11-11-11 1-13-5-1-6 13-12 6-6 3-20z"/>
+        <path fill="none" d="M224 175q-13 2-15 8t10 6q-8 5-5 8 3 4 8 1" stroke="#126a7a" stroke-width="2.3" stroke-linecap="round"/>
+      </g>
+      <g id="feet">
+        <g id="foot-left" transform="translate(117 214) rotate(-17)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+        <g id="foot-right" transform="translate(197 214) scale(-1 1) rotate(-17)">
+          <path fill="#d9962d" d="M-6 3q-3-5 0-7 2-1 4 2 1-8 4-8 4 0 2 7 5-5 7-2 2 3-4 8-4 4-2 11-2 5-7-1l-4-4q-8-1-5-5z"/>
+        </g>
+      </g>
+    </g>
+  </g><svg:g xmlns:svg="http://www.w3.org/2000/svg" id="topa" transform="translate(459 170) scale(0.257 0.257)"><svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-tail" inkscape:groupmode="layer" inkscape:label="01 · Хвост" data-pivot="278 616">
+  <svg:g id="topa-tail-spikes"><svg:path fill="#f5a246" d="M52 605q10-27 24-28 13 1 19 30l11 18-54-1Z"/><svg:path fill="#f8bc45" d="M107 610q8-39 23-40 14-1 32 29l19 18-74 12Z"/><svg:path fill="#f8a13d" d="M164 601q-9-49 5-58 15-3 50 9l27 11-31 52-46 17Z"/><svg:path fill="#f69e41" d="M214 542q-22-20-23-47 2-17 56-18l33-7-14 68-53 28Z"/></svg:g>
+  <svg:path fill="#cdd84e" d="M31 612c46 50 107 64 174 55l75-34 24 53c-39 17-77 20-106 19-59-2-112-25-151-64-8-8-16-18-16-29Z"/>
+  <svg:path fill="#89a64a" d="M255 467c-17 76-46 111-99 128-42 14-79 10-102 3-9-3-19-3-23 3-6 10 9 30 28 43 61 41 132 38 197 10 10 0 24 23 28 43l53-71-23-119Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-arm-wave" inkscape:groupmode="layer" inkscape:label="02 · Машущая лапка" data-pivot="585 446">
+  <svg:path fill="#6b8634" d="M560 396c33 7 62-10 82-31 4-8 2-26 9-30 5-3 10 5 14 9 9-7 21-24 29-22 6 0 7 9 9 16 8-6 20-9 23-4 2 5-3 16-5 25 8-6 15-3 16 2 2 6-5 15-8 20-18 59-68 101-133 116-26 0-45-12-56-46Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-leg-back" inkscape:groupmode="layer" inkscape:label="03 · Дальняя ножка" data-pivot="518 651">
+  <svg:path fill="#6d8837" d="M457 637q53-19 112-6c6 26 0 56-4 83 11 7 17 20 22 29 3 11-19 17-42 18-25 1-56 2-75-4-17-6-18-10-21-34l-3-70Z"/>
+  <svg:path fill="#5b7530" d="M547 747c6 0 9 7 7 12l-9 1c-3-5-3-10 2-13Zm20-5c6 1 11 8 10 13l-9 3c-4-5-6-13-1-16Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-leg-front" inkscape:groupmode="layer" inkscape:label="04 · Передняя ножка" data-pivot="333 656">
+  <svg:path fill="#89a64a" d="M273 646c76-25 119-14 139 28l-9 64c9 9 17 18 19 26 4 10-18 14-42 16-35 2-74-3-89-14-8-6-6-19-8-41Z"/>
+  <svg:path fill="#5b7530" d="M374 761c6 0 15 6 16 15l-11 3c-6-3-11-12-5-18Zm29-6c6-1 14 8 15 15l-11 4c-4-2-10-16-4-19Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-back-spikes" inkscape:groupmode="layer" inkscape:label="05 · Спинные шипы" data-pivot="264 440">
+  <svg:path fill="#f6a142" d="M244 480c-26-16-35-44-22-58 11-15 26-24 50-34l37 42-16 52-33 21Z"/>
+  <svg:path fill="#f9a141" d="M263 374c-20-4-44-16-56-26-16-15-1-42 31-66l63 36 6 49-36 24Z"/>
+  <svg:path fill="#f69e3e" d="M245 277c-29-14-56-37-56-56 0-20 35-39 62-40l53 35-16 58-34 23Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-body" inkscape:groupmode="layer" inkscape:label="06 · Туловище" data-pivot="430 601">
+  <svg:path fill="#89a64a" d="M260 371c43-28 227-57 300 10 23 20 30 61 40 100 12 52 12 104-15 148-28 46-101 76-180 77-67 1-128-16-152-50-25-36-28-100-13-152 12-41 27-78 20-133Z"/>
+  <svg:ellipse id="topa-belly" cx="486" cy="556" rx="103" ry="123" transform="rotate(15 486 556)" fill="#cbd94c"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-arm-front" inkscape:groupmode="layer" inkscape:label="07 · Передняя рука" data-pivot="298 443">
+  <svg:path fill="#668334" d="M299 435c-13 5-33 37-46 71-12 32-14 72-3 94-4 5-3 11 1 12 4 0 10-4 12-3 3 4 0 16 8 18 5 0 9-11 13-11 4 0 11 10 15 10 6 0 8-11 9-15 6 1 18-4 20-14 4 5 9 9 11 4 2-6 0-15-2-22 2-28 15-63 29-85 4-6-1-8-6-3-14 14-25 48-34 77-8 26-19 40-39 38-28-2-36-28-32-56 5-37 20-72 44-103 7-8 6-14 0-12Z"/>
+  <svg:path fill="#89a64a" d="M294 439c22-14 52 10 69 47-27 36-30 82-53 109-11 13-26 16-38 8-26-15-22-51-14-79 8-29 19-58 36-85Z"/>
+</svg:g>
+<svg:g xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-head" inkscape:groupmode="layer" inkscape:label="08 · Голова" data-pivot="402 389">
+  <svg:g id="topa-head-crest" data-pivot="333 129"><svg:path fill="#f9a241" d="M263 173c-11-16-19-40-13-67 5-25 38-20 63-6l40 18-27 45-52 32Z"/><svg:path fill="#f7c632" d="M336 112c-1-22 0-50 13-68 9-12 18-9 30-5 24 7 49 46 47 68l12 17-104 17Z"/></svg:g>
+  <svg:path fill="#89a64a" d="M258 390c-18-43-31-87-21-134 13-64 47-120 100-146 26-12 61-14 89-2 0-6-2-14-6-25 54-9 109 14 141 55 23 29 30 55 44 84 8 11 29 22 34 57 9 49-31 93-65 121-42 34-122 56-191 36-61-16-100-3-125-46Z"/>
+  <svg:g id="topa-eyebrows" fill="#5d772f"><svg:path d="M324 184c7-11 26-21 35-17 7 4 6 10-1 15-11 8-24 16-32 15-6-1-8-6-2-13Z"/><svg:path d="M506 135c4-12 25-10 36-5 10 6 9 12-1 15-14 3-36-1-35-10Z"/></svg:g>
+  <svg:g id="topa-eye-left" data-pivot="377 261"><svg:ellipse cx="377" cy="261" rx="53" ry="55" transform="rotate(10 377 261)" fill="#f5ebc8"/><svg:g id="topa-pupil-left" data-pivot="380 270"><svg:ellipse cx="380" cy="270" rx="31" ry="31" fill="#301c12"/><svg:circle cx="365" cy="261" r="9" fill="#fff4d8"/></svg:g></svg:g>
+  <svg:g id="topa-eye-right" data-pivot="540 217"><svg:ellipse cx="540" cy="217" rx="44" ry="49" transform="rotate(-19 540 217)" fill="#f5ebc8"/><svg:g id="topa-pupil-right" data-pivot="530 229"><svg:ellipse cx="530" cy="229" rx="29" ry="31" transform="rotate(-18 530 229)" fill="#301c12"/><svg:circle cx="516" cy="220" r="8" fill="#fff4d8"/></svg:g></svg:g>
+  <svg:g id="topa-cheeks" fill="#e56b70"><svg:ellipse cx="344" cy="348" rx="35" ry="25" transform="rotate(-6 344 348)"/><svg:ellipse cx="596" cy="278" rx="30" ry="23" transform="rotate(-18 596 278)"/></svg:g>
+  <svg:g id="topa-nostrils" fill="#607936"><svg:ellipse cx="473" cy="298" rx="9" ry="6" transform="rotate(43 473 298)"/><svg:ellipse cx="513" cy="287" rx="8" ry="6" transform="rotate(-59 513 287)"/></svg:g>
+  <svg:path id="topa-smile" d="M405 350q5-9 15-11m-9 6c33 36 112 34 137-23" fill="none" stroke="#372511" stroke-width="6" stroke-linecap="round" data-pivot="477 354"/>
+</svg:g>
+</svg:g><g id="baking-table"><path d="M194 286q173-15 370 0l-14 104H182Z" fill="#cca187" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M184 291q2-14 22-15h357q19 0 14 17l-11 10H193Z" fill="#e7be9c" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M202 306v94m348-94v91" fill="none" stroke="#ad7b69" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><path d="M207 321q155-7 327 0" fill="none" stroke="#bf8e77" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g id="ingredients"><g transform="translate(227 254) scale(0.7 0.7)"><path d="M19 5q11-1 17 17 6 18-10 22-15 4-21-7-5-10 6-26Q15 6 19 5Z" fill="#fff2d3" stroke="#ba9877" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(253 246) scale(0.7 0.7)"><path d="M19 5q11-1 17 17 6 18-10 22-15 4-21-7-5-10 6-26Q15 6 19 5Z" fill="#fff2d3" stroke="#ba9877" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(264 261) scale(0.7 0.7)"><path d="M19 5q11-1 17 17 6 18-10 22-15 4-21-7-5-10 6-26Q15 6 19 5Z" fill="#fff2d3" stroke="#ba9877" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(450 229) scale(0.6 0.6)"><path d="M24 11q23 11 44 0l-7 23q25 24 21 50-6 23-33 20Q15 103 10 85 4 64 31 35Z" fill="#f1e1c0" stroke="#ae8968" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 34q16 7 33 0" fill="none" stroke="#c1816d" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 74q13-16 29 0-9 13-22 13Z" fill="#fff9e8" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(405 255) scale(0.48 0.48)"><ellipse cx="50" cy="30" rx="45" ry="13" fill="#a8b7a5"/><path d="M4 30q7 41 26 46h41q20-4 24-46-38 20-91 0Z" fill="#cfbfe5" stroke="#8b7aa3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 51q27 12 56 0" fill="none" stroke="#ede4f3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g><g transform="translate(421 243) scale(0.42 0.42)"><path d="M10 27q-3-17 19-18 19-1 23 16-1 21-24 32Q11 47 10 27Z" fill="#d88e83" stroke="#b96b75" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 16l8-10 6 5 5-8 6 9 9 2-15 9Z" fill="#80a98e" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="31" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="27" cy="38" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="32" cy="27" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="39" cy="32" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="32" cy="47" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/></g><g transform="translate(442 254) scale(0.39 0.39)"><path d="M10 27q-3-17 19-18 19-1 23 16-1 21-24 32Q11 47 10 27Z" fill="#d88e83" stroke="#b96b75" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 16l8-10 6 5 5-8 6 9 9 2-15 9Z" fill="#80a98e" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="31" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="27" cy="38" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="32" cy="27" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="39" cy="32" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/><circle cx="32" cy="47" r="1.5" fill="#fff2d3" stroke="none" stroke-width="0"/></g></g><g id="recipe-page"><g transform="translate(287 240) scale(0.69 0.69)"><path d="M7 20Q50 7 91 26q39-19 80-6v81q-47-8-80 11-37-17-84-10Z" fill="#ae8ba3" stroke="#795f80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 17q44-12 83 9 42-21 80-9v78q-42-6-80 14-35-18-83-11Z" fill="#fff2d3" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><path d="M90 28v78m13-62q30-14 54-9m-53 22q27-9 44-9m-46 23q30-12 54-10" fill="none" stroke="#b79b8f" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 67q8-27 39-3-5 14-21 14T29 67Z" fill="#e3a779" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/><circle cx="48" cy="55" r="4" fill="#d88e83" stroke="none" stroke-width="0"/><circle cx="55" cy="57" r="3" fill="#b67484" stroke="none" stroke-width="0"/></g></g><g transform="translate(341 234) scale(0.76 0.76)"><path d="M0-12 3-2 12 0 3 3 0 12-3 3-12 0-3-2Z" fill="#efd28d" stroke="none" stroke-width="0" stroke-linecap="round" stroke-linejoin="round"/></g></svg>

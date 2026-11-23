@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 496" width="840" height="496" role="img" aria-labelledby="title"><title id="title">Носочки и футболка</title><defs><clipPath id="frame"><rect width="840" height="496" rx="30"/></clipPath></defs><g clip-path="url(#frame)"><g id="setting"><rect x="0" y="0" width="840" height="496" fill="#f1e5d7" rx="0" stroke="none" stroke-width="2"/><path d="M0 350Q196 341 409 346t431-8v158H0z" fill="#dbb99d" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 359q170-14 381-8t459-6M0 416q279-33 555-17m-184 62q190-18 469-17" fill="none" stroke="#c09982" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><g transform="translate(78 53)"><rect x="0" y="0" width="165" height="139" fill="#ecd2a5" rx="18" stroke="none" stroke-width="2"/><rect x="9" y="9" width="147" height="120" fill="#bbd4d6" rx="12" stroke="none" stroke-width="2"/><ellipse cx="106" cy="37" rx="18" ry="18" fill="#eecc84"/><path d="M9 103q37-40 81-13 34-22 66-11v50H9z" fill="#adc7a0" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M82 12v115M12 78h141" fill="none" stroke="#d8a991" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></g><rect x="611" y="113" width="151" height="238" fill="#b68770" rx="19" stroke="#866652" stroke-width="2"/><rect x="626" y="127" width="122" height="116" fill="#d9a88c" rx="9" stroke="none" stroke-width="2"/><rect x="626" y="249" width="122" height="38" fill="#d9a88c" rx="9" stroke="none" stroke-width="2"/><rect x="626" y="293" width="122" height="45" fill="#d9a88c" rx="9" stroke="none" stroke-width="2"/><ellipse cx="686" cy="267" rx="7" ry="4" fill="#785f51"/><ellipse cx="686" cy="316" rx="7" ry="4" fill="#785f51"/><ellipse cx="412" cy="402" rx="305" ry="48" fill="#c3a3c9"/><ellipse cx="412" cy="402" rx="291" ry="41" fill="none" stroke="#fff1db" stroke-width="2" stroke-dasharray="5 7"/></g><g id="cast-and-props"><g id="owl" transform="translate(267 403) scale(0.2626953125 0.2626953125) translate(-500 -940)"><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-feet" inkscape:groupmode="layer" inkscape:label="01 · Лапки" aria-label="Лапы">
+  <g id="ukh-foot-left" inkscape:label="Левая лапа" aria-label="Левая лапа">
+   <path fill="#d49639" d="M424 845c8-1 16-1 23-3v34c14 4 34 6 47 11 11 4 15 11 7 17-4 4-17 0-29-2 9 5 18 12 12 19-7 8-21-2-33-9-8-4-16-10-23-13-9 1-22 8-30 4-10-5 0-13 10-17l15-5z"/>
+  </g>
+  <g id="ukh-foot-right" inkscape:label="Правая лапа" aria-label="Правая лапа">
+   <path fill="#d69737" d="M590 827c7-4 16-5 23-7l-1 37c17 2 37 3 50 9 10 5 12 12 5 16-6 3-18-1-30-1 9 5 18 11 14 17-6 9-23-1-33-7-11-4-18-9-25-11-8 0-24 9-28 1-6-9 9-15 17-18l7-4z"/>
+  </g>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-wing-wave" inkscape:groupmode="layer" inkscape:label="02 · Машущее крыло" aria-label="Машущее крыло справа" transform="rotate(32 676 505)">
+  <path fill="#118b9e" d="M694 426c24-15 44-32 63-55 22-28 30-48 41-77 7-20 17-34 29-28 19 10 24 55 10 91 12-12 21-30 34-29 17 1 20 39-7 84 14-8 22-12 29-6 12 10 9 44-34 92l-5 4c14-6 22-4 21 9-1 26-31 56-65 77-36 23-62 28-86 29l-52-139z"/>
+  <path d="M768 382q20-22 30-3c9 15-1 33-9 47 13-10 23-20 30-9 6 10-1 25-9 37 12-11 17-7 20 1 3 11-2 25-17 36 15-7 22 2 22 12-1 13-7 22-17 31" fill="none" stroke="#115b73" stroke-width="8.1" stroke-linecap="round" stroke-linejoin="round"/>
+  <g id="ukh-wing-wave-markings" fill="none" stroke="#38a7b9" stroke-linecap="round">
+    <path d="M773 409q-9 14-21 25m34 28q-9 9-19 16m19 40q-8 4-16 5m35 24q-7 10-17 15" stroke-width="7"/>
+  </g>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-crest" inkscape:groupmode="layer" inkscape:label="03 · Хохолок" aria-label="Хохолок">
+  <g id="ukh-crest-left" inkscape:label="Левый пучок" aria-label="Левый пучок">
+   <path fill="#12899c" d="M309 313c-10-16-29-36-54-50-16-9-24-7-23 2 1 5 5 10 9 18-19-10-43-18-56-12-18 8-13 23 0 34 12 10 25 14 40 17-10 1-18 3-19 9-5 12 17 17 30 16 25-1 51-9 76-18z"/>
+  </g>
+  <g id="ukh-crest-top" inkscape:label="Верхний пучок" aria-label="Верхний пучок">
+   <path fill="#11899b" d="M552 235c-10-33-17-63-5-83 9-15 18-1 21 12 7-19 14-40 27-51 10-8 16-1 21 9 8 18 5 41-3 60 10-11 22-15 26-7 5 12-7 32-17 43-12 13-25 21-44 31z"/>
+  </g>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-body" inkscape:groupmode="layer" inkscape:label="04 · Туловище" aria-label="Туловище и голова">
+ <path id="ukh-lower-left-body" fill="#118a9a" d="M396 792c6-10 36-13 66-10l17 45c-4 21-22 35-43 35-24 0-39-14-44-36-5-15-2-26 4-34z"/>
+ <path id="ukh-lower-right-body" fill="#118b9b" d="M570 787c18-8 53-7 77 0-6 30-18 53-41 56-17 3-31-2-38-13-8-12-9-31 2-43z"/>
+ <path id="ukh-body-silhouette" fill="#118b9d" d="M255 526c-9-43-6-97 2-135 7-34 23-61 46-88 28-34 63-54 98-68 38-15 89-25 132-16 36 7 69 17 97 43 46 43 74 107 93 178 16 57 26 112 26 162 0 89-25 140-63 175-50 48-131 64-196 63-70 1-130-11-173-44-35-26-56-70-64-118-9-50 7-100 2-152z"/>
+ <path id="ukh-face-and-front" fill="#1aaabc" d="M305 523c-17-31-27-68-20-106 6-33 22-65 47-88 22-21 49-30 71-26 33 4 59 18 80 40-1-22 6-44 18-60 15-21 38-38 61-38 26-2 49 6 68 21 46 42 74 105 93 174 16 57 26 112 26 162 0 89-25 140-63 175-50 48-131 64-196 63-64 0-122-10-164-39-23-19-41-55-50-83-15-47-18-122 29-195z"/>
+ <g id="ukh-forehead-feathers" fill="none" stroke="#105a72" stroke-linecap="round" aria-label="Пёрышки на лбу">
+   <path d="m368 276 20 6m14-27 12 9m25-20 9 17m27-23-2 19m38-25-10 16m-67 37 9 11m24-11 4 18" stroke-width="7"/>
+ </g>
+ <g id="ukh-belly" inkscape:label="Светлый живот" aria-label="Светлый живот">
+  <path fill="#a5e2e9" d="M418 607c19-40 50-66 84-84 30-15 72-23 100-18 43 7 76 29 97 66 25 43 25 86 13 129-12 47-45 83-77 104-33 21-90 35-130 34-47-1-82-20-99-54-20-41-21-105 12-177z"/>
+  <g id="ukh-belly-feathers" fill="none" stroke="#69afbc" stroke-linecap="round" stroke-width="8.5">
+    <path d="M570 539q5 8 8 17m36 0q7 10 10 24m35-37q10 7 16 17m-223 37q-6 11-6 24m60-33q-1 15 1 28m48-30q6 13 9 29m94-18q6 11 9 26m-66 5q3 13 4 27m-67-8q2 16 8 29m-69-26q-2 14-1 28m165-6q3 16 0 28m55-46v14m-117 30q2 13 0 26m-62-4q2 10 5 22m95 5q-3 8-10 16m67-29q-1 6-6 12m-121 35q-1 8-5 19"/>
+  </g>
+ </g>
+ <path id="ukh-side-highlights" d="M713 502q4 6 6 15m-6 32q4 7 5 15m12 44q1 6 0 14" fill="none" stroke="#a1e0e7" stroke-width="7.3" stroke-linecap="round"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-face" inkscape:groupmode="layer" inkscape:label="05 · Лицо" aria-label="Лицо">
+ <g id="ukh-brows" inkscape:label="Брови" aria-label="Брови">
+  <path id="ukh-brow-left" d="M323 340c5-9 15-19 24-22 9-4 15 0 11 8-4 9-16 20-25 25-9 4-15-1-10-11z" fill="#10586b"/>
+  <path id="ukh-brow-right" d="M541 255c8-5 22-7 35-4 10 2 11 12 3 15-9 4-26 3-35 0-6-1-7-8-3-11z" fill="#115969"/>
+ </g>
+ <g id="ukh-eye-left" inkscape:label="Левый глаз" aria-label="Левый глаз">
+  <path id="ukh-left-eye-white" d="M332 416c-3-34 26-67 60-69 35-3 67 24 71 61 4 36-21 71-57 74-35 4-71-25-74-66z" fill="#f8f1df"/>
+  <g id="ukh-left-pupil" inkscape:label="Левый зрачок и блик" aria-label="Левый зрачок и блик">
+   <path d="M396 408c1-16 14-27 29-26 16 0 28 13 27 29 0 15-12 28-28 28-15 0-29-13-28-31z" fill="#060504"/>
+   <circle cx="433" cy="398" r="8" fill="#f9f3e0"/>
+  </g>
+ </g>
+ <g id="ukh-eye-right" inkscape:label="Правый глаз" aria-label="Правый глаз">
+  <path id="ukh-right-eye-white" d="M517 349c0-33 28-63 60-62 35 1 62 28 62 64 0 34-26 65-61 65-36-1-63-31-61-67z" fill="#f8f2e0"/>
+  <g id="ukh-right-pupil" inkscape:label="Правый зрачок и блик" aria-label="Правый зрачок и блик">
+   <path d="M571 349c1-15 13-27 28-27 15 0 28 12 28 27 0 17-12 30-28 30-15 0-28-13-28-30z" fill="#060504"/>
+   <circle cx="608" cy="338" r="8" fill="#faf4e1"/>
+  </g>
+ </g>
+ <g id="ukh-cheeks" fill="#ee607f" aria-label="Румянец">
+  <path id="ukh-cheek-left" d="M342 511c10-17 38-25 57-15 17 9 20 27 3 40-15 11-37 12-52 3-9-6-13-17-8-28z"/>
+  <path id="ukh-cheek-right" d="M627 421c3-20 24-35 44-34 17 1 26 17 18 33-8 19-31 29-49 22-10-4-15-11-13-21z"/>
+ </g>
+ <g id="ukh-beak" inkscape:label="Клюв" aria-label="Клюв">
+  <path id="ukh-beak-lower" d="M484 430c4-4 35 3 44 9-1 14-1 30-9 30-15 1-30-14-37-27-3-6-2-9 2-12z" fill="#db8b1c"/>
+  <path id="ukh-mouth" d="M487 435c5 2 27 4 36 10-1 9-1 16-7 14-11-3-21-9-29-24z" fill="#983426"/>
+  <path id="ukh-beak-upper" d="M483 427c5-15 16-25 29-25 15 0 23 13 24 28 2 11 0 18-8 17l-42-10c-5-1-6-4-3-10z" fill="#e49115"/>
+ </g>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="ukh-wing-book" inkscape:groupmode="layer" inkscape:label="07 · Крыло у книги" aria-label="Крыло, которое держит книгу" transform="rotate(-22 262 566)">
+ <path d="M255 525c-14 15-31 43-42 71-22 53-25 102-7 145 6 17 21 43 38 47 4 1 7 0 10-4 13 20 32 37 46 33 5-1 9-5 12-12 15 14 34 25 51 22 15-1 13-14 4-29-21-34-32-62-38-97-6-34-6-60 1-91 9-42 3-66-20-95-13-16-43-10-55 10z" fill="#118b9d"/>
+ <g id="ukh-wing-book-feathers" fill="none" stroke="#399fb2" stroke-linecap="round">
+   <path d="M261 557q-6 5-10 14m43 4q-4 8-5 16m-22 14q-4 11-4 24m-27-17q-3 8-5 17m67 1v16m-33 7q-2 10 2 23m-26 3q-1 10 3 22m-32-62q-2 7-2 19m88 33q1 13 7 21" stroke-width="7"/>
+ </g>
+ <path id="ukh-wing-book-tips" d="M239 730c4 24 10 43 20 62 13 19 26 27 38 25 8-1 12-6 13-12m-26-67c6 34 24 72 42 81 18 9 35 11 42 3" fill="none" stroke="#145c74" stroke-linecap="round" stroke-linejoin="round" stroke-width="8.2"/>
+</g>
+</g><g id="topa" transform="translate(472 408) scale(-0.3076923076923077 0.3076923076923077) translate(-390 -778)"><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-tail" inkscape:groupmode="layer" inkscape:label="01 · Хвост" data-pivot="278 616">
+  <g id="topa-tail-spikes"><path fill="#f5a246" d="M52 605q10-27 24-28 13 1 19 30l11 18-54-1Z"/><path fill="#f8bc45" d="M107 610q8-39 23-40 14-1 32 29l19 18-74 12Z"/><path fill="#f8a13d" d="M164 601q-9-49 5-58 15-3 50 9l27 11-31 52-46 17Z"/><path fill="#f69e41" d="M214 542q-22-20-23-47 2-17 56-18l33-7-14 68-53 28Z"/></g>
+  <path fill="#cdd84e" d="M31 612c46 50 107 64 174 55l75-34 24 53c-39 17-77 20-106 19-59-2-112-25-151-64-8-8-16-18-16-29Z"/>
+  <path fill="#89a64a" d="M255 467c-17 76-46 111-99 128-42 14-79 10-102 3-9-3-19-3-23 3-6 10 9 30 28 43 61 41 132 38 197 10 10 0 24 23 28 43l53-71-23-119Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-arm-wave" inkscape:groupmode="layer" inkscape:label="02 · Машущая лапка" data-pivot="585 446" transform="rotate(34 563 455)">
+  <path fill="#6b8634" d="M560 396c33 7 62-10 82-31 4-8 2-26 9-30 5-3 10 5 14 9 9-7 21-24 29-22 6 0 7 9 9 16 8-6 20-9 23-4 2 5-3 16-5 25 8-6 15-3 16 2 2 6-5 15-8 20-18 59-68 101-133 116-26 0-45-12-56-46Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-leg-back" inkscape:groupmode="layer" inkscape:label="03 · Дальняя ножка" data-pivot="518 651">
+  <path fill="#6d8837" d="M457 637q53-19 112-6c6 26 0 56-4 83 11 7 17 20 22 29 3 11-19 17-42 18-25 1-56 2-75-4-17-6-18-10-21-34l-3-70Z"/>
+  <path fill="#5b7530" d="M547 747c6 0 9 7 7 12l-9 1c-3-5-3-10 2-13Zm20-5c6 1 11 8 10 13l-9 3c-4-5-6-13-1-16Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-leg-front" inkscape:groupmode="layer" inkscape:label="04 · Передняя ножка" data-pivot="333 656">
+  <path fill="#89a64a" d="M273 646c76-25 119-14 139 28l-9 64c9 9 17 18 19 26 4 10-18 14-42 16-35 2-74-3-89-14-8-6-6-19-8-41Z"/>
+  <path fill="#5b7530" d="M374 761c6 0 15 6 16 15l-11 3c-6-3-11-12-5-18Zm29-6c6-1 14 8 15 15l-11 4c-4-2-10-16-4-19Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-back-spikes" inkscape:groupmode="layer" inkscape:label="05 · Спинные шипы" data-pivot="264 440">
+  <path fill="#f6a142" d="M244 480c-26-16-35-44-22-58 11-15 26-24 50-34l37 42-16 52-33 21Z"/>
+  <path fill="#f9a141" d="M263 374c-20-4-44-16-56-26-16-15-1-42 31-66l63 36 6 49-36 24Z"/>
+  <path fill="#f69e3e" d="M245 277c-29-14-56-37-56-56 0-20 35-39 62-40l53 35-16 58-34 23Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-body" inkscape:groupmode="layer" inkscape:label="06 · Туловище" data-pivot="430 601">
+  <path fill="#89a64a" d="M260 371c43-28 227-57 300 10 23 20 30 61 40 100 12 52 12 104-15 148-28 46-101 76-180 77-67 1-128-16-152-50-25-36-28-100-13-152 12-41 27-78 20-133Z"/>
+  <ellipse id="topa-belly" cx="486" cy="556" rx="103" ry="123" transform="rotate(15 486 556)" fill="#cbd94c"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M289 438q36-31 69-51l60 14 125-1q30 9 59 36l37 77-54 28-19-33 11 111q-90 52-251 27l-13-125-30 26-57-36z" fill="#8bb8dc" stroke="#426f91" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M370 398q72 56 158 4" fill="none" stroke="#446f92" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><rect x="465" y="535" width="57" height="29" fill="#e0b572" rx="5" stroke="none" stroke-width="2"/><path d="M267 748q18-6 37-4l42 17q14 11 43 6l11 18-112 6-23-17z" fill="#e9ad9e" stroke="#a65b65" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></g><g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-arm-front" inkscape:groupmode="layer" inkscape:label="07 · Передняя рука" data-pivot="298 443">
+  <path fill="#668334" d="M299 435c-13 5-33 37-46 71-12 32-14 72-3 94-4 5-3 11 1 12 4 0 10-4 12-3 3 4 0 16 8 18 5 0 9-11 13-11 4 0 11 10 15 10 6 0 8-11 9-15 6 1 18-4 20-14 4 5 9 9 11 4 2-6 0-15-2-22 2-28 15-63 29-85 4-6-1-8-6-3-14 14-25 48-34 77-8 26-19 40-39 38-28-2-36-28-32-56 5-37 20-72 44-103 7-8 6-14 0-12Z"/>
+  <path fill="#89a64a" d="M294 439c22-14 52 10 69 47-27 36-30 82-53 109-11 13-26 16-38 8-26-15-22-51-14-79 8-29 19-58 36-85Z"/>
+</g>
+<g xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" id="topa-head" inkscape:groupmode="layer" inkscape:label="08 · Голова" data-pivot="402 389">
+  <g id="topa-head-crest" data-pivot="333 129"><path fill="#f9a241" d="M263 173c-11-16-19-40-13-67 5-25 38-20 63-6l40 18-27 45-52 32Z"/><path fill="#f7c632" d="M336 112c-1-22 0-50 13-68 9-12 18-9 30-5 24 7 49 46 47 68l12 17-104 17Z"/></g>
+  <path fill="#89a64a" d="M258 390c-18-43-31-87-21-134 13-64 47-120 100-146 26-12 61-14 89-2 0-6-2-14-6-25 54-9 109 14 141 55 23 29 30 55 44 84 8 11 29 22 34 57 9 49-31 93-65 121-42 34-122 56-191 36-61-16-100-3-125-46Z"/>
+  <g id="topa-eyebrows" fill="#5d772f"><path d="M324 184c7-11 26-21 35-17 7 4 6 10-1 15-11 8-24 16-32 15-6-1-8-6-2-13Z"/><path d="M506 135c4-12 25-10 36-5 10 6 9 12-1 15-14 3-36-1-35-10Z"/></g>
+  <g id="topa-eye-left" data-pivot="377 261"><ellipse cx="377" cy="261" rx="53" ry="55" transform="rotate(10 377 261)" fill="#f5ebc8"/><g id="topa-pupil-left" data-pivot="380 270"><ellipse cx="380" cy="270" rx="31" ry="31" fill="#301c12"/><circle cx="365" cy="261" r="9" fill="#fff4d8"/></g></g>
+  <g id="topa-eye-right" data-pivot="540 217"><ellipse cx="540" cy="217" rx="44" ry="49" transform="rotate(-19 540 217)" fill="#f5ebc8"/><g id="topa-pupil-right" data-pivot="530 229"><ellipse cx="530" cy="229" rx="29" ry="31" transform="rotate(-18 530 229)" fill="#301c12"/><circle cx="516" cy="220" r="8" fill="#fff4d8"/></g></g>
+  <g id="topa-cheeks" fill="#e56b70"><ellipse cx="344" cy="348" rx="35" ry="25" transform="rotate(-6 344 348)"/><ellipse cx="596" cy="278" rx="30" ry="23" transform="rotate(-18 596 278)"/></g>
+  <g id="topa-nostrils" fill="#607936"><ellipse cx="473" cy="298" rx="9" ry="6" transform="rotate(43 473 298)"/><ellipse cx="513" cy="287" rx="8" ry="6" transform="rotate(-59 513 287)"/></g>
+  <path id="topa-smile" d="M405 350q5-9 15-11m-9 6c33 36 112 34 137-23" fill="none" stroke="#372511" stroke-width="6" stroke-linecap="round" data-pivot="477 354"/>
+</g>
+</g><g transform="translate(578 369) rotate(-23)"><path d="M0 0h27l-1 29 15 6q18 9 5 18-11 7-36-3L0 37z" fill="#e9ad9e" stroke="#a65b65" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M0 6h25m-20 9h21" fill="none" stroke="#f7d2b5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></g><g id="foreground"></g></g></svg>
