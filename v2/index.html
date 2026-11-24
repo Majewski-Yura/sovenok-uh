@@ -976,6 +976,7 @@ html.preview-club-home{overflow:hidden}
 <link rel="stylesheet" href="theme-assets/wardrobe-studio.css">
 <link rel="stylesheet" href="theme-assets/parent-cabinet.css">
 <link rel="stylesheet" href="theme-assets/parent-gate.css">
+<link rel="stylesheet" href="theme-assets/voyage-gift.css?v=1">
 </head>
 <body>
 <div class="sky" id="sky"></div>
@@ -1038,6 +1039,21 @@ html.preview-club-home{overflow:hidden}
   });
 })();
 </script>
+<dialog id="tripGiftDialog" aria-labelledby="tripGiftHeading" aria-describedby="tripGiftNote">
+  <div class="tg-hero" aria-hidden="true">
+    <svg class="tg-spark tg-spark--left" viewBox="0 0 48 48" fill="none"><path fill="#a984e3" d="m26 2 4 15 15 6-15 6-8 15-4-15L3 21l15-4 8-15Z"/></svg>
+    <img class="tg-topa" src="belarusian-assets/topa.svg" alt="">
+    <svg class="tg-spark tg-spark--right" viewBox="0 0 48 48" fill="none"><path fill="#ffcd62" d="m21 2 8 13 16 2-12 11 2 16-13-8L8 42l4-16L2 15l16 1 3-14Z"/></svg>
+    <span class="tg-dot"></span><span class="tg-orbit"></span>
+  </div>
+  <div class="tg-content">
+    <p id="tripGiftKicker"></p>
+    <h2 id="tripGiftHeading">Новая раскраска!</h2>
+    <p class="tg-island" id="tripGiftIsland"></p>
+    <p id="tripGiftNote">Подарок уже ждёт тебя в «Раскрасках».</p>
+    <form method="dialog"><button type="submit" autofocus>Здорово!</button></form>
+  </div>
+</dialog>
 <div class="reveal" id="confModal" onclick="if(event.target===this)this.classList.remove('on')"><div class="rv-card" style="max-width:560px;text-align:left">
   <h2 style="margin:0 0 6px;text-align:center">Алиса помогла?</h2><p style="color:var(--ink2);text-align:center;margin-top:0">Подтвердите — и&nbsp;она получит звёздочки.</p>
   <div class="diary" id="confList"></div>
@@ -2132,7 +2148,18 @@ function renderPbook(){
 /* подарок-раскраска за остров: выдаётся один раз, и задним числом, если остров уже открыт */
 function tripPaintGifts(){const D=T(),g=S.paintsGift=S.paintsGift||[];let fresh=null;
   ISL_PAINT.forEach((k,ii)=>{if(!k||g.includes(k))return;if(ii===0||(D.paid||{})[ii]){g.push(k);fresh=fresh===null?ii:fresh}});
-  if(fresh!==null){save();setTimeout(()=>celebrate('Подарок за '+(fresh?'вход на остров':'начало кругосветки')+': раскраска «'+ISL_NAMES[fresh]+'»! Она уже в «Раскрасках».','uh-star'),600)}}
+  if(fresh!==null){save();setTimeout(()=>showTripGift(fresh),600)}}
+function showTripGift(ii){
+  const dialog=document.getElementById('tripGiftDialog'),name=ISL_NAMES[ii];
+  if(!name)return;
+  if(dialog&&typeof dialog.showModal==='function'){
+    document.getElementById('tripGiftKicker').textContent=ii?'Подарок за открытие острова':'Подарок за начало кругосветки';
+    document.getElementById('tripGiftIsland').textContent='«'+name+'»';
+    if(dialog.open)return;
+    try{dialog.showModal();return}catch(e){}
+  }
+  celebrate('Подарок за '+(ii?'вход на остров':'начало кругосветки')+': раскраска «'+name+'»! Она уже в «Раскрасках».','uh-star');
+}
 let pFrom='shop';
 function buyPaint(k){
   if(!PSHOP_A.some(([key])=>key===k)||(S.paintsOwned||[]).includes('a-'+k))return;
