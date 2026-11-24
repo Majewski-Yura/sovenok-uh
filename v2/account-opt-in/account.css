@@ -1,0 +1,8 @@
+[data-topouh-parent-account]{padding:clamp(16px,4vw,24px);background:#f8f5ff;color:#28213e;border:1px solid #e4d9f5;border-radius:20px}
+[data-topouh-parent-account] h2{margin:0;color:inherit;font-size:1.3rem}
+[data-topouh-parent-account] p{margin:.6em 0;line-height:1.5}
+[data-topouh-parent-account] [role=status]{min-block-size:1.5em;color:#4b386e}
+[data-topouh-parent-account] .topouh-account-actions{display:flex;flex-wrap:wrap;gap:8px}
+[data-topouh-parent-account] button{min-height:44px;padding:8px 14px;color:inherit;background:white;border:1px solid #c7b4e8;border-radius:13px;font:inherit;font-weight:700;cursor:pointer}
+[data-topouh-parent-account] button:focus-visible{outline:3px solid #6544bc;outline-offset:2px}
+[data-topouh-parent-account] [hidden]{display:none!important}

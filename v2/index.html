@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ru" data-topouh-white-canvas>
-<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; object-src 'none'; base-uri 'none'; connect-src 'self'; form-action 'none'; frame-src 'self'">
+<head><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self'; object-src 'none'; base-uri 'none'; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://sovenok-uh.firebaseapp.com https://firestore.googleapis.com; form-action 'none'; frame-src 'self' https://sovenok-uh.firebaseapp.com https://accounts.google.com">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Топоух</title>
@@ -1412,7 +1412,7 @@ let S={trip:{done:{},stamps:0},stars:0,owned:[],wear:{},diary:[],mission:null,mi
 try{const d=JSON.parse(localStorage.getItem(KEY));if(d)S=Object.assign(S,d)}catch(e){}
 if(S.mode==='school'||S.mode==='holiday')S.mode='auto';
 /* Keep existing GitHub saves as-is: do not reset rewards or inventory. */
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));if(globalThis.TopouhAccountIntegration?.reviewed===true)window.dispatchEvent(new Event('topouh:v2-local-saved'))}catch(e){}}
 
 /* Family sync is intentionally absent from the private draft. */
 const cloudInit=async()=>{}, cloudPush=()=>{};
@@ -2135,6 +2135,7 @@ function tripPaintGifts(){const D=T(),g=S.paintsGift=S.paintsGift||[];let fresh=
   if(fresh!==null){save();setTimeout(()=>celebrate('Подарок за '+(fresh?'вход на остров':'начало кругосветки')+': раскраска «'+ISL_NAMES[fresh]+'»! Она уже в «Раскрасках».','uh-star'),600)}}
 let pFrom='shop';
 function buyPaint(k){
+  if(!PSHOP_A.some(([key])=>key===k)||(S.paintsOwned||[]).includes('a-'+k))return;
   if(S.stars<PSHOP_PRICE){say('pbook','Пока не хватает звёздочек. Ещё '+(PSHOP_PRICE-S.stars)+' — и раскраска твоя!');return}
   S.stars-=PSHOP_PRICE;S.paintsOwned=S.paintsOwned||[];S.paintsOwned.push('a-'+k);setStars();save();say('pbook','Новая раскраска! Давай раскрасим её вместе!');renderPbook();
   setTimeout(()=>openPaint('a-'+k),900)}
@@ -3954,7 +3955,7 @@ function tripEnd(){
   document.getElementById('tripBody').style.display='none';const nx=document.getElementById('tripNext'),nb=document.getElementById('tripNextBtn');nx.style.display='flex';
   const D=T().done,k=TR.exam?TR.ii+'-exam':tripKey(TR.ii,TR.wi,TR.si),I=TRIP[TR.ii];
   if(TR.test&&TR.miss>2){say('tripL',pick(TRIP_FAIL));nb.textContent='Попробовать ещё раз';nb.onclick=()=>startTripStop(TR.ii,TR.exam?'exam':TR.wi,TR.si);return}
-  const first=!D[k];D[k]=today();save();
+  const first=!D[k];if(first||globalThis.TopouhAccountIntegration?.reviewed!==true)D[k]=today();save();
   S.diary.unshift({d:today(),q:'Кругосветка Топы',a:TR.exam?'Сдала экзамен острова «'+I.n+'»':TR.si===3?'Сдала тест недели «'+I.weeks[TR.wi].t+'»':'Прошла остановку '+(TR.si+1)+' недели «'+I.weeks[TR.wi].t+'»'});save();
   gameReward('trip','за остановку');
   if(TR.exam){tripSnd('fan');if(first&&TRIP[TR.ii+1]&&TRIP[TR.ii+1].weeks)T().reveal=TR.ii+1;if(first)setTimeout(()=>addStars(5,'за экзамен острова'),1500);say('tripL','Ура! Экзамен сдан! Флаг острова твой. Плывём к новому острову!');celebrate('Экзамен острова сдан! Флаг в паспорте.','trip/flag-'+(TR.ii+1))}
@@ -4493,5 +4494,12 @@ window.addEventListener('popstate',()=>{
   const audioURL=audioCatalogueURL();if(audioURL)showAudioCatalogue(audioURL,'none');
 })();
 </script>
+<!-- local-account-opt-in -->
+<link rel="stylesheet" href="account-opt-in/account.css">
+<script defer src="account-opt-in/core.js"></script>
+<script defer src="account-opt-in/sdk-adapter.js"></script>
+<script defer src="account-opt-in/sync.js"></script>
+<script defer src="account-opt-in/bootstrap.js"></script>
+<script defer src="account-opt-in/app-bridge.js"></script>
 </body>
 </html>
