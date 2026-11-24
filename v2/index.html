@@ -3730,7 +3730,12 @@ const TRIP=[
    b:[['I can ski.','Я умею кататься на лыжах.'],['Can you skate?','Ты умеешь кататься на коньках?'],['Yes, I can.','Да, умею.'],["Let's make a snowman!",'Давай слепим снеговика!'],['I like my sledge.','Я люблю свои санки.']],
    d:[['Can you skate?','Yes, I can!',['A hat.','Seven.']],['Can Topa ski?',"No, he can't.",['Happy New Year!','Two.']],["Let's make a snowman!",'Yes, please!',['I am tired.','A present.']],['Do you like winter?','Yes, I do!',['It is a bell.','Five.']]]}
  ]},
- {n:'Вкусный остров',c:'#ffc6a8',soon:'еда, I like, кафе'},
+ {n:'Вкусный остров',c:'#ffc6a8',weeks:[
+  {"t":"В фруктовой лавке","w":[["apple","яблоко","@eng-apple"],["pear","груша","@eng-pear"],["banana","банан","@eng-banana"],["orange","апельсин","@eng-orange"],["tomato","помидор","@eng-tomato"],["carrot","морковь","food/carrot",1]],"b":[["This is a pear.","Это груша."],["I have got an apple.","У меня есть яблоко."],["I see a banana.","Я вижу банан."],["The carrot is orange.","Морковь оранжевая."]],"d":[["What is a long yellow fruit?","A banana.",["A tomato.","A pear."]],["Which fruit has the same name as a colour?","An orange.",["A pear.","An apple."]],["Which vegetable is orange?","A carrot.",["A tomato.","A banana."]]]},
+  {"t":"Завтрак у Топы","w":[["bread","хлеб","@eng-bread"],["cheese","сыр","@eng-cheese"],["milk","молоко","@eng-milk"],["juice","сок","@eng-juice"],["tea","чай","@tea"],["cookie","печенье","food/cookie",1]],"b":[["I have bread for breakfast.","Я ем хлеб на завтрак."],["I drink milk.","Я пью молоко."],["Here is your tea.","Вот твой чай."],["I eat a cookie.","Я ем печенье."]],"d":[["What drink is white?","Milk.",["Tea.","Juice."]],["What can you put on a slice of bread?","Cheese.",["Tea.","Milk."]],["Can I have some tea, please?","Here is your tea.",["Here is your bread.","Here is your juice."]]]},
+  {"t":"Что тебе нравится?","w":[["soup","суп","@eng-soup"],["salad","салат","@eng-salad"],["sandwich","бутерброд","@eng-cheese-sandwich"],["cake","торт","@eng-cake"],["strawberry","клубника","food/strawberry",1],["water","вода","@water"]],"b":[["I like soup.","Я люблю суп."],["I don’t like salad.","Я не люблю салат."],["Do you like cake?","Тебе нравится торт?"],["I like strawberries.","Я люблю клубнику."]],"d":[["Topa says: “I like soup.” Does he like soup?","Yes, he does.",["No, he doesn’t.","Yes, she does."]],["Uh says: “I don’t like salad.” Does she like salad?","No, she doesn’t.",["Yes, she does.","No, he doesn’t."]],["How do you say «Мне нравится торт»?","I like cake.",["I don’t like cake.","Do you like cake?"]]]},
+  {"t":"Закажи в кафе","w":[["apple juice","яблочный сок","@eng-apple-juice"],["orange juice","апельсиновый сок","@eng-orange-juice"],["soup","суп","@eng-soup"],["salad","салат","@eng-salad"],["cheese sandwich","бутерброд с сыром","@eng-cheese-sandwich"],["water","вода","@water"]],"b":[["Can I have some soup, please?","Можно мне суп, пожалуйста?"],["Can I have a cheese sandwich?","Можно мне бутерброд с сыром?"],["Water for me, please.","Мне воду, пожалуйста."],["Thank you for the salad.","Спасибо за салат."]],"d":[["Can I have some soup, please?","Here is your soup.",["Here is your salad.","Here is your juice."]],["Here is your cheese sandwich.","Thank you.",["I am a sandwich.","It is a pear."]],["Order some water politely.","Water for me, please.",["Salad for me, please.","Here is your juice."]]]}
+ ]},
  {n:'Остров Домик',c:'#cdb4db',soon:'комнаты, мебель, in / on / under'},
  {n:'Остров Зверей',c:'#b7e4c7',soon:'дикие звери, can, что делает'},
  {n:'Остров Школа',c:'#a2d2ff',soon:'школа, дни недели, мой день'}
@@ -3741,7 +3746,7 @@ const TRIP_EXAM_HI='Это экзамен острова! Сдашь — пол�
 const TRIP_FAIL=['Чуть-чуть не хватило! Давай повторим остановки и попробуем ещё раз. Я подожду!','Почти получилось! Ошибаться не страшно. Попробуем ещё разок?'];
 /* слова недели → карточки {en,ru,pic} */
 function tripItems(W){if(W.num)return NUMW.map((en,i)=>({en,ru:NUMR[i],n:i+1,pic:'<span class="num">'+(i+1)+'</span>'}));
-  return (W.w||[]).map(x=>({en:x[0],ru:x[1],pic:TI(x[2],x[3])}))}
+  return (W.w||[]).map(x=>({en:x[0],ru:x[1],pic:x[2].startsWith('@')?'<svg class="art photo fit" viewBox="0 0 64 64" aria-hidden="true"><use href="belarusian-assets/workshop-icons.svg#vis-'+x[2].slice(1)+'"></use></svg>':TI(x[2],x[3])}))}
 function tripPrevItems(ii,wi){let r=[];TRIP[ii].weeks.slice(0,wi).forEach(W=>r=r.concat(tripItems(W)));
   if(!r.length)r=ANIMALS.filter(a=>a.en!=='owl').map(a=>({en:a.en,ru:a.ru.split(' ')[0],pic:enPic(a.en)}));return r}
 function tripCountPic(it){if(!it.n||it.n>6||Math.random()<.5)return it.pic;return '<span class="cnt">'+Array(it.n).fill(TI('en/apple')).join('')+'</span>'}
@@ -3763,22 +3768,23 @@ const TRIP_EXAM=['pic','listen','build','dialog','ru','pic','listen','build','di
 const T=()=>{if(!S.trip)S.trip={done:{},stamps:0};return S.trip};
 const tripKey=(ii,wi,si)=>ii+'-'+wi+'-'+si;            /* si: 0..2 остановки, 3 — тест недели; экзамен острова — ii+'-exam' */
 /* вход на остров (06.11.2026, решение родителя): таймер до даты острова, потом вход за звёзды: 50, 100, 150… (T().paid); сначала обязателен экзамен прошлого острова */
-const TRIP_DATE=[null,'2026-11-11','2027-01-11','2027-02-08','2027-03-08','2027-04-05'];
+const FOOD_ISLAND=2, FOOD_OPEN_AT='2026-12-01T10:19:00+03:00';
+const TRIP_DATE=[null,'2026-11-11',FOOD_OPEN_AT,'2027-02-08','2027-03-08','2027-04-05'];
 const tripPrice=ii=>ii*50;
-function tripLeft(ii){const d=TRIP_DATE[ii];return d?Math.max(0,new Date(d+'T00:00:00')-Date.now()):0}
+function tripLeft(ii){const d=TRIP_DATE[ii];return d?Math.max(0,Date.parse(d.includes('T')?d:d+'T00:00:00')-Date.now()):0}
 function tripState(ii){const D=T().done,I=TRIP[ii];
   if(ii===0||(T().paid||{})[ii])return I.weeks?'open':'fill';
   if(!D[(ii-1)+'-exam'])return 'exam';if(!I.weeks)return 'fill';if(tripLeft(ii)>0)return 'time';return 'pay'}
 function tripLeftTxt(ii){const ms=tripLeft(ii),d=Math.ceil(ms/864e5),h=Math.ceil(ms/36e5);
   return d>1?'через '+d+' '+plural(d,['день','дня','дней']):'через '+h+' '+plural(h,['час','часа','часов'])}
 /* таймер «дни : часы : минуты : секунды» на плашке острова (07.11.2026, просьба родителя), тикает раз в секунду */
-function tripClock(ii){const t=Math.max(0,Math.floor(tripLeft(ii)/1000)),z=n=>String(n).padStart(2,'0'),d=Math.floor(t/86400),h=Math.floor(t%86400/3600),m=Math.floor(t%3600/60),sc=t%60;
-  return '<span class="tclk-t">Откроется через</span><span class="tclk">'+[[d,'дн'],[z(h),'ч'],[z(m),'мин'],[z(sc),'сек']].map(([v,l])=>'<i><b>'+v+'</b><small>'+l+'</small></i>').join('<em>:</em>')+'</span>'}
+function tripClock(ii){const t=Math.max(0,Math.ceil(tripLeft(ii)/1000)),z=n=>String(n).padStart(2,'0'),d=Math.floor(t/86400),h=Math.floor(t%86400/3600),m=Math.floor(t%3600/60),sc=t%60;
+  return '<span class="tclk-t">'+(ii===FOOD_ISLAND&&tripState(ii)==='exam'?'До даты открытия':'Откроется через')+'</span><span class="tclk">'+[[d,'дн'],[z(h),'ч'],[z(m),'мин'],[z(sc),'сек']].map(([v,l])=>'<i><b>'+v+'</b><small>'+l+'</small></i>').join('<em>:</em>')+'</span>'}
 let tripTick=null;
 function tripTickStart(){clearInterval(tripTick);tripTick=setInterval(()=>{const on=document.getElementById('trip');if(!on||!on.classList.contains('on')){clearInterval(tripTick);return}
   document.querySelectorAll('.tbadge.time').forEach(b=>{const ii=+b.dataset.ii;if(tripLeft(ii)<=0){clearInterval(tripTick);renderTrip();return}b.innerHTML=tripClock(ii)})},1000)}
 let tripPayAsk=null;
-function tripPay(ii){const p=tripPrice(ii);
+function tripPay(ii){if(ii===FOOD_ISLAND&&tripState(ii)!=='pay')return;const p=tripPrice(ii);
   if(S.stars<p){say('trip','Чтобы открыть остров, нужно больше звёздочек. Собирай звёзды в уроках и возвращайся!');toast('Нужно ещё '+(p-S.stars)+' ⭐');return}
   if(tripPayAsk!==ii){tripPayAsk=ii;say('trip','Остров уже можно открыть! Вход стоит звёздочки. Нажми на остров ещё раз — и поплыли!');toast('Вход: '+p+' ⭐. Нажми ещё раз');setTimeout(()=>{if(tripPayAsk===ii)tripPayAsk=null},8000);return}
   tripPayAsk=null;S.stars-=p;T().paid=T().paid||{};T().paid[ii]=1;setStars();save();tripSnd('fan');say('trip','Ура! Остров открыт! Плывём!');renderTrip()}
@@ -3799,6 +3805,8 @@ function tripNextStop(){const D=T().done;for(let ii=0;ii<TRIP.length;ii++){const
   for(let wi=0;wi<I.weeks.length;wi++)for(let si=0;si<4;si++)if(!D[tripKey(ii,wi,si)]&&tripOpen(ii,wi,si))return {ii,wi,si};
   if(tripExamOpen(ii)&&!D[ii+'-exam'])return {ii,wi:'exam'}}return null}
 function tripGoBtn(){const n=tripNextStop(),b=document.createElement('button');b.className='tgo';
+  if(!n&&!T().done[FOOD_ISLAND+'-exam']&&tripState(FOOD_ISLAND)==='time'){b.innerHTML='Следующий: Вкусный остров<small>До открытия смотри таймер на карте</small>';b.onclick=()=>say('trip','До открытия Вкусного острова смотри таймер на карте.');return b}
+  if(!n&&!T().done[FOOD_ISLAND+'-exam']&&tripState(FOOD_ISLAND)==='pay'){b.innerHTML='Открыть Вкусный остров<small>Вход: 100 ⭐</small>';b.onclick=()=>tripPay(FOOD_ISLAND);return b}
   if(!n){b.innerHTML='Все острова пройдены!<small>Новые скоро появятся</small>';b.onclick=()=>say('trip','Ты прошла всё, что есть! Скоро я приплыву с новым островом.');return b}
   const I=TRIP[n.ii];b.innerHTML=(n.wi==='exam'?'Экзамен острова ▶':n.si===3?'Тест недели ▶':'Плыть дальше ▶')+'<small></small>';
   b.querySelector('small').textContent=n.wi==='exam'?I.n:'Неделя '+(n.wi+1)+' · '+(n.si===3?'тест':'остановка '+(n.si+1))+' · '+I.weeks[n.wi].t;
@@ -3836,13 +3844,13 @@ function tripWorld(box,D){
   sea.innerHTML='<div class="twave" style="top:14%"></div><div class="twave" style="top:44%;animation-delay:-2s"></div><div class="twave" style="top:74%;animation-delay:-1s"></div>'+
     '<svg class="troute" viewBox="0 0 '+VW+' '+VH+'" preserveAspectRatio="none"><path d="'+TRIP.map((_,i)=>{const p=tripPos(i),x=p.x*VW/100,y=(p.y+3)*VH/100;if(!i)return 'M'+x+' '+y;const q=tripPos(i-1),qx=q.x*VW/100,qy=(q.y+3)*VH/100;return wide?'Q'+(qx+x)/2+' '+(qy<y?qy:y)+' '+x+' '+y:'Q'+(x<qx?x-60:x+60)+' '+(qy+y)/2+' '+x+' '+y}).join(' ')+'" fill="none" stroke="#fff" stroke-width="6" stroke-dasharray="1 16" stroke-linecap="round"/></svg>';
   let boatAt=0;
-  TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],st=tripState(ii),ready=st==='open',fog=st==='exam'||st==='fill';if(ready)boatAt=ii;
+  TRIP.forEach((I,ii)=>{const L=TRIP_LOOK[ii],st=tripState(ii),ready=st==='open',fog=st==='exam'||st==='fill',clock=st==='time'||(ii===FOOD_ISLAND&&st==='exam'&&tripLeft(ii)>0);if(ready)boatAt=ii;
     const P=tripPos(ii),e=document.createElement('button');e.className='tisl'+(ready?'':' locked')+(L.real?' real':'')+(D[ii+'-exam']?' won':'');e.style.left=P.x+'%';e.style.top=P.y+'%';e.style.setProperty('--g1',L.g1);e.style.setProperty('--g2',L.g2);e.style.setProperty('--f',L.f);
     e.innerHTML=(ready&&!D[ii+'-exam']?'<i class="tring"></i>':'')+(L.real?'':'<i class="tland"></i>')+'<img class="tart" src="img/'+L.art+'.webp" alt="">'+(D[ii+'-exam']?'<img class="tflagimg" src="img/trip/flag-'+(ii+1)+'.webp" alt="">':'')+
-      (st==='time'?'<b class="tbadge time" data-ii="'+ii+'"></b>':st==='pay'?'<b class="tbadge pay"></b>':'')+(!fog?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
+      (clock?'<b class="tbadge time" data-ii="'+ii+'"></b>':st==='pay'?'<b class="tbadge pay"></b>':'')+(!fog?'':'<span class="tfog"><i style="width:40%;height:32%;left:2%;top:52%"></i><i style="width:46%;height:38%;left:30%;top:58%"></i><i style="width:34%;height:28%;left:66%;top:50%"></i><b class="tlock">?</b></span>')+'<span class="tname"></span>';
     e.querySelector('.tname').textContent=I.n;
-    const bd=e.querySelector('.tbadge');if(bd){if(st==='time'){bd.innerHTML=tripClock(ii);tripTickStart()}else bd.textContent='Вход '+tripPrice(ii)+' ⭐'}
-    e.onclick=()=>{if(ready){confirmPreviewTripActivity();tripSnd('go');tripView=ii;renderTrip();return}
+    const bd=e.querySelector('.tbadge');if(bd){if(clock){bd.innerHTML=tripClock(ii);tripTickStart()}else bd.textContent='Вход '+tripPrice(ii)+' ⭐'}
+    e.onclick=()=>{const st=tripState(ii);if(st==='open'){confirmPreviewTripActivity();tripSnd('go');tripView=ii;renderTrip();return}
       if(st==='pay'){tripPay(ii);return}
       if(st==='time'){say('trip','Этот остров откроется совсем скоро! Я считаю дни. А пока можно повторить слова на прошлом острове.');toast('«'+I.n+'» откроется '+tripLeftTxt(ii));return}
       say('trip',st==='fill'?'Этот остров ещё в тумане. Скоро я приплыву туда с новыми словами!':'Этот остров в тумане! Сдай экзамен острова «'+TRIP[ii-1].n+'», и туман разлетится.')};
@@ -3852,7 +3860,7 @@ function tripWorld(box,D){
   box.appendChild(sea);
   if((previewTripOrigin!=="home"||previewTripEntered)&&T().reveal!==undefined){const k=T().reveal;delete T().reveal;save();const el=sea.querySelectorAll('.tisl')[k];if(el){el.classList.add('reveal');tripSnd('fan')}}
 }
-const TRIP_STICK=[['en/happy','en/apple','en/family','toys/ball'],['words/scarf','words/snowy','words/christmas-tree','words/sledge']];
+const TRIP_STICK=[['en/happy','en/apple','en/family','toys/ball'],['words/scarf','words/snowy','words/christmas-tree','words/sledge'],['food/apple','food/cookie','food/strawberry','food/carrot']];
 function tripIsle(box,D,ii){
   const I=TRIP[ii],L=TRIP_LOOK[ii],v=document.createElement('div');v.className='tisle big';v.style.setProperty('--g1',L.g1);v.style.setProperty('--f',L.f);
   v.innerHTML='<div class="tisle-sky"><b class="ttitle"></b><div class="tstick"></div></div><div class="ttrail"></div>';v.querySelector('.ttitle').textContent=I.n;
@@ -3894,12 +3902,13 @@ function tripSnd(k){if(window.TopouhAudio?.get().effects===false)return;try{trip
   N.forEach(([f,d])=>{const o=A.createOscillator(),g=A.createGain();o.type=k==='no'?'triangle':'sine';o.frequency.value=f;g.gain.setValueAtTime(0,t+d);g.gain.linearRampToValueAtTime(k==='stamp'&&!d?.25:.12,t+d+.02);g.gain.exponentialRampToValueAtTime(.001,t+d+.35);o.connect(g);g.connect(A.destination);o.start(t+d);o.stop(t+d+.4)})}catch(e){}}
 let TR=null;
 function startTripStop(ii,wi,si){
-  confirmPreviewTripActivity();
   const I=TRIP[ii],exam=wi==='exam';let W,P,B=[],Dl=[],seq;
+  if(ii===FOOD_ISLAND&&(tripState(ii)!=='open'||(exam?!tripExamOpen(ii):!Number.isInteger(wi)||wi<0||wi>3||!Number.isInteger(si)||si<0||si>3||!tripOpen(ii,wi,si))))return;
+  confirmPreviewTripActivity();
   if(exam){W=[];I.weeks.forEach(x=>{W=W.concat(tripItems(x).filter(it=>!it.n||it.n<=10));B=B.concat(x.b);Dl=Dl.concat(x.d)});P=W;seq=TRIP_EXAM}
-  else{const X=I.weeks[wi];W=tripItems(X);P=tripPrevItems(ii,wi);B=X.b;Dl=X.d;seq=si===3?TRIP_TEST:TRIP_STOPS[si]}
+  else{const X=I.weeks[wi];W=tripItems(X);P=ii===FOOD_ISLAND&&wi===0?W:tripPrevItems(ii,wi);B=X.b;Dl=X.d;seq=si===3?TRIP_TEST:ii===FOOD_ISLAND?TRIP_STOPS[si].map(k=>k==='catch'?si===1?'match':'ru':k):TRIP_STOPS[si]}
   if(!exam&&I.weeks[wi].num&&si<2)W=W.slice(0,si===0?10:20);
-  TR={ii,wi,si,exam,test:exam||si===3,list:seq.map(g=>TRIP_GEN[g](W,P,B,Dl)),i:-1,miss:0,extra:0};
+  TR={ii,wi,si,exam,test:exam||si===3,list:seq.map((g,j)=>{if(ii!==FOOD_ISLAND||!exam)return TRIP_GEN[g](W,P,B,Dl);const w=I.weeks[j%4];return TRIP_GEN[g](tripItems(w),P,w.b,w.d)}),i:-1,miss:0,extra:0};
   go('tripL');showPrize('tripLPrize','trip');document.getElementById('tripLPrize').textContent=TR.test?'Нужно не больше 2 ошибок':prizeText();
   say('tripL',TR.exam?TRIP_EXAM_HI:TR.test?pick(TRIP_TEST_HI):'Поплыли! Остановка '+(si+1)+' из трёх.');const me=TR;TR.tm=setTimeout(()=>{if(TR===me&&TR.i<0)tripStep()},TR.test?2600:900);
 }
