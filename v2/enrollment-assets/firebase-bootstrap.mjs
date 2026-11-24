@@ -1,5 +1,7 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {initializeAuth,inMemoryPersistence,browserPopupRedirectResolver,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import * as firestore from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import {installTransfer} from './transfer-ui.mjs';
 import {exactPage,verifiedUid} from './identity.mjs';
 
 if (exactPage(location,window)) {
@@ -9,7 +11,8 @@ if (exactPage(location,window)) {
  const $=id=>document.getElementById(id);
  const login=$('google'), feedback=$('status'), output=$('account'), field=$('uid'), logout=$('clear');
  let epoch=0, selected=null;
- const hide=()=>{selected=null;output.hidden=true;field.textContent='';};
+ const transfer=installTransfer({sdk:firestore,auth,db:firestore.getFirestore(app)});
+ const hide=()=>{transfer.reset();selected=null;output.hidden=true;field.textContent='';};
  onAuthStateChanged(auth,u=>{
   if(selected && u!==selected){epoch++;hide();feedback.textContent='Аккаунт изменился. Подтвердите вход снова.';}
  });
@@ -22,7 +25,7 @@ if (exactPage(location,window)) {
    const {user}=await signInWithPopup(auth,provider);
    const uid=await verifiedUid(auth,user);
    if(g!==epoch)return;
-   selected=user;field.textContent=uid;output.hidden=false;
+   selected=user;field.textContent=uid;output.hidden=false;transfer.start();
    feedback.textContent='Аккаунт подтверждён. Прогресс не читался и не отправлялся.';
   } catch(e){
    if(g===epoch){await signOut(auth).catch(()=>{});feedback.textContent=e?.code==='auth/popup-blocked'?'Браузер заблокировал окно Google. Разрешите всплывающие окна и повторите.':'Вход не подтверждён. Попробуйте ещё раз.';}
