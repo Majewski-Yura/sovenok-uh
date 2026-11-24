@@ -1,3 +1,4 @@
+(() => {
 'use strict';
 const OWNED=new Set('cap bow glasses scarf bowtie pencil butterfly balloon book wreath shades phones medal wizard crown'.split(' '));
 const COLORS=new Set(["t-topa","t-cap","t-balloon","t-crown","t-topa-book","t-car","t-train","t-repka","t-repka-mouse","t-kolobok","t-kolobok-hare","t-fox","t-bear","t-hen","t-dedbaba","t-mouse-egg","t-topa-ball","t-topa-bike","t-uh-topa","t-firetruck","t-bus","t-tractor","t-rocket","t-castle","t-kitten","t-puppy","t-frog","t-piglet","t-cow","t-dinos","a-uh-berries","a-uh-pie","a-uh-skates","a-uh-night","a-uh-ship","a-topa-flowers","a-topa-sand","a-winter-house","a-autumn-forest","a-kitten-basket","a-fox-flowers","a-squirrel","a-pony","a-butterflies","a-sea","a-castle","a-dollhouse","a-cake","a-vase","a-gingerbread","a-space"]);
@@ -57,3 +58,4 @@ function project(local,remote,uid){
  trip:{...trip,done,paid:{...(trip.paid||{}),...r.paid}}};
 }
 globalThis.TopouhAccountCore={makeAccount,validateAccount,normalizeRestoration,restore,project};
+})();
